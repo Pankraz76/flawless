@@ -13,8 +13,8 @@ dependencies {
 		api projects.lib
 		api projects.libExtra
 	} else {
-		api "com.diffplug.spotless:spotless-lib:${rootProject.spotlessChangelog.versionLast}"
-		api "com.diffplug.spotless:spotless-lib-extra:${rootProject.spotlessChangelog.versionLast}"
+		api "com.opencohesion.flawless:spotless-lib:${rootProject.spotlessChangelog.versionLast}"
+		api "com.opencohesion.flawless:spotless-lib-extra:${rootProject.spotlessChangelog.versionLast}"
 	}
 	implementation "com.diffplug.durian:durian-core:${VER_DURIAN}"
 	implementation "com.diffplug.durian:durian-io:${VER_DURIAN}"
@@ -42,11 +42,11 @@ tasks.validatePlugins {
 // GRADLE PLUGIN PORTAL //
 //////////////////////////
 gradlePlugin {
-	website = "https://github.com/diffplug/spotless"
-	vcsUrl = "https://github.com/diffplug/spotless"
+	website = "https://github.com/Pankraz76/flawless"
+	vcsUrl = "https://github.com/Pankraz76/flawless"
 	plugins {
-		spotlessPlugin {
-			id = 'com.diffplug.spotless'
+		flawlessPlugin {
+			id = 'com.opencohesion.flawless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
 			displayName = 'Spotless formatting plugin'
 			description = project.description
@@ -68,7 +68,7 @@ gradlePlugin {
 				'clang-format'
 			])
 		}
-		spotlessPluginLegacy {
+		flawlessPluginLegacy {
 			id = 'com.diffplug.gradle.spotless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPluginRedirect'
 			displayName = 'Spotless formatting plugin (legacy)'
