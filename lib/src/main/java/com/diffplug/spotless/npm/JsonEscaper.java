@@ -77,7 +77,7 @@ final class JsonEscaper {
 		char b;
 		var c = 0;
 		for (var i = 0; i < unescaped.length(); i++) {
-			b = c;
+			b = (char) c;
 			c = unescaped.charAt(i);
 			switch (c) {
 			case '\"':
