@@ -1,13 +1,8 @@
 ---
 type: specs.openrewrite.org/v1beta/recipe
 name: com.diffplug.spotless.openrewrite.SanityCheck
-displayName: Apply all Java & Gradle best practices
+displayName: Apply all best practices
 description: Comprehensive code quality recipe combining modernization, security, and best practices.
-tags:
-  - java
-  - gradle
-  - static-analysis
-  - cleanup
 recipeList:
   - org.openrewrite.gradle.EnableGradleBuildCache
   - org.openrewrite.java.migrate.lang.var.UseVarForObject
