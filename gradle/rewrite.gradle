@@ -1,6 +1,7 @@
 apply plugin: 'org.openrewrite.rewrite'
 rewrite {
 	activeRecipe('com.diffplug.spotless.openrewrite.SanityCheck')
+	configFile = project.getRootProject().file("${rootDir}/sanity.yml")
 	exclusions.addAll(
 			'**.dirty.java',
 			'**FormatterProperties.java',
