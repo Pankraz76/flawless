@@ -38,8 +38,8 @@ user@machine repo % ./gradlew build
   src\main\java\com\diffplug\gradle\spotless\FormatExtension.java
     -\t\t····if·(targets.length·==·0)·{
     +\t\tif·(targets.length·==·0)·{
-  Run './gradlew spotlessApply' to fix these violations.
-user@machine repo % ./gradlew spotlessApply
+  Run './gradlew flawlessApply' to fix these violations.
+user@machine repo % ./gradlew flawlessApply
 :spotlessApply
 BUILD SUCCESSFUL
 user@machine repo % ./gradlew build
@@ -147,7 +147,7 @@ Spotless requires JRE 17+ and Gradle 7.3 or newer.
 
 ### Git hook
 
-If you want, you can run `./gradlew spotlessInstallGitPrePushHook` and it will install a hook such that
+If you want, you can run `./gradlew flawlessInstallGitPrePushHook` and it will install a hook such that
 
 1. When you push, it runs `spotlessCheck`
 2. If formatting issues are found:
