@@ -88,7 +88,7 @@ public abstract class SpotlessCheck extends SpotlessTaskService.ClientTask {
 	}
 
 	private @NotNull List<File> getUncleanFiles(ConfigurableFileTree cleanFiles) {
-		List<File> uncleanFiles = new ArrayList<>();
+		var uncleanFiles = new ArrayList<File>();
 		cleanFiles.visit(new FileVisitor() {
 			@Override
 			public void visitDir(FileVisitDetails fileVisitDetails) {

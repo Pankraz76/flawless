@@ -55,10 +55,10 @@ abstract class FileIndexHarness {
 	}
 
 	protected List<Path> createSourceFilesAndWriteIndexFile(PluginFingerprint fingerprint, String... files) throws IOException {
-		List<String> lines = new ArrayList<>();
+		var lines = new ArrayList<String>();
 		lines.add(fingerprint.value());
 
-		List<Path> sourceFiles = new ArrayList<>();
+		var sourceFiles = new ArrayList<Path>();
 		for (String file : files) {
 			Path path = createSourceFile(file);
 			lines.add(file + " " + Files.getLastModifiedTime(path).toInstant());

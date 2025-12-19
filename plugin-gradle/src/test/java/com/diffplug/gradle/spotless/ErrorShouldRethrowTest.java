@@ -32,7 +32,7 @@ import com.diffplug.selfie.StringSelfie;
 /** Tests the desired behavior from https://github.com/diffplug/spotless/issues/46. */
 class ErrorShouldRethrowTest extends GradleIntegrationHarness {
 	private void writeBuild(String... toInsert) throws IOException {
-		List<String> lines = new ArrayList<>();
+		var lines = new ArrayList<String>();
 		lines.add("plugins {");
 		lines.add("    id 'com.diffplug.spotless'");
 		lines.add("    id 'java'");

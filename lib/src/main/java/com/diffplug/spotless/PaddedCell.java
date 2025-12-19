@@ -113,7 +113,7 @@ public final class PaddedCell {
 			return Type.CONVERGE.create(file, List.of(appliedOnce));
 		}
 
-		List<String> appliedN = new ArrayList<>();
+		var appliedN = new ArrayList<String>();
 		appliedN.add(appliedOnce);
 		appliedN.add(appliedTwice);
 		String input = appliedTwice;

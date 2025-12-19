@@ -139,7 +139,7 @@ class MultiModuleProjectTest extends MavenIntegrationHarness {
 		}
 
 		private void createRootPom() throws IOException {
-			List<String> modulesList = new ArrayList<>();
+			var modulesList = new ArrayList<String>();
 			modulesList.add(configSubProject);
 			modulesList.addAll(subProjects.keySet());
 			String[] modules = modulesList.toArray(new String[0]);

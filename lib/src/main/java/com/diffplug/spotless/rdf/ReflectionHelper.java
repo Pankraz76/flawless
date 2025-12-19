@@ -415,7 +415,7 @@ class ReflectionHelper {
 	private Object getKnownPrefix(String stringRepresentation)
 			throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		Field[] fields = TurtleFormatFormattingStyleClass.getDeclaredFields();
-		List<String> options = new ArrayList<>();
+		var options = new ArrayList<String>();
 		for (Field field : fields) {
 			if (field.getType().equals(TurtleFormatKnownPrefix)) {
 				Object knownPrefix = field.get(TurtleFormatFormattingStyleClass);
@@ -502,7 +502,7 @@ class ReflectionHelper {
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			if ("listSubjects".equals(method.getName()) && method.getParameterCount() == 0) {
 				Object resIterator = method.invoke(jenaModel);
-				List<Object> resources = new ArrayList<>();
+				var resources = new ArrayList<Object>();
 				while (hasNext(resIterator)) {
 					resources.add(next(resIterator));
 				}

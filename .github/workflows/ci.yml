@@ -15,7 +15,7 @@ jobs:
       buildcacheuser: ${{secrets.BUILDCACHE_USER}}
       buildcachepass: ${{secrets.BUILDCACHE_PASS}}
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
@@ -54,7 +54,7 @@ jobs:
             os: ubuntu-latest
     runs-on: ${{matrix.os}}
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
       - name: Setup Java ☕️️
         uses: actions/setup-java@v5

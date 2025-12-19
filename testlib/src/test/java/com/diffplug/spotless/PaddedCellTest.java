@@ -46,7 +46,7 @@ class PaddedCellTest {
 	}
 
 	private void testCase(SerializedFunction<String, String> step, String input, PaddedCell.Type expectedOutputType, String expectedSteps, String canonical, boolean misbehaved) throws IOException {
-		List<FormatterStep> formatterSteps = new ArrayList<>();
+		var formatterSteps = new ArrayList<FormatterStep>();
 		formatterSteps.add(NeverUpToDateStep.create("step", step));
 		try (Formatter formatter = Formatter.builder()
 				.lineEndingsPolicy(LineEnding.UNIX.createPolicy())

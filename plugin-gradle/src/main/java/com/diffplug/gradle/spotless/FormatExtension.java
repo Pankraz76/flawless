@@ -323,7 +323,7 @@ public class FormatExtension {
 				return matchedFiles;
 			}
 			if (targetString.startsWith("**/") || targetString.startsWith("**\\")) {
-				List<String> excludes = new ArrayList<>();
+				var excludes = new ArrayList<String>();
 				// no git
 				excludes.add(".git");
 				// no .gradle

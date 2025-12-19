@@ -65,7 +65,7 @@ final class GitRatchetMaven extends GitRatchet<File> {
 		String workTreePath = repository.getWorkTree().getPath();
 		Path baseDirPath = Path.of(baseDir.getPath());
 
-		Set<String> dirtyPaths = new HashSet<>(indexDiff.getChanged());
+		var dirtyPaths = new HashSet<String>(indexDiff.getChanged());
 		dirtyPaths.addAll(indexDiff.getAdded());
 		dirtyPaths.addAll(indexDiff.getConflicting());
 		dirtyPaths.addAll(indexDiff.getUntracked());

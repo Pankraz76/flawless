@@ -21,7 +21,7 @@ jobs:
       matrix:
         language: ['java','javascript']
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
         with:
           fetch-depth: 0

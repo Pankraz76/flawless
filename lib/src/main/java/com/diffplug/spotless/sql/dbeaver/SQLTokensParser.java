@@ -280,7 +280,7 @@ class SQLTokensParser {
 		fPos = 0;
 		fBefore = argSql;
 
-		final List<FormatterToken> list = new ArrayList<>();
+		final var list = new ArrayList<FormatterToken>();
 		for (;;) {
 			final FormatterToken token = nextToken();
 			if (token.getType() == TokenType.END) {

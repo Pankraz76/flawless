@@ -67,8 +67,8 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 	protected void process(String name, Iterable<File> files, Formatter formatter, UpToDateChecker upToDateChecker) throws MojoExecutionException {
 		ImpactedFilesTracker counter = new ImpactedFilesTracker();
 
-		List<File> problemFiles = new ArrayList<>();
-		List<Map.Entry<File, LintState>> lintProblems = new ArrayList<>();
+		var problemFiles = new ArrayList<File>();
+		var lintProblems = new ArrayList<Map.Entry<File, LintState>>();
 		for (File file : files) {
 			if (upToDateChecker.isUpToDate(file.toPath())) {
 				counter.skippedAsCleanCache();

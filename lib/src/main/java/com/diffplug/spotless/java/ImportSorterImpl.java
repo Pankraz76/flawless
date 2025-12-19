@@ -185,7 +185,7 @@ final class ImportSorterImpl {
 	}
 
 	private List<String> mergeMatchingItems() {
-		List<String> template = new ArrayList<>();
+		var template = new ArrayList<String>();
 		for (ImportsGroup group : importsGroups) {
 			var groupIsNotEmpty = false;
 			for (String subgroup : group.getSubGroups()) {
@@ -194,7 +194,7 @@ final class ImportSorterImpl {
 					continue;
 				}
 				groupIsNotEmpty = true;
-				List<String> matchingItems = new ArrayList<>(strings);
+				var matchingItems = new ArrayList<String>(strings);
 				sort(matchingItems);
 				template.addAll(matchingItems);
 			}
@@ -214,7 +214,7 @@ final class ImportSorterImpl {
 	}
 
 	private List<String> getResult(List<String> sortedImported, String lineFormat) {
-		List<String> strings = new ArrayList<>();
+		var strings = new ArrayList<String>();
 
 		for (String s : sortedImported) {
 			if (ImportSorter.N.equals(s)) {

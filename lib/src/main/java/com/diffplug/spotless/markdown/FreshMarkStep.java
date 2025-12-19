@@ -71,7 +71,7 @@ public final class FreshMarkStep implements Serializable {
 		Objects.requireNonNull(properties, "properties");
 		Objects.requireNonNull(provisioner, "provisioner");
 
-		List<String> mavenCoordinates = new ArrayList<>();
+		var mavenCoordinates = new ArrayList<String>();
 		mavenCoordinates.add(MAVEN_COORDINATE + version);
 		if (Jvm.version() >= 15) {
 			mavenCoordinates.add("com.diffplug.jscriptbox:jscriptbox:3.0.1");

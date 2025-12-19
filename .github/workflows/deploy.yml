@@ -35,7 +35,7 @@ jobs:
       ORG_GRADLE_PROJECT_gpg_passphrase: ${{secrets.GPG_PASSPHRASE}}
       ORG_GRADLE_PROJECT_gpg_key64: ${{secrets.GPG_KEY64}}
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
       - name: Setup Java ☕️
         uses: actions/setup-java@v5

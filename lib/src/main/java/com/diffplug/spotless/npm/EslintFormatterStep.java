@@ -51,7 +51,7 @@ public final class EslintFormatterStep {
 	}
 
 	public static Map<String, String> defaultDevDependenciesTypescriptWithEslint(String eslintVersion) {
-		Map<String, String> dependencies = new LinkedHashMap<>();
+		var dependencies = new LinkedHashMap<String, String>();
 		dependencies.put("@typescript-eslint/eslint-plugin", "^6.1.0");
 		dependencies.put("@typescript-eslint/parser", "^6.1.0");
 		dependencies.put("typescript", "^5.1.6");
@@ -156,7 +156,7 @@ public final class EslintFormatterStep {
 
 		@Override
 		public String applyWithFile(String unix, File file) throws Exception {
-			Map<FormatOption, Object> eslintCallOptions = new HashMap<>();
+			var eslintCallOptions = new HashMap<FormatOption, Object>();
 			setConfigToCallOptions(eslintCallOptions);
 			setFilePathToCallOptions(eslintCallOptions, file);
 			return restService.format(unix, eslintCallOptions);

@@ -133,7 +133,7 @@ public final class Formatter implements Serializable, AutoCloseable {
 	 * is guaranteed to also have unix line endings.
 	 */
 	public String compute(String unix, File file) {
-		ValuePerStep<Throwable> exceptionPerStep = new ValuePerStep<>(this);
+		var exceptionPerStep = new ValuePerStep<Throwable>(this);
 		String result = computeWithLint(unix, file, exceptionPerStep);
 		legacyErrorBehavior(this, file, exceptionPerStep);
 		return result;

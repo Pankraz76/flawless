@@ -86,7 +86,7 @@ public final class ReplaceRegexStep {
 
 				@Override
 				public List<Lint> lint(String raw, File file) {
-					List<Lint> lints = new ArrayList<>();
+					var lints = new ArrayList<Lint>();
 					var matcher = regex.matcher(raw);
 					while (matcher.find()) {
 						var line = 1 + (int) raw.codePoints().limit(matcher.start()).filter(c -> c == '\n').count();
