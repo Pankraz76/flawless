@@ -8,8 +8,7 @@
 #   gpg --export-secret-keys --armor KEY_ID | openssl base64 | pbcopy
 # GRADLE_KEY
 # GRADLE_SECRET
-
-name: deploy
+name: Release Pipeline 🚀
 on:
   workflow_dispatch:
     inputs:
@@ -23,11 +22,10 @@ on:
           - plugin-maven
           - all
           - lib
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: deploy
+    name: Deploy Release 🚀
     permissions:
       contents: write
     env:
@@ -37,30 +35,29 @@ jobs:
       ORG_GRADLE_PROJECT_gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
       ORG_GRADLE_PROJECT_gpg_key64: ${{ secrets.GPG_KEY64 }}
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v6
+      - name: Setup Java ☕️
+        uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: gradle caching
+      - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - name: git fetch origin main
+      - name: Fetch Latest Main Branch 🔄
         run: git fetch origin main
-      - name: publish all
+      - name: Publish All Components 📦
         if: "${{ github.event.inputs.to_publish == 'all' }}"
         run: |
           ./gradlew :changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
           ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
           ./gradlew :plugin-maven:changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
-      - name: publish just plugin-gradle
+      - name: Publish Gradle Plugin Only 📦
         if: "${{ github.event.inputs.to_publish == 'plugin-gradle' }}"
-        run: |
-          ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
-      - name: publish just plugin-maven
+        run: ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
+      - name: Publish Maven Plugin Only 📦
         if: "${{ github.event.inputs.to_publish == 'plugin-maven' }}"
-        run: |
-          ./gradlew :plugin-maven:changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
-      - name: publish just lib
+        run: ./gradlew :plugin-maven:changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
+      - name: Publish Library Only 📦
         if: "${{ github.event.inputs.to_publish == 'lib' }}"
-        run: |
-          ./gradlew :changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
+        run: ./gradlew :changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
