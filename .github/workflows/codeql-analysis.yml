@@ -27,11 +27,11 @@ jobs:
           fetch-depth: 0
       - name: Checkout Pull Request Head 🔀
         run: git checkout HEAD^2
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{github.event_name == 'pull_request'}}
       - name: Initialize CodeQL 🧰
         uses: github/codeql-action/init@v4
         with:
-          languages: ${{ matrix.language }}
+          languages: ${{matrix.language}}
       - name: Autobuild Project 🏗️
         uses: github/codeql-action/autobuild@v4
       - name: Analyze 🔎
