@@ -10,7 +10,12 @@ tags:
   - cleanup
 recipeList:
   - org.openrewrite.gradle.EnableGradleBuildCache
+  - org.openrewrite.java.migrate.lang.var.UseVarForObject
   - org.openrewrite.gradle.EnableGradleParallelExecution
+  # - org.openrewrite.java.migrate.lang.var.UseVarForGenericMethodInvocations # bug;
+  # - org.openrewrite.java.migrate.lang.var.UseVarForGenericsConstructors # 700 changes... 1Code has comments. Press enter to view.
+  # - org.openrewrite.java.migrate.lang.var.UseVarForObject # 6k changes...
+  # - org.openrewrite.java.migrate.lang.var.UseVarForPrimitive # 1,8k changes...
   - org.openrewrite.gradle.GradleBestPractices
   - org.openrewrite.java.RemoveUnusedImports
   - org.openrewrite.java.format.NormalizeFormat
