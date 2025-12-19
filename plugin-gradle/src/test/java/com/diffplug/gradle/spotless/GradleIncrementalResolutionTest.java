@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.assertj.core.api.AbstractStringAssert;
