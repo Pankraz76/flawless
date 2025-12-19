@@ -61,7 +61,7 @@ jobs:
         with:
           distribution: "temurin"
           java-version: ${{ matrix.jre }}
-      - name: Setup Gradle Caching 🐘
+      - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
       - name: Build Maven Plugin 🧱
         if: matrix.kind == 'maven'

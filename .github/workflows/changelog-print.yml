@@ -1,19 +1,20 @@
-name: changelogPrint
-
+name: Changelog Print 📝
 on:
   push:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: changelogPrint
+    name: Changelog Print 📝
     steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-java@v5
+      - name: Checkout Repository 📥
+        uses: actions/checkout@v6
+      - name: Setup Java ☕️
+        uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: gradle caching
+      - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - run: ./gradlew changelogPrint
+      - name: Run Changelog Print 🖨️
+        run: ./gradlew changelogPrint
