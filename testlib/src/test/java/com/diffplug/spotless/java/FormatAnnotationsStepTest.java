@@ -26,19 +26,19 @@ import com.diffplug.spotless.StepHarness;
 class FormatAnnotationsStepTest {
 	@Test
 	void formatAnnotations() {
-		FormatterStep step = FormatAnnotationsStep.create();
+		var step = FormatAnnotationsStep.create();
 		StepHarness.forStep(step).testResource("java/formatannotations/FormatAnnotationsTestInput.test", "java/formatannotations/FormatAnnotationsTestOutput.test");
 	}
 
 	@Test
 	void formatAnnotationsInComments() {
-		FormatterStep step = FormatAnnotationsStep.create();
+		var step = FormatAnnotationsStep.create();
 		StepHarness.forStep(step).testResource("java/formatannotations/FormatAnnotationsInCommentsInput.test", "java/formatannotations/FormatAnnotationsInCommentsOutput.test");
 	}
 
 	@Test
 	void formatAnnotationsAddRemove() {
-		FormatterStep step = FormatAnnotationsStep.create(Arrays.asList("Empty", "NonEmpty"), Arrays.asList("Localized"));
+		var step = FormatAnnotationsStep.create(Arrays.asList("Empty", "NonEmpty"), Arrays.asList("Localized"));
 		StepHarness.forStep(step).testResource("java/formatannotations/FormatAnnotationsAddRemoveInput.test", "java/formatannotations/FormatAnnotationsAddRemoveOutput.test");
 	}
 

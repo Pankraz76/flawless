@@ -54,7 +54,7 @@ public class SpotlessApplyMojo extends AbstractSpotlessMojo {
 			return;
 		}
 
-		ImpactedFilesTracker counter = new ImpactedFilesTracker();
+		var counter = new ImpactedFilesTracker();
 
 		for (File file : files) {
 			if (upToDateChecker.isUpToDate(file.toPath())) {
@@ -66,7 +66,7 @@ public class SpotlessApplyMojo extends AbstractSpotlessMojo {
 			}
 
 			try {
-				LintState lintState = super.calculateLintState(formatter, file);
+				var lintState = super.calculateLintState(formatter, file);
 				boolean hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
 				boolean hasUnsuppressedLints = lintState.isHasLints();
 
@@ -84,12 +84,12 @@ public class SpotlessApplyMojo extends AbstractSpotlessMojo {
 					int lintCount = lintState.getLintsByStep(formatter).values().stream()
 							.mapToInt(List::size)
 							.sum();
-					StringBuilder message = new StringBuilder();
+					var message = new StringBuilder();
 					message.append("There were ").append(lintCount).append(" lint error(s), they must be fixed or suppressed.");
 
 					// Build lint messages in Gradle format (using relative path, not just filename)
 					for (Map.Entry<String, List<Lint>> stepEntry : lintState.getLintsByStep(formatter).entrySet()) {
-						String stepName = stepEntry.getKey();
+						var stepName = stepEntry.getKey();
 						for (Lint lint : stepEntry.getValue()) {
 							String relativePath = LintSuppression.relativizeAsUnix(baseDir, file);
 							message.append("\n  ").append(relativePath).append(":");

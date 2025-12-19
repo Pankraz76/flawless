@@ -24,32 +24,32 @@ import com.diffplug.spotless.StepHarness;
 class IndentStepTest {
 	@Test
 	void tabToTab() {
-		FormatterStep indent = IndentStep.Type.TAB.create(4);
+		var indent = IndentStep.Type.TAB.create(4);
 		StepHarness.forStep(indent).testResource("indent/IndentedWithTab.test", "indent/IndentedWithTab.test");
 	}
 
 	@Test
 	void spaceToSpace() {
-		FormatterStep indent = IndentStep.Type.SPACE.create(4);
+		var indent = IndentStep.Type.SPACE.create(4);
 		StepHarness.forStep(indent).testResource("indent/IndentedWithSpace.test", "indent/IndentedWithSpace.test");
 	}
 
 	@Test
 	void spaceToTab() {
-		FormatterStep indent = IndentStep.Type.TAB.create(4);
+		var indent = IndentStep.Type.TAB.create(4);
 		StepHarness.forStep(indent).testResource("indent/IndentedWithSpace.test", "indent/IndentedWithTab.test");
 	}
 
 	@Test
 	void tabToSpace() {
-		FormatterStep indent = IndentStep.Type.SPACE.create(4);
+		var indent = IndentStep.Type.SPACE.create(4);
 		StepHarness.forStep(indent).testResource("indent/IndentedWithTab.test", "indent/IndentedWithSpace.test");
 	}
 
 	@Test
 	void doesntClipNewlines() {
-		FormatterStep indent = IndentStep.Type.SPACE.create(4);
-		String blankNewlines = "\n\n\n\n";
+		var indent = IndentStep.Type.SPACE.create(4);
+		var blankNewlines = "\n\n\n\n";
 		StepHarness.forStep(indent).testUnaffected(blankNewlines);
 	}
 

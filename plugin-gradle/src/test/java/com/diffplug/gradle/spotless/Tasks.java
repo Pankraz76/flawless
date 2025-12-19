@@ -77,8 +77,8 @@ final class Tasks {
 
 			@Override
 			public String getNormalizedPath() {
-				String rootPath = FileSignature.pathNativeToUnix(rootDir.getAbsolutePath());
-				String absPath = FileSignature.pathNativeToUnix(file.getAbsolutePath());
+				var rootPath = FileSignature.pathNativeToUnix(rootDir.getAbsolutePath());
+				var absPath = FileSignature.pathNativeToUnix(file.getAbsolutePath());
 				return FileSignature.subpath(rootPath, absPath);
 			}
 		};

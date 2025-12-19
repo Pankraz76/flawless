@@ -32,7 +32,7 @@ class JsonWriter {
 	private final LinkedHashMap<String, Object> valueMap = new LinkedHashMap<>();
 
 	public static JsonWriter of(Map<String, ?> values) {
-		JsonWriter writer = new JsonWriter();
+		var writer = new JsonWriter();
 		writer.putAll(values);
 		return writer;
 	}
@@ -71,7 +71,7 @@ class JsonWriter {
 	}
 
 	String toJsonString() {
-		final String valueString = valueMap.entrySet()
+		final var valueString = valueMap.entrySet()
 				.stream()
 				.map(entry -> "    " + jsonEscape(entry.getKey()) + ": " + jsonEscape(entry.getValue()))
 				.collect(Collectors.joining(",\n"));

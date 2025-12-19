@@ -38,10 +38,10 @@ public class ScalafmtFormatterFunc implements FormatterFunc.NeedsFile {
 			// default which happens to be a reserved Java keyword. The only way to call
 			// such methods is by reflection, see
 			// https://vlkan.com/blog/post/2015/11/20/scala-method-with-java-reserved-keyword/
-			Method method = ScalafmtConfig$.MODULE$.getClass().getDeclaredMethod("default");
+			var method = ScalafmtConfig$.MODULE$.getClass().getDeclaredMethod("default");
 			config = (ScalafmtConfig) method.invoke(ScalafmtConfig$.MODULE$);
 		} else {
-			File file = configSignature.getOnlyFile();
+			var file = configSignature.getOnlyFile();
 			String configStr = Files.readString(file.toPath());
 			config = Scalafmt.parseHoconConfig(configStr).get();
 		}
@@ -49,7 +49,7 @@ public class ScalafmtFormatterFunc implements FormatterFunc.NeedsFile {
 		// This check is to raise awareness to the user that the version of the config file is currently not used.
 		// Context: https://github.com/diffplug/spotless/issues/2460
 		// This check should be removed when Spotless dynamically loads the proper version of the Scalafmt library.
-		String scalafmtLibraryVersion = Versions.version();
+		var scalafmtLibraryVersion = Versions.version();
 		if (!config.version().equals(scalafmtLibraryVersion)) {
 			throw new IllegalArgumentException(
 					"Spotless is using " + scalafmtLibraryVersion + " but the config file declares " + config.version()

@@ -92,7 +92,7 @@ public final class ScalaFmtStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			final ClassLoader classLoader = jarState.getClassLoader();
+			final var classLoader = jarState.getClassLoader();
 			final Class<?> formatterFunc = classLoader.loadClass("com.diffplug.spotless.glue.scalafmt.ScalafmtFormatterFunc");
 			final Constructor<?> constructor = formatterFunc.getConstructor(FileSignature.class);
 			return (FormatterFunc) constructor.newInstance(this.configSignature);

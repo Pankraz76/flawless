@@ -145,7 +145,7 @@ public class JavaDefaultIncludesTest extends MavenIntegrationHarness {
 	}
 
 	private void writePomWithBuildConfiguration(String... build) throws IOException {
-		String xml = createPomXmlContent(build, new String[]{"<java>", "<removeUnusedImports/>", "</java>"});
+		var xml = createPomXmlContent(build, new String[]{"<java>", "<removeUnusedImports/>", "</java>"});
 		setFile("pom.xml").toContent(xml);
 	}
 }

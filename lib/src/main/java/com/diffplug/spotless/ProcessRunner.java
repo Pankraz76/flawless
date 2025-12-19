@@ -109,7 +109,7 @@ public class ProcessRunner implements AutoCloseable {
 
 	/** Creates a process with the given arguments, the given byte array is written to stdin immediately. */
 	public Result exec(@Nullable File cwd, @Nullable Map<String, String> environment, @Nullable byte[] stdin, List<String> args) throws IOException, InterruptedException {
-		LongRunningProcess process = start(cwd, environment, stdin, args);
+		var process = start(cwd, environment, stdin, args);
 		try {
 			// wait for the process to finish
 			process.waitFor();
@@ -139,7 +139,7 @@ public class ProcessRunner implements AutoCloseable {
 	 */
 	public LongRunningProcess start(@Nullable File cwd, @Nullable Map<String, String> environment, @Nullable byte[] stdin, boolean redirectErrorStream, List<String> args) throws IOException {
 		checkState();
-		ProcessBuilder builder = new ProcessBuilder(args);
+		var builder = new ProcessBuilder(args);
 		if (cwd != null) {
 			builder.directory(cwd);
 		}
@@ -153,7 +153,7 @@ public class ProcessRunner implements AutoCloseable {
 			builder.redirectErrorStream(true);
 		}
 
-		Process process = builder.start();
+		var process = builder.start();
 		Future<byte[]> outputFut = threadStdOut.submit(() -> drainToBytes(process.getInputStream(), bufStdOut));
 		Future<byte[]> errorFut = null;
 		if (!redirectErrorStream) {
@@ -252,15 +252,15 @@ public class ProcessRunner implements AutoCloseable {
 
 		@Override
 		public String toString() {
-			StringBuilder builder = new StringBuilder();
+			var builder = new StringBuilder();
 			builder.append("> arguments: ").append(args).append("\n");
 			builder.append("> exit code: ").append(exitCode).append("\n");
 			BiConsumer<String, byte[]> perStream = (name, content) -> {
-				String string = new String(content, Charset.defaultCharset()).trim();
+				var string = new String(content, Charset.defaultCharset()).trim();
 				if (string.isEmpty()) {
 					builder.append("> ").append(name).append(": (empty)\n");
 				} else {
-					String[] lines = string.replace("\r", "").split("\n");
+					var lines = string.replace("\r", "").split("\n");
 					if (lines.length == 1) {
 						builder.append("> " + name + ": " + lines[0] + "\n");
 					} else {

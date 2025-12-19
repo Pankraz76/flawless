@@ -169,8 +169,8 @@ public final class FenceStep {
 			if (groups.isEmpty()) {
 				return unix;
 			}
-			StringBuilder builder = builderZeroed();
-			Matcher matcher = regex.matcher(unix);
+			var builder = builderZeroed();
+			var matcher = regex.matcher(unix);
 			int lastEnd = 0;
 			int groupIdx = 0;
 			while (matcher.find()) {
@@ -188,7 +188,7 @@ public final class FenceStep {
 				int endLine = 1 + (int) unix.codePoints().filter(c -> c == '\n').count();
 
 				// throw an error with either the full regex, or the nicer open/close pair
-				Matcher openClose = Pattern.compile("\\\\Q([\\s\\S]*?)\\\\E" + "\\Q([\\s\\S]*?)\\E" + "\\\\Q([\\s\\S]*?)\\\\E")
+				var openClose = Pattern.compile("\\\\Q([\\s\\S]*?)\\\\E" + "\\Q([\\s\\S]*?)\\E" + "\\\\Q([\\s\\S]*?)\\\\E")
 						.matcher(regex.pattern());
 				String pattern;
 				if (openClose.matches()) {
@@ -209,7 +209,7 @@ public final class FenceStep {
 				formatter = buildFormatter();
 			}
 			List<String> groups = groupsZeroed();
-			Matcher matcher = regex.matcher(unix);
+			var matcher = regex.matcher(unix);
 			switch (kind) {
 			case APPLY:
 				while (matcher.find()) {
@@ -223,7 +223,7 @@ public final class FenceStep {
 					// store whatever is within the open/close tags
 					groups.add(matcher.group(1));
 				}
-				String formatted = formatter.compute(unix, file);
+				var formatted = formatter.compute(unix, file);
 				return assembleGroups(formatted);
 			default:
 				throw new Error();

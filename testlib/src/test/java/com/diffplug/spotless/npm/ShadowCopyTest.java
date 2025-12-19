@@ -49,21 +49,21 @@ class ShadowCopyTest extends ResourceHarness {
 
 	@Test
 	void anAddedEntryCanBeRetrieved() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
-		File shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
+		var shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
 		Assertions.assertThat(shadowCopyFile.listFiles()).hasSize(folderWithRandomFile.listFiles().length);
 		assertAllFilesAreEqualButNotSameAbsolutePath(folderWithRandomFile, shadowCopyFile);
 	}
 
 	@Test
 	void twoAddedEntriesCanBeRetrieved() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
-		File folderWithRandomFile2 = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile2 = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
 		shadowCopy.addEntry("someOtherEntry", folderWithRandomFile2);
-		File shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
-		File shadowCopyFile2 = shadowCopy.getEntry("someOtherEntry", folderWithRandomFile2.getName());
+		var shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
+		var shadowCopyFile2 = shadowCopy.getEntry("someOtherEntry", folderWithRandomFile2.getName());
 		Assertions.assertThat(shadowCopyFile.listFiles()).hasSize(folderWithRandomFile.listFiles().length);
 		Assertions.assertThat(shadowCopyFile2.listFiles()).hasSize(folderWithRandomFile2.listFiles().length);
 		assertAllFilesAreEqualButNotSameAbsolutePath(folderWithRandomFile, shadowCopyFile);
@@ -72,36 +72,36 @@ class ShadowCopyTest extends ResourceHarness {
 
 	@Test
 	void addingTheSameEntryTwiceWorks() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
-		File shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
+		var shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
 		Assertions.assertThat(shadowCopyFile.listFiles()).hasSize(folderWithRandomFile.listFiles().length);
 		assertAllFilesAreEqualButNotSameAbsolutePath(folderWithRandomFile, shadowCopyFile);
 	}
 
 	@Test
 	void changingAFolderAfterAddingItDoesNotChangeTheShadowCopy() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
 
 		// now change the orig
 		Files.delete(folderWithRandomFile.listFiles()[0].toPath());
-		File newRandomFile = new File(folderWithRandomFile, "replacedFile.txt");
+		var newRandomFile = new File(folderWithRandomFile, "replacedFile.txt");
 		writeRandomStringOfLengthToFile(newRandomFile, 100);
 
 		// now check that they are different
-		File shadowCopy = this.shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
+		var shadowCopy = this.shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
 		Assertions.assertThat(shadowCopy.listFiles()).hasSize(folderWithRandomFile.listFiles().length);
 		Assertions.assertThat(shadowCopy.listFiles()[0].getName()).isNotEqualTo(folderWithRandomFile.listFiles()[0].getName());
 	}
 
 	@Test
 	void aFolderCanBeCopiedUsingShadowCopy() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
-		File copiedFolder = newFolder("copyDest");
-		File copiedEntry = shadowCopy.copyEntryInto("someEntry", folderWithRandomFile.getName(), copiedFolder);
+		var copiedFolder = newFolder("copyDest");
+		var copiedEntry = shadowCopy.copyEntryInto("someEntry", folderWithRandomFile.getName(), copiedFolder);
 
 		Assertions.assertThat(copiedEntry.listFiles()).hasSize(folderWithRandomFile.listFiles().length);
 		assertAllFilesAreEqualButNotSameAbsolutePath(folderWithRandomFile, copiedEntry);
@@ -109,26 +109,26 @@ class ShadowCopyTest extends ResourceHarness {
 
 	@Test
 	void aCopiedFolderIsDifferentFromShadowCopyEntry() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
-		File copiedFolder = newFolder("copyDest");
-		File copiedEntry = shadowCopy.copyEntryInto("someEntry", folderWithRandomFile.getName(), copiedFolder);
+		var copiedFolder = newFolder("copyDest");
+		var copiedEntry = shadowCopy.copyEntryInto("someEntry", folderWithRandomFile.getName(), copiedFolder);
 
-		File shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
+		var shadowCopyFile = shadowCopy.getEntry("someEntry", folderWithRandomFile.getName());
 		Assertions.assertThat(shadowCopyFile.listFiles()).hasSize(copiedEntry.listFiles().length);
 		assertAllFilesAreEqualButNotSameAbsolutePath(copiedEntry, shadowCopyFile);
 	}
 
 	@Test
 	void anAddedEntryExistsAfterAdding() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		shadowCopy.addEntry("someEntry", folderWithRandomFile);
 		Assertions.assertThat(shadowCopy.entryExists("someEntry", folderWithRandomFile.getName())).isTrue();
 	}
 
 	@Test
 	void aEntryThatHasNotBeenAddedDoesNotExist() throws IOException {
-		File folderWithRandomFile = newFolderWithRandomFile();
+		var folderWithRandomFile = newFolderWithRandomFile();
 		Assertions.assertThat(shadowCopy.entryExists("someEntry", folderWithRandomFile.getName())).isFalse();
 	}
 
@@ -167,8 +167,8 @@ class ShadowCopyTest extends ResourceHarness {
 	}
 
 	private File newFolderWithRandomFile() throws IOException {
-		File folder = newFolder(randomStringOfLength(10));
-		File file = new File(folder, randomStringOfLength(10) + ".txt");
+		var folder = newFolder(randomStringOfLength(10));
+		var file = new File(folder, randomStringOfLength(10) + ".txt");
 		writeRandomStringOfLengthToFile(file, 10);
 		return folder;
 	}
@@ -180,7 +180,7 @@ class ShadowCopyTest extends ResourceHarness {
 	private String randomStringOfLength(int length) {
 		// returns a string of length containing characters a-z, A-Z, 0-9
 
-		StringBuilder sb = new StringBuilder();
+		var sb = new StringBuilder();
 		for (int i = 0; i < length; i++) {
 			sb.append(CHARS[random.nextInt(CHARS.length)]);
 		}

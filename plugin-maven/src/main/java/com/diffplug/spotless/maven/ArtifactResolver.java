@@ -69,9 +69,9 @@ public class ArtifactResolver {
 				.map(DefaultArtifact::new)
 				.map(artifact -> new Dependency(artifact, null, null, excludeTransitive))
 				.collect(toList());
-		CollectRequest collectRequest = new CollectRequest(dependencies, null, repositories);
-		DependencyRequest dependencyRequest = new DependencyRequest(collectRequest, null);
-		DependencyResult dependencyResult = resolveDependencies(dependencyRequest);
+		var collectRequest = new CollectRequest(dependencies, null, repositories);
+		var dependencyRequest = new DependencyRequest(collectRequest, null);
+		var dependencyResult = resolveDependencies(dependencyRequest);
 
 		return dependencyResult.getArtifactResults()
 				.stream()

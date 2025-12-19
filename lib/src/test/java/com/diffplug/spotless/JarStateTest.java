@@ -59,8 +59,8 @@ class JarStateTest {
 
 	@Test
 	void itCreatesClassloaderWhenForcedClassLoaderNotSet() throws IOException {
-		JarState state1 = JarState.from(a.getName(), provisioner);
-		JarState state2 = JarState.from(b.getName(), provisioner);
+		var state1 = JarState.from(a.getName(), provisioner);
+		var state2 = JarState.from(b.getName(), provisioner);
 
 		SoftAssertions.assertSoftly(softly -> {
 			softly.assertThat(state1.getClassLoader()).isNotNull();
@@ -70,10 +70,10 @@ class JarStateTest {
 
 	@Test
 	void itReturnsForcedClassloaderIfSetNoMatterIfSetBeforeOrAfterCreation() throws IOException {
-		JarState stateA = JarState.from(a.getName(), provisioner);
-		ClassLoader forcedClassLoader = new URLClassLoader(new URL[0]);
+		var stateA = JarState.from(a.getName(), provisioner);
+		var forcedClassLoader = new URLClassLoader(new URL[0]);
 		JarState.setForcedClassLoader(forcedClassLoader);
-		JarState stateB = JarState.from(b.getName(), provisioner);
+		var stateB = JarState.from(b.getName(), provisioner);
 
 		SoftAssertions.assertSoftly(softly -> {
 			softly.assertThat(stateA.getClassLoader()).isSameAs(forcedClassLoader);
@@ -83,13 +83,13 @@ class JarStateTest {
 
 	@Test
 	void itReturnsForcedClassloaderEvenWhenRountripSerialized() throws IOException, ClassNotFoundException {
-		JarState stateA = JarState.from(a.getName(), provisioner);
-		ClassLoader forcedClassLoader = new URLClassLoader(new URL[0]);
+		var stateA = JarState.from(a.getName(), provisioner);
+		var forcedClassLoader = new URLClassLoader(new URL[0]);
 		JarState.setForcedClassLoader(forcedClassLoader);
-		JarState stateB = JarState.from(b.getName(), provisioner);
+		var stateB = JarState.from(b.getName(), provisioner);
 
-		JarState stateARoundtripSerialized = roundtripSerialize(stateA);
-		JarState stateBRoundtripSerialized = roundtripSerialize(stateB);
+		var stateARoundtripSerialized = roundtripSerialize(stateA);
+		var stateBRoundtripSerialized = roundtripSerialize(stateB);
 
 		SoftAssertions.assertSoftly(softly -> {
 			softly.assertThat(stateARoundtripSerialized.getClassLoader()).isSameAs(forcedClassLoader);
@@ -98,11 +98,11 @@ class JarStateTest {
 	}
 
 	private JarState roundtripSerialize(JarState state) throws IOException, ClassNotFoundException {
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		try (ObjectOutputStream oOut = new ObjectOutputStream(outputStream)) {
+		var outputStream = new ByteArrayOutputStream();
+		try (var oOut = new ObjectOutputStream(outputStream)) {
 			oOut.writeObject(state);
 		}
-		try (ObjectInputStream oIn = new ObjectInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
+		try (var oIn = new ObjectInputStream(new ByteArrayInputStream(outputStream.toByteArray()))) {
 			return (JarState) oIn.readObject();
 		}
 	}

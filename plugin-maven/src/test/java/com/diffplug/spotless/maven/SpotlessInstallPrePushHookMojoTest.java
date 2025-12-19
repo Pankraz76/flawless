@@ -136,7 +136,7 @@ class SpotlessInstallPrePushHookMojoTest extends MavenIntegrationHarness {
 
 	private ProcessRunner.Result executeHookScript(String hookFile) throws Exception {
 		try (final var runner = new ProcessRunner()) {
-			String executor = "sh";
+			var executor = "sh";
 			if (isWindows()) {
 				final var bashPath = findGitBashExecutable();
 				if (bashPath.isEmpty()) {
@@ -171,7 +171,7 @@ class SpotlessInstallPrePushHookMojoTest extends MavenIntegrationHarness {
 
 		// 3. Try bash from PATH
 		try {
-			Process process = new ProcessBuilder("bash", "--version").start();
+			var process = new ProcessBuilder("bash", "--version").start();
 			process.waitFor();
 			return Optional.of("bash"); // just use "bash"
 		} catch (Exception e) {

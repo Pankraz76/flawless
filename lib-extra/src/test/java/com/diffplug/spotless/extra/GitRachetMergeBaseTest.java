@@ -36,7 +36,7 @@ import com.diffplug.spotless.ResourceHarness;
 class GitRachetMergeBaseTest extends ResourceHarness {
 	@Test
 	void test() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			setFile("mine.txt").toContent("init");
 			setFile("untouched.txt").toContent("init");
 			addAndCommit(git, "init");
@@ -61,7 +61,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test // https://github.com/diffplug/spotless/issues/911
 	void testGitIgnoredDirectory_ShouldNotThrowNPE() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create a directory with files and commit them
 			setFile("useless/Wow.java").toContent("class Wow {}");
 			setFile("useless/Another.java").toContent("class Another {}");
@@ -79,7 +79,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testNewUntrackedFile_ShouldBeDirty() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit initial file
 			setFile("committed.java").toContent("class Committed {}");
 			addAndCommit(git, "Initial commit");
@@ -94,7 +94,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testModifiedTrackedFile_ShouldBeDirty() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit initial file
 			setFile("Main.java").toContent("class Main { void old() {} }");
 			addAndCommit(git, "Initial commit");
@@ -109,7 +109,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testDeletedFile_ShouldBeDirty() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit multiple files
 			setFile("keep.java").toContent("class Keep {}");
 			setFile("delete.java").toContent("class Delete {}");
@@ -125,14 +125,14 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testRenamedFile_ShouldBeDirty() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit initial file
 			setFile("OldName.java").toContent("class OldName {}");
 			addAndCommit(git, "Initial commit");
 
 			// Rename the file (Git sees this as delete + add)
-			File oldFile = new File(rootFolder(), "OldName.java");
-			File newFile = new File(rootFolder(), "NewName.java");
+			var oldFile = new File(rootFolder(), "OldName.java");
+			var newFile = new File(rootFolder(), "NewName.java");
 			oldFile.renameTo(newFile);
 
 			// Both old and new files should be considered dirty
@@ -142,7 +142,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testStagedButUncommittedChanges_ShouldBeDirty() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit initial file
 			setFile("Test.java").toContent("class Test {}");
 			addAndCommit(git, "Initial commit");
@@ -158,7 +158,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testMultipleBranchesWithDifferentFiles() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Initial commit
 			setFile("base.txt").toContent("base");
 			addAndCommit(git, "Initial commit");
@@ -183,7 +183,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testNestedDirectoryStructure() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create nested directory structure
 			setFile("src/main/java/com/example/Main.java").toContent("package com.example; class Main {}");
 			setFile("src/main/java/com/example/Util.java").toContent("package com.example; class Util {}");
@@ -200,7 +200,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testNonExistentReference_ShouldThrowException() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			setFile("test.txt").toContent("test");
 			addAndCommit(git, "Initial commit");
 
@@ -211,7 +211,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testBinaryFile_ShouldBeHandled() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Create and commit binary file
 			setFile("image.png").toContent("binary content that looks like an image");
 			addAndCommit(git, "Add binary file");
@@ -226,7 +226,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testSymlink_ShouldBeHandled() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// This test would require creating actual symlinks
 			// For now, we'll test that the code doesn't break with special files
 			setFile("regular.txt").toContent("regular file");
@@ -243,7 +243,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 
 	@Test
 	void testMultipleProjectsInSameRepo() throws IllegalStateException, GitAPIException, IOException {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			// Simulate multiple projects in same repo
 			setFile("project1/src/Main.java").toContent("class Main {}");
 			setFile("project2/src/Other.java").toContent("class Other {}");
@@ -299,7 +299,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 		}
 
 		public void allDirty() throws IOException {
-			String[] filenames = Arrays.stream(rootFolder().listFiles())
+			var filenames = Arrays.stream(rootFolder().listFiles())
 					.filter(File::isFile)
 					.map(File::getName)
 					.toArray(String[]::new);
@@ -321,8 +321,8 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 	}
 
 	private Git initRepo() throws IllegalStateException, GitAPIException, IOException {
-		Git git = Git.init().setDirectory(rootFolder()).call();
-		RefDatabase refDB = git.getRepository().getRefDatabase();
+		var git = Git.init().setDirectory(rootFolder()).call();
+		var refDB = git.getRepository().getRefDatabase();
 		refDB.newUpdate(Constants.R_HEADS + "main", false).setNewObjectId(ObjectId.zeroId());
 		refDB.newUpdate(Constants.HEAD, false).link(Constants.R_HEADS + "main");
 		refDB.newUpdate(Constants.R_HEADS + Constants.MASTER, false).delete();

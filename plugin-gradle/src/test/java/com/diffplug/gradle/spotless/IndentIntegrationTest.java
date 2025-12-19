@@ -31,14 +31,14 @@ class IndentIntegrationTest extends GradleIntegrationHarness {
 	@ParameterizedTest
 	@ValueSource(strings = {"indentWithSpaces", "indentWithTabs"})
 	void oldIndentApiLogsDeprecationWarning(String indentationMethodName) throws IOException {
-		BuildResult result = runIndentFormatter(indentationMethodName);
+		var result = runIndentFormatter(indentationMethodName);
 		assertThat(result.getOutput()).containsPattern(".*" + indentationMethodName + ".*deprecated.*");
 	}
 
 	@ParameterizedTest
 	@ValueSource(strings = {"leadingTabsToSpaces", "leadingSpacesToTabs"})
 	void newIndentApiDoesNotLogDeprecationWarning(String indentationMethodName) throws IOException {
-		BuildResult result = runIndentFormatter(indentationMethodName);
+		var result = runIndentFormatter(indentationMethodName);
 		assertThat(result.getOutput()).doesNotContainPattern(".*" + indentationMethodName + ".*deprecated.*");
 	}
 

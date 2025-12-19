@@ -34,8 +34,8 @@ public class ExpandWildcardImportsStepTest extends ResourceHarness {
 		newFile("src/foo/bar/baz/").mkdirs();
 		Files.write(newFile("src/foo/bar/AnotherClassInSamePackage.java").toPath(), getTestResource("java/expandwildcardimports/AnotherClassInSamePackage.test").getBytes(StandardCharsets.UTF_8));
 		Files.write(newFile("src/foo/bar/baz/AnotherImportedClass.java").toPath(), getTestResource("java/expandwildcardimports/AnotherImportedClass.test").getBytes(StandardCharsets.UTF_8));
-		File dummyJar = new File(ResourceHarness.class.getResource("/java/expandwildcardimports/example-lib.jar").toURI());
-		FormatterStep step = ExpandWildcardImportsStep.create(Set.of(newFile("src"), dummyJar), TestProvisioner.mavenCentral());
+		var dummyJar = new File(ResourceHarness.class.getResource("/java/expandwildcardimports/example-lib.jar").toURI());
+		var step = ExpandWildcardImportsStep.create(Set.of(newFile("src"), dummyJar), TestProvisioner.mavenCentral());
 		StepHarnessWithFile.forStep(this, step).testResource("java/expandwildcardimports/JavaClassWithWildcardsUnformatted.test", "java/expandwildcardimports/JavaClassWithWildcardsFormatted.test");
 	}
 

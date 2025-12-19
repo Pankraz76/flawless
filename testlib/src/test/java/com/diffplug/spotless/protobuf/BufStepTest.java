@@ -25,7 +25,7 @@ import com.diffplug.spotless.tag.BufTest;
 class BufStepTest extends ResourceHarness {
 	@Test
 	void test() throws Exception {
-		try (StepHarnessWithFile harness = StepHarnessWithFile.forStep(this, BufStep.withVersion(BufStep.defaultVersion()).create())) {
+		try (var harness = StepHarnessWithFile.forStep(this, BufStep.withVersion(BufStep.defaultVersion()).create())) {
 			harness.testResource("protobuf/buf/buf.proto", "protobuf/buf/buf.proto.clean");
 		}
 	}

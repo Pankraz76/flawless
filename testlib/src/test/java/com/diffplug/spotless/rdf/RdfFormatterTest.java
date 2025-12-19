@@ -50,15 +50,15 @@ public class RdfFormatterTest extends ResourceHarness {
 
 	@Test
 	void testTurtleFormatter_1_2_12_DefaultStyle() throws IOException, ClassNotFoundException {
-		String inputDir = "/rdf/ttl/input/";
-		String expectedOutputDir = "/rdf/ttl/expected/v1.2.12-default/";
+		var inputDir = "/rdf/ttl/input/";
+		var expectedOutputDir = "/rdf/ttl/expected/v1.2.12-default/";
 		testBeforeAfterFolders(inputDir, expectedOutputDir, StepHarness.forStep(forTurtleFormatterVersion("1.2.12")));
 	}
 
 	@Test
 	void testTurtleFormatter_1_2_12_style01() throws IOException, ClassNotFoundException {
-		String inputDir = "/rdf/ttl/input/";
-		String expectedOutputDir = "/rdf/ttl/expected/v1.2.12-style01/";
+		var inputDir = "/rdf/ttl/input/";
+		var expectedOutputDir = "/rdf/ttl/expected/v1.2.12-style01/";
 		testBeforeAfterFolders(inputDir, expectedOutputDir, StepHarness.forStep(forTurtleFormatterVersionAndStyle("1.2.12", style01())));
 	}
 
@@ -77,8 +77,8 @@ public class RdfFormatterTest extends ResourceHarness {
 	private void testBeforeAfterFolders(String beforeDir, String afterDir, StepHarness stepHarness) throws IOException {
 		List<Arguments> args = getBeforeAfterTestResources(beforeDir, afterDir);
 		for (Arguments arg : args) {
-			String before = (String) arg.get()[0];
-			String after = (String) arg.get()[1];
+			var before = (String) arg.get()[0];
+			var after = (String) arg.get()[1];
 			try {
 				stepHarness.testResource(before, after);
 			} catch (AssertionFailedError e) {
@@ -125,7 +125,7 @@ public class RdfFormatterTest extends ResourceHarness {
 	}
 
 	private static @NotNull String unixRelative(Path input) {
-		String path = input.toString().replaceAll("\\\\", "/");
+		var path = input.toString().replaceAll("\\\\", "/");
 		while (path.startsWith("/")) {
 			path = path.substring(1);
 		}

@@ -26,7 +26,7 @@ import com.diffplug.spotless.generic.ReplaceStep;
 class FilterByFileFormatterStepTest extends ResourceHarness {
 	@Test
 	void behavior() throws Exception {
-		FormatterStep underTest = ReplaceStep.create("makeSpaceA", " ", "a")
+		var underTest = ReplaceStep.create("makeSpaceA", " ", "a")
 				.filterByFile(SerializableFileFilter.skipFilesNamed("dontFormat"));
 		assertThat(underTest.format(" ", new File("someFileName"))).isEqualTo("a");
 		assertThat(underTest.format(" ", new File("dontFormat"))).isEqualTo(" ");
@@ -57,7 +57,7 @@ class FilterByFileFormatterStepTest extends ResourceHarness {
 
 			@Override
 			protected FormatterStep create() {
-				FormatterStep baseStep = FormatterStep.create("name", state, state -> input -> state);
+				var baseStep = FormatterStep.create("name", state, state -> input -> state);
 				if (filter == null) {
 					return baseStep;
 				} else {

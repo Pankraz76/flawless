@@ -51,11 +51,11 @@ public class EclipseJdtFormatterStepImpl {
 		raw = sort(raw);
 		int kind = (file.getName().equals(IModule.MODULE_INFO_JAVA) ? CodeFormatter.K_MODULE_INFO
 				: CodeFormatter.K_COMPILATION_UNIT) | CodeFormatter.F_INCLUDE_COMMENTS;
-		TextEdit edit = codeFormatter.format(kind, raw, 0, raw.length(), 0, LINE_DELIMITER);
+		var edit = codeFormatter.format(kind, raw, 0, raw.length(), 0, LINE_DELIMITER);
 		if (edit == null) {
 			throw new IllegalArgumentException("Invalid java syntax for formatting.");
 		} else {
-			IDocument doc = new Document(raw);
+			var doc = new Document(raw);
 			edit.apply(doc);
 			return doc.get();
 		}

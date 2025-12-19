@@ -56,7 +56,7 @@ public class CppExtension extends FormatExtension implements HasBuiltinDelimiter
 
 		public EclipseConfig configFile(Object... configFiles) {
 			requireElementsNonNull(configFiles);
-			Project project = getProject();
+			var project = getProject();
 			builder.setPreferences(project.files(configFiles).getFiles());
 			replaceStep(builder.build());
 			return this;

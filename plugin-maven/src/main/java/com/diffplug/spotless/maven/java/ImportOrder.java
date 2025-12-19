@@ -64,7 +64,7 @@ public class ImportOrder implements FormatterStepFactory {
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
 		if (file != null ^ order != null) {
 			if (file != null) {
-				File importsFile = config.getFileLocator().locateFile(file);
+				var importsFile = config.getFileLocator().locateFile(file);
 				return ImportOrderStep.forJava().createFrom(wildcardsLast, semanticSort, treatAsPackage, treatAsClass,
 						importsFile);
 			} else {

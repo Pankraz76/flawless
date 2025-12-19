@@ -49,7 +49,7 @@ public final class EclipseJdtFormatterStep {
 		Class<?> formatterClazz = state.getJarState().getClassLoader().loadClass("com.diffplug.spotless.extra.glue.jdt.EclipseJdtFormatterStepImpl");
 		var formatter = formatterClazz.getConstructor(Properties.class, Map.class).newInstance(state.getPreferences(), state.getStepProperties());
 		var method = formatterClazz.getMethod("format", String.class, File.class);
-		FormatterFunc formatterFunc = (FormatterFunc.NeedsFile) (input, file) -> (String) method.invoke(formatter, input, file);
+		var formatterFunc = (FormatterFunc.NeedsFile) (input, file) -> (String) method.invoke(formatter, input, file);
 		return JVM_SUPPORT.suggestLaterVersionOnError(state.getSemanticVersion(), formatterFunc);
 	}
 
@@ -77,7 +77,7 @@ public final class EclipseJdtFormatterStep {
 		@Override
 		public void setVersion(String version) {
 			if (version.endsWith(".0")) {
-				String newVersion = version.substring(0, version.length() - 2);
+				var newVersion = version.substring(0, version.length() - 2);
 				System.err.println("Recommend replacing '" + version + "' with '" + newVersion + "' for Eclipse JDT");
 				version = newVersion;
 			}

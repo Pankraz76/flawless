@@ -46,18 +46,18 @@ class EslintFormatterStepTest {
 		@ParameterizedTest(name = "{index}: eslint can be applied using ruleset {0}")
 		@ValueSource(strings = {"custom_rules", "styleguide/airbnb", "styleguide/google", "styleguide/standard"})
 		void formattingUsingRulesetsFile(String ruleSetName) throws Exception {
-			String filedir = "npm/eslint/javascript/" + ruleSetName + "/";
+			var filedir = "npm/eslint/javascript/" + ruleSetName + "/";
 
-			String testDir = "formatting_ruleset_" + ruleSetName.replace('/', '_') + "/";
+			var testDir = "formatting_ruleset_" + ruleSetName.replace('/', '_') + "/";
 			//			File testDirFile = newFolder(testDir);
 
-			final File eslintRc = createTestFile(filedir + ".eslintrc.js");
+			final var eslintRc = createTestFile(filedir + ".eslintrc.js");
 			//			final File eslintRc = setFile(buildDir().getPath() + "/.eslintrc.js").toResource(filedir + ".eslintrc.js");
 
-			final String dirtyFile = filedir + "javascript-es6.dirty";
-			final String cleanFile = filedir + "javascript-es6.clean";
+			final var dirtyFile = filedir + "javascript-es6.dirty";
+			final var cleanFile = filedir + "javascript-es6.clean";
 
-			final FormatterStep formatterStep = EslintFormatterStep.create(
+			final var formatterStep = EslintFormatterStep.create(
 					devDependenciesForRuleset.get(ruleSetName),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -66,7 +66,7 @@ class EslintFormatterStepTest {
 					npmPathResolver(),
 					new EslintConfig(eslintRc, null));
 
-			try (StepHarnessWithFile stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
+			try (var stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
 				stepHarness.test("test.js", ResourceHarness.getTestResource(dirtyFile), ResourceHarness.getTestResource(cleanFile));
 			}
 		}
@@ -83,12 +83,12 @@ class EslintFormatterStepTest {
 		@ParameterizedTest(name = "{index}: eslint can be applied using ruleset {0}")
 		@ValueSource(strings = {"custom_rules", "styleguide/standard_with_typescript"})
 		void formattingUsingRulesetsFile(String ruleSetName) throws Exception {
-			String filedir = "npm/eslint/typescript/" + ruleSetName + "/";
+			var filedir = "npm/eslint/typescript/" + ruleSetName + "/";
 
-			String testDir = "formatting_ruleset_" + ruleSetName.replace('/', '_') + "/";
+			var testDir = "formatting_ruleset_" + ruleSetName.replace('/', '_') + "/";
 			//			File testDirFile = newFolder(testDir);
 
-			final File eslintRc = createTestFile(filedir + ".eslintrc.js");
+			final var eslintRc = createTestFile(filedir + ".eslintrc.js");
 			//			final File eslintRc = setFile(buildDir().getPath() + "/.eslintrc.js").toResource(filedir + ".eslintrc.js");
 
 			//setFile(testDir + "/test.ts").toResource(filedir + "typescript.dirty");
@@ -96,10 +96,10 @@ class EslintFormatterStepTest {
 			if (existsTestResource(filedir + "tsconfig.json")) {
 				tsconfigFile = setFile(testDir + "tsconfig.json").toResource(filedir + "tsconfig.json");
 			}
-			final String dirtyFile = filedir + "typescript.dirty";
-			final String cleanFile = filedir + "typescript.clean";
+			final var dirtyFile = filedir + "typescript.dirty";
+			final var cleanFile = filedir + "typescript.clean";
 
-			final FormatterStep formatterStep = EslintFormatterStep.create(
+			final var formatterStep = EslintFormatterStep.create(
 					devDependenciesForRuleset.get(ruleSetName),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -108,7 +108,7 @@ class EslintFormatterStepTest {
 					npmPathResolver(),
 					new EslintTypescriptConfig(eslintRc, null, tsconfigFile));
 
-			try (StepHarnessWithFile stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
+			try (var stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
 				stepHarness.test(testDir + "test.ts", ResourceHarness.getTestResource(dirtyFile), ResourceHarness.getTestResource(cleanFile));
 			}
 		}
@@ -120,9 +120,9 @@ class EslintFormatterStepTest {
 
 		@Test
 		void formattingUsingInlineXoConfig() throws Exception {
-			String filedir = "npm/eslint/typescript/styleguide/xo/";
+			var filedir = "npm/eslint/typescript/styleguide/xo/";
 
-			String testDir = "formatting_ruleset_xo_inline_config/";
+			var testDir = "formatting_ruleset_xo_inline_config/";
 
 			final String esLintConfig = String.join("\n",
 					"{",
@@ -152,11 +152,11 @@ class EslintFormatterStepTest {
 					"	},",
 					"}");
 
-			File tsconfigFile = setFile(testDir + "tsconfig.json").toResource(filedir + "tsconfig.json");
-			final String dirtyFile = filedir + "typescript.dirty";
-			final String cleanFile = filedir + "typescript.clean";
+			var tsconfigFile = setFile(testDir + "tsconfig.json").toResource(filedir + "tsconfig.json");
+			final var dirtyFile = filedir + "typescript.dirty";
+			final var cleanFile = filedir + "typescript.clean";
 
-			final FormatterStep formatterStep = EslintFormatterStep.create(
+			final var formatterStep = EslintFormatterStep.create(
 					EslintStyleGuide.TS_XO_TYPESCRIPT.mergedWith(EslintFormatterStep.defaultDevDependenciesForTypescript()),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -165,7 +165,7 @@ class EslintFormatterStepTest {
 					npmPathResolver(),
 					new EslintTypescriptConfig(null, esLintConfig, tsconfigFile));
 
-			try (StepHarnessWithFile stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
+			try (var stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
 				stepHarness.test(testDir + "test.ts", ResourceHarness.getTestResource(dirtyFile), ResourceHarness.getTestResource(cleanFile));
 			}
 		}

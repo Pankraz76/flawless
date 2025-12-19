@@ -23,7 +23,7 @@ class SortPomCfgTest {
 
 	@Test
 	void testDefaultValues() {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 
 		// Test default values using AssertJ
 		assertThat(cfg.version).isEqualTo("4.0.0");
@@ -51,7 +51,7 @@ class SortPomCfgTest {
 
 	@Test
 	void testFieldSetters() {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 
 		// Set all fields
 		cfg.version = "4.1.0";
@@ -102,7 +102,7 @@ class SortPomCfgTest {
 
 	@Test
 	void testNullHandling() {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 
 		// Set nullable fields to null
 		cfg.version = null;
@@ -131,7 +131,7 @@ class SortPomCfgTest {
 
 	@Test
 	void testBooleanFieldsEdgeCases() {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 
 		// Toggle all boolean fields
 		cfg.expandEmptyElements = !cfg.expandEmptyElements;
@@ -160,7 +160,7 @@ class SortPomCfgTest {
 
 	@Test
 	void testNumericFieldEdgeCases() {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 
 		// Test minimum value
 		cfg.nrOfIndentSpace = 0;

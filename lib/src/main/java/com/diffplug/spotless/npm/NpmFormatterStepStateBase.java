@@ -118,7 +118,7 @@ abstract class NpmFormatterStepStateBase implements Serializable {
 				final UUID nodeServerInstanceId = UUID.randomUUID();
 				// The npm process will output the randomly selected port of the http server process to 'server-<id>.port' file
 				// so in order to be safe, remove such a file if it exists before starting.
-				final File serverPortFile = new File(this.nodeServerLayout.nodeModulesDir(), "server-%s.port".formatted(nodeServerInstanceId));
+				final var serverPortFile = new File(this.nodeServerLayout.nodeModulesDir(), "server-%s.port".formatted(nodeServerInstanceId));
 				NpmResourceHelper.deleteFileIfExists(serverPortFile);
 				// start the http server in node
 				server = nodeServeApp.startNpmServeProcess(nodeServerInstanceId);
@@ -131,7 +131,7 @@ abstract class NpmFormatterStepStateBase implements Serializable {
 					try {
 						if (server.isAlive()) {
 							server.destroyForcibly();
-							ProcessRunner.Result result = server.result();
+							var result = server.result();
 							LOGGER.info("Launching npm server process failed. Process result:\n{}", result);
 						}
 					} catch (Throwable t) {
@@ -141,7 +141,7 @@ abstract class NpmFormatterStepStateBase implements Serializable {
 					throw timeoutException;
 				}
 				// read the server.port file for resulting port and remember the port for later formatting calls
-				String serverPort = NpmResourceHelper.readUtf8StringFromFile(serverPortFile).trim();
+				var serverPort = NpmResourceHelper.readUtf8StringFromFile(serverPortFile).trim();
 				return new ServerProcessInfo(server, serverPort, serverPortFile);
 			} catch (IOException | TimeoutException e) {
 				throw new ServerStartException("Starting server failed." + (server != null ? "\n\nProcess result:\n" + ThrowingEx.get(server::result) : ""), e);
@@ -150,7 +150,7 @@ abstract class NpmFormatterStepStateBase implements Serializable {
 	}
 
 	protected static String replaceDevDependencies(String template, Map<String, String> devDependencies) {
-		StringBuilder builder = new StringBuilder();
+		var builder = new StringBuilder();
 		Iterator<Map.Entry<String, String>> entryIter = devDependencies.entrySet().iterator();
 		while (entryIter.hasNext()) {
 			Map.Entry<String, String> entry = entryIter.next();
@@ -167,7 +167,7 @@ abstract class NpmFormatterStepStateBase implements Serializable {
 	}
 
 	private static String replacePlaceholders(String template, Map<String, String> replacements) {
-		String result = template;
+		var result = template;
 		for (Entry<String, String> entry : replacements.entrySet()) {
 			result = result.replaceAll("\\Q${" + entry.getKey() + "}\\E", entry.getValue());
 		}

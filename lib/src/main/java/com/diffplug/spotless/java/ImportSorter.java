@@ -46,7 +46,7 @@ final class ImportSorter {
 
 	String format(String raw, String lineFormat) {
 		// parse file
-		Scanner scanner = new Scanner(raw);
+		var scanner = new Scanner(raw);
 		int firstImportLine = 0;
 		int lastImportLine = 0;
 		int line = 0;
@@ -54,7 +54,7 @@ final class ImportSorter {
 		List<String> imports = new ArrayList<>();
 		while (scanner.hasNext()) {
 			line++;
-			String next = scanner.nextLine();
+			var next = scanner.nextLine();
 			if (next == null) {
 				break;
 			}
@@ -78,7 +78,7 @@ final class ImportSorter {
 				lastImportLine = line;
 				int endIndex = next.indexOf(";");
 
-				String imprt = next.substring(START_INDEX_OF_IMPORTS_PACKAGE_DECLARATION, endIndex != -1 ? endIndex : next.length());
+				var imprt = next.substring(START_INDEX_OF_IMPORTS_PACKAGE_DECLARATION, endIndex != -1 ? endIndex : next.length());
 				if (!isMultiLineComment && !imports.contains(imprt)) {
 					imports.add(imprt);
 				}
@@ -107,12 +107,12 @@ final class ImportSorter {
 			return document;
 		}
 		boolean importsAlreadyAppended = false;
-		Scanner scanner = new Scanner(document);
+		var scanner = new Scanner(document);
 		int curentLine = 0;
-		final StringBuilder sb = new StringBuilder();
+		final var sb = new StringBuilder();
 		while (scanner.hasNext()) {
 			curentLine++;
-			String next = scanner.nextLine();
+			var next = scanner.nextLine();
 			if (next == null) {
 				break;
 			}

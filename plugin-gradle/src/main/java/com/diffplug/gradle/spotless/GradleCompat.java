@@ -23,11 +23,11 @@ public final class GradleCompat {
 	private GradleCompat() {}
 
 	@Nullable public static String findOptionalProperty(Project project, String propertyName) {
-		@Nullable String value = project.getProviders().gradleProperty(propertyName).getOrNull();
+		@Nullable var value = project.getProviders().gradleProperty(propertyName).getOrNull();
 		if (value != null) {
 			return value;
 		}
-		@Nullable Object property = project.findProperty(propertyName);
+		@Nullable var property = project.findProperty(propertyName);
 		if (property != null) {
 			return property.toString();
 		}

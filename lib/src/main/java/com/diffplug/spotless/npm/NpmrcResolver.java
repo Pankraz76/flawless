@@ -39,7 +39,7 @@ class NpmrcResolver {
 
 	NpmrcResolver(List<File> projectLocations) {
 		// no instance
-		final FileFinder.Builder finderBuilder = FileFinder.finderForFilename(".npmrc")
+		final var finderBuilder = FileFinder.finderForFilename(".npmrc")
 				.candidateSystemProperty("npm.npmrc");
 		projectLocations.forEach(finderBuilder::candidateFileInFolder);
 		npmrcFileFinder = finderBuilder

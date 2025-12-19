@@ -37,14 +37,14 @@ public class CombinedJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void checkIssue1679() {
-		FormatterStep gjf = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), "AOSP", mavenCentral());
-		FormatterStep indentWithSpaces = IndentStep.Type.SPACE.create();
-		FormatterStep importOrder = ImportOrderStep.forJava().createFrom();
-		FormatterStep removeUnused = RemoveUnusedImportsStep.create(mavenCentral());
-		FormatterStep trimTrailing = TrimTrailingWhitespaceStep.create();
-		FormatterStep endWithNewLine = EndWithNewlineStep.create();
-		FenceStep toggleOffOnPair = FenceStep.named(FenceStep.defaultToggleName()).openClose("formatting:off", "formatting:on");
-		try (StepHarness formatter = StepHarness.forSteps(
+		var gjf = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), "AOSP", mavenCentral());
+		var indentWithSpaces = IndentStep.Type.SPACE.create();
+		var importOrder = ImportOrderStep.forJava().createFrom();
+		var removeUnused = RemoveUnusedImportsStep.create(mavenCentral());
+		var trimTrailing = TrimTrailingWhitespaceStep.create();
+		var endWithNewLine = EndWithNewlineStep.create();
+		var toggleOffOnPair = FenceStep.named(FenceStep.defaultToggleName()).openClose("formatting:off", "formatting:on");
+		try (var formatter = StepHarness.forSteps(
 				toggleOffOnPair.preserveWithin(List.of(
 						new SerializeToByteArrayHack(),
 						gjf,

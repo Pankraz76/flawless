@@ -53,7 +53,7 @@ public class EquoResourceHarness extends ResourceHarness {
 	protected StepHarnessWithFile harnessFor(String formatterVersion, File... settingsFiles) throws Exception {
 		stepBuilder.setVersion(formatterVersion);
 		stepBuilder.setPreferences(Arrays.asList(settingsFiles));
-		FormatterStep step = stepBuilder.build();
+		var step = stepBuilder.build();
 		return StepHarnessWithFile.forStep(this, step);
 	}
 }

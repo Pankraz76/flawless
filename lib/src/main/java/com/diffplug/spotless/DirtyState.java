@@ -93,18 +93,18 @@ public class DirtyState {
 		String rawUnix = LineEnding.toUnix(raw);
 
 		// enforce the format
-		String formattedUnix = formatter.computeWithLint(rawUnix, file, exceptionPerStep);
+		var formattedUnix = formatter.computeWithLint(rawUnix, file, exceptionPerStep);
 		// convert the line endings if necessary
-		String formatted = formatter.computeLineEndings(formattedUnix, file);
+		var formatted = formatter.computeLineEndings(formattedUnix, file);
 
 		// if F(input) == input, then the formatter is well-behaving and the input is clean
-		byte[] formattedBytes = formatted.getBytes(formatter.getEncoding());
+		var formattedBytes = formatted.getBytes(formatter.getEncoding());
 		if (Arrays.equals(rawBytes, formattedBytes)) {
 			return IS_CLEAN;
 		}
 
 		// F(input) != input, so we'll do a padded check
-		String doubleFormattedUnix = formatter.computeWithLint(formattedUnix, file, exceptionPerStep);
+		var doubleFormattedUnix = formatter.computeWithLint(formattedUnix, file, exceptionPerStep);
 		if (doubleFormattedUnix.equals(formattedUnix)) {
 			// most dirty files are idempotent-dirty, so this is a quick-short circuit for that common case
 			return new DirtyState(formattedBytes);
@@ -116,9 +116,9 @@ public class DirtyState {
 		}
 
 		// get the canonical bytes
-		String canonicalUnix = cell.canonical();
-		String canonical = formatter.computeLineEndings(canonicalUnix, file);
-		byte[] canonicalBytes = canonical.getBytes(formatter.getEncoding());
+		var canonicalUnix = cell.canonical();
+		var canonical = formatter.computeLineEndings(canonicalUnix, file);
+		var canonicalBytes = canonical.getBytes(formatter.getEncoding());
 		if (!Arrays.equals(rawBytes, canonicalBytes)) {
 			// and write them to disk if needed
 			return new DirtyState(canonicalBytes);

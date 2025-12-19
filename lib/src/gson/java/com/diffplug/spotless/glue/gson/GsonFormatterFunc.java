@@ -39,7 +39,7 @@ public class GsonFormatterFunc implements FormatterFunc {
 	private final String generatedIndent;
 
 	public GsonFormatterFunc(GsonConfig gsonConfig) {
-		GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
+		var gsonBuilder = new GsonBuilder().serializeNulls();
 		if (!gsonConfig.isEscapeHtml()) {
 			gsonBuilder = gsonBuilder.disableHtmlEscaping();
 		}
@@ -54,15 +54,15 @@ public class GsonFormatterFunc implements FormatterFunc {
 		if (inputString.isEmpty()) {
 			result = "";
 		} else {
-			JsonElement jsonElement = gson.fromJson(inputString, JsonElement.class);
+			var jsonElement = gson.fromJson(inputString, JsonElement.class);
 			if (jsonElement == null) {
 				throw new IllegalArgumentException(FAILED_TO_PARSE_ERROR_MESSAGE);
 			}
 			if (gsonConfig.isSortByKeys()) {
 				jsonElement = sortByKeys(jsonElement);
 			}
-			try (StringWriter stringWriter = new StringWriter()) {
-				JsonWriter jsonWriter = new JsonWriter(stringWriter);
+			try (var stringWriter = new StringWriter()) {
+				var jsonWriter = new JsonWriter(stringWriter);
 				jsonWriter.setIndent(this.generatedIndent);
 				gson.toJson(jsonElement, jsonWriter);
 				result = stringWriter + "\n";
@@ -84,10 +84,10 @@ public class GsonFormatterFunc implements FormatterFunc {
 	}
 
 	private JsonElement sortByKeys(JsonObject jsonObject) {
-		JsonObject result = new JsonObject();
+		var result = new JsonObject();
 		jsonObject.keySet().stream().sorted()
 				.forEach(key -> {
-					JsonElement sorted = sortByKeys(jsonObject.get(key));
+					var sorted = sortByKeys(jsonObject.get(key));
 					result.add(key, sorted);
 				});
 		return result;
@@ -96,7 +96,7 @@ public class GsonFormatterFunc implements FormatterFunc {
 	private JsonElement sortByKeys(JsonArray jsonArray) {
 		var result = new JsonArray();
 		for (JsonElement element : jsonArray) {
-			JsonElement sorted = sortByKeys(element);
+			var sorted = sortByKeys(element);
 			result.add(sorted);
 		}
 

@@ -71,8 +71,8 @@ class FormatterPropertiesTest extends ResourceHarness {
 	@Test
 	void differentPropertyFileTypes() throws IOException {
 		for (String settingsResource : VALID_SETTINGS_RESOURCES) {
-			File settingsFile = createTestFile(settingsResource);
-			FormatterProperties preferences = FormatterProperties.from(settingsFile);
+			var settingsFile = createTestFile(settingsResource);
+			var preferences = FormatterProperties.from(settingsFile);
 			assertFor(preferences)
 					.containsSpecificValuesOf(settingsFile)
 					.containsCommonValueOf(settingsFile);
@@ -82,9 +82,9 @@ class FormatterPropertiesTest extends ResourceHarness {
 	@Test
 	void differentPropertyFileTypes_content_properties() throws IOException {
 		for (String settingsResource : validPropertiesResources()) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			String content = Files.readString(settingsFile.toPath());
-			FormatterProperties preferences = FormatterProperties.fromPropertiesContent(List.of(content));
+			var preferences = FormatterProperties.fromPropertiesContent(List.of(content));
 			assertFor(preferences)
 					.containsSpecificValuesOf(settingsFile)
 					.containsCommonValueOf(settingsFile);
@@ -94,9 +94,9 @@ class FormatterPropertiesTest extends ResourceHarness {
 	@Test
 	void differentPropertyFileTypes_content_xml() throws IOException {
 		for (String settingsResource : validXmlResources()) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			String content = Files.readString(settingsFile.toPath());
-			FormatterProperties preferences = FormatterProperties.fromXmlContent(List.of(content));
+			var preferences = FormatterProperties.fromXmlContent(List.of(content));
 			assertFor(preferences)
 					.containsSpecificValuesOf(settingsFile)
 					.containsCommonValueOf(settingsFile);
@@ -107,10 +107,10 @@ class FormatterPropertiesTest extends ResourceHarness {
 	void multiplePropertyFiles() throws IOException {
 		LinkedList<File> settingsFiles = new LinkedList<>();
 		for (String settingsResource : VALID_SETTINGS_RESOURCES) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			settingsFiles.add(settingsFile);
 		}
-		FormatterProperties preferences = FormatterProperties.from(settingsFiles);
+		var preferences = FormatterProperties.from(settingsFiles);
 		/* Settings are loaded / overridden in the sequence they are configured. */
 		assertFor(preferences)
 				.containsSpecificValuesOf(settingsFiles)
@@ -122,11 +122,11 @@ class FormatterPropertiesTest extends ResourceHarness {
 		LinkedList<File> settingsFiles = new LinkedList<>();
 		LinkedList<String> content = new LinkedList<>();
 		for (String settingsResource : validPropertiesResources()) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			content.add(Files.readString(settingsFile.toPath()));
 			settingsFiles.add(settingsFile);
 		}
-		FormatterProperties preferences = FormatterProperties.fromPropertiesContent(content);
+		var preferences = FormatterProperties.fromPropertiesContent(content);
 		/* Settings are loaded / overridden in the sequence they are configured. */
 		assertFor(preferences)
 				.containsSpecificValuesOf(settingsFiles)
@@ -138,11 +138,11 @@ class FormatterPropertiesTest extends ResourceHarness {
 		LinkedList<File> settingsFiles = new LinkedList<>();
 		LinkedList<String> content = new LinkedList<>();
 		for (String settingsResource : validXmlResources()) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			content.add(Files.readString(settingsFile.toPath()));
 			settingsFiles.add(settingsFile);
 		}
-		FormatterProperties preferences = FormatterProperties.fromXmlContent(content);
+		var preferences = FormatterProperties.fromXmlContent(content);
 		/* Settings are loaded / overridden in the sequence they are configured. */
 		assertFor(preferences)
 				.containsSpecificValuesOf(settingsFiles)
@@ -152,7 +152,7 @@ class FormatterPropertiesTest extends ResourceHarness {
 	@Test
 	void invalidPropertyFiles() throws IOException {
 		for (String settingsResource : INVALID_SETTINGS_RESOURCES) {
-			File settingsFile = createTestFile(settingsResource);
+			var settingsFile = createTestFile(settingsResource);
 			boolean exceptionCaught = false;
 			try {
 				FormatterProperties.from(settingsFile);
@@ -171,14 +171,14 @@ class FormatterPropertiesTest extends ResourceHarness {
 	@Test
 	void invalidPropertyFiles_content_xml() throws IOException {
 		for (String settingsResource : invalidXmlResources()) {
-			IllegalArgumentException actual = assertThrows(IllegalArgumentException.class, () -> FormatterProperties.fromXmlContent(List.of(ResourceHarness.getTestResource(settingsResource))));
+			var actual = assertThrows(IllegalArgumentException.class, () -> FormatterProperties.fromXmlContent(List.of(ResourceHarness.getTestResource(settingsResource))));
 			assertThat(actual.getMessage()).startsWith("Failed to add preferences from XML:");
 		}
 	}
 
 	@Test
 	void nonExistingFile() throws IOException {
-		String filePath = FileSignature.pathUnixToNative("does/not/exist.properties");
+		var filePath = FileSignature.pathUnixToNative("does/not/exist.properties");
 		try {
 			FormatterProperties.from(new File(filePath));
 			Assertions.fail("Should have thrown");
@@ -204,16 +204,16 @@ class FormatterPropertiesTest extends ResourceHarness {
 		public FormatterSettingsAssert containsSpecificValuesOf(File file) {
 			isNotNull();
 
-			String fileName = file.getName();
-			Properties settingsProps = actual.getProperties();
+			var fileName = file.getName();
+			var settingsProps = actual.getProperties();
 			for (String expectedValue : VALID_VALUES) {
 				// A parsable (valid) file contains keys of the following format
 				String validValueName = expectedValue == null ? "null" : expectedValue;
-				String key = "%s.%s".formatted(fileName, validValueName);
+				var key = "%s.%s".formatted(fileName, validValueName);
 				if (!settingsProps.containsKey(key)) {
 					failWithMessage("Key <%s> not part of formatter settings.", key);
 				}
-				String value = settingsProps.getProperty(key);
+				var value = settingsProps.getProperty(key);
 				if ((expectedValue != null) && (!expectedValue.equals(value))) {
 					failWithMessage("Value of key <%s> is '%s' and not '%s' as expected.", key, value, expectedValue);
 				}
@@ -224,13 +224,13 @@ class FormatterPropertiesTest extends ResourceHarness {
 		public FormatterSettingsAssert containsCommonValueOf(final File file) {
 			isNotNull();
 
-			String fileName = file.getName();
-			Properties settingsProps = actual.getProperties();
-			String key = "common";
+			var fileName = file.getName();
+			var settingsProps = actual.getProperties();
+			var key = "common";
 			if (!settingsProps.containsKey(key)) {
 				failWithMessage("Key <%s> not part of formatter settings. Value '%s' had been expected.", key, fileName);
 			}
-			String value = settingsProps.getProperty(key);
+			var value = settingsProps.getProperty(key);
 			if (!fileName.equals(value)) {
 				failWithMessage("Value of key <%s> is '%s' and not '%s' as expected.", key, value, fileName);
 			}

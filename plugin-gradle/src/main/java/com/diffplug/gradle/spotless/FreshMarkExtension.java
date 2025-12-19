@@ -48,7 +48,7 @@ public class FreshMarkExtension extends FormatExtension {
 	public void propertiesFile(Object... files) {
 		requireElementsNonNull(files);
 		propertyActions.add(map -> {
-			FormatterProperties preferences = FormatterProperties.from(getProject().files(files));
+			var preferences = FormatterProperties.from(getProject().files(files));
 			/* FreshMarkStep.State serializes the properties and not the files.
 			 * Therefore they must be stored in a hash-map like used by Properties.*/
 			preferences.getProperties().forEach((key, value) -> map.put(key.toString(), value));

@@ -40,7 +40,7 @@ public class GherkinUtilsFormatterFunc implements FormatterFunc {
 
 	// Follows https://github.com/cucumber/gherkin-utils/blob/main/java/src/test/java/io/cucumber/gherkin/utils/pretty/PrettyTest.java
 	private GherkinDocument parse(String gherkin) {
-		GherkinParser parser = GherkinParser
+		var parser = GherkinParser
 				.builder()
 				.includeSource(false)
 				.build();
@@ -53,7 +53,7 @@ public class GherkinUtilsFormatterFunc implements FormatterFunc {
 
 	@Override
 	public String apply(String inputString) {
-		GherkinDocument gherkinDocument = parse(inputString);
+		var gherkinDocument = parse(inputString);
 
 		return Pretty.prettyPrint(gherkinDocument, Syntax.gherkin);
 	}

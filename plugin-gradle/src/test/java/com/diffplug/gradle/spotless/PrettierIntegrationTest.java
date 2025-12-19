@@ -50,7 +50,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		if (PRETTIER_VERSION_2.equals(prettierVersion)) {
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
@@ -77,7 +77,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessCheckFailsGracefully = gradleRunner().withArguments("--stacktrace", "spotlessCheck").buildAndFail();
+		final var spotlessCheckFailsGracefully = gradleRunner().withArguments("--stacktrace", "spotlessCheck").buildAndFail();
 		Assertions.assertThat(spotlessCheckFailsGracefully.getOutput()).contains("> The following files had format violations:");
 
 		gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
@@ -100,7 +100,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		if (PRETTIER_VERSION_2.equals(prettierVersion)) {
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
@@ -124,7 +124,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("dirty.json").toResource("npm/prettier/filename/dirty.json");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("dirty.json").sameAsResource("npm/prettier/filename/clean.json");
 	}
@@ -159,7 +159,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("JavaTest.java").toResource("npm/prettier/plugins/java-test.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("JavaTest.java").sameAsResource("npm/prettier/plugins/java-test.clean");
 	}
@@ -189,7 +189,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("JavaTest.java").toResource("npm/prettier/plugins/java-test.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("JavaTest.java").sameAsResource("npm/prettier/plugins/java-test.clean");
 	}
@@ -213,7 +213,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("JavaTest.java").toResource("npm/prettier/plugins/java-test.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("Could not infer a parser");
 		Assertions.assertThat(spotlessApply.getOutput()).contains("prettier-plugin-java");
 	}
@@ -248,7 +248,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("php-example.php").toResource("npm/prettier/plugins/php.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("php-example.php").sameAsResource("npm/prettier/plugins/php.clean");
 	}
@@ -305,9 +305,9 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"}");
 		setFile("php-example.php").toResource("npm/prettier/plugins/php.dirty");
 		setFile("JavaTest.java").toResource("npm/prettier/plugins/java-test.dirty");
-		final BuildResult spotlessApply = gradleRunner().forwardOutput().withArguments("--stacktrace", "--info", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().forwardOutput().withArguments("--stacktrace", "--info", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
-		final BuildResult spotlessApply2 = gradleRunner().forwardOutput().withArguments("--stacktrace", "--info", "spotlessApply").build();
+		final var spotlessApply2 = gradleRunner().forwardOutput().withArguments("--stacktrace", "--info", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply2.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("php-example.php").sameAsResource("npm/prettier/plugins/php.clean");
 		assertFile("JavaTest.java").sameAsResource("npm/prettier/plugins/java-test.clean");
@@ -336,7 +336,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
 		Assertions.assertThat(spotlessApply.getOutput()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 
@@ -358,9 +358,9 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
-		final BuildResult spotlessApply2 = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
+		final var spotlessApply2 = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply2.getOutput()).contains("BUILD SUCCESSFUL");
 	}
 
@@ -382,9 +382,9 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
-		final BuildResult spotlessApply2 = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
+		final var spotlessApply2 = gradleRunner().withArguments("--stacktrace", "clean", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply2.getOutput()).contains("BUILD SUCCESSFUL");
 	}
 
@@ -411,7 +411,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
+		final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
 		Assertions.assertThat(spotlessApply.getOutput()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 }

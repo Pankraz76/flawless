@@ -77,7 +77,7 @@ public final class FlexmarkStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			final ClassLoader classLoader = jarState.getClassLoader();
+			final var classLoader = jarState.getClassLoader();
 			final Class<?> formatterFunc = classLoader.loadClass("com.diffplug.spotless.glue.markdown.FlexmarkFormatterFunc");
 			final Constructor<?> constructor = formatterFunc.getConstructor(FlexmarkConfig.class);
 			return (FormatterFunc) constructor.newInstance(config);

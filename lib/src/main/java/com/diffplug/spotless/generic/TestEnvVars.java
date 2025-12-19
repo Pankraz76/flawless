@@ -49,7 +49,7 @@ final class TestEnvVars {
 		Optional<Path> resolvedTestenvProps = candidateTestEnvLocations().filter(Files::exists).findFirst();
 		resolvedTestenvProps.ifPresent(testenvProps -> {
 			try (var reader = Files.newBufferedReader(testenvProps)) {
-				Properties properties = new Properties();
+				var properties = new Properties();
 				properties.load(reader);
 				for (String name : properties.stringPropertyNames()) {
 					envVars.put(name, properties.getProperty(name));
@@ -85,7 +85,7 @@ final class TestEnvVars {
 	}
 
 	public String getOrThrow(String key) {
-		String value = envVars.get(key);
+		var value = envVars.get(key);
 		if (value == null) {
 			throw new IllegalArgumentException("Environment variable " + key + " not found");
 		}

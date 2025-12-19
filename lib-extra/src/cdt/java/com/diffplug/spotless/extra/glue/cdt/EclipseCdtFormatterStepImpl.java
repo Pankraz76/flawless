@@ -42,11 +42,11 @@ public class EclipseCdtFormatterStepImpl {
 	/** Formatting C/C++ string */
 	public String format(String raw) throws Exception {
 		//The 'kind' can be set to CodeFormatter.K_UNKNOWN, since it is anyway ignored by the internal formatter
-		TextEdit edit = codeFormatter.format(CodeFormatter.K_UNKNOWN, raw, 0, raw.length(), 0, "\n");
+		var edit = codeFormatter.format(CodeFormatter.K_UNKNOWN, raw, 0, raw.length(), 0, "\n");
 		if (edit == null) {
 			throw new IllegalArgumentException("Invalid C/C++ syntax for formatting.");
 		} else {
-			IDocument doc = new Document(raw);
+			var doc = new Document(raw);
 			edit.apply(doc);
 			return doc.get();
 		}

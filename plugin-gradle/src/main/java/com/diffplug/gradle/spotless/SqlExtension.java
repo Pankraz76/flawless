@@ -50,7 +50,7 @@ public class SqlExtension extends FormatExtension {
 		}
 
 		private FormatterStep createStep() {
-			Project project = getProject();
+			var project = getProject();
 			return DBeaverSQLFormatterStep.create(project.files(configFiles).getFiles());
 		}
 	}

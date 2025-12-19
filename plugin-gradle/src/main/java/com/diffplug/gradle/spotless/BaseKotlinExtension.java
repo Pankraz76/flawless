@@ -141,7 +141,7 @@ public abstract class BaseKotlinExtension extends FormatExtension {
 
 		public class ConfigurableStyle {
 			public void configure(Consumer<KtfmtStep.KtfmtFormattingOptions> optionsConfiguration) {
-				KtfmtStep.KtfmtFormattingOptions ktfmtFormattingOptions = new KtfmtStep.KtfmtFormattingOptions();
+				var ktfmtFormattingOptions = new KtfmtStep.KtfmtFormattingOptions();
 				optionsConfiguration.accept(ktfmtFormattingOptions);
 				options = ktfmtFormattingOptions;
 				replaceStep(createStep());
@@ -160,7 +160,7 @@ public abstract class BaseKotlinExtension extends FormatExtension {
 				Map<String, Object> editorConfigOverride,
 				List<String> customRuleSets) throws IOException {
 			Objects.requireNonNull(version);
-			File defaultEditorConfig = getProject().getRootProject().file(".editorconfig");
+			var defaultEditorConfig = getProject().getRootProject().file(".editorconfig");
 			FileSignature editorConfigPath = defaultEditorConfig.exists() ? FileSignature.signAsList(defaultEditorConfig) : null;
 			this.version = version;
 			this.editorConfigPath = editorConfigPath;
@@ -173,7 +173,7 @@ public abstract class BaseKotlinExtension extends FormatExtension {
 			if (editorConfigPath == null) {
 				this.editorConfigPath = null;
 			} else {
-				File editorConfigFile = getProject().file(editorConfigPath);
+				var editorConfigFile = getProject().file(editorConfigPath);
 				if (!editorConfigFile.exists()) {
 					throw new IllegalArgumentException("EditorConfig file does not exist: " + editorConfigFile);
 				}

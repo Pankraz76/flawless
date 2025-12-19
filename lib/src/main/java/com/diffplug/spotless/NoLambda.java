@@ -63,7 +63,7 @@ public interface NoLambda extends Serializable {
 			if (otherObj == null) {
 				return false;
 			} else if (otherObj.getClass().equals(this.getClass())) {
-				EqualityBasedOnSerialization other = (EqualityBasedOnSerialization) otherObj;
+				var other = (EqualityBasedOnSerialization) otherObj;
 				return Arrays.equals(toBytes(), other.toBytes());
 			} else {
 				return false;

@@ -94,8 +94,8 @@ public abstract class SpotlessTask extends DefaultTask {
 	public void setupRatchet(String ratchetFrom) {
 		this.ratchetFrom = ratchetFrom;
 		if (!ratchetFrom.isEmpty()) {
-			GitRatchet ratchet = getTaskService().get().getRatchet();
-			File projectDir = getProjectDir().get().getAsFile();
+			var ratchet = getTaskService().get().getRatchet();
+			var projectDir = getProjectDir().get().getAsFile();
 			rootTreeSha = ratchet.rootTreeShaOf(projectDir, ratchetFrom);
 			subtreeSha = ratchet.subtreeShaOf(projectDir, rootTreeSha);
 		} else {
@@ -191,7 +191,7 @@ public abstract class SpotlessTask extends DefaultTask {
 
 	/** Returns the name of this format. */
 	String formatName() {
-		String name = getName();
+		var name = getName();
 		if (name.startsWith(SpotlessExtension.EXTENSION)) {
 			return name.substring(SpotlessExtension.EXTENSION.length()).toLowerCase(Locale.ROOT);
 		} else {

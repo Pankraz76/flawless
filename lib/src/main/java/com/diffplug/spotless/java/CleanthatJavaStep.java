@@ -193,7 +193,7 @@ public final class CleanthatJavaStep implements Serializable {
 			public String apply(String input, File file) throws Exception {
 				if (file.isAbsolute()) {
 					// Cleanthat expects a relative file as input (relative to the root of the repository)
-					Path absolutePath = file.toPath();
+					var absolutePath = file.toPath();
 					file = absolutePath.subpath(1, absolutePath.getNameCount()).toFile();
 				}
 				return (String) formatterMethod.invoke(formatter, input, file);
@@ -201,7 +201,7 @@ public final class CleanthatJavaStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() {
-			ClassLoader classLoader = jarState.getClassLoader();
+			var classLoader = jarState.getClassLoader();
 
 			Object formatter;
 			Method formatterMethod;
@@ -215,7 +215,7 @@ public final class CleanthatJavaStep implements Serializable {
 				throw new IllegalStateException("Issue executing the formatter", e);
 			}
 
-			FormatterFunc formatterFunc = new JvmSupportFormatterFunc(formatter, formatterMethod);
+			var formatterFunc = new JvmSupportFormatterFunc(formatter, formatterMethod);
 
 			return JVM_SUPPORT.suggestLaterVersionOnError(version, formatterFunc);
 		}

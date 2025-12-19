@@ -67,7 +67,7 @@ final class GradleProvisioner {
 
 		@Override
 		public Set<File> provisionWithTransitives(boolean withTransitives, Collection<String> mavenCoordinates) {
-			Request req = new Request(withTransitives, mavenCoordinates);
+			var req = new Request(withTransitives, mavenCoordinates);
 			Set<File> result;
 			synchronized (cache) {
 				result = cache.get(req);
@@ -105,15 +105,15 @@ final class GradleProvisioner {
 	}
 
 	static Provisioner forRootProjectBuildscript(Project project) {
-		Project rootProject = project.getRootProject();
-		ScriptHandler buildscript = rootProject.getBuildscript();
+		var rootProject = project.getRootProject();
+		var buildscript = rootProject.getBuildscript();
 		return forConfigurationContainer(rootProject, buildscript.getConfigurations(), buildscript.getDependencies());
 	}
 
 	private static Provisioner forConfigurationContainer(Project project, ConfigurationContainer configurations, DependencyHandler dependencies) {
 		return (withTransitives, mavenCoords) -> {
 			try {
-				Configuration config = configurations.create("spotless"
+				var config = configurations.create("spotless"
 						+ new Request(withTransitives, mavenCoords).hashCode());
 				mavenCoords.stream()
 						.map(dependencies::create)
@@ -130,7 +130,7 @@ final class GradleProvisioner {
 				});
 				return config.resolve();
 			} catch (Exception e) {
-				String projName = project.getPath().substring(1).replace(':', '/');
+				var projName = project.getPath().substring(1).replace(':', '/');
 				if (!projName.isEmpty()) {
 					projName = projName + "/";
 				}
@@ -172,8 +172,8 @@ final class GradleProvisioner {
 
 		@Override
 		public String toString() {
-			String coords = mavenCoords.toString();
-			StringBuilder builder = new StringBuilder();
+			var coords = mavenCoords.toString();
+			var builder = new StringBuilder();
 			builder.append(coords, 1, coords.length() - 1); // strip off []
 			if (withTransitives) {
 				builder.append(" with transitives");

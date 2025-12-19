@@ -32,7 +32,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toStringBehavesNormallyWithinLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(12, 1);
+		var stream = new RingBufferByteArrayOutputStream(12, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toString()).isEqualTo("0123456789");
 	}
@@ -40,7 +40,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toStringBehavesOverwritingOverLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(4, 1);
+		var stream = new RingBufferByteArrayOutputStream(4, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toString()).hasSize(4);
 		Assertions.assertThat(stream.toString()).isEqualTo("6789");
@@ -49,7 +49,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toStringBehavesNormallyAtExactlyLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
+		var stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toString()).isEqualTo("0123456789");
 	}
@@ -57,7 +57,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toByteArrayBehavesNormallyWithinLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(12, 1);
+		var stream = new RingBufferByteArrayOutputStream(12, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toByteArray()).isEqualTo(bytes);
 	}
@@ -65,7 +65,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toByteArrayBehavesOverwritingOverLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(4, 1);
+		var stream = new RingBufferByteArrayOutputStream(4, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toByteArray()).hasSize(4);
 		Assertions.assertThat(stream.toByteArray()).isEqualTo(new byte[]{'6', '7', '8', '9'});
@@ -74,7 +74,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void toByteArrayBehavesOverwritingAtExactlyLimit(String name, ByteWriteStrategy writeStrategy) {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
+		var stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
 		writeStrategy.write(stream, bytes);
 		Assertions.assertThat(stream.toByteArray()).isEqualTo(bytes);
 	}
@@ -82,9 +82,9 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void writeToBehavesNormallyWithinLimit(String name, ByteWriteStrategy writeStrategy) throws IOException {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(12, 1);
+		var stream = new RingBufferByteArrayOutputStream(12, 1);
 		writeStrategy.write(stream, bytes);
-		ByteArrayOutputStream target = new ByteArrayOutputStream();
+		var target = new ByteArrayOutputStream();
 		stream.writeTo(target);
 		Assertions.assertThat(target.toByteArray()).isEqualTo(bytes);
 	}
@@ -92,9 +92,9 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void writeToBehavesOverwritingOverLimit(String name, ByteWriteStrategy writeStrategy) throws IOException {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(4, 1);
+		var stream = new RingBufferByteArrayOutputStream(4, 1);
 		writeStrategy.write(stream, bytes);
-		ByteArrayOutputStream target = new ByteArrayOutputStream();
+		var target = new ByteArrayOutputStream();
 		stream.writeTo(target);
 		Assertions.assertThat(target.toByteArray()).hasSize(4);
 		Assertions.assertThat(target.toByteArray()).isEqualTo(new byte[]{'6', '7', '8', '9'});
@@ -103,9 +103,9 @@ class RingBufferByteArrayOutputStreamTest {
 	@ParameterizedTest(name = "{index} writeStrategy: {0}")
 	@MethodSource("writeStrategies")
 	void writeToBehavesNormallyAtExactlyLimit(String name, ByteWriteStrategy writeStrategy) throws IOException {
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
+		var stream = new RingBufferByteArrayOutputStream(bytes.length, 1);
 		writeStrategy.write(stream, bytes);
-		ByteArrayOutputStream target = new ByteArrayOutputStream();
+		var target = new ByteArrayOutputStream();
 		stream.writeTo(target);
 		Assertions.assertThat(target.toByteArray()).isEqualTo(bytes);
 	}
@@ -113,7 +113,7 @@ class RingBufferByteArrayOutputStreamTest {
 	@Test
 	void writeToBehavesCorrectlyWhenOverLimitMultipleCalls() {
 		// this test explicitly captures a border case where the buffer is not empty but can exactly fit what we are writing
-		RingBufferByteArrayOutputStream stream = new RingBufferByteArrayOutputStream(2, 1);
+		var stream = new RingBufferByteArrayOutputStream(2, 1);
 		stream.write('0');
 		stream.write(new byte[]{'1', '2'}, 0, 2);
 		Assertions.assertThat(stream.toString()).hasSize(2);

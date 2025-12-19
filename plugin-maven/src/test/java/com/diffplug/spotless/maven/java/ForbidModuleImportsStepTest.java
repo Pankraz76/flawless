@@ -25,7 +25,7 @@ class ForbidModuleImportsStepTest extends MavenIntegrationHarness {
 	void testForbidModuleImports() throws Exception {
 		writePomWithJavaSteps("<forbidModuleImports/>");
 
-		String path = "src/main/java/test.java";
+		var path = "src/main/java/test.java";
 		setFile(path).toResource("java/forbidmoduleimports/JavaCodeModuleImportsUnformatted.test");
 		var selfie = expectSelfieErrorMsg(mavenRunner().withArguments("spotless:apply").runHasError());
 		assertFile(path).sameAsResource("java/forbidmoduleimports/JavaCodeModuleImportsUnformatted.test");

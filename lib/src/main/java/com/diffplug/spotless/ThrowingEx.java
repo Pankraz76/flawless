@@ -108,7 +108,7 @@ public final class ThrowingEx {
 	 * }</pre>
 	 */
 	public static RuntimeException unwrapCause(Throwable e) {
-		Throwable cause = e.getCause();
+		var cause = e.getCause();
 		if (cause == null) {
 			return asRuntimeRethrowError(e);
 		} else {
@@ -147,8 +147,8 @@ public final class ThrowingEx {
 	}
 
 	public static String stacktrace(Throwable e) {
-		StringWriter out = new StringWriter();
-		PrintWriter writer = new PrintWriter(out);
+		var out = new StringWriter();
+		var writer = new PrintWriter(out);
 		e.printStackTrace(writer);
 		writer.flush();
 		return out.toString();

@@ -43,8 +43,8 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 	private static final String TEST_PATH = "src/markdown/test.md";
 
 	private Git initRepo() throws IllegalStateException, GitAPIException, IOException {
-		Git git = Git.init().setDirectory(rootFolder()).call();
-		RefDatabase refDB = git.getRepository().getRefDatabase();
+		var git = Git.init().setDirectory(rootFolder()).call();
+		var refDB = git.getRepository().getRefDatabase();
 		refDB.newUpdate(Constants.R_HEADS + "main", false).setNewObjectId(ObjectId.zeroId());
 		refDB.newUpdate(Constants.HEAD, false).link(Constants.R_HEADS + "main");
 		refDB.newUpdate(Constants.R_HEADS + Constants.MASTER, false).delete();
@@ -60,7 +60,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 	//@ValueSource(ints = {0, 1}) // TODO: this is a flaky configuration cache issue that started with Gradle 8.5
 	@ValueSource(ints = 0)
 	void singleProjectExhaustive(int useConfigCache) throws Exception {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			if (useConfigCache == 1) {
 				setFile("gradle.properties").toContent("org.gradle.unsafe.configuration-cache=true");
 			}
@@ -160,7 +160,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 	//@ValueSource(ints = {0, 1}) // TODO: this is a flaky configuration cache issue that started with Gradle 8.5
 	@ValueSource(ints = 0)
 	void multiProject(int useConfigCache) throws Exception {
-		try (Git git = initRepo()) {
+		try (var git = initRepo()) {
 			if (useConfigCache == 1) {
 				setFile("gradle.properties").toContent("org.gradle.unsafe.configuration-cache=true");
 			}
@@ -189,13 +189,13 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 			setFile("dirty/build.gradle").toContent("apply from: rootProject.file('spotless.gradle') // dirty");
 			setFile("dirty/" + TEST_PATH).toContent("HELLO");
 			setFile("added/build.gradle").toContent("apply from: rootProject.file('spotless.gradle') // added");
-			RevCommit baseline = addAndCommit(git);
+			var baseline = addAndCommit(git);
 			if (useConfigCache == 1) {
 				setFile("gradle.properties").toContent("org.gradle.unsafe.configuration-cache=true");
 			}
 
-			ObjectId cleanFolder = TreeWalk.forPath(git.getRepository(), "clean", baseline.getTree()).getObjectId(0);
-			ObjectId dirtyFolder = TreeWalk.forPath(git.getRepository(), "dirty", baseline.getTree()).getObjectId(0);
+			var cleanFolder = TreeWalk.forPath(git.getRepository(), "clean", baseline.getTree()).getObjectId(0);
+			var dirtyFolder = TreeWalk.forPath(git.getRepository(), "dirty", baseline.getTree()).getObjectId(0);
 
 			Assertions.assertThat(baseline.getTree().toObjectId()).isEqualTo(ObjectId.fromString(BASELINE_ROOT));
 			Assertions.assertThat(cleanFolder).isEqualTo(ObjectId.fromString(BASELINE_CLEAN));
@@ -230,7 +230,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 					.outcome(":dirty:spotlessMisc", TaskOutcome.UP_TO_DATE)
 					.outcome(":added:spotlessMisc", TaskOutcome.UP_TO_DATE);
 
-			RevCommit next = addAndCommit(git);
+			var next = addAndCommit(git);
 			Assertions.assertThat(next.getTree().toObjectId()).isNotEqualTo(baseline.getTree().toObjectId());
 			// if we commit to main (the baseline), then tasks will be out of date only because the baseline changed
 			// TO REPEAAT:
@@ -238,8 +238,8 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 			// - we pressed "commit", which didn't change the files, just the baseline
 			// - and that causes spotless to be out-of-date
 
-			ObjectId nextCleanFolder = TreeWalk.forPath(git.getRepository(), "clean", next.getTree()).getObjectId(0);
-			ObjectId nextDirtyFolder = TreeWalk.forPath(git.getRepository(), "dirty", next.getTree()).getObjectId(0);
+			var nextCleanFolder = TreeWalk.forPath(git.getRepository(), "clean", next.getTree()).getObjectId(0);
+			var nextDirtyFolder = TreeWalk.forPath(git.getRepository(), "dirty", next.getTree()).getObjectId(0);
 			Assertions.assertThat(nextCleanFolder).isEqualTo(cleanFolder);    // the baseline for 'clean' didn't change
 			Assertions.assertThat(nextDirtyFolder).isNotEqualTo(dirtyFolder); // only the baseline for dirty
 
@@ -260,7 +260,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 		}
 
 		public BuildResultAssertion outcome(String taskPath, TaskOutcome expected) {
-			TaskOutcome actual = result.getTasks().stream()
+			var actual = result.getTasks().stream()
 					.filter(task -> task.getPath().equals(taskPath))
 					.findAny().get().getOutcome();
 			Assertions.assertThat(actual).isEqualTo(expected);
@@ -269,7 +269,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 	}
 
 	private RevCommit addAndCommit(Git git) throws NoFilepatternException, GitAPIException {
-		PersonIdent emptyPerson = new PersonIdent("jane doe", "jane@doe.com", new Date(0), TimeZone.getTimeZone("UTC"));
+		var emptyPerson = new PersonIdent("jane doe", "jane@doe.com", new Date(0), TimeZone.getTimeZone("UTC"));
 		git.add().addFilepattern(".").call();
 		return git.commit().setMessage("baseline")
 				.setCommitter(emptyPerson)

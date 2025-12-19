@@ -73,7 +73,7 @@ public final class FileSignature implements Serializable {
 		List<File> natural = toSortedSet(files);
 		List<File> onNameOnly = toSortedSet(files, comparing(File::getName));
 		if (natural.size() != onNameOnly.size()) {
-			StringBuilder builder = new StringBuilder();
+			var builder = new StringBuilder();
 			builder.append("For these files:\n");
 			for (File file : files) {
 				builder.append("  ").append(file.getAbsolutePath()).append("\n");
@@ -185,15 +185,15 @@ public final class FileSignature implements Serializable {
 		Map<String, Sig> cache = new HashMap<>();
 
 		synchronized Sig sign(File fileInput) throws IOException {
-			String canonicalPath = fileInput.getCanonicalPath();
-			Sig sig = cache.computeIfAbsent(canonicalPath, ThrowingEx.<String, Sig> wrap(p -> {
+			var canonicalPath = fileInput.getCanonicalPath();
+			var sig = cache.computeIfAbsent(canonicalPath, ThrowingEx.<String, Sig> wrap(p -> {
 				MessageDigest digest = MessageDigest.getInstance("SHA-256");
-				File file = new File(p);
+				var file = new File(p);
 				// calculate the size and content hash of the file
 				long size = 0;
 				byte[] buf = new byte[1024];
 				long lastModified;
-				try (InputStream input = new FileInputStream(file)) {
+				try (var input = new FileInputStream(file)) {
 					lastModified = file.lastModified();
 					int numRead;
 					while ((numRead = input.read(buf)) != -1) {

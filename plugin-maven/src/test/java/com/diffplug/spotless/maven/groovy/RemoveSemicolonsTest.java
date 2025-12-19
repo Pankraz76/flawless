@@ -38,7 +38,7 @@ class RemoveSemicolonsTest extends MavenIntegrationHarness {
 	void testRemoveSemicolons() throws Exception {
 		writePomWithGroovySteps("<removeSemicolons/>");
 
-		String path = "src/main/groovy/test.groovy";
+		var path = "src/main/groovy/test.groovy";
 		setFile(path).toResource("groovy/removeSemicolons/GroovyCodeWithSemicolons.test");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("groovy/removeSemicolons/GroovyCodeWithSemicolonsFormatted.test");
@@ -53,7 +53,7 @@ class RemoveSemicolonsTest extends MavenIntegrationHarness {
 		void testMultilineStrings() throws Exception {
 			writePomWithGroovySteps("<removeSemicolons/>");
 
-			String path = "src/main/groovy/test.groovy";
+			var path = "src/main/groovy/test.groovy";
 			setFile(path).toResource("groovy/removeSemicolons/Issue2780/MultilineString.test");
 			mavenRunner().withArguments("spotless:apply").runNoError();
 			assertFile(path).sameAsResource("groovy/removeSemicolons/Issue2780/MultilineStringFormatted.test");
@@ -63,7 +63,7 @@ class RemoveSemicolonsTest extends MavenIntegrationHarness {
 		void testComments() throws Exception {
 			writePomWithGroovySteps("<removeSemicolons/>");
 
-			String path = "src/main/groovy/test.groovy";
+			var path = "src/main/groovy/test.groovy";
 			setFile(path).toResource("groovy/removeSemicolons/Issue2780/Comments.test");
 			mavenRunner().withArguments("spotless:apply").runNoError();
 			assertFile(path).sameAsResource("groovy/removeSemicolons/Issue2780/CommentsFormatted.test");
@@ -71,7 +71,7 @@ class RemoveSemicolonsTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String sourceContent, String targetContent) throws Exception {
-		String path = "src/main/groovy/test.groovy";
+		var path = "src/main/groovy/test.groovy";
 		setFile(path).toContent(sourceContent);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).hasContent(targetContent);

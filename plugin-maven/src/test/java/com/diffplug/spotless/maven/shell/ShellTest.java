@@ -24,7 +24,7 @@ import com.diffplug.spotless.tag.ShfmtTest;
 public class ShellTest extends MavenIntegrationHarness {
 	@Test
 	public void testFormatShellWithEditorconfig() throws Exception {
-		String fileDir = "shell/shfmt/with-config/";
+		var fileDir = "shell/shfmt/with-config/";
 		setFile("shfmt.sh").toResource(fileDir + "shfmt.sh");
 		setFile("scripts/other.sh").toResource(fileDir + "other.sh");
 		setFile(".editorconfig").toResource(fileDir + ".editorconfig");
@@ -38,7 +38,7 @@ public class ShellTest extends MavenIntegrationHarness {
 
 	@Test
 	public void testFormatShellWithoutEditorconfig() throws Exception {
-		String fileDir = "shell/shfmt/without-config/";
+		var fileDir = "shell/shfmt/without-config/";
 		setFile("shfmt.sh").toResource(fileDir + "shfmt.sh");
 		setFile("scripts/other.sh").toResource(fileDir + "other.sh");
 

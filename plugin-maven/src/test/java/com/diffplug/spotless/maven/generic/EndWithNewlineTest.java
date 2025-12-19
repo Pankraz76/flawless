@@ -37,8 +37,8 @@ class EndWithNewlineTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest() throws Exception {
-		String noTrailingNewline = "public class Java {}";
-		String hasTrailingNewline = noTrailingNewline + "\n";
+		var noTrailingNewline = "public class Java {}";
+		var hasTrailingNewline = noTrailingNewline + "\n";
 		setFile("src/main/java/test.java").toContent(noTrailingNewline);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile("src/main/java/test.java").hasContent(hasTrailingNewline);

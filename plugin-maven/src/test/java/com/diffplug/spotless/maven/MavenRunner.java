@@ -67,7 +67,7 @@ public final class MavenRunner {
 	}
 
 	public MavenRunner withRemoteDebug(int port) {
-		String address = (Jvm.version() < 9 ? "" : "*:") + port;
+		var address = (Jvm.version() < 9 ? "" : "*:") + port;
 		environment.put("MAVEN_OPTS", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=" + address);
 		return this;
 	}
@@ -81,10 +81,10 @@ public final class MavenRunner {
 		Map<String, String> env = new HashMap<>(environment);
 		if (!systemProperties.isEmpty()) {
 			// add system properties as environment variables as MAVEN_OPTS or append if already there
-			String sysProps = systemProperties.entrySet().stream()
+			var sysProps = systemProperties.entrySet().stream()
 					.map(entry -> "-D%s=%s".formatted(entry.getKey(), entry.getValue()))
 					.collect(Collectors.joining(" "));
-			String mavenOpts = Stream.of(env.getOrDefault("MAVEN_OPTS", ""), sysProps)
+			var mavenOpts = Stream.of(env.getOrDefault("MAVEN_OPTS", ""), sysProps)
 					.collect(Collectors.joining(" "));
 			env.put("MAVEN_OPTS", mavenOpts.trim());
 		}
@@ -95,20 +95,20 @@ public final class MavenRunner {
 		Objects.requireNonNull(projectDir, "Need to call withProjectDir() first");
 		Objects.requireNonNull(args, "Need to call withArguments() first");
 		// run Maven with the given args in the given directory
-		String argsString = "-e " + String.join(" ", Arrays.asList(args));
+		var argsString = "-e " + String.join(" ", Arrays.asList(args));
 		return runner.shellWinUnix(projectDir, calculateEnvironment(), "mvnw " + argsString, "./mvnw " + argsString);
 	}
 
 	/** Runs the command and asserts that exit code is 0. */
 	public ProcessRunner.Result runNoError() throws IOException, InterruptedException {
-		ProcessRunner.Result result = run();
+		var result = run();
 		assertThat(result.exitCode()).as("Run without error %s", result).isEqualTo(0);
 		return result;
 	}
 
 	/** Runs the command and asserts that exit code is not 0. */
 	public ProcessRunner.Result runHasError() throws IOException, InterruptedException {
-		ProcessRunner.Result result = run();
+		var result = run();
 		assertThat(result.exitCode()).as("Run with error %s", result).isNotEqualTo(0);
 		return result;
 	}

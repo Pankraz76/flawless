@@ -39,7 +39,7 @@ public class Scalafmt implements FormatterStepFactory {
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
 		String scalafmtVersion = version != null ? version : ScalaFmtStep.defaultVersion();
 		String scalafmtScalaMajorVersion = scalaMajorVersion != null ? scalaMajorVersion : ScalaFmtStep.defaultScalaMajorVersion();
-		File configFile = config.getFileLocator().locateFile(file);
+		var configFile = config.getFileLocator().locateFile(file);
 		return ScalaFmtStep.create(scalafmtVersion, scalafmtScalaMajorVersion, config.getProvisioner(), configFile);
 	}
 }

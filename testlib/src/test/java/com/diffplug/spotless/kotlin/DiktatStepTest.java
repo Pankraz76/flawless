@@ -31,25 +31,25 @@ import com.diffplug.spotless.TestProvisioner;
 class DiktatStepTest extends ResourceHarness {
 	@Test
 	void behavior() {
-		FormatterStep step = DiktatStep.create(TestProvisioner.mavenCentral());
+		var step = DiktatStep.create(TestProvisioner.mavenCentral());
 		StepHarnessWithFile.forStep(this, step).expectLintsOfResource("kotlin/diktat/Unsolvable.kt").toBe("L12 diktat(diktat-ruleset:debug-print) [DEBUG_PRINT] use a dedicated logging library: found println()",
 				"L13 diktat(diktat-ruleset:debug-print) [DEBUG_PRINT] use a dedicated logging library: found println()");
 	}
 
 	@Test
 	void behaviorConf() throws Exception {
-		String configPath = "src/main/kotlin/diktat-analysis.yml";
-		File conf = setFile(configPath).toResource("kotlin/diktat/diktat-analysis.yml");
-		FileSignature config = signAsList(conf);
+		var configPath = "src/main/kotlin/diktat-analysis.yml";
+		var conf = setFile(configPath).toResource("kotlin/diktat/diktat-analysis.yml");
+		var config = signAsList(conf);
 
-		FormatterStep step = DiktatStep.create("1.2.1", TestProvisioner.mavenCentral(), config);
+		var step = DiktatStep.create("1.2.1", TestProvisioner.mavenCentral(), config);
 		StepHarnessWithFile.forStep(this, step).expectLintsOfResource("kotlin/diktat/Unsolvable.kt").toBe("L1 diktat(diktat-ruleset:debug-print) [DEBUG_PRINT] use a dedicated logging library: found println()",
 				"L13 diktat(diktat-ruleset:debug-print) [DEBUG_PRINT] use a dedicated logging library: found println()");
 	}
 
 	@Test
 	void notSupportedVersion() {
-		final IllegalStateException notSupportedException = Assertions.assertThrows(IllegalStateException.class,
+		final var notSupportedException = Assertions.assertThrows(IllegalStateException.class,
 				() -> DiktatStep.create("1.1.0", TestProvisioner.mavenCentral()));
 		Assertions.assertTrue(
 				notSupportedException.getMessage().contains("Minimum required Diktat version is 1.2.1, you tried 1.1.0 which is too old"));

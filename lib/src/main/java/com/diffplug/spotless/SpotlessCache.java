@@ -67,7 +67,7 @@ public final class SpotlessCache {
 	}
 
 	synchronized ClassLoader classloader(Serializable key, JarState state) {
-		SerializedKey serializedKey = new SerializedKey(key);
+		var serializedKey = new SerializedKey(key);
 		return cache
 				.computeIfAbsent(serializedKey, k -> {
 					LOGGER.debug("Allocating an additional FeatureClassLoader for key={} Cache.size was {}", key, cache.size());

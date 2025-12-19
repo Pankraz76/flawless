@@ -49,7 +49,7 @@ public class ForeignExe implements Serializable {
 
 	/** The name of the executable, used by "where" (win) and "which" (unix). */
 	public static ForeignExe nameAndVersion(String exeName, String version) {
-		ForeignExe foreign = new ForeignExe();
+		var foreign = new ForeignExe();
 		foreign.name = Objects.requireNonNull(exeName);
 		foreign.version = Objects.requireNonNull(version);
 		return foreign;
@@ -91,27 +91,27 @@ public class ForeignExe implements Serializable {
 	 * throws an exception with a message describing how to fix.
 	 */
 	public String confirmVersionAndGetAbsolutePath() throws IOException, InterruptedException {
-		try (ProcessRunner runner = new ProcessRunner()) {
+		try (var runner = new ProcessRunner()) {
 			String exeAbsPath;
 			if (pathToExe != null) {
 				exeAbsPath = pathToExe;
 			} else {
-				ProcessRunner.Result cmdWhich = runner.shellWinUnix("where " + name, "which " + name);
+				var cmdWhich = runner.shellWinUnix("where " + name, "which " + name);
 				if (cmdWhich.exitNotZero()) {
 					throw cantFind("Unable to find " + name + " on path", cmdWhich);
 				} else {
 					exeAbsPath = cmdWhich.assertExitZero(Charset.defaultCharset()).trim();
 				}
 			}
-			ProcessRunner.Result cmdVersion = runner.exec(exeAbsPath, versionFlag);
+			var cmdVersion = runner.exec(exeAbsPath, versionFlag);
 			if (cmdVersion.exitNotZero()) {
 				throw cantFind("Unable to run " + exeAbsPath, cmdVersion);
 			}
-			Matcher versionMatcher = versionRegex.matcher(cmdVersion.assertExitZero(Charset.defaultCharset()));
+			var versionMatcher = versionRegex.matcher(cmdVersion.assertExitZero(Charset.defaultCharset()));
 			if (!versionMatcher.find()) {
 				throw cantFind("Unable to parse version with /" + versionRegex + "/", cmdVersion);
 			}
-			String versionFound = versionMatcher.group(1);
+			var versionFound = versionMatcher.group(1);
 			if (!VERSION_WILDCARD.equals(versionFound) && !versionFound.equals(version)) {
 				throw wrongVersion("You specified version " + version + ", but Spotless found " + versionFound, cmdVersion, versionFound);
 			}
@@ -128,7 +128,7 @@ public class ForeignExe implements Serializable {
 	}
 
 	private RuntimeException exceptionFmt(String msgPrimary, ProcessRunner.Result cmd, @Nullable String msgFix) {
-		StringBuilder errorMsg = new StringBuilder();
+		var errorMsg = new StringBuilder();
 		errorMsg.append(msgPrimary);
 		errorMsg.append('\n');
 		if (msgFix != null) {

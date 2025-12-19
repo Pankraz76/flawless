@@ -120,9 +120,9 @@ public final class EslintFormatterStep {
 		public FormatterFunc createFormatterFunc() {
 			try {
 				LOGGER.info("Creating formatter function (starting server)");
-				Runtime runtime = toRuntime();
-				ServerProcessInfo eslintRestServer = runtime.npmRunServer();
-				EslintRestService restService = new EslintRestService(eslintRestServer.getBaseUrl());
+				var runtime = toRuntime();
+				var eslintRestServer = runtime.npmRunServer();
+				var restService = new EslintRestService(eslintRestServer.getBaseUrl());
 				return Closeable.ofDangerous(() -> endServer(restService, eslintRestServer), new EslintFilePathPassingFormatterFunc(locations.projectDir(), runtime.nodeServerLayout().nodeModulesDir(), eslintConfigInUse, restService));
 			} catch (IOException e) {
 				throw ThrowingEx.asRuntime(e);
@@ -175,7 +175,7 @@ public final class EslintFormatterStep {
 			}
 			if (eslintConfig instanceof EslintTypescriptConfig config) {
 				// if we are a ts config, see if we need to use specific paths or use default projectDir
-				File tsConfigFilePath = config.getTypescriptConfigPath();
+				var tsConfigFilePath = config.getTypescriptConfigPath();
 				File tsConfigRootDir = tsConfigFilePath != null ? tsConfigFilePath.getParentFile() : projectDir;
 				eslintCallOptions.put(FormatOption.TS_CONFIG_ROOT_DIR, nodeModulesDir.getAbsoluteFile().toPath().relativize(tsConfigRootDir.getAbsoluteFile().toPath()).toString());
 			}

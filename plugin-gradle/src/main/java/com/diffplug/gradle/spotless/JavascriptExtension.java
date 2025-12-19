@@ -52,7 +52,7 @@ public class JavascriptExtension extends FormatExtension {
 	}
 
 	public JavascriptEslintConfig eslint(Map<String, String> devDependencies) {
-		JavascriptEslintConfig eslint = new JavascriptEslintConfig(devDependencies);
+		var eslint = new JavascriptEslintConfig(devDependencies);
 		addStep(eslint.createStep());
 		return eslint;
 	}
@@ -101,7 +101,7 @@ public class JavascriptExtension extends FormatExtension {
 
 		@Override
 		public FormatterStep createStep() {
-			final Project project = getProject();
+			final var project = getProject();
 
 			return EslintFormatterStep.create(devDependencies, provisioner(), project.getProjectDir(),
 					project.getLayout().getBuildDirectory().getAsFile().get(), npmModulesCacheOrNull(),
@@ -130,7 +130,7 @@ public class JavascriptExtension extends FormatExtension {
 	/** Uses exactly the npm packages specified in the map. */
 	@Override
 	public PrettierConfig prettier(Map<String, String> devDependencies) {
-		PrettierConfig prettierConfig = new JavascriptPrettierConfig(devDependencies);
+		var prettierConfig = new JavascriptPrettierConfig(devDependencies);
 		addStep(prettierConfig.createStep());
 		return prettierConfig;
 	}
@@ -201,7 +201,7 @@ public class JavascriptExtension extends FormatExtension {
 			if (this.prettierConfig == null) {
 				this.prettierConfig = Map.of("parser", DEFAULT_PRETTIER_JS_PARSER);
 			} else {
-				final Object currentParser = this.prettierConfig.get("parser");
+				final var currentParser = this.prettierConfig.get("parser");
 				if (PRETTIER_JS_PARSERS.contains(String.valueOf(currentParser))) {
 					getProject().getLogger().debug("Already javascript parser set, not overriding.");
 				} else {

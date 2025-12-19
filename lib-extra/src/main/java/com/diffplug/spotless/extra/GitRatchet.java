@@ -57,8 +57,8 @@ import com.diffplug.spotless.FileSignature;
 public abstract class GitRatchet<Project> implements AutoCloseable {
 
 	public boolean isClean(Project project, ObjectId treeSha, File file) throws IOException {
-		Repository repo = repositoryFor(project);
-		String relativePath = FileSignature.pathNativeToUnix(repo.getWorkTree().toPath().relativize(file.toPath()).toString());
+		var repo = repositoryFor(project);
+		var relativePath = FileSignature.pathNativeToUnix(repo.getWorkTree().toPath().relativize(file.toPath()).toString());
 		return isClean(project, treeSha, relativePath);
 	}
 
@@ -71,15 +71,15 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 	 * could be verrrry slow, so the rest of this is about speeding this up.
 	 */
 	public boolean isClean(Project project, ObjectId treeSha, String relativePathUnix) throws IOException {
-		Repository repo = repositoryFor(project);
+		var repo = repositoryFor(project);
 
 		DirCacheIterator dirCacheIteratorInit;
 		synchronized (this) {
 			// each DirCache is thread-safe, and we compute them one-to-one based on `repositoryFor`
-			DirCache dirCache = dirCaches.computeIfAbsent(repo, Errors.rethrow().wrap(Repository::readDirCache));
+			var dirCache = dirCaches.computeIfAbsent(repo, Errors.rethrow().wrap(Repository::readDirCache));
 			dirCacheIteratorInit = new DirCacheIterator(dirCache);
 		}
-		try (TreeWalk treeWalk = new TreeWalk(repo)) {
+		try (var treeWalk = new TreeWalk(repo)) {
 			treeWalk.setRecursive(true);
 			treeWalk.addTree(treeSha);
 			treeWalk.addTree(dirCacheIteratorInit);
@@ -92,9 +92,9 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 				// the file we care about is git clean
 				return true;
 			} else {
-				AbstractTreeIterator treeIterator = treeWalk.getTree(TREE, AbstractTreeIterator.class);
-				DirCacheIterator dirCacheIterator = treeWalk.getTree(INDEX, DirCacheIterator.class);
-				WorkingTreeIterator workingTreeIterator = treeWalk.getTree(WORKDIR, WorkingTreeIterator.class);
+				var treeIterator = treeWalk.getTree(TREE, AbstractTreeIterator.class);
+				var dirCacheIterator = treeWalk.getTree(INDEX, DirCacheIterator.class);
+				var workingTreeIterator = treeWalk.getTree(WORKDIR, WorkingTreeIterator.class);
 
 				boolean hasTree = treeIterator != null && workingTreeIterator != null;
 				boolean hasDirCache = dirCacheIterator != null;
@@ -150,7 +150,7 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 		if (projectGitDir == null || !RepositoryCache.FileKey.isGitRepository(projectGitDir, FS.DETECTED)) {
 			throw new IllegalArgumentException("Cannot find git repository in any parent directory");
 		}
-		Repository repo = gitRoots.get(projectGitDir);
+		var repo = gitRoots.get(projectGitDir);
 		if (repo == null) {
 			repo = FileRepositoryBuilder.create(projectGitDir);
 			gitRoots.put(projectGitDir, repo);
@@ -170,23 +170,23 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 	 */
 	public synchronized ObjectId rootTreeShaOf(Project project, String reference) {
 		try {
-			Repository repo = repositoryFor(project);
-			ObjectId treeSha = rootTreeShaCache.get(repo, reference);
+			var repo = repositoryFor(project);
+			var treeSha = rootTreeShaCache.get(repo, reference);
 			if (treeSha == null) {
-				try (RevWalk revWalk = new RevWalk(repo)) {
-					ObjectId commitSha = repo.resolve(reference);
+				try (var revWalk = new RevWalk(repo)) {
+					var commitSha = repo.resolve(reference);
 					if (commitSha == null) {
 						throw new IllegalArgumentException("No such reference '" + reference + "'");
 					}
 
-					RevCommit ratchetFrom = revWalk.parseCommit(commitSha);
-					RevCommit head = revWalk.parseCommit(repo.resolve(Constants.HEAD));
+					var ratchetFrom = revWalk.parseCommit(commitSha);
+					var head = revWalk.parseCommit(repo.resolve(Constants.HEAD));
 
 					revWalk.setRevFilter(RevFilter.MERGE_BASE);
 					revWalk.markStart(ratchetFrom);
 					revWalk.markStart(head);
 
-					RevCommit mergeBase = revWalk.next();
+					var mergeBase = revWalk.next();
 					treeSha = Optional.ofNullable(mergeBase).orElse(ratchetFrom).getTree();
 				}
 				rootTreeShaCache.put(repo, reference, treeSha.copy());
@@ -203,15 +203,15 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 	 */
 	public synchronized ObjectId subtreeShaOf(Project project, ObjectId rootTreeSha) {
 		try {
-			ObjectId subtreeSha = subtreeShaCache.get(project);
+			var subtreeSha = subtreeShaCache.get(project);
 			if (subtreeSha == null) {
-				Repository repo = repositoryFor(project);
-				File directory = getDir(project);
+				var repo = repositoryFor(project);
+				var directory = getDir(project);
 				if (repo.getWorkTree().equals(directory)) {
 					subtreeSha = rootTreeSha;
 				} else {
-					String subpath = FileSignature.pathNativeToUnix(repo.getWorkTree().toPath().relativize(directory.toPath()).toString());
-					TreeWalk treeWalk = TreeWalk.forPath(repo, subpath, rootTreeSha);
+					var subpath = FileSignature.pathNativeToUnix(repo.getWorkTree().toPath().relativize(directory.toPath()).toString());
+					var treeWalk = TreeWalk.forPath(repo, subpath, rootTreeSha);
 					subtreeSha = treeWalk == null ? ObjectId.zeroId() : treeWalk.getObjectId(0);
 				}
 				subtreeShaCache.put(project, subtreeSha.copy());

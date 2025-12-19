@@ -56,14 +56,14 @@ final class IdeHook {
 	}
 
 	static void performHook(SpotlessTaskImpl spotlessTask, IdeHook.State state) {
-		File file = new File(state.path);
+		var file = new File(state.path);
 		if (!file.isAbsolute()) {
 			System.err.println("Argument passed to " + PROPERTY + " must be an absolute path");
 			return;
 		}
 		if (spotlessTask.getTarget().contains(file)) {
-			GitRatchetGradle ratchet = spotlessTask.getRatchet();
-			try (Formatter formatter = spotlessTask.buildFormatter()) {
+			var ratchet = spotlessTask.getRatchet();
+			try (var formatter = spotlessTask.buildFormatter()) {
 				if (ratchet != null) {
 					if (ratchet.isClean(spotlessTask.getProjectDir().get().getAsFile(), spotlessTask.getRootTreeSha(), file)) {
 						dumpIsClean();
@@ -76,7 +76,7 @@ final class IdeHook {
 				} else {
 					bytes = Files.readAllBytes(file.toPath());
 				}
-				DirtyState dirty = DirtyState.of(formatter, file, bytes);
+				var dirty = DirtyState.of(formatter, file, bytes);
 				if (dirty.isClean()) {
 					dumpIsClean();
 				} else if (dirty.didNotConverge()) {

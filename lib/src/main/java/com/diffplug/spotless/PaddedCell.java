@@ -84,7 +84,7 @@ public final class PaddedCell {
 		Objects.requireNonNull(formatter, "formatter");
 		Objects.requireNonNull(file, "file");
 		byte[] rawBytes = ThrowingEx.get(() -> Files.readAllBytes(file.toPath()));
-		String raw = new String(rawBytes, formatter.getEncoding());
+		var raw = new String(rawBytes, formatter.getEncoding());
 		String original = LineEnding.toUnix(raw);
 		return check(formatter, file, original, MAX_CYCLE, new ValuePerStep<>(formatter));
 	}
@@ -103,12 +103,12 @@ public final class PaddedCell {
 		if (maxLength < 2) {
 			throw new IllegalArgumentException("maxLength must be at least 2");
 		}
-		String appliedOnce = formatter.computeWithLint(original, file, exceptionPerStep);
+		var appliedOnce = formatter.computeWithLint(original, file, exceptionPerStep);
 		if (appliedOnce.equals(original)) {
 			return Type.CONVERGE.create(file, List.of(appliedOnce));
 		}
 
-		String appliedTwice = formatter.computeWithLint(appliedOnce, file, exceptionPerStep);
+		var appliedTwice = formatter.computeWithLint(appliedOnce, file, exceptionPerStep);
 		if (appliedOnce.equals(appliedTwice)) {
 			return Type.CONVERGE.create(file, List.of(appliedOnce));
 		}
@@ -116,9 +116,9 @@ public final class PaddedCell {
 		List<String> appliedN = new ArrayList<>();
 		appliedN.add(appliedOnce);
 		appliedN.add(appliedTwice);
-		String input = appliedTwice;
+		var input = appliedTwice;
 		while (appliedN.size() < maxLength) {
-			String output = formatter.computeWithLint(input, file, exceptionPerStep);
+			var output = formatter.computeWithLint(input, file, exceptionPerStep);
 			if (output.equals(input)) {
 				return Type.CONVERGE.create(file, appliedN);
 			} else {

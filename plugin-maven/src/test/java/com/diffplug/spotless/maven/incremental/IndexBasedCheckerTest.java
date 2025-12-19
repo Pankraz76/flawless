@@ -37,14 +37,14 @@ class IndexBasedCheckerTest extends FileIndexHarness {
 
 	@Test
 	void isUpToDateReturnsFalseForUnknownFile() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
+		var sourceFile = createSourceFile("source.txt");
 		assertThat(checker.isUpToDate(sourceFile)).isFalse();
 	}
 
 	@Test
 	void isUpToDateReturnsTrueWhenOnDiskFileIsSameAsInTheIndex() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
-		Instant modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant();
+		var sourceFile = createSourceFile("source.txt");
+		var modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant();
 		index.setLastModifiedTime(sourceFile, modifiedTime);
 
 		assertThat(checker.isUpToDate(sourceFile)).isTrue();
@@ -52,8 +52,8 @@ class IndexBasedCheckerTest extends FileIndexHarness {
 
 	@Test
 	void isUpToDateReturnsFalseWhenOnDiskFileIsNewerThanInTheIndex() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
-		Instant modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant().minusSeconds(42);
+		var sourceFile = createSourceFile("source.txt");
+		var modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant().minusSeconds(42);
 		index.setLastModifiedTime(sourceFile, modifiedTime);
 
 		assertThat(checker.isUpToDate(sourceFile)).isFalse();
@@ -66,8 +66,8 @@ class IndexBasedCheckerTest extends FileIndexHarness {
 	 */
 	@Test
 	void isUpToDateReturnsFalseWhenOnDiskFileIsOlderThanInTheIndex() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
-		Instant modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant().plusSeconds(42);
+		var sourceFile = createSourceFile("source.txt");
+		var modifiedTime = Files.getLastModifiedTime(sourceFile).toInstant().plusSeconds(42);
 		index.setLastModifiedTime(sourceFile, modifiedTime);
 
 		assertThat(checker.isUpToDate(sourceFile)).isFalse();
@@ -75,7 +75,7 @@ class IndexBasedCheckerTest extends FileIndexHarness {
 
 	@Test
 	void setUpToDateUpdatesTheIndex() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
+		var sourceFile = createSourceFile("source.txt");
 		assertThat(index.getLastModifiedTime(sourceFile)).isNull();
 		assertThat(checker.isUpToDate(sourceFile)).isFalse();
 
@@ -87,13 +87,13 @@ class IndexBasedCheckerTest extends FileIndexHarness {
 
 	@Test
 	void closeWritesTheIndex() throws Exception {
-		Path sourceFile = createSourceFile("source.txt");
+		var sourceFile = createSourceFile("source.txt");
 		assertThat(index.getLastModifiedTime(sourceFile)).isNull();
 
 		checker.setUpToDate(sourceFile);
 		checker.close();
 
-		FileIndex newIndex = FileIndex.read(config, log);
+		var newIndex = FileIndex.read(config, log);
 		assertThat(newIndex.getLastModifiedTime(sourceFile)).isEqualTo(Files.getLastModifiedTime(sourceFile).toInstant());
 	}
 }

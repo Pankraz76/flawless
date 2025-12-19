@@ -51,7 +51,7 @@ class TimedLoggerTest {
 	@Test
 	void itDoesNotLogWhenLevelDisabled() {
 
-		TestLogger logger = new TestLogger() {
+		var logger = new TestLogger() {
 			@Override
 			public boolean isInfoEnabled() {
 				return false;
@@ -67,7 +67,7 @@ class TimedLoggerTest {
 				return false;
 			}
 		};
-		TimedLogger timedLogger = TimedLogger.forLogger(logger);
+		var timedLogger = TimedLogger.forLogger(logger);
 
 		timedLogger.withInfo("This should not be logged").run(() -> Thread.sleep(1));
 		logger.assertNoEvents();
@@ -136,7 +136,7 @@ class TimedLoggerTest {
 
 	@Test
 	void itReturnsValueOfCallableWhileStillLogging() {
-		String result = timedLogger.withInfo("This should be logged").call(() -> {
+		var result = timedLogger.withInfo("This should be logged").call(() -> {
 			testTicker.tickMillis(2);
 			return "This is the result";
 		});

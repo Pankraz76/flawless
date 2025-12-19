@@ -75,7 +75,7 @@ public final class GitWorkarounds {
 	 * @return the builder.
 	 */
 	static RepositorySpecificResolver fileRepositoryResolverForProject(File projectDir, @Nullable Config baseConfig) {
-		RepositorySpecificResolver repositoryResolver = new RepositorySpecificResolver(baseConfig);
+		var repositoryResolver = new RepositorySpecificResolver(baseConfig);
 		repositoryResolver.findGitDir(projectDir);
 		repositoryResolver.readEnvironment();
 		if (repositoryResolver.getGitDir() != null || repositoryResolver.getWorkTree() != null) {
@@ -130,7 +130,7 @@ public final class GitWorkarounds {
 		@Override
 		protected Config loadConfig() throws IOException {
 			if (getGitDir() != null) {
-				File path = resolveWithCommonDir(Constants.CONFIG);
+				var path = resolveWithCommonDir(Constants.CONFIG);
 				FileBasedConfig cfg = null;
 				if (this.baseConfig == null) {
 					cfg = new FileBasedConfig(path, safeFS());
@@ -142,7 +142,7 @@ public final class GitWorkarounds {
 
 					// Check for per-worktree config, it should be parsed after the common config
 					if (cfg.getBoolean(ConfigConstants.CONFIG_EXTENSIONS_SECTION, EXTENSIONS_WORKTREE_CONFIG, false)) {
-						File worktreeSpecificConfig = safeFS().resolve(getGitDir(), EXTENSIONS_WORKTREE_CONFIG_FILENAME);
+						var worktreeSpecificConfig = safeFS().resolve(getGitDir(), EXTENSIONS_WORKTREE_CONFIG_FILENAME);
 						if (safeFS().exists(worktreeSpecificConfig) && safeFS().isFile(worktreeSpecificConfig)) {
 							// It is important to base this on the common config, as both the common config and the per-worktree config should be used
 							cfg = new FileBasedConfig(cfg, worktreeSpecificConfig, safeFS());
@@ -167,9 +167,9 @@ public final class GitWorkarounds {
 
 			// Setup common directory
 			if (commonDirectory == null) {
-				File commonDirFile = safeFS().resolve(getGitDir(), COMMON_DIR);
+				var commonDirFile = safeFS().resolve(getGitDir(), COMMON_DIR);
 				if (safeFS().exists(commonDirFile) && safeFS().isFile(commonDirFile)) {
-					byte[] content = IO.readFully(commonDirFile);
+					var content = IO.readFully(commonDirFile);
 					if (content.length < 1) {
 						throw emptyFile(commonDirFile);
 					}
@@ -182,8 +182,8 @@ public final class GitWorkarounds {
 						throw emptyFile(commonDirFile);
 					}
 
-					String commonPath = RawParseUtils.decode(content, 0, lineEnd);
-					File common = new File(commonPath);
+					var commonPath = RawParseUtils.decode(content, 0, lineEnd);
+					var common = new File(commonPath);
 					if (common.isAbsolute()) {
 						commonDirectory = common;
 					} else {
@@ -208,7 +208,7 @@ public final class GitWorkarounds {
 			super.readEnvironment(sr);
 
 			// Always overwrite, will trump over the common dir file
-			String val = sr.getenv(GIT_COMMON_DIR_ENV_KEY);
+			var val = sr.getenv(GIT_COMMON_DIR_ENV_KEY);
 			if (val != null) {
 				commonDirectory = new File(val);
 			}

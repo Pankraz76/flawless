@@ -27,14 +27,14 @@ class PalantirJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void jvm13Features() throws Exception {
-		try (StepHarness step = StepHarness.forStep(PalantirJavaFormatStep.create(TestProvisioner.mavenCentral()))) {
+		try (var step = StepHarness.forStep(PalantirJavaFormatStep.create(TestProvisioner.mavenCentral()))) {
 			step.testResource("java/palantirjavaformat/TextBlock.dirty", "java/palantirjavaformat/TextBlock.clean");
 		}
 	}
 
 	@Test
 	void behavior2() throws Exception {
-		FormatterStep step = PalantirJavaFormatStep.create(TestProvisioner.mavenCentral());
+		var step = PalantirJavaFormatStep.create(TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/palantirjavaformat/JavaCodeUnformatted.test", "java/palantirjavaformat/JavaCodeFormatted.test")
 				.testResource("java/palantirjavaformat/JavaCodeWithLicenseUnformatted.test", "java/palantirjavaformat/JavaCodeWithLicenseFormatted.test")
@@ -43,7 +43,7 @@ class PalantirJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behavior() throws Exception {
-		FormatterStep step = PalantirJavaFormatStep.create("1.1.0", TestProvisioner.mavenCentral());
+		var step = PalantirJavaFormatStep.create("1.1.0", TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/palantirjavaformat/JavaCodeUnformatted.test", "java/palantirjavaformat/JavaCodeFormatted.test")
 				.testResource("java/palantirjavaformat/JavaCodeWithLicenseUnformatted.test", "java/palantirjavaformat/JavaCodeWithLicenseFormatted.test")
@@ -52,7 +52,7 @@ class PalantirJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void formatJavadoc() throws Exception {
-		FormatterStep step = PalantirJavaFormatStep.create("2.57.0", "PALANTIR", true, TestProvisioner.mavenCentral());
+		var step = PalantirJavaFormatStep.create("2.57.0", "PALANTIR", true, TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/palantirjavaformat/JavaCodeWithJavaDocUnformatted.test", "java/palantirjavaformat/JavaCodeWithJavaDocFormatted.test")
 				.testResource("java/palantirjavaformat/JavaCodeWithPackageUnformatted.test", "java/palantirjavaformat/JavaCodeWithPackageFormatted.test");
@@ -60,7 +60,7 @@ class PalantirJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithGoogleStyle() throws Exception {
-		FormatterStep step = PalantirJavaFormatStep.create("1.1.0", "GOOGLE", TestProvisioner.mavenCentral());
+		var step = PalantirJavaFormatStep.create("1.1.0", "GOOGLE", TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/palantirjavaformat/JavaCodeUnformatted.test", "java/palantirjavaformat/JavaCodeFormattedGoogle.test")
 				.testResource("java/palantirjavaformat/JavaCodeWithLicenseUnformatted.test", "java/palantirjavaformat/JavaCodeWithLicenseFormattedGoogle.test")
@@ -97,7 +97,7 @@ class PalantirJavaFormatStepTest extends ResourceHarness {
 
 			@Override
 			protected FormatterStep create() {
-				String finalVersion = this.version;
+				var finalVersion = this.version;
 				return PalantirJavaFormatStep.create(finalVersion, style, formatJavadoc, TestProvisioner.mavenCentral());
 			}
 		}.testEquals();

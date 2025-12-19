@@ -25,7 +25,7 @@ import com.diffplug.spotless.StepHarness;
 class TrimTrailingWhitespaceStepTest extends ResourceHarness {
 	@Test
 	void trimTrailingWhitespace() throws Exception {
-		StepHarness step = StepHarness.forStep(TrimTrailingWhitespaceStep.create());
+		var step = StepHarness.forStep(TrimTrailingWhitespaceStep.create());
 		step.testUnaffected("");
 		step.testUnaffected("\n");
 		step.testUnaffected("\n\n\n");

@@ -65,7 +65,7 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 
 	@Override
 	protected void process(String name, Iterable<File> files, Formatter formatter, UpToDateChecker upToDateChecker) throws MojoExecutionException {
-		ImpactedFilesTracker counter = new ImpactedFilesTracker();
+		var counter = new ImpactedFilesTracker();
 
 		List<File> problemFiles = new ArrayList<>();
 		List<Map.Entry<File, LintState>> lintProblems = new ArrayList<>();
@@ -79,7 +79,7 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 			}
 			buildContext.removeMessages(file);
 			try {
-				LintState lintState = super.calculateLintState(formatter, file);
+				var lintState = super.calculateLintState(formatter, file);
 				boolean hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
 				boolean hasUnsuppressedLints = lintState.isHasLints();
 
@@ -121,9 +121,9 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 		} else if (!lintProblems.isEmpty()) {
 			// Show lints only if there are no formatting violations
 			Map.Entry<File, LintState> firstLintProblem = lintProblems.get(0);
-			File file = firstLintProblem.getKey();
-			LintState lintState = firstLintProblem.getValue();
-			String stepName = lintState.getLintsByStep(formatter).keySet().iterator().next();
+			var file = firstLintProblem.getKey();
+			var lintState = firstLintProblem.getValue();
+			var stepName = lintState.getLintsByStep(formatter).keySet().iterator().next();
 			throw new MojoExecutionException("Unable to format file %s%nStep '%s' found problem in '%s':%n%s".formatted(
 					file, stepName, file.getName(), lintState.asStringOneLine(file, formatter)));
 		}

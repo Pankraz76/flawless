@@ -33,23 +33,23 @@ class FileTreeTest extends ResourceHarness {
 
 	@BeforeEach
 	void fileTree() throws IOException {
-		Project project = TestProvisioner.gradleProject(rootFolder());
+		var project = TestProvisioner.gradleProject(rootFolder());
 		fileTree = project.fileTree(rootFolder());
 		fileTree.exclude("userHome"); // somehow we're getting userHome\native\19\windows-amd64\native-platform.dll
 	}
 
 	@Test
 	void absolutePathDoesntWork() throws IOException {
-		File someFile = setFile("someFolder/someFile").toContent("");
-		File someFolder = someFile.getParentFile();
+		var someFile = setFile("someFolder/someFile").toContent("");
+		var someFolder = someFile.getParentFile();
 		fileTree.exclude(someFolder.getAbsolutePath());
 		Assertions.assertThat(fileTree).containsExactlyInAnyOrder(someFile);
 	}
 
 	@Test
 	void relativePathDoes() throws IOException {
-		File someFile = setFile("someFolder/someFile").toContent("");
-		File someFolder = someFile.getParentFile();
+		var someFile = setFile("someFolder/someFile").toContent("");
+		var someFolder = someFile.getParentFile();
 		fileTree.exclude(LintSuppression.relativizeAsUnix(rootFolder(), someFolder));
 		Assertions.assertThat(fileTree).containsExactlyInAnyOrder();
 	}

@@ -48,9 +48,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 
 	@Test
 	void prettierCachesNodeModulesToADefaultFolderWhenCachingEnabled() throws IOException {
-		File dir1 = newFolder("npm-prettier-1");
-		File cacheDir = DEFAULT_DIR_FOR_NPM_INSTALL_CACHE_DO_NEVER_WRITE_TO_THIS;
-		BuildResult result = runPhpPrettierOnDir(dir1, cacheDir);
+		var dir1 = newFolder("npm-prettier-1");
+		var cacheDir = DEFAULT_DIR_FOR_NPM_INSTALL_CACHE_DO_NEVER_WRITE_TO_THIS;
+		var result = runPhpPrettierOnDir(dir1, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContain("Using cached node_modules for")
 				.contains("Caching node_modules for ")
@@ -60,19 +60,19 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 
 	@Test
 	void prettierCachesAndReusesNodeModulesInSpecificInstallCacheFolder() throws IOException {
-		File dir1 = newFolder("npm-prettier-1");
-		File cacheDir = newFolder("npm-prettier-cache");
-		BuildResult result = runPhpPrettierOnDir(dir1, cacheDir);
+		var dir1 = newFolder("npm-prettier-1");
+		var cacheDir = newFolder("npm-prettier-cache");
+		var result = runPhpPrettierOnDir(dir1, cacheDir);
 		Assertions.assertThat(result.getOutput()).doesNotContainPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
-		File dir2 = newFolder("npm-prettier-2");
-		BuildResult result2 = runPhpPrettierOnDir(dir2, cacheDir);
+		var dir2 = newFolder("npm-prettier-2");
+		var result2 = runPhpPrettierOnDir(dir2, cacheDir);
 		Assertions.assertThat(result2.getOutput()).containsPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
 	}
 
 	@Test
 	void prettierDoesNotCacheNodeModulesIfNotExplicitlyEnabled() throws IOException {
-		File dir2 = newFolder("npm-prettier-1");
-		BuildResult result = runPhpPrettierOnDir(dir2, null);
+		var dir2 = newFolder("npm-prettier-1");
+		var result = runPhpPrettierOnDir(dir2, null);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*")
 				.doesNotContainPattern("Caching node_modules for .*");
@@ -81,9 +81,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(1)
 	void prettierCachesNodeModuleInGlobalInstallCacheDir() throws IOException {
-		File dir1 = newFolder("npm-prettier-global-1");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runPhpPrettierOnDir(dir1, cacheDir);
+		var dir1 = newFolder("npm-prettier-global-1");
+		var cacheDir = pertainingCacheDir;
+		var result = runPhpPrettierOnDir(dir1, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.containsPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
@@ -92,16 +92,16 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(2)
 	void prettierUsesCachedNodeModulesFromGlobalInstallCacheDir() throws IOException {
-		File dir2 = newFolder("npm-prettier-global-2");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runPhpPrettierOnDir(dir2, cacheDir);
+		var dir2 = newFolder("npm-prettier-global-2");
+		var cacheDir = pertainingCacheDir;
+		var result = runPhpPrettierOnDir(dir2, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.containsPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.doesNotContainPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
 	}
 
 	private BuildResult runPhpPrettierOnDir(File projDir, File cacheDir) throws IOException {
-		String baseDir = projDir.getName();
+		var baseDir = projDir.getName();
 		String cacheDirEnabled = cacheDirEnabledStringForCacheDir(cacheDir);
 		setFile(baseDir + "/build.gradle").toLines(
 				"plugins {",
@@ -121,7 +121,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile(baseDir + "/php-example.php").toResource("npm/prettier/plugins/php.dirty");
-		final BuildResult spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile(baseDir + "/php-example.php").sameAsResource("npm/prettier/plugins/php.clean");
 		return spotlessApply;
@@ -130,9 +130,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(3)
 	void tsfmtCachesNodeModuleInGlobalInstallCacheDir() throws IOException {
-		File dir1 = newFolder("npm-tsfmt-global-1");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runTsfmtOnDir(dir1, cacheDir);
+		var dir1 = newFolder("npm-tsfmt-global-1");
+		var cacheDir = pertainingCacheDir;
+		var result = runTsfmtOnDir(dir1, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.containsPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
@@ -141,9 +141,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(4)
 	void tsfmtUsesCachedNodeModulesFromGlobalInstallCacheDir() throws IOException {
-		File dir2 = newFolder("npm-tsfmt-global-2");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runTsfmtOnDir(dir2, cacheDir);
+		var dir2 = newFolder("npm-tsfmt-global-2");
+		var cacheDir = pertainingCacheDir;
+		var result = runTsfmtOnDir(dir2, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.containsPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.doesNotContainPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
@@ -151,15 +151,15 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 
 	@Test
 	void tsfmtDoesNotCacheNodeModulesIfNotExplicitlyEnabled() throws IOException {
-		File dir2 = newFolder("npm-tsfmt-1");
-		BuildResult result = runTsfmtOnDir(dir2, null);
+		var dir2 = newFolder("npm-tsfmt-1");
+		var result = runTsfmtOnDir(dir2, null);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*")
 				.doesNotContainPattern("Caching node_modules for .*");
 	}
 
 	private BuildResult runTsfmtOnDir(File projDir, File cacheDir) throws IOException {
-		String baseDir = projDir.getName();
+		var baseDir = projDir.getName();
 		String cacheDirEnabled = cacheDirEnabledStringForCacheDir(cacheDir);
 		setFile(baseDir + "/build.gradle").toLines(
 				"plugins {",
@@ -176,7 +176,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile(baseDir + "/test.ts").toResource("npm/tsfmt/tsfmt/tsfmt.dirty");
-		final BuildResult spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
+		final var spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
 		assertFile(baseDir + "/test.ts").sameAsResource("npm/tsfmt/tsfmt/tsfmt.clean");
 		return spotlessApply;
 	}
@@ -184,9 +184,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(5)
 	void eslintCachesNodeModuleInGlobalInstallCacheDir() throws IOException {
-		File dir1 = newFolder("npm-eslint-global-1");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runEslintOnDir(dir1, cacheDir);
+		var dir1 = newFolder("npm-eslint-global-1");
+		var cacheDir = pertainingCacheDir;
+		var result = runEslintOnDir(dir1, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.containsPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
@@ -195,9 +195,9 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 	@Test
 	@Order(6)
 	void eslintUsesCachedNodeModulesFromGlobalInstallCacheDir() throws IOException {
-		File dir2 = newFolder("npm-eslint-global-2");
-		File cacheDir = pertainingCacheDir;
-		BuildResult result = runEslintOnDir(dir2, cacheDir);
+		var dir2 = newFolder("npm-eslint-global-2");
+		var cacheDir = pertainingCacheDir;
+		var result = runEslintOnDir(dir2, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.containsPattern("Using cached node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E")
 				.doesNotContainPattern("Caching node_modules for .*\\Q" + cacheDir.getAbsolutePath() + "\\E");
@@ -205,16 +205,16 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 
 	@Test
 	void eslintDoesNotCacheNodeModulesIfNotExplicitlyEnabled() throws IOException {
-		File dir2 = newFolder("npm-eslint-1");
+		var dir2 = newFolder("npm-eslint-1");
 		File cacheDir = null;
-		BuildResult result = runEslintOnDir(dir2, cacheDir);
+		var result = runEslintOnDir(dir2, cacheDir);
 		Assertions.assertThat(result.getOutput())
 				.doesNotContainPattern("Using cached node_modules for .*")
 				.doesNotContainPattern("Caching node_modules for .*");
 	}
 
 	private BuildResult runEslintOnDir(File projDir, File cacheDir) throws IOException {
-		String baseDir = projDir.getName();
+		var baseDir = projDir.getName();
 		String cacheDirEnabled = cacheDirEnabledStringForCacheDir(cacheDir);
 
 		setFile(baseDir + "/.eslintrc.js").toResource("npm/eslint/typescript/custom_rules/.eslintrc.js");
@@ -230,7 +230,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile(baseDir + "/test.ts").toResource("npm/eslint/typescript/custom_rules/typescript.dirty");
-		BuildResult spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
+		var spotlessApply = gradleRunner().withProjectDir(projDir).withArguments("--stacktrace", "--info", "spotlessApply").build();
 		assertFile(baseDir + "/test.ts").sameAsResource("npm/eslint/typescript/custom_rules/typescript.clean");
 		return spotlessApply;
 	}

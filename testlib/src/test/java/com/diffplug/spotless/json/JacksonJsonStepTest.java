@@ -24,11 +24,11 @@ import com.diffplug.spotless.TestProvisioner;
 class JacksonJsonStepTest {
 	@Test
 	void canSetCustomIndentationLevel() {
-		FormatterStep step = JacksonJsonStep.create(TestProvisioner.mavenCentral());
-		StepHarness stepHarness = StepHarness.forStep(step);
+		var step = JacksonJsonStep.create(TestProvisioner.mavenCentral());
+		var stepHarness = StepHarness.forStep(step);
 
-		String before = "json/singletonArrayBefore.json";
-		String after = "json/singletonArrayAfter_Jackson.json";
+		var before = "json/singletonArrayBefore.json";
+		var after = "json/singletonArrayAfter_Jackson.json";
 		stepHarness.testResource(before, after);
 	}
 }

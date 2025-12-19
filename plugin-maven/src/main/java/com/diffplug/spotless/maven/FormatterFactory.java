@@ -86,11 +86,11 @@ public abstract class FormatterFactory {
 	}
 
 	public final Formatter newFormatter(Supplier<Iterable<File>> filesToFormat, FormatterConfig config) {
-		Charset formatterEncoding = encoding(config);
-		LineEnding formatterLineEndings = lineEndings(config);
-		LineEnding.Policy formatterLineEndingPolicy = formatterLineEndings.createPolicy(config.getFileLocator().getBaseDir(), filesToFormat);
+		var formatterEncoding = encoding(config);
+		var formatterLineEndings = lineEndings(config);
+		var formatterLineEndingPolicy = formatterLineEndings.createPolicy(config.getFileLocator().getBaseDir(), filesToFormat);
 
-		FormatterStepConfig stepConfig = stepConfig(formatterEncoding, config);
+		var stepConfig = stepConfig(formatterEncoding, config);
 		List<FormatterStepFactory> factories = gatherStepFactories(config.getGlobalStepFactories(), stepFactories);
 
 		List<FormatterStep> formatterSteps = factories.stream()

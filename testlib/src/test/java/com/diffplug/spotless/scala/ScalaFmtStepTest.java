@@ -42,21 +42,21 @@ class ScalaFmtStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorFileOverride() {
-		FormatterStep step = ScalaFmtStep.create(ScalaFmtStep.DEFAULT_VERSION, TestProvisioner.mavenCentral(), createTestFile("scala/scalafmt/scalafmt.fileoverride.conf"));
+		var step = ScalaFmtStep.create(ScalaFmtStep.DEFAULT_VERSION, TestProvisioner.mavenCentral(), createTestFile("scala/scalafmt/scalafmt.fileoverride.conf"));
 		StepHarness.forStep(step)
 				.testResource("scala/scalafmt/basic.dirty", "scala/scalafmt/basic.cleanWithCustomConf_3.0.0");
 	}
 
 	@Test
 	void behaviorNoConfigFile() {
-		FormatterStep step = ScalaFmtStep.create("3.0.0", TestProvisioner.mavenCentral(), null);
+		var step = ScalaFmtStep.create("3.0.0", TestProvisioner.mavenCentral(), null);
 		StepHarness.forStep(step)
 				.testResource("scala/scalafmt/basic.dirty", "scala/scalafmt/basicPost3.0.0.clean");
 	}
 
 	@Test
 	void behaviorConfigFileVersionDoesnotMatchLibrary() {
-		FormatterStep step = ScalaFmtStep.create("3.0.0", TestProvisioner.mavenCentral(), createTestFile("scala/scalafmt/scalafmt.conf"));
+		var step = ScalaFmtStep.create("3.0.0", TestProvisioner.mavenCentral(), createTestFile("scala/scalafmt/scalafmt.conf"));
 		Assertions.assertThatThrownBy(() -> step.format("", new File(""))).cause().message().contains("Spotless is using 3.0.0 but the config file declares 3.8.1. Both must match. Update the version declared in the plugin's settings and/or the config file.");
 	}
 
@@ -90,8 +90,8 @@ class ScalaFmtStepTest extends ResourceHarness {
 
 	@Test
 	void invalidConfiguration() {
-		File invalidConfFile = createTestFile("scala/scalafmt/scalafmt.invalid.conf");
-		Provisioner provisioner = TestProvisioner.mavenCentral();
+		var invalidConfFile = createTestFile("scala/scalafmt/scalafmt.invalid.conf");
+		var provisioner = TestProvisioner.mavenCentral();
 		Assertions.assertThatThrownBy(() -> ScalaFmtStep.create("3.0.0", provisioner, invalidConfFile).format("", new File(""))).cause().message().contains("found option 'invalidScalaFmtConfigField' which wasn't expected");
 	}
 }

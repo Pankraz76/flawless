@@ -25,7 +25,7 @@ final class NoopChecker implements UpToDateChecker {
 	private NoopChecker() {}
 
 	static NoopChecker create(MavenProject project, Path indexFile, Log log) {
-		FileIndexConfig indexConfig = new FileIndexConfig(project, indexFile);
+		var indexConfig = new FileIndexConfig(project, indexFile);
 		FileIndex.delete(indexConfig, log);
 		return new NoopChecker();
 	}

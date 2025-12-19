@@ -52,7 +52,7 @@ public class Ktfmt implements FormatterStepFactory {
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
 		String version = this.version != null ? this.version : KtfmtStep.defaultVersion();
 		Style style = this.style != null ? Style.valueOf(this.style) : null;
-		KtfmtFormattingOptions options = new KtfmtFormattingOptions(maxWidth, blockIndent, continuationIndent, removeUnusedImports, trailingCommaManagementStrategy);
+		var options = new KtfmtFormattingOptions(maxWidth, blockIndent, continuationIndent, removeUnusedImports, trailingCommaManagementStrategy);
 		return KtfmtStep.create(version, config.getProvisioner(), style, options);
 	}
 }

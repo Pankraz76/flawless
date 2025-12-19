@@ -139,7 +139,7 @@ public class JavaExtension extends FormatExtension implements HasBuiltinDelimite
 		}
 
 		private FormatterStep createStep() {
-			ImportOrderStep importOrderStep = ImportOrderStep.forJava();
+			var importOrderStep = ImportOrderStep.forJava();
 
 			return importOrderFile != null
 					? importOrderStep.createFrom(wildcardsLast, semanticSort, treatAsPackage, treatAsClass, getProject().file(importOrderFile))
@@ -327,7 +327,7 @@ public class JavaExtension extends FormatExtension implements HasBuiltinDelimite
 
 		public EclipseConfig configFile(Object... configFiles) {
 			requireElementsNonNull(configFiles);
-			Project project = getProject();
+			var project = getProject();
 			builder.setPreferences(project.files(configFiles).getFiles());
 			replaceStep(builder.build());
 			return this;

@@ -48,15 +48,15 @@ class PaddedCellTest {
 	private void testCase(SerializedFunction<String, String> step, String input, PaddedCell.Type expectedOutputType, String expectedSteps, String canonical, boolean misbehaved) throws IOException {
 		List<FormatterStep> formatterSteps = new ArrayList<>();
 		formatterSteps.add(NeverUpToDateStep.create("step", step));
-		try (Formatter formatter = Formatter.builder()
+		try (var formatter = Formatter.builder()
 				.lineEndingsPolicy(LineEnding.UNIX.createPolicy())
 				.encoding(StandardCharsets.UTF_8)
 				.steps(formatterSteps).build()) {
 
-			File file = new File(rootFolder, "input");
+			var file = new File(rootFolder, "input");
 			Files.write(file.toPath(), input.getBytes(StandardCharsets.UTF_8));
 
-			PaddedCell result = PaddedCell.check(formatter, file);
+			var result = PaddedCell.check(formatter, file);
 			Assertions.assertEquals(misbehaved, result.misbehaved());
 			Assertions.assertEquals(expectedOutputType, result.type());
 
@@ -119,7 +119,7 @@ class PaddedCellTest {
 			for (int i = 0; i < unordered.size(); ++i) {
 				// try every rotation of the list
 				Collections.rotate(unordered, 1);
-				PaddedCell result = CYCLE.create(rootFolder, unordered);
+				var result = CYCLE.create(rootFolder, unordered);
 				// make sure the canonical result is always the appropriate one
 				Assertions.assertEquals(canonical, result.canonical());
 			}

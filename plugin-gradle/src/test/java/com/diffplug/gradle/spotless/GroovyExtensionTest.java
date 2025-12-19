@@ -51,7 +51,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 
-		String withoutHeader = getTestResource("groovy/licenseheader/JavaCodeWithoutHeader.test");
+		var withoutHeader = getTestResource("groovy/licenseheader/JavaCodeWithoutHeader.test");
 
 		setFile("src/main/java/test.java").toContent(withoutHeader);
 		setFile("src/main/groovy/test.java").toContent(withoutHeader);
@@ -83,7 +83,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 
-		Throwable error = assertThrows(Throwable.class,
+		var error = assertThrows(Throwable.class,
 				() -> gradleRunner().withArguments("spotlessApply").build());
 		assertThat(error).hasMessageContaining("'excludeJava' is not supported");
 	}
@@ -102,8 +102,8 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 
-		String withSemicolons = getTestResource("groovy/removeSemicolons/GroovyCodeWithSemicolons.test");
-		String withoutSemicolons = getTestResource("groovy/removeSemicolons/GroovyCodeWithSemicolonsFormatted.test");
+		var withSemicolons = getTestResource("groovy/removeSemicolons/GroovyCodeWithSemicolons.test");
+		var withoutSemicolons = getTestResource("groovy/removeSemicolons/GroovyCodeWithSemicolonsFormatted.test");
 		setFile("src/main/groovy/test.groovy").toContent(withSemicolons);
 		gradleRunner().withArguments("spotlessApply").build();
 		assertFile("src/main/groovy/test.groovy").hasContent(withoutSemicolons);
@@ -122,7 +122,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 
-		Throwable error = assertThrows(Throwable.class,
+		var error = assertThrows(Throwable.class,
 				() -> gradleRunner().withArguments("spotlessApply").build());
 		assertThat(error).hasMessageContaining("You must either specify 'target' manually or apply the 'groovy' plugin.");
 	}

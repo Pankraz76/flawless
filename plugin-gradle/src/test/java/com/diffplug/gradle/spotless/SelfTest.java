@@ -50,7 +50,7 @@ public class SelfTest {
 			});
 		});
 		project.getBuildscript().getRepositories().mavenCentral();
-		SpotlessTaskImpl onlyTask = project.getTasks().stream()
+		var onlyTask = project.getTasks().stream()
 				.filter(task -> task instanceof SpotlessTaskImpl)
 				.map(task -> (SpotlessTaskImpl) task)
 				.collect(MoreCollectors.singleOrEmpty()).get();
@@ -62,7 +62,7 @@ public class SelfTest {
 	/** Creates a Project which has had the SpotlessExtension setup. */
 	private static Project createProject(Consumer<SpotlessExtensionImpl> test) throws Exception {
 		//Project project = Mocks.mockProject(TestProvisioner.gradleProject(new File("").getAbsoluteFile()), afterEvaluate);
-		Project project = TestProvisioner.gradleProject(new File("").getAbsoluteFile());
+		var project = TestProvisioner.gradleProject(new File("").getAbsoluteFile());
 		// create the spotless plugin
 		project.getPlugins().apply(SpotlessPlugin.class);
 		// setup the plugin

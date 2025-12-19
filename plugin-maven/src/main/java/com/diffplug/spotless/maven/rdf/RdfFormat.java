@@ -40,7 +40,7 @@ public class RdfFormat implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
-		RdfFormatterConfig formatterConfig = RdfFormatterConfig
+		var formatterConfig = RdfFormatterConfig
 				.builder()
 				.failOnWarning(failOnWarning)
 				.turtleFormatterVersion(turtleFormatterVersion)

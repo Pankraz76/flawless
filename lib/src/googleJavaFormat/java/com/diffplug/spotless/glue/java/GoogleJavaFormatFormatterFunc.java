@@ -52,7 +52,7 @@ public class GoogleJavaFormatFormatterFunc implements FormatterFunc {
 		this.reflowStrings = reflowStrings;
 		this.reorderImports = reorderImports;
 
-		JavaFormatterOptions.Builder builder = JavaFormatterOptions.builder().style(formatterStyle);
+		var builder = JavaFormatterOptions.builder().style(formatterStyle);
 		if (!formatJavadoc) {
 			builder = builder.formatJavadoc(false);
 		}
@@ -62,9 +62,9 @@ public class GoogleJavaFormatFormatterFunc implements FormatterFunc {
 	@Override
 	@Nonnull
 	public String apply(@Nonnull String input) throws Exception {
-		String formatted = formatter.formatSource(input);
-		String removedUnused = RemoveUnusedImports.removeUnusedImports(formatted);
-		String sortedImports = ImportOrderer.reorderImports(removedUnused, reorderImports ? formatterStyle : Style.GOOGLE);
+		var formatted = formatter.formatSource(input);
+		var removedUnused = RemoveUnusedImports.removeUnusedImports(formatted);
+		var sortedImports = ImportOrderer.reorderImports(removedUnused, reorderImports ? formatterStyle : Style.GOOGLE);
 		return reflowLongStrings(sortedImports);
 	}
 

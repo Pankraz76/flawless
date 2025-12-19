@@ -55,7 +55,7 @@ class FreshMarkStepTest {
 
 			@Override
 			protected FormatterStep create() {
-				String finalVersion = this.version;
+				var finalVersion = this.version;
 				Map<String, ?> finalProps = new HashMap<>(props);
 				return FreshMarkStep.create(finalVersion, finalProps, TestProvisioner.mavenCentral());
 			}

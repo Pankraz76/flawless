@@ -28,7 +28,7 @@ public class DBeaverSQLFormatter {
 	private final SQLTokenizedFormatter sqlTokenizedFormatter;
 
 	DBeaverSQLFormatter(Properties properties) {
-		DBeaverSQLFormatterConfiguration configuration = new DBeaverSQLFormatterConfiguration(properties);
+		var configuration = new DBeaverSQLFormatterConfiguration(properties);
 		sqlTokenizedFormatter = new SQLTokenizedFormatter(configuration);
 	}
 

@@ -150,7 +150,7 @@ public abstract class EquoBasedStepBuilder {
 	}
 
 	private P2Model createModelWithMirrors() {
-		P2Model model = model(formatterVersion);
+		var model = model(formatterVersion);
 		if (p2Mirrors.isEmpty()) {
 			return model;
 		}
@@ -158,7 +158,7 @@ public abstract class EquoBasedStepBuilder {
 		ArrayList<String> p2Repos = new ArrayList<>(model.getP2repo());
 		p2Repos.replaceAll(url -> {
 			for (Map.Entry<String, String> mirror : p2Mirrors.entrySet()) {
-				String prefix = mirror.getKey();
+				var prefix = mirror.getKey();
 				if (url.startsWith(prefix)) {
 					return mirror.getValue() + url.substring(prefix.length());
 				}
@@ -233,9 +233,9 @@ public abstract class EquoBasedStepBuilder {
 		}
 
 		public Properties getPreferences() {
-			FormatterProperties fromFiles = FormatterProperties.from(settingsFiles.files());
-			FormatterProperties fromPropertiesContent = FormatterProperties.fromPropertiesContent(settingProperties);
-			FormatterProperties fromXmlContent = FormatterProperties.fromXmlContent(settingXml);
+			var fromFiles = FormatterProperties.from(settingsFiles.files());
+			var fromPropertiesContent = FormatterProperties.fromPropertiesContent(settingProperties);
+			var fromXmlContent = FormatterProperties.fromXmlContent(settingXml);
 			return FormatterProperties.merge(fromFiles.getProperties(), fromPropertiesContent.getProperties(), fromXmlContent.getProperties()).getProperties();
 		}
 

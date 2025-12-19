@@ -24,7 +24,7 @@ import com.diffplug.spotless.TestProvisioner;
 class Antlr4FormatterStepTest {
 	@Test
 	void formatGrammar() throws Throwable {
-		FormatterStep step = Antlr4FormatterStep.create(TestProvisioner.mavenCentral());
+		var step = Antlr4FormatterStep.create(TestProvisioner.mavenCentral());
 		StepHarness.forStep(step).testResource("antlr4/Hello.unformatted.g4", "antlr4/Hello.formatted.g4");
 	}
 }

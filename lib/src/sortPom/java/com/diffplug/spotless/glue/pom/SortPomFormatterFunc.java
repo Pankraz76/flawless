@@ -43,13 +43,13 @@ public class SortPomFormatterFunc implements FormatterFunc {
 	@Override
 	public String apply(String input) throws Exception {
 		// SortPom expects a file to sort, so we write the input into a temporary file
-		File pom = Files.createTempFile("pom", ".xml").toFile();
+		var pom = Files.createTempFile("pom", ".xml").toFile();
 		pom.deleteOnExit();
-		try (BufferedWriter writer = new BufferedWriter(new FileWriter(pom, Charset.forName(cfg.encoding)))) {
+		try (var writer = new BufferedWriter(new FileWriter(pom, Charset.forName(cfg.encoding)))) {
 			writer.write(input);
 		}
-		SortPomImpl sortPom = new SortPomImpl();
-		PluginParameters.Builder builder = PluginParameters.builder()
+		var sortPom = new SortPomImpl();
+		var builder = PluginParameters.builder()
 				.setPomFile(pom)
 				.setFileOutput(false, null, null, false)
 				.setEncoding(cfg.encoding);
@@ -59,7 +59,7 @@ public class SortPomFormatterFunc implements FormatterFunc {
 							cfg.keepBlankLines, cfg.endWithNewline);
 		} catch (NoSuchMethodError e) {
 			try {
-				Method method = PluginParameters.Builder.class
+				var method = PluginParameters.Builder.class
 						.getMethod("setFormatting", String.class, boolean.class, boolean.class, boolean.class);
 				builder = (PluginParameters.Builder) method
 						.invoke(builder, cfg.lineSeparator, cfg.expandEmptyElements, cfg.spaceBeforeCloseEmptyElement,
@@ -74,7 +74,7 @@ public class SortPomFormatterFunc implements FormatterFunc {
 							cfg.indentAttribute);
 		} catch (NoSuchMethodError e) {
 			try {
-				Method method = PluginParameters.Builder.class
+				var method = PluginParameters.Builder.class
 						.getMethod("setIndent", int.class, boolean.class, boolean.class);
 				builder = (PluginParameters.Builder) method
 						.invoke(builder, cfg.nrOfIndentSpace, cfg.indentBlankLines, cfg.indentSchemaLocation);

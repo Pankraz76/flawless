@@ -73,7 +73,7 @@ public enum LineEnding {
 		}
 		try {
 			Class<?> clazz = Class.forName("com.diffplug.spotless.extra.GitAttributesLineEndings");
-			Method method = clazz.getMethod(gitAttributesMethod, File.class, Supplier.class);
+			var method = clazz.getMethod(gitAttributesMethod, File.class, Supplier.class);
 			return ThrowingEx.get(() -> (Policy) method.invoke(null, projectDir, toFormat));
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
 			throw new IllegalStateException("LineEnding.GIT_ATTRIBUTES requires the spotless-lib-extra library, but it is not on the classpath", e);
@@ -114,7 +114,7 @@ public enum LineEnding {
         @Override
         public String getEndingFor(File file) {
             // assume US-ASCII encoding (only line ending characters need to be decoded anyways)
-            try (Reader reader = new FileReader(file, StandardCharsets.US_ASCII)) {
+            try (var reader = new FileReader(file, StandardCharsets.US_ASCII)) {
                 return getEndingFor(reader);
             } catch (IOException e) {
                 throw new IllegalArgumentException("Could not determine line ending of file: " + file, e);
@@ -187,7 +187,7 @@ public enum LineEnding {
 		/** Returns true iff this file has unix line endings. */
 		public default boolean isUnix(File file) {
 			Objects.requireNonNull(file);
-			String ending = getEndingFor(file);
+			var ending = getEndingFor(file);
 			return ending.equals(UNIX.str());
 		}
 	}

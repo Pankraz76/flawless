@@ -23,15 +23,15 @@ class NpmResourceHelperTest {
 
 	@Test
 	void itCalculatesMd5ForSingleString() {
-		String input = "Hello, World!";
+		var input = "Hello, World!";
 
 		expectSelfie(NpmResourceHelper.md5(input)).toBe("65a8e27d8879283831b664bd8b7f0ad4");
 	}
 
 	@Test
 	void itCalculatesMd5ForMultipleStrings() {
-		String input1 = "Hello, World!";
-		String input2 = "Hello, Spencer!";
+		var input1 = "Hello, World!";
+		var input2 = "Hello, Spencer!";
 
 		expectSelfie(NpmResourceHelper.md5(input1, input2)).toBe("371ba0fbf3d73b33e71b4af8dc6afe00");
 	}

@@ -47,7 +47,7 @@ public class RdfFormatterFunc implements FormatterFunc {
 
 	@Override
 	public String apply(String rawUnix, File file) throws Exception {
-		String filename = file.getName().toLowerCase(Locale.US);
+		var filename = file.getName().toLowerCase(Locale.US);
 		int lastDot = filename.lastIndexOf('.');
 		if (lastDot < 0) {
 			throw new IllegalArgumentException(
@@ -57,7 +57,7 @@ public class RdfFormatterFunc implements FormatterFunc {
 			throw new IllegalArgumentException(
 					"File %s has no file extension, cannot determine RDF format".formatted(file.getAbsolutePath()));
 		}
-		String extension = filename.substring(lastDot + 1);
+		var extension = filename.substring(lastDot + 1);
 
 		try {
 			if (TURTLE_EXTENSIONS.contains(extension)) {
@@ -96,7 +96,7 @@ public class RdfFormatterFunc implements FormatterFunc {
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException,
 			NoSuchFieldException, InstantiationException {
 		String formatted;
-		Object lang = reflectionHelper.getLang("TTL");
+		var lang = reflectionHelper.getLang("TTL");
 		formatted = reflectionHelper.formatWithTurtleFormatter(rawUnix);
 		if (state.getConfig().isVerify()) {
 			veryfyResult(rawUnix, file, reflectionHelper, lang, formatted);
@@ -106,8 +106,8 @@ public class RdfFormatterFunc implements FormatterFunc {
 
 	private static void veryfyResult(String rawUnix, File file, ReflectionHelper reflectionHelper, Object lang,
 			String formatted) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Object modelBefore = reflectionHelper.parseToModel(rawUnix, file, lang);
-		Object modelAfter = reflectionHelper.parseToModel(formatted, file, lang);
+		var modelBefore = reflectionHelper.parseToModel(rawUnix, file, lang);
+		var modelAfter = reflectionHelper.parseToModel(formatted, file, lang);
 		if (!reflectionHelper.areModelsIsomorphic(modelBefore, modelAfter)) {
 			long beforeSize = reflectionHelper.modelSize(modelBefore);
 			long afterSize = reflectionHelper.modelSize(modelAfter);
@@ -130,8 +130,8 @@ public class RdfFormatterFunc implements FormatterFunc {
 	private static String calculateDiff(ReflectionHelper reflectionHelper, Object modelBefore, Object modelAfter)
 			throws InvocationTargetException, IllegalAccessException {
 		String diffResult;
-		Object graphBefore = reflectionHelper.getGraph(modelBefore);
-		Object graphAfter = reflectionHelper.getGraph(modelAfter);
+		var graphBefore = reflectionHelper.getGraph(modelBefore);
+		var graphAfter = reflectionHelper.getGraph(modelAfter);
 
 		List<Object> onlyInBeforeContent = reflectionHelper.streamGraph(graphBefore)
 				.filter(triple -> {

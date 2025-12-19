@@ -58,7 +58,7 @@ class PaddedCellTaskTest extends ResourceHarness {
 		Bundle(String name, SerializedFunction<String, String> function) throws IOException {
 			this.name = name;
 			file = setFile("src/test." + name).toContent("CCC");
-			FormatterStep step = NeverUpToDateStep.create(name, function);
+			var step = NeverUpToDateStep.create(name, function);
 			source = registerFormatTask(name, step);
 			check = registerCheckTask(name, source);
 			apply = registerApplyTask(name, source);
@@ -130,10 +130,10 @@ class PaddedCellTaskTest extends ResourceHarness {
 
 	@Test
 	void paddedCellFormat() throws Exception {
-		Bundle wellbehaved = wellbehaved();
-		Bundle cycle = cycle();
-		Bundle converge = converge();
-		Bundle diverge = diverge();
+		var wellbehaved = wellbehaved();
+		var cycle = cycle();
+		var converge = converge();
+		var diverge = diverge();
 
 		wellbehaved.format();
 		cycle.format();
@@ -148,10 +148,10 @@ class PaddedCellTaskTest extends ResourceHarness {
 
 	@Test
 	void paddedCellApplyCheck() throws Exception {
-		Bundle wellbehaved = wellbehaved();
-		Bundle cycle = cycle();
-		Bundle converge = converge();
-		Bundle diverge = diverge();
+		var wellbehaved = wellbehaved();
+		var cycle = cycle();
+		var converge = converge();
+		var diverge = diverge();
 
 		wellbehaved.apply();
 		cycle.apply();
@@ -202,7 +202,7 @@ class PaddedCellTaskTest extends ResourceHarness {
 	}
 
 	private void assertFolderContents(String subfolderName, String... files) throws IOException {
-		File subfolder = new File(rootFolder(), subfolderName);
+		var subfolder = new File(rootFolder(), subfolderName);
 		Assertions.assertTrue(subfolder.isDirectory());
 		String asList = String.join("\n", Arrays.asList(files));
 		Assertions.assertEquals(StringPrinter.buildStringFromLines(files).trim(), asList);
@@ -230,8 +230,8 @@ class PaddedCellTaskTest extends ResourceHarness {
 	}
 
 	private void assertFailureMessage(Bundle bundle, String... expectedOutput) {
-		String msg = bundle.checkFailureMsg();
-		String expected = StringPrinter.buildStringFromLines(expectedOutput).trim();
+		var msg = bundle.checkFailureMsg();
+		var expected = StringPrinter.buildStringFromLines(expectedOutput).trim();
 		Assertions.assertEquals(expected, msg);
 	}
 }

@@ -84,7 +84,7 @@ public class LintSuppression implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		LintSuppression that = (LintSuppression) o;
+		var that = (LintSuppression) o;
 		return Objects.equals(path, that.path) && Objects.equals(step, that.step) && Objects.equals(shortCode, that.shortCode);
 	}
 
@@ -107,13 +107,13 @@ public class LintSuppression implements Serializable {
 	 * child of root. Guaranteed to only have unix-separators.
 	 */
 	public static @Nullable String relativizeAsUnix(File root, File dest) {
-		String rootPath = root.getAbsolutePath();
-		String destPath = dest.getAbsolutePath();
+		var rootPath = root.getAbsolutePath();
+		var destPath = dest.getAbsolutePath();
 		if (!destPath.startsWith(rootPath)) {
 			return null;
 		} else {
-			String relativized = destPath.substring(rootPath.length());
-			String unixified = relativized.replace('\\', '/');
+			var relativized = destPath.substring(rootPath.length());
+			var unixified = relativized.replace('\\', '/');
 			return unixified.startsWith("/") ? unixified.substring(1) : unixified;
 		}
 	}

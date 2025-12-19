@@ -65,7 +65,7 @@ class FormatterToken {
 
 	@Override
 	public String toString() {
-		final StringBuilder buf = new StringBuilder();
+		final var buf = new StringBuilder();
 		buf.append(getClass().getName());
 		buf.append("type=").append(fType);
 		buf.append(",string=").append(fString);

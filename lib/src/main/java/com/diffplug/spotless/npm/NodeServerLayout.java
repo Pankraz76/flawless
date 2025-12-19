@@ -47,11 +47,11 @@ class NodeServerLayout {
 
 	private static String nodeModulesDirName(String packageJsonContent, String serveJsContent) {
 		String md5Hash = NpmResourceHelper.md5(packageJsonContent, serveJsContent);
-		Matcher matcher = PACKAGE_JSON_NAME_PATTERN.matcher(packageJsonContent);
+		var matcher = PACKAGE_JSON_NAME_PATTERN.matcher(packageJsonContent);
 		if (!matcher.find()) {
 			throw new IllegalArgumentException("package.json must contain a name property");
 		}
-		String packageName = matcher.group(1);
+		var packageName = matcher.group(1);
 		return "%s-node-modules-%s".formatted(packageName, md5Hash);
 	}
 
@@ -89,7 +89,7 @@ class NodeServerLayout {
 	}
 
 	public boolean isNodeModulesPrepared() {
-		Path nodeModulesInstallDirPath = new File(nodeModulesDir(), NODE_MODULES).toPath();
+		var nodeModulesInstallDirPath = new File(nodeModulesDir(), NODE_MODULES).toPath();
 		if (!Files.isDirectory(nodeModulesInstallDirPath)) {
 			return false;
 		}

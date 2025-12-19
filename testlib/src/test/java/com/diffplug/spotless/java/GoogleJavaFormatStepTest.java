@@ -32,14 +32,14 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void jvm13Features() throws Exception {
-		try (StepHarness step = StepHarness.forStep(GoogleJavaFormatStep.create(TestProvisioner.mavenCentral()))) {
+		try (var step = StepHarness.forStep(GoogleJavaFormatStep.create(TestProvisioner.mavenCentral()))) {
 			step.testResource("java/googlejavaformat/TextBlock.dirty", "java/googlejavaformat/TextBlock.clean");
 		}
 	}
 
 	@Test
 	void behavior18() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create(TestProvisioner.mavenCentral());
+		var step = GoogleJavaFormatStep.create(TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormatted18.test")
 				.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormatted.test")
@@ -49,7 +49,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behavior() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), TestProvisioner.mavenCentral());
+		var step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormatted.test")
 				.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormatted.test")
@@ -60,7 +60,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 	@Test
 	@EnabledForJreRange(min = JAVA_21, max = JAVA_21)
 	void versionBelowMinimumRequiredVersionIsNotAllowed() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create("1.2", "AOSP", TestProvisioner.mavenCentral());
+		var step = GoogleJavaFormatStep.create("1.2", "AOSP", TestProvisioner.mavenCentral());
 		StepHarness.forStepNoRoundtrip(step)
 				.expectLintsOfResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test")
 				.toBe("LINE_UNDEFINED google-java-format(jvm-version) You are running Spotless on JVM 21. This requires google-java-format of at least 1.17.0 (you are using 1.2). (...)");
@@ -69,7 +69,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 	@Test
 	@EnabledForJreRange(min = JAVA_21, max = JAVA_21)
 	void versionBelowOneDotTenIsNotAllowed() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create("1.9", "AOSP", TestProvisioner.mavenCentral());
+		var step = GoogleJavaFormatStep.create("1.9", "AOSP", TestProvisioner.mavenCentral());
 		StepHarness.forStepNoRoundtrip(step)
 				.expectLintsOfResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test")
 				.toBe("LINE_UNDEFINED google-java-format(jvm-version) You are running Spotless on JVM 21. This requires google-java-format of at least 1.17.0 (you are using 1.9). (...)");
@@ -77,7 +77,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithAospStyle() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral());
+		var step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormattedAOSP.test")
 				.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormattedAOSP.test")
@@ -87,7 +87,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithReflowLongStrings() throws Exception {
-		try (StepHarness step = StepHarness.forStep(GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), true))) {
+		try (var step = StepHarness.forStep(GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), true))) {
 			if (Jvm.version() >= 11) {
 				step.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormattedReflowLongStrings.test")
 						.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormattedReflowLongStrings.test")
@@ -99,7 +99,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithSkipFormatJavadoc() throws Exception {
-		try (StepHarness step = StepHarness.forStep(GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), GoogleJavaFormatStep.defaultReorderImports(), false))) {
+		try (var step = StepHarness.forStep(GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), GoogleJavaFormatStep.defaultReorderImports(), false))) {
 			step.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormattedSkipJavadocFormatting.test")
 					.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormatted.test")
 					.testResource("java/googlejavaformat/JavaCodeWithLicensePackageUnformatted.test", "java/googlejavaformat/JavaCodeWithLicensePackageFormatted.test")
@@ -109,7 +109,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithCustomGroupArtifact() throws Exception {
-		FormatterStep step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), false);
+		var step = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), GoogleJavaFormatStep.defaultStyle(), TestProvisioner.mavenCentral(), false);
 		StepHarness.forStep(step)
 				.testResource("java/googlejavaformat/JavaCodeUnformatted.test", "java/googlejavaformat/JavaCodeFormatted.test")
 				.testResource("java/googlejavaformat/JavaCodeWithLicenseUnformatted.test", "java/googlejavaformat/JavaCodeWithLicenseFormatted.test")
@@ -119,13 +119,13 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithReorderImports() throws Exception {
-		FormatterStep enabled = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), true);
-		FormatterStep disabled = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), false);
-		String unformatted = "java/googlejavaformat/JavaWithReorderImportsUnformatted.test";
-		try (StepHarness step = StepHarness.forStep(enabled)) {
+		var enabled = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), true);
+		var disabled = GoogleJavaFormatStep.create(GoogleJavaFormatStep.defaultGroupArtifact(), GoogleJavaFormatStep.defaultVersion(), "AOSP", TestProvisioner.mavenCentral(), GoogleJavaFormatStep.defaultReflowLongStrings(), false);
+		var unformatted = "java/googlejavaformat/JavaWithReorderImportsUnformatted.test";
+		try (var step = StepHarness.forStep(enabled)) {
 			step.testResource(unformatted, "java/googlejavaformat/JavaWithReorderImportsEnabledFormatted.test");
 		}
-		try (StepHarness step = StepHarness.forStep(disabled)) {
+		try (var step = StepHarness.forStep(disabled)) {
 			step.testResource(unformatted, "java/googlejavaformat/JavaWithReorderImportsDisabledFormatted.test");
 		}
 	}
@@ -155,7 +155,7 @@ class GoogleJavaFormatStepTest extends ResourceHarness {
 
 			@Override
 			protected FormatterStep create() {
-				String finalVersion = this.version;
+				var finalVersion = this.version;
 				return GoogleJavaFormatStep.create(finalVersion, style, TestProvisioner.mavenCentral(), reflowLongStrings);
 			}
 		}.testEquals();

@@ -30,9 +30,9 @@ class CppDefaultsTest extends ResourceHarness {
 
 	@Test
 	void testDelimiterExpr() throws Exception {
-		final String header = "/*My tests header*/";
-		FormatterStep step = LicenseHeaderStep.headerDelimiter(header, CppDefaults.DELIMITER_EXPR).build();
-		final File dummyFile = setFile("src/main/cpp/file1.dummy").toContent("");
+		final var header = "/*My tests header*/";
+		var step = LicenseHeaderStep.headerDelimiter(header, CppDefaults.DELIMITER_EXPR).build();
+		final var dummyFile = setFile("src/main/cpp/file1.dummy").toContent("");
 		for (String testSource : Arrays.asList(
 				"//Accpet multiple spaces between composed term.@using  namespace std;",
 				"//Accpet line delimiters between composed term.@using\n namespace std;",
@@ -48,7 +48,7 @@ class CppDefaultsTest extends ResourceHarness {
 			} catch (IllegalArgumentException e) {
 				throw new AssertionError("No delimiter found in '%s'".formatted(testSource), e);
 			}
-			String expected = testSource.replaceAll("(.*?)\\@", header + '\n');
+			var expected = testSource.replaceAll("(.*?)\\@", header + '\n');
 			assertThat(output).isEqualTo(expected).as("Unexpected header insertion for '$s'.", testSource);
 		}
 	}

@@ -27,13 +27,13 @@ import com.diffplug.spotless.tag.ClangTest;
 class ClangFormatStepTest extends ResourceHarness {
 	@Test
 	void test() {
-		try (StepHarnessWithFile harness = StepHarnessWithFile.forStep(this, ClangFormatStep.withVersion(ClangFormatStep.defaultVersion()).create())) {
+		try (var harness = StepHarnessWithFile.forStep(this, ClangFormatStep.withVersion(ClangFormatStep.defaultVersion()).create())) {
 			// can't be named java or it gets compiled into .class file
 			harness.testResource("example.java", "clang/example.java.dirty", "clang/example.java.clean");
 			// test every other language clang supports
 			for (String ext : Arrays.asList("c", "cs", "js", "m", "proto")) {
-				String filename = "example." + ext;
-				String root = "clang/" + filename;
+				var filename = "example." + ext;
+				var root = "clang/" + filename;
 				harness.testResource(filename, root, root + ".clean");
 			}
 		}

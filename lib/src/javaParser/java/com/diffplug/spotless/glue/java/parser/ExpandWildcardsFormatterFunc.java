@@ -69,7 +69,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 	public ExpandWildcardsFormatterFunc(Collection<File> typeSolverClasspath) throws IOException {
 		this.parser = new JavaParser();
 
-		CombinedTypeSolver combinedTypeSolver = new CombinedTypeSolver();
+		var combinedTypeSolver = new CombinedTypeSolver();
 		combinedTypeSolver.add(new ReflectionTypeSolver());
 		for (File element : typeSolverClasspath) {
 			if (element.isFile()) {
@@ -79,7 +79,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 			} // gracefully ignore non-existing src-directories
 		}
 
-		SymbolResolver symbolSolver = new JavaSymbolSolver(combinedTypeSolver);
+		var symbolSolver = new JavaSymbolSolver(combinedTypeSolver);
 		parser.getParserConfiguration().setSymbolResolver(symbolSolver);
 	}
 
@@ -89,7 +89,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 		if (parseResult.isEmpty()) {
 			return rawUnix;
 		}
-		CompilationUnit cu = parseResult.get();
+		var cu = parseResult.get();
 		Map<ImportDeclaration, Set<ImportDeclaration>> importMap = findWildcardImports(cu)
 				.stream()
 				.collect(toMap(Function.identity(),
@@ -102,7 +102,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 		cu.accept(new CollectImportedTypesVisitor(), importMap);
 		for (var entry : importMap.entrySet()) {
 			String pattern = Pattern.quote(LineEnding.toUnix(entry.getKey().toString()));
-			String replacement = entry.getValue().stream().map(ImportDeclaration::toString).collect(joining());
+			var replacement = entry.getValue().stream().map(ImportDeclaration::toString).collect(joining());
 			rawUnix = rawUnix.replaceAll(pattern, replacement);
 		}
 
@@ -126,7 +126,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 		public void visit(final ClassOrInterfaceType n,
 				final Map<ImportDeclaration, Set<ImportDeclaration>> importMap) {
 			// default imports
-			ResolvedType resolvedType = wrapUnsolvedSymbolException(n, ClassOrInterfaceType::resolve);
+			var resolvedType = wrapUnsolvedSymbolException(n, ClassOrInterfaceType::resolve);
 			if (resolvedType.isReference()) {
 				matchTypeName(importMap, resolvedType.asReferenceType().getQualifiedName(), false);
 			}
@@ -140,7 +140,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 				return;
 			}
 
-			String packageName = qualifiedName.substring(0, lastDot);
+			var packageName = qualifiedName.substring(0, lastDot);
 			for (var entry : importMap.entrySet()) {
 				if (entry.getKey().isStatic() == isStatic
 						&& packageName.equals(entry.getKey().getName().asString())) {
@@ -173,14 +173,14 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 
 		private void visitAnnotation(final AnnotationExpr n,
 				final Map<ImportDeclaration, Set<ImportDeclaration>> importMap) {
-			ResolvedAnnotationDeclaration resolvedType = wrapUnsolvedSymbolException(n, AnnotationExpr::resolve);
+			var resolvedType = wrapUnsolvedSymbolException(n, AnnotationExpr::resolve);
 			matchTypeName(importMap, resolvedType.getQualifiedName(), false);
 		}
 
 		@Override
 		public void visit(final MethodCallExpr n, final Map<ImportDeclaration, Set<ImportDeclaration>> importMap) {
 			// static imports
-			ResolvedMethodDeclaration resolved = wrapUnsolvedSymbolException(n, MethodCallExpr::resolve);
+			var resolved = wrapUnsolvedSymbolException(n, MethodCallExpr::resolve);
 			if (resolved.isStatic()) {
 				matchTypeName(importMap, resolved.getQualifiedName(), true);
 			}

@@ -87,9 +87,9 @@ public final class PrettierFormatterStep {
 		public FormatterFunc createFormatterFunc() {
 			try {
 				LOGGER.info("creating formatter function (starting server)");
-				ServerProcessInfo prettierRestServer = toRuntime().npmRunServer();
-				PrettierRestService restService = new PrettierRestService(prettierRestServer.getBaseUrl());
-				String prettierConfigOptions = restService.resolveConfig(this.prettierConfig.getPrettierConfigPath(), this.prettierConfig.getOptions());
+				var prettierRestServer = toRuntime().npmRunServer();
+				var restService = new PrettierRestService(prettierRestServer.getBaseUrl());
+				var prettierConfigOptions = restService.resolveConfig(this.prettierConfig.getPrettierConfigPath(), this.prettierConfig.getOptions());
 				return Closeable.ofDangerous(() -> endServer(restService, prettierRestServer), new PrettierFilePathPassingFormatterFunc(prettierConfigOptions, restService));
 			} catch (IOException e) {
 				throw ThrowingEx.asRuntime(e);
@@ -119,7 +119,7 @@ public final class PrettierFormatterStep {
 
 		@Override
 		public String applyWithFile(String unix, File file) throws Exception {
-			final String prettierConfigOptionsWithFilepath = assertFilepathInConfigOptions(file);
+			final var prettierConfigOptionsWithFilepath = assertFilepathInConfigOptions(file);
 			try {
 				return restService.format(unix, prettierConfigOptionsWithFilepath);
 			} catch (SimpleRestClient.SimpleRestResponseException e) {
@@ -142,7 +142,7 @@ public final class PrettierFormatterStep {
 			// if it is not there, we add it at the beginning of the Options
 			final int startOfConfigOption = prettierConfigOptions.indexOf('{');
 			final boolean hasAnyConfigOption = prettierConfigOptions.indexOf(':', startOfConfigOption + 1) != -1;
-			final String filePathOption = "\"filepath\":\"" + file.getName() + "\"";
+			final var filePathOption = "\"filepath\":\"" + file.getName() + "\"";
 			return "{" + filePathOption + (hasAnyConfigOption ? "," : "") + prettierConfigOptions.substring(startOfConfigOption + 1);
 		}
 	}

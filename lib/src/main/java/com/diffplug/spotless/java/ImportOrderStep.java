@@ -108,7 +108,7 @@ public final class ImportOrderStep implements Serializable {
 	}
 
 	private static Map.Entry<Integer, String> splitIntoIndexAndName(String line) {
-		String[] pieces = line.split("=");
+		var pieces = line.split("=");
 		Integer index = Integer.valueOf(pieces[0]);
 		String name = pieces.length == 2 ? pieces[1] : "";
 		return new SimpleImmutableEntry<>(index, name);

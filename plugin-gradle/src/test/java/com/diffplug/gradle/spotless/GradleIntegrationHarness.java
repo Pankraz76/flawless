@@ -160,8 +160,8 @@ public class GradleIntegrationHarness extends ResourceHarness {
 		ListIterator<File> iterator = files.listIterator(files.size());
 		int rootLength = rootFolder().getAbsolutePath().length() + 1;
 		while (iterator.hasPrevious()) {
-			File file = iterator.previous();
-			String subPath = file.getAbsolutePath().substring(rootLength);
+			var file = iterator.previous();
+			var subPath = file.getAbsolutePath().substring(rootLength);
 			if (subpathsToInclude.test(subPath)) {
 				consumer.accept(subPath, file);
 			}
@@ -193,7 +193,7 @@ public class GradleIntegrationHarness extends ResourceHarness {
 
 	private void taskIsUpToDate(String task, boolean upToDate) throws IOException {
 		pauseForFilesystem();
-		BuildResult buildResult = gradleRunner().withArguments(task).build();
+		var buildResult = gradleRunner().withArguments(task).build();
 
 		List<String> expected = outcomes(buildResult, upToDate ? TaskOutcome.UP_TO_DATE : TaskOutcome.SUCCESS);
 		List<String> notExpected = outcomes(buildResult, upToDate ? TaskOutcome.SUCCESS : TaskOutcome.UP_TO_DATE);

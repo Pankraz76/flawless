@@ -60,7 +60,7 @@ final class FilterByFileFormatterStep extends DelegateFormatterStep {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		FilterByFileFormatterStep that = (FilterByFileFormatterStep) o;
+		var that = (FilterByFileFormatterStep) o;
 		return Objects.equals(delegateStep, that.delegateStep)
 				&& Objects.equals(filter, that.filter);
 	}

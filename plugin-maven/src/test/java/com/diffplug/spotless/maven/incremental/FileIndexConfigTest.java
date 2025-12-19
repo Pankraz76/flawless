@@ -29,7 +29,7 @@ class FileIndexConfigTest {
 	@Test
 	void returnsCorrectProjectDir() {
 		MavenProject project = mavenProject();
-		FileIndexConfig config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
+		var config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
 
 		assertThat(config.getProjectDir()).isEqualTo(Path.of("projectDir"));
 	}
@@ -37,7 +37,7 @@ class FileIndexConfigTest {
 	@Test
 	void returnsCorrectIndexFile() {
 		MavenProject project = mavenProject();
-		FileIndexConfig config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
+		var config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
 
 		assertThat(config.getIndexFile())
 				.isEqualTo(Path.of("projectDir", "target", "spotless-index"));
@@ -46,7 +46,7 @@ class FileIndexConfigTest {
 	@Test
 	void returnsCorrectPluginFingerprint() {
 		MavenProject project = mavenProject();
-		FileIndexConfig config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
+		var config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
 
 		assertThat(config.getPluginFingerprint()).isEqualTo(PluginFingerprint.from("foo"));
 	}
@@ -54,15 +54,15 @@ class FileIndexConfigTest {
 	@Test
 	void returnsEmptyPluginFingerprint() {
 		MavenProject project = mavenProject();
-		FileIndexConfig config = new FileIndexConfig(project, getIndexFile(project));
+		var config = new FileIndexConfig(project, getIndexFile(project));
 
 		assertThat(config.getPluginFingerprint()).isEqualTo(PluginFingerprint.from(""));
 	}
 
 	private static MavenProject mavenProject() {
-		MavenProject project = new MavenProject();
+		var project = new MavenProject();
 		project.setFile(new File("projectDir", "pom.xml"));
-		Build build = new Build();
+		var build = new Build();
 		build.setDirectory("target");
 		project.setBuild(build);
 		return project;

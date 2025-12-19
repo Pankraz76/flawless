@@ -251,7 +251,7 @@ public final class LicenseHeaderStep {
 				int yearPlusSep = 4 + yearSeparator.length();
 				if (beforeYear.endsWith(yearSeparator) && yearTokenIndex > yearPlusSep) {
 					// year from in range
-					String yearFrom = licenseHeader.substring(yearTokenIndex - yearPlusSep, yearTokenIndex).substring(0, 4);
+					var yearFrom = licenseHeader.substring(yearTokenIndex - yearPlusSep, yearTokenIndex).substring(0, 4);
 					hasHeaderWithRange = YYYY.matcher(yearFrom).matches();
 				}
 				this.licenseHeaderWithRange = hasHeaderWithRange;
@@ -281,13 +281,13 @@ public final class LicenseHeaderStep {
 			if (skipLinesMatching == null) {
 				return addOrUpdateLicenseHeader(raw, file);
 			} else {
-				String[] lines = raw.split("\n");
-				StringBuilder skippedLinesBuilder = new StringBuilder();
-				StringBuilder remainingLinesBuilder = new StringBuilder();
+				var lines = raw.split("\n");
+				var skippedLinesBuilder = new StringBuilder();
+				var remainingLinesBuilder = new StringBuilder();
 				boolean lastMatched = true;
 				for (String line : lines) {
 					if (lastMatched) {
-						Matcher matcher = skipLinesMatching.matcher(line);
+						var matcher = skipLinesMatching.matcher(line);
 						if (matcher.find()) {
 							skippedLinesBuilder.append(line).append('\n');
 						} else {
@@ -308,11 +308,11 @@ public final class LicenseHeaderStep {
 		}
 
 		private String replaceYear(String raw) {
-			Matcher contentMatcher = delimiterPattern.matcher(raw);
+			var contentMatcher = delimiterPattern.matcher(raw);
 			if (!contentMatcher.find()) {
 				throw new IllegalArgumentException("Unable to find delimiter regex " + delimiterPattern);
 			} else {
-				String content = raw.substring(contentMatcher.start());
+				var content = raw.substring(contentMatcher.start());
 				if (yearToday == null) {
 					// the no year case is easy
 					if (contentMatcher.start() == yearSepOrFull.length() && raw.startsWith(yearSepOrFull)) {
@@ -330,8 +330,8 @@ public final class LicenseHeaderStep {
 
 					if (beforeYearIdx >= 0 && afterYearIdx >= 0 && afterYearIdx + afterYear.length() <= contentMatcher.start()) {
 						// and also ends with exactly the right header, so it's easy to parse the existing year
-						String existingYear = raw.substring(beforeYearIdx + beforeYear.length(), afterYearIdx);
-						String newYear = calculateYearExact(existingYear);
+						var existingYear = raw.substring(beforeYearIdx + beforeYear.length(), afterYearIdx);
+						var newYear = calculateYearExact(existingYear);
 						if (existingYear.equals(newYear)) {
 							// fastpath where we don't need to make any changes at all
 							boolean noPadding = beforeYearIdx == 0 && afterYearIdx + afterYear.length() == contentMatcher.start(); // allows fastpath return raw
@@ -341,7 +341,7 @@ public final class LicenseHeaderStep {
 						}
 						return beforeYear + newYear + afterYear + content;
 					} else {
-						String newYear = calculateYearBySearching(raw.substring(0, contentMatcher.start()));
+						var newYear = calculateYearBySearching(raw.substring(0, contentMatcher.start()));
 						// at worst, we just say that it was made today
 						return beforeYear + newYear + afterYear + content;
 					}
@@ -373,20 +373,20 @@ public final class LicenseHeaderStep {
 
 		/** Searches the given string for YYYY, and uses that to determine the year range. */
 		private String calculateYearBySearching(String content) {
-			Matcher yearMatcher = YYYY.matcher(content);
+			var yearMatcher = YYYY.matcher(content);
 			if (yearMatcher.find()) {
-				String firstYear = yearMatcher.group();
+				var firstYear = yearMatcher.group();
 
 				String secondYear = null;
 				if (updateYearWithLatest) {
 					secondYear = firstYear.equals(yearToday) ? null : yearToday;
 				} else {
-					String contentWithSecondYear = content.substring(yearMatcher.end() + 1);
+					var contentWithSecondYear = content.substring(yearMatcher.end() + 1);
 					int endOfLine = contentWithSecondYear.indexOf('\n');
 					if (endOfLine != -1) {
 						contentWithSecondYear = contentWithSecondYear.substring(0, endOfLine);
 					}
-					Matcher secondYearMatcher = YYYY.matcher(contentWithSecondYear);
+					var secondYearMatcher = YYYY.matcher(contentWithSecondYear);
 					if (secondYearMatcher.find()) {
 						secondYear = secondYearMatcher.group();
 					}
@@ -413,7 +413,7 @@ public final class LicenseHeaderStep {
 			if (yearToday == null) {
 				return raw;
 			}
-			Matcher contentMatcher = delimiterPattern.matcher(raw);
+			var contentMatcher = delimiterPattern.matcher(raw);
 			if (!contentMatcher.find()) {
 				throw new IllegalArgumentException("Unable to find delimiter regex " + delimiterPattern);
 			}
@@ -441,30 +441,30 @@ public final class LicenseHeaderStep {
 			if (!hasFileToken) {
 				return raw;
 			}
-			Matcher contentMatcher = delimiterPattern.matcher(raw);
+			var contentMatcher = delimiterPattern.matcher(raw);
 			if (!contentMatcher.find()) {
 				throw new IllegalArgumentException("Unable to find delimiter regex " + delimiterPattern);
 			}
-			String header = raw.substring(0, contentMatcher.start());
-			String content = raw.substring(contentMatcher.start());
+			var header = raw.substring(0, contentMatcher.start());
+			var content = raw.substring(contentMatcher.start());
 			return FILENAME_PATTERN.matcher(header).replaceAll(file.getName()) + content;
 		}
 
 		private static String parseYear(String cmd, File file) throws IOException {
-			String fullCmd = cmd + " -- " + file.getAbsolutePath();
-			ProcessBuilder builder = new ProcessBuilder().directory(file.getParentFile());
+			var fullCmd = cmd + " -- " + file.getAbsolutePath();
+			var builder = new ProcessBuilder().directory(file.getParentFile());
 			if (FileSignature.machineIsWin()) {
 				builder.command("cmd", "/c", fullCmd);
 			} else {
 				builder.command("bash", "-c", fullCmd);
 			}
-			Process process = builder.start();
+			var process = builder.start();
 			String output = drain(process.getInputStream());
 			String error = drain(process.getErrorStream());
 			if (!error.isEmpty()) {
 				throw new IllegalArgumentException("Error for command '" + fullCmd + "':\n" + error);
 			}
-			Matcher matcher = FIND_YEAR.matcher(output);
+			var matcher = FIND_YEAR.matcher(output);
 			if (matcher.find()) {
 				return matcher.group(1);
 			} else {
@@ -476,7 +476,7 @@ public final class LicenseHeaderStep {
 
 		@SuppressFBWarnings("DM_DEFAULT_ENCODING")
 		private static String drain(InputStream stream) throws IOException {
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			var output = new ByteArrayOutputStream();
 			byte[] buf = new byte[1024];
 			int numRead;
 			while ((numRead = stream.read(buf)) != -1) {

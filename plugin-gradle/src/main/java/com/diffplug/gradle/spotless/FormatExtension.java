@@ -180,7 +180,7 @@ public class FormatExtension {
 
 	/** Suppresses any lints which meet the supplied criteria. */
 	public void suppressLintsFor(Action<LintSuppression> lintSuppression) {
-		LintSuppression suppression = new LintSuppression();
+		var suppression = new LintSuppression();
 		lintSuppression.execute(suppression);
 		suppression.ensureDoesNotSuppressAll();
 		lintSuppressions.add(suppression);
@@ -224,7 +224,7 @@ public class FormatExtension {
 	@Nullable protected String targetExcludeContentPattern;
 
 	protected boolean isLicenseHeaderStep(FormatterStep formatterStep) {
-		String formatterStepName = formatterStep.getName();
+		var formatterStepName = formatterStep.getName();
 		return formatterStepName.startsWith(LicenseHeaderStep.class.getName());
 	}
 
@@ -286,7 +286,7 @@ public class FormatExtension {
 		} else if (targets.length == 1) {
 			return parseTargetIsExclude(targets[0], isExclude);
 		} else {
-			FileCollection union = getProject().files();
+			var union = getProject().files();
 			for (Object target : targets) {
 				union = union.plus(parseTargetIsExclude(target, isExclude));
 			}
@@ -310,8 +310,8 @@ public class FormatExtension {
 		} else if (target instanceof FileCollection) {
 			return (FileCollection) target;
 		} else if (target instanceof String targetString) {
-			File dir = getProject().getProjectDir();
-			ConfigurableFileTree matchedFiles = getProject().fileTree(dir);
+			var dir = getProject().getProjectDir();
+			var matchedFiles = getProject().fileTree(dir);
 			matchedFiles.include(targetString);
 
 			// since people are likely to do '**/*.md', we want to make sure to exclude
@@ -345,7 +345,7 @@ public class FormatExtension {
 	}
 
 	private static void relativizeIfSubdir(List<String> relativePaths, File root, File dest) {
-		String relativized = LintSuppression.relativizeAsUnix(root, dest);
+		var relativized = LintSuppression.relativizeAsUnix(root, dest);
 		if (relativized != null) {
 			relativePaths.add(relativized);
 		}
@@ -368,7 +368,7 @@ public class FormatExtension {
 	/** Adds a new step that requires a Provisioner. */
 	public void addStep(Function<Provisioner, FormatterStep> createStepFn) {
 		requireNonNull(createStepFn);
-		FormatterStep newStep = createStepFn.apply(provisioner());
+		var newStep = createStepFn.apply(provisioner());
 		addStep(newStep);
 	}
 
@@ -568,7 +568,7 @@ public class FormatExtension {
 		Boolean updateYearWithLatest;
 
 		public LicenseHeaderConfig named(String name) {
-			String existingStepName = builder.getName();
+			var existingStepName = builder.getName();
 			builder = builder.withName(name);
 			int existingStepIdx = getExistingStepIdx(existingStepName);
 			if (existingStepIdx != -1) {
@@ -646,7 +646,7 @@ public class FormatExtension {
 	 *                      regular expression pattern to know what the "top" is.
 	 */
 	public LicenseHeaderConfig licenseHeader(String licenseHeader, String delimiter) {
-		LicenseHeaderConfig config = new LicenseHeaderConfig(
+		var config = new LicenseHeaderConfig(
 				LicenseHeaderStep.headerDelimiter(licenseHeader, delimiter));
 		addStep(config.createStep());
 		return config;
@@ -659,8 +659,8 @@ public class FormatExtension {
 	 *                          is.
 	 */
 	public LicenseHeaderConfig licenseHeaderFile(Object licenseHeaderFile, String delimiter) {
-		LicenseHeaderConfig config = new LicenseHeaderConfig(LicenseHeaderStep.headerDelimiter(() -> {
-			File file = getProject().file(licenseHeaderFile);
+		var config = new LicenseHeaderConfig(LicenseHeaderStep.headerDelimiter(() -> {
+			var file = getProject().file(licenseHeaderFile);
 			byte[] data = Files.readAllBytes(file.toPath());
 			return new String(data, getEncoding());
 		}, delimiter));
@@ -777,7 +777,7 @@ public class FormatExtension {
 
 		@Override
 		protected FormatterStep createStep() {
-			final Project project = getProject();
+			final var project = getProject();
 			return PrettierFormatterStep.create(devDependencies, provisioner(), project.getProjectDir(),
 					project.getLayout().getBuildDirectory().getAsFile().get(), npmModulesCacheOrNull(),
 					new NpmPathResolver(npmFileOrNull(), nodeFileOrNull(), npmrcFileOrNull(),
@@ -857,7 +857,7 @@ public class FormatExtension {
 
 	/** Uses exactly the npm packages specified in the map. */
 	public PrettierConfig prettier(Map<String, String> devDependencies) {
-		PrettierConfig prettierConfig = new PrettierConfig(devDependencies);
+		var prettierConfig = new PrettierConfig(devDependencies);
 		addStep(prettierConfig.createStep());
 		return prettierConfig;
 	}
@@ -925,7 +925,7 @@ public class FormatExtension {
 
 		public void configFile(Object... configFiles) {
 			requireElementsNonNull(configFiles);
-			Project project = getProject();
+			var project = getProject();
 			builder.setPreferences(project.files(configFiles).getFiles());
 			replaceStep(builder.build());
 		}
@@ -1034,11 +1034,11 @@ public class FormatExtension {
 	private <T extends FormatExtension> void withinBlocksHelper(FenceStep fence, Class<T> clazz,
 			Action<T> configure) {
 		// create the sub-extension
-		T formatExtension = spotless.instantiateFormatExtension(clazz);
+		var formatExtension = spotless.instantiateFormatExtension(clazz);
 		// configure it
 		configure.execute(formatExtension);
 		// create a step which applies all of those steps as sub-steps
-		FormatterStep step = fence.applyWithin(formatExtension.steps);
+		var step = fence.applyWithin(formatExtension.steps);
 		addStep(step);
 	}
 
@@ -1089,8 +1089,8 @@ public class FormatExtension {
 					formatterStep -> formatterStep.filterByContent(OnMatch.EXCLUDE, targetExcludeContentPattern));
 		}
 		task.setSteps(steps);
-		Directory projectDir = getProject().getLayout().getProjectDirectory();
-		LineEnding lineEndings = getLineEndings();
+		var projectDir = getProject().getLayout().getProjectDirectory();
+		var lineEndings = getLineEndings();
 		task.setLineEndingsPolicy(
 				getProject().provider(() -> lineEndings.createPolicy(projectDir.getAsFile(), () -> totalTarget)));
 		spotless.getRegisterDependenciesTask().hookSubprojectTask(task);

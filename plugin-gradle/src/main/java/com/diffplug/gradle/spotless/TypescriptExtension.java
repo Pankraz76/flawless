@@ -63,7 +63,7 @@ public class TypescriptExtension extends FormatExtension {
 	 * packages.
 	 */
 	public TypescriptFormatExtension tsfmt(Map<String, String> devDependencies) {
-		TypescriptFormatExtension tsfmt = new TypescriptFormatExtension(devDependencies);
+		var tsfmt = new TypescriptFormatExtension(devDependencies);
 		addStep(tsfmt.createStep());
 		return tsfmt;
 	}
@@ -114,7 +114,7 @@ public class TypescriptExtension extends FormatExtension {
 
 		@Override
 		public FormatterStep createStep() {
-			final Project project = getProject();
+			final var project = getProject();
 
 			return TsFmtFormatterStep
 					.create(devDependencies, provisioner(), project.getProjectDir(),
@@ -147,7 +147,7 @@ public class TypescriptExtension extends FormatExtension {
 	/** Uses exactly the npm packages specified in the map. */
 	@Override
 	public PrettierConfig prettier(Map<String, String> devDependencies) {
-		PrettierConfig prettierConfig = new TypescriptPrettierConfig(devDependencies);
+		var prettierConfig = new TypescriptPrettierConfig(devDependencies);
 		addStep(prettierConfig.createStep());
 		return prettierConfig;
 	}
@@ -171,7 +171,7 @@ public class TypescriptExtension extends FormatExtension {
 			if (this.prettierConfig == null) {
 				this.prettierConfig = new TreeMap<>(Map.of("parser", "typescript"));
 			} else {
-				final Object replaced = this.prettierConfig.put("parser", "typescript");
+				final var replaced = this.prettierConfig.put("parser", "typescript");
 				if (replaced != null) {
 					getProject().getLogger().warn("overriding parser option to 'typescript'. Was set to '{}'",
 							replaced);
@@ -189,7 +189,7 @@ public class TypescriptExtension extends FormatExtension {
 	}
 
 	public TypescriptEslintConfig eslint(Map<String, String> devDependencies) {
-		TypescriptEslintConfig eslint = new TypescriptEslintConfig(devDependencies);
+		var eslint = new TypescriptEslintConfig(devDependencies);
 		addStep(eslint.createStep());
 		return eslint;
 	}
@@ -210,7 +210,7 @@ public class TypescriptExtension extends FormatExtension {
 
 		@Override
 		public FormatterStep createStep() {
-			final Project project = getProject();
+			final var project = getProject();
 
 			return EslintFormatterStep.create(devDependencies, provisioner(), project.getProjectDir(),
 					project.getLayout().getBuildDirectory().getAsFile().get(), npmModulesCacheOrNull(),

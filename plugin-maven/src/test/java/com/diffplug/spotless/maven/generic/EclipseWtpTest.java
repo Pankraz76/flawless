@@ -31,8 +31,8 @@ class EclipseWtpTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest() throws Exception {
-		String notFormatted = "<a><b>   c</b></a>";
-		String formatted = "<a>\n\t<b> c</b>\n</a>";
+		var notFormatted = "<a><b>   c</b></a>";
+		var formatted = "<a>\n\t<b> c</b>\n</a>";
 		//writePomWithFormatSteps includes java. WTP does not care about file extensions.
 		setFile("src/main/java/test.java").toContent(notFormatted);
 		mavenRunner().withArguments("spotless:apply").runNoError();

@@ -53,7 +53,7 @@ interface ExclusiveFolderAccess {
 
 		@Override
 		public void runExclusively(ThrowingEx.Runnable runnable) {
-			final Lock lock = getMutex();
+			final var lock = getMutex();
 			try {
 				lock.lock();
 				runnable.run();

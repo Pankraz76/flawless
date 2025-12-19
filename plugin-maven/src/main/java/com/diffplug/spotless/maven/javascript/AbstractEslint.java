@@ -65,10 +65,10 @@ public abstract class AbstractEslint extends AbstractNpmFormatterStepFactory {
 			devDependencies.putAll(defaultDependencies);
 		}
 
-		File buildDir = buildDir(stepConfig);
-		File baseDir = baseDir(stepConfig);
-		File cacheDir = cacheDir(stepConfig);
-		NpmPathResolver npmPathResolver = npmPathResolver(stepConfig);
+		var buildDir = buildDir(stepConfig);
+		var baseDir = baseDir(stepConfig);
+		var cacheDir = cacheDir(stepConfig);
+		var npmPathResolver = npmPathResolver(stepConfig);
 		return EslintFormatterStep.create(devDependencies, stepConfig.getProvisioner(), baseDir, buildDir, cacheDir, npmPathResolver, eslintConfig(stepConfig));
 	}
 

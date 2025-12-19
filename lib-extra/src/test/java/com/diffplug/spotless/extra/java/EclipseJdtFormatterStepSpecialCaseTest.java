@@ -28,9 +28,9 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 	/** https://github.com/diffplug/spotless/issues/1638 */
 	@Test
 	void issue_1638() {
-		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("eclipse_formatter_issue_1638.xml").getFile());
-		EquoBasedStepBuilder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var classLoader = getClass().getClassLoader();
+		var file = new File(classLoader.getResource("eclipse_formatter_issue_1638.xml").getFile());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.setPreferences(List.of(file));
 		StepHarness.forStep(builder.build())
 				.testResource("java/eclipse/AbstractType.test", "java/eclipse/AbstractType.clean");
@@ -38,7 +38,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_global_by_visibility() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(false);
@@ -50,7 +50,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_global_enabled() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(false);
@@ -60,7 +60,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_global_no_fields() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(true);
@@ -70,7 +70,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_local_by_visibility() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(false);
@@ -82,7 +82,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_local_enabled_false() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(false);
@@ -92,7 +92,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_local_no_fields() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		builder.sortMembersEnabled(true);
 		builder.sortMembersOrder("SF,SI,SM,F,I,C,M,T");
 		builder.sortMembersDoNotSortFields(false);
@@ -102,7 +102,7 @@ class EclipseJdtFormatterStepSpecialCaseTest {
 
 	@Test
 	void sort_members_local_enabled_true() {
-		EclipseJdtFormatterStep.Builder builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
+		var builder = EclipseJdtFormatterStep.createBuilder(TestProvisioner.mavenCentral());
 		StepHarness.forStep(builder.build())
 				.testResource("java/eclipse/SortExample.localEnabledTrue.test", "java/eclipse/SortExample.localEnabledTrue.clean");
 	}

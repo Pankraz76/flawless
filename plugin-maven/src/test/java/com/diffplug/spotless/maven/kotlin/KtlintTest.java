@@ -26,7 +26,7 @@ class KtlintTest extends MavenIntegrationHarness {
 	void testKtlint() throws Exception {
 		writePomWithKotlinSteps("<ktlint/>");
 
-		String path = "src/main/kotlin/Main.kt";
+		var path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/ktlint/basic.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/ktlint/basic.clean");
@@ -42,7 +42,7 @@ class KtlintTest extends MavenIntegrationHarness {
 				  </editorConfigOverride>
 				</ktlint>""");
 
-		String path = "src/main/kotlin/Main.kt";
+		var path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/ktlint/experimentalEditorConfigOverride.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/ktlint/experimentalEditorConfigOverride.clean");
@@ -91,12 +91,12 @@ class KtlintTest extends MavenIntegrationHarness {
 				  </editorConfigOverride>
 				</ktlint>""");
 		setFile("src/main/kotlin/Main.kt").toResource("kotlin/ktlint/listScreen.dirty");
-		ProcessRunner.Result result = mavenRunner().withArguments("spotless:check").runHasError();
+		var result = mavenRunner().withArguments("spotless:check").runHasError();
 		Assertions.assertThat(result.toString()).contains("Composable functions that return Unit should start with an uppercase letter.");
 	}
 
 	private void checkKtlintOfficialStyle() throws Exception {
-		String path = "src/main/kotlin/Main.kt";
+		var path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/ktlint/experimentalEditorConfigOverride.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/ktlint/experimentalEditorConfigOverride.ktlintOfficial.clean");

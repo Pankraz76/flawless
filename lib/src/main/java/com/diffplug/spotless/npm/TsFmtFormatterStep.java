@@ -95,8 +95,8 @@ public final class TsFmtFormatterStep {
 		public FormatterFunc createFormatterFunc() {
 			try {
 				Map<String, Object> tsFmtOptions = unifyOptions();
-				ServerProcessInfo tsfmtRestServer = toRuntime().npmRunServer();
-				TsFmtRestService restService = new TsFmtRestService(tsfmtRestServer.getBaseUrl());
+				var tsfmtRestServer = toRuntime().npmRunServer();
+				var restService = new TsFmtRestService(tsfmtRestServer.getBaseUrl());
 				return Closeable.ofDangerous(() -> endServer(restService, tsfmtRestServer), input -> restService.format(input, tsFmtOptions));
 			} catch (IOException e) {
 				throw ThrowingEx.asRuntime(e);
@@ -106,7 +106,7 @@ public final class TsFmtFormatterStep {
 		private Map<String, Object> unifyOptions() {
 			Map<String, Object> unified = new HashMap<>();
 			if (!this.inlineTsFmtSettings.isEmpty()) {
-				File targetFile = new File(this.buildDir, "inline-tsfmt.json");
+				var targetFile = new File(this.buildDir, "inline-tsfmt.json");
 				JsonWriter.of(this.inlineTsFmtSettings).toJsonFile(targetFile);
 				unified.put("tsfmt", true);
 				unified.put("tsfmtFile", targetFile.getAbsolutePath());

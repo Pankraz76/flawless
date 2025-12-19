@@ -60,8 +60,8 @@ public final class BlackStep {
 	}
 
 	private RoundtripState createRoundtrip() {
-		String trackingIssue = "\n  github issue to handle this better: https://github.com/diffplug/spotless/issues/674";
-		ForeignExe exeAbsPath = ForeignExe.nameAndVersion("black", version)
+		var trackingIssue = "\n  github issue to handle this better: https://github.com/diffplug/spotless/issues/674";
+		var exeAbsPath = ForeignExe.nameAndVersion("black", version)
 				.pathToExe(pathToExe)
 				.versionRegex(Pattern.compile("(?:black, version|black,|version) (\\S*)"))
 				.fixCantFind("Try running {@code pip install black=={version}}, or else tell Spotless where it is with {@code black().pathToExe('path/to/executable')}" + trackingIssue)
@@ -107,7 +107,7 @@ public final class BlackStep {
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			ProcessRunner runner = new ProcessRunner();
+			var runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

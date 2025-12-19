@@ -61,7 +61,7 @@ public final class NodeModulesCachingNpmProcessFactory implements NpmProcessFact
 
 	@Override
 	public NpmProcess createNpmInstallProcess(NodeServerLayout nodeServerLayout, NpmFormatterStepLocations formatterStepLocations, OnlinePreferrence onlinePreferrence) {
-		NpmProcess actualNpmInstallProcess = StandardNpmProcessFactory.INSTANCE.createNpmInstallProcess(nodeServerLayout, formatterStepLocations, onlinePreferrence);
+		var actualNpmInstallProcess = StandardNpmProcessFactory.INSTANCE.createNpmInstallProcess(nodeServerLayout, formatterStepLocations, onlinePreferrence);
 		return new CachingNmpInstall(actualNpmInstallProcess, nodeServerLayout);
 	}
 
@@ -82,13 +82,13 @@ public final class NodeModulesCachingNpmProcessFactory implements NpmProcessFact
 
 		@Override
 		public Result waitFor() {
-			String entryName = entryName();
+			var entryName = entryName();
 			if (shadowCopy.entryExists(entryName, NodeServerLayout.NODE_MODULES)) {
 				TIMED_LOGGER.withInfo("Using cached node_modules for {} from {}", entryName, cacheDir)
 						.run(() -> shadowCopy.copyEntryInto(entryName(), NodeServerLayout.NODE_MODULES, nodeServerLayout.nodeModulesDir()));
 				return new CachedResult();
 			} else {
-				Result result = TIMED_LOGGER.withInfo("calling actual npm install {}", actualNpmInstallProcess.describe())
+				var result = TIMED_LOGGER.withInfo("calling actual npm install {}", actualNpmInstallProcess.describe())
 						.call(actualNpmInstallProcess::waitFor);
 				assert result.exitCode() == 0;
 				storeShadowCopy(entryName);

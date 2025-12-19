@@ -34,7 +34,7 @@ class FormatTaskTest extends ResourceHarness {
 
 	@BeforeEach
 	void createTask() {
-		Project project = TestProvisioner.gradleProject(rootFolder());
+		var project = TestProvisioner.gradleProject(rootFolder());
 		spotlessTask = project.getTasks().create("spotlessTaskUnderTest", SpotlessTaskImpl.class);
 		spotlessTask.setLineEndingsPolicy(project.provider(LineEnding.UNIX::createPolicy));
 		spotlessTask.init(GradleIntegrationHarness.providerOf(new SpotlessTaskService() {
@@ -47,8 +47,8 @@ class FormatTaskTest extends ResourceHarness {
 
 	@Test
 	void testLineEndings() throws Exception {
-		File testFile = setFile("testFile").toContent("\r\n");
-		File outputFile = new File(spotlessTask.getCleanDirectory(), "testFile");
+		var testFile = setFile("testFile").toContent("\r\n");
+		var outputFile = new File(spotlessTask.getCleanDirectory(), "testFile");
 
 		spotlessTask.setTarget(Set.of(testFile));
 		Tasks.execute(spotlessTask);
@@ -58,8 +58,8 @@ class FormatTaskTest extends ResourceHarness {
 
 	@Test
 	void testStep() throws Exception {
-		File testFile = setFile("testFile").toContent("apple");
-		File outputFile = new File(spotlessTask.getCleanDirectory(), "testFile");
+		var testFile = setFile("testFile").toContent("apple");
+		var outputFile = new File(spotlessTask.getCleanDirectory(), "testFile");
 		spotlessTask.setTarget(Set.of(testFile));
 
 		spotlessTask.setSteps(List.of(ReplaceStep.create("double-p", "pp", "p")));

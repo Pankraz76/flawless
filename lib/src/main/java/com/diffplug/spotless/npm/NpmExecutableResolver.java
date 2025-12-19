@@ -50,7 +50,7 @@ final class NpmExecutableResolver {
 	}
 
 	static String npmExecutableName() {
-		String npmName = "npm";
+		var npmName = "npm";
 		if (PlatformInfo.normalizedOS() == WINDOWS) {
 			npmName += ".cmd";
 		}

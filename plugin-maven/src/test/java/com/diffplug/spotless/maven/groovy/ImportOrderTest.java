@@ -50,7 +50,7 @@ class ImportOrderTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String expectedResource) throws Exception {
-		String path = "src/main/groovy/test.groovy";
+		var path = "src/main/groovy/test.groovy";
 		setFile(path).toResource("java/importsorter/GroovyCodeUnsortedMisplacedImports.test");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource(expectedResource);

@@ -30,7 +30,7 @@ class DBeaverSQLFormatterStepTest extends ResourceHarness {
 
 	@Test
 	void behavior() {
-		FormatterStep step = DBeaverSQLFormatterStep.create(Collections.emptySet());
+		var step = DBeaverSQLFormatterStep.create(Collections.emptySet());
 		StepHarness.forStep(step)
 				.testResource("sql/dbeaver/full.dirty", "sql/dbeaver/full.clean")
 				.testResource("sql/dbeaver/V1_initial.sql.dirty", "sql/dbeaver/V1_initial.sql.clean")
@@ -41,14 +41,14 @@ class DBeaverSQLFormatterStepTest extends ResourceHarness {
 
 	@Test
 	void behaviorWithConfigFile() {
-		FormatterStep step = DBeaverSQLFormatterStep.create(createTestFiles("sql/dbeaver/sqlConfig.properties"));
+		var step = DBeaverSQLFormatterStep.create(createTestFiles("sql/dbeaver/sqlConfig.properties"));
 		StepHarness.forStep(step)
 				.testResource("sql/dbeaver/create.dirty", "sql/dbeaver/create.clean");
 	}
 
 	@Test
 	void behaviorWithAlternativeConfigFile() {
-		FormatterStep step = DBeaverSQLFormatterStep.create(createTestFiles("sql/dbeaver/sqlConfig2.properties"));
+		var step = DBeaverSQLFormatterStep.create(createTestFiles("sql/dbeaver/sqlConfig2.properties"));
 		StepHarness.forStep(step)
 				.testResource("sql/dbeaver/create.dirty", "sql/dbeaver/create.clean.alternative");
 	}

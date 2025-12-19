@@ -41,26 +41,26 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 
 	@Test
 	void prettierTypescriptWithoutCache() throws Exception {
-		String suffix = "ts";
+		var suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"</prettier>");
-		Result result = run("typescript", suffix);
+		var result = run("typescript", suffix);
 		Assertions.assertThat(result.stdOutUtf8()).doesNotContain("Caching node_modules for").doesNotContain("Using cached node_modules for");
 	}
 
 	@Test
 	void prettierTypescriptWithDefaultCache() throws Exception {
-		String suffix = "ts";
+		var suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"  <npmInstallCache>true</npmInstallCache>",
 				"</prettier>");
-		Result result = run("typescript", suffix);
+		var result = run("typescript", suffix);
 		Assertions.assertThat(result.stdOutUtf8())
 				.contains("Caching node_modules for")
 				.contains(SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME)
@@ -70,14 +70,14 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 	@Disabled
 	@Test
 	void prettierTypescriptWithDefaultCacheIsReusedOnSecondRun() throws Exception {
-		String suffix = "ts";
+		var suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"  <npmInstallCache>true</npmInstallCache>",
 				"</prettier>");
-		Result result1 = run("typescript", suffix);
+		var result1 = run("typescript", suffix);
 		Assertions.assertThat(result1.stdOutUtf8())
 				.contains("Caching node_modules for")
 				.contains(SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME)
@@ -86,7 +86,7 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 		// recursively delete target folder to simulate a fresh run (except the default cache folder)
 		recursiveDelete(Path.of(rootFolder().getAbsolutePath(), "target"), SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME);
 
-		Result result2 = run("typescript", suffix);
+		var result2 = run("typescript", suffix);
 		Assertions.assertThat(result2.stdOutUtf8())
 				.doesNotContain("Caching node_modules for")
 				.contains(SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME)
@@ -95,15 +95,15 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 
 	@Test
 	void prettierTypescriptWithSpecificCache() throws Exception {
-		String suffix = "ts";
-		File cacheDir = newFolder("cache-prettier-1");
+		var suffix = "ts";
+		var cacheDir = newFolder("cache-prettier-1");
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"  <npmInstallCache>" + cacheDir.getAbsolutePath() + "</npmInstallCache>",
 				"</prettier>");
-		Result result = run("typescript", suffix);
+		var result = run("typescript", suffix);
 		Assertions.assertThat(result.stdOutUtf8())
 				.contains("Caching node_modules for")
 				.contains(Path.of(cacheDir.getAbsolutePath()).toAbsolutePath().toString())
@@ -113,15 +113,15 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 	@Disabled
 	@Test
 	void prettierTypescriptWithSpecificCacheIsUsedOnSecondRun() throws Exception {
-		String suffix = "ts";
-		File cacheDir = newFolder("cache-prettier-1");
+		var suffix = "ts";
+		var cacheDir = newFolder("cache-prettier-1");
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"  <npmInstallCache>" + cacheDir.getAbsolutePath() + "</npmInstallCache>",
 				"</prettier>");
-		Result result1 = run("typescript", suffix);
+		var result1 = run("typescript", suffix);
 		Assertions.assertThat(result1.stdOutUtf8())
 				.contains("Caching node_modules for")
 				.contains(Path.of(cacheDir.getAbsolutePath()).toAbsolutePath().toString())
@@ -130,7 +130,7 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 		// recursively delete target folder to simulate a fresh run
 		recursiveDelete(Path.of(rootFolder().getAbsolutePath(), "target"), null);
 
-		Result result2 = run("typescript", suffix);
+		var result2 = run("typescript", suffix);
 		Assertions.assertThat(result2.stdOutUtf8())
 				.doesNotContain("Caching node_modules for")
 				.contains(Path.of(cacheDir.getAbsolutePath()).toAbsolutePath().toString())
@@ -142,16 +142,16 @@ public class NpmStepsWithNpmInstallCacheTest extends MavenIntegrationHarness {
 	}
 
 	private Result run(String kind, String suffix) throws IOException, InterruptedException {
-		String path = prepareRun(kind, suffix);
-		Result result = mavenRunner().withArguments("spotless:apply").runNoError();
+		var path = prepareRun(kind, suffix);
+		var result = mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("npm/prettier/filetypes/" + kind + "/" + kind + ".clean");
 		return result;
 	}
 
 	private String prepareRun(String kind, String suffix) throws IOException {
-		String configPath = ".prettierrc.yml";
+		var configPath = ".prettierrc.yml";
 		setFile(configPath).toResource("npm/prettier/filetypes/" + kind + "/" + ".prettierrc.yml");
-		String path = "src/main/" + kind + "/test." + suffix;
+		var path = "src/main/" + kind + "/test." + suffix;
 		setFile(path).toResource("npm/prettier/filetypes/" + kind + "/" + kind + ".dirty");
 		return path;
 	}

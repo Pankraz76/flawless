@@ -46,7 +46,7 @@ class Antlr4FormatterTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest() throws Exception {
-		String path = "src/main/antlr4/Hello.g4";
+		var path = "src/main/antlr4/Hello.g4";
 		setFile(path).toResource("antlr4/Hello.unformatted.g4");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("antlr4/Hello.formatted.g4");

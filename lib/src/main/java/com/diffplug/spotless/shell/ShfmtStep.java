@@ -64,7 +64,7 @@ public final class ShfmtStep {
 	}
 
 	private RoundtripState createRoundtrip() throws IOException, InterruptedException {
-		String howToInstall = """
+		var howToInstall = """
 				You can download shfmt from https://github.com/mvdan/sh and \
 				then point Spotless to it with {@code pathToExe('/path/to/shfmt')} \
 				or you can use your platform's package manager:
@@ -72,7 +72,7 @@ public final class ShfmtStep {
 				  mac:   brew install shfmt
 				  linux: apt install shfmt
 				    github issue to handle this better: https://github.com/diffplug/spotless/issues/673""";
-		final ForeignExe exe = ForeignExe.nameAndVersion("shfmt", version)
+		final var exe = ForeignExe.nameAndVersion("shfmt", version)
 				.pathToExe(pathToExe)
 				.versionRegex(Pattern.compile("([\\d.]+)"))
 				.fixCantFind(howToInstall)
@@ -129,7 +129,7 @@ public final class ShfmtStep {
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			ProcessRunner runner = new ProcessRunner();
+			var runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

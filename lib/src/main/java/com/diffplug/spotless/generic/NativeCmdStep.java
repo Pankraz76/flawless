@@ -73,7 +73,7 @@ public final class NativeCmdStep {
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			ProcessRunner runner = new ProcessRunner();
+			var runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

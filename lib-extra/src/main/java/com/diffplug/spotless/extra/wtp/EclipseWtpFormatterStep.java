@@ -60,13 +60,13 @@ public enum EclipseWtpFormatterStep {
 	private static FormatterFunc applyWithoutFile(String className, EclipseBasedStepBuilder.State state) throws Exception {
 		JVM_SUPPORT.assertFormatterSupported(state.getSemanticVersion());
 		Class<?> formatterClazz = state.loadClass(FORMATTER_PACKAGE + className);
-		Object formatter = formatterClazz.getConstructor(Properties.class).newInstance(state.getPreferences());
-		Method method = formatterClazz.getMethod(FORMATTER_METHOD, String.class);
+		var formatter = formatterClazz.getConstructor(Properties.class).newInstance(state.getPreferences());
+		var method = formatterClazz.getMethod(FORMATTER_METHOD, String.class);
 		return input -> {
 			try {
 				return (String) method.invoke(formatter, input);
 			} catch (InvocationTargetException exceptionWrapper) {
-				Throwable throwable = exceptionWrapper.getTargetException();
+				var throwable = exceptionWrapper.getTargetException();
 				Exception exception = throwable instanceof Exception e ? e : null;
 				throw exception == null ? exceptionWrapper : exception;
 			}
@@ -76,15 +76,15 @@ public enum EclipseWtpFormatterStep {
 	private static FormatterFunc applyWithFile(String className, EclipseBasedStepBuilder.State state) throws Exception {
 		JVM_SUPPORT.assertFormatterSupported(state.getSemanticVersion());
 		Class<?> formatterClazz = state.loadClass(FORMATTER_PACKAGE + className);
-		Object formatter = formatterClazz.getConstructor(Properties.class).newInstance(state.getPreferences());
-		Method method = formatterClazz.getMethod(FORMATTER_METHOD, String.class, String.class);
+		var formatter = formatterClazz.getConstructor(Properties.class).newInstance(state.getPreferences());
+		var method = formatterClazz.getMethod(FORMATTER_METHOD, String.class, String.class);
 		return JVM_SUPPORT.suggestLaterVersionOnError(state.getSemanticVersion(), new FormatterFunc.NeedsFile() {
 			@Override
 			public String applyWithFile(String unix, File file) throws Exception {
 				try {
 					return (String) method.invoke(formatter, unix, file.getAbsolutePath());
 				} catch (InvocationTargetException exceptionWrapper) {
-					Throwable throwable = exceptionWrapper.getTargetException();
+					var throwable = exceptionWrapper.getTargetException();
 					Exception exception = throwable instanceof Exception e ? e : null;
 					throw exception == null ? exceptionWrapper : exception;
 				}

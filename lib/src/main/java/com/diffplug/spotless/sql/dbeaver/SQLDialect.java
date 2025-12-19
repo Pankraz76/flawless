@@ -72,7 +72,7 @@ final class SQLDialect {
 	private void addKeywords(Collection<String> set, DBPKeywordType type) {
 		for (String keyword : set) {
 			keyword = keyword.toUpperCase(Locale.ENGLISH);
-			DBPKeywordType oldType = allKeywords.get(keyword);
+			var oldType = allKeywords.get(keyword);
 			if (oldType != DBPKeywordType.KEYWORD) {
 				// We can't mark keywords as functions or types because keywords are reserved and
 				// if some identifier conflicts with keyword it must be quoted.

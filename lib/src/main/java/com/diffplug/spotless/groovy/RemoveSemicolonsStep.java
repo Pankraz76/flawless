@@ -47,7 +47,7 @@ public final class RemoveSemicolonsStep implements Serializable {
 
 		FormatterFunc toFormatter() {
 			return raw -> {
-				StringBuilder result = new StringBuilder(raw.length());
+				var result = new StringBuilder(raw.length());
 
 				// State tracking
 				boolean inSingleQuoteString = false;
@@ -63,7 +63,7 @@ public final class RemoveSemicolonsStep implements Serializable {
 
 					// Check for triple quotes first (needs lookahead)
 					if (!inSingleLineComment && !inMultiLineComment && i + 2 < raw.length()) {
-						String triple = raw.substring(i, i + 3);
+						var triple = raw.substring(i, i + 3);
 						if ("'''".equals(triple) && !inDoubleQuoteString && !inTripleDoubleQuoteString) {
 							inTripleSingleQuoteString = !inTripleSingleQuoteString;
 							result.append(triple);

@@ -119,7 +119,7 @@ public final class Formatter implements Serializable, AutoCloseable {
 		Objects.requireNonNull(unix, "unix");
 		Objects.requireNonNull(file, "file");
 
-		String ending = lineEndingsPolicy.getEndingFor(file);
+		var ending = lineEndingsPolicy.getEndingFor(file);
 		if (!ending.equals(LineEnding.UNIX.str())) {
 			return unix.replace(LineEnding.UNIX.str(), ending);
 		} else {
@@ -134,14 +134,14 @@ public final class Formatter implements Serializable, AutoCloseable {
 	 */
 	public String compute(String unix, File file) {
 		ValuePerStep<Throwable> exceptionPerStep = new ValuePerStep<>(this);
-		String result = computeWithLint(unix, file, exceptionPerStep);
+		var result = computeWithLint(unix, file, exceptionPerStep);
 		legacyErrorBehavior(this, file, exceptionPerStep);
 		return result;
 	}
 
 	static void legacyErrorBehavior(Formatter formatter, File file, ValuePerStep<Throwable> exceptionPerStep) {
 		for (int i = 0; i < formatter.getSteps().size(); i++) {
-			Throwable exception = exceptionPerStep.get(i);
+			var exception = exceptionPerStep.get(i);
 			if (exception != null && exception != LintState.formatStepCausedNoChange()) {
 				LOGGER.error("Step '{}' found problem in '{}':\n{}", formatter.getSteps().get(i).getName(), file.getName(), exception.getMessage(), exception);
 				throw ThrowingEx.asRuntimeRethrowError(exception);
@@ -166,10 +166,10 @@ public final class Formatter implements Serializable, AutoCloseable {
 		Objects.requireNonNull(file, "file");
 
 		for (int i = 0; i < steps.size(); i++) {
-			FormatterStep step = steps.get(i);
+			var step = steps.get(i);
 			Throwable storeForStep;
 			try {
-				String formatted = step.format(unix, file);
+				var formatted = step.format(unix, file);
 				if (formatted == null) {
 					// This probably means it was a step that only checks
 					// for errors and doesn't actually have any fixes.
@@ -214,7 +214,7 @@ public final class Formatter implements Serializable, AutoCloseable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		Formatter other = (Formatter) obj;
+		var other = (Formatter) obj;
 		return encoding.equals(other.encoding)
 				&& lineEndingsPolicy.equals(other.lineEndingsPolicy)
 				&& steps.equals(other.steps);

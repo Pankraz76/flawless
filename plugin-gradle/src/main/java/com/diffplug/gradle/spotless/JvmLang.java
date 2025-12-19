@@ -30,7 +30,7 @@ import org.gradle.api.tasks.SourceSetContainer;
 interface JvmLang {
 
 	default SourceSetContainer getSourceSets(Project project, String message) {
-		final JavaPluginExtension javaPluginExtension = project.getExtensions().findByType(JavaPluginExtension.class);
+		final var javaPluginExtension = project.getExtensions().findByType(JavaPluginExtension.class);
 		if (javaPluginExtension == null) {
 			throw new GradleException(message);
 		}
@@ -38,7 +38,7 @@ interface JvmLang {
 	}
 
 	default FileCollection getSources(Project project, String message, Function<SourceSet, SourceDirectorySet> sourceSetSourceDirectory, Spec<? super File> filterSpec) {
-		FileCollection union = project.files();
+		var union = project.files();
 		for (SourceSet sourceSet : getSourceSets(project, message)) {
 			union = union.plus(sourceSetSourceDirectory.apply(sourceSet).filter(filterSpec));
 		}

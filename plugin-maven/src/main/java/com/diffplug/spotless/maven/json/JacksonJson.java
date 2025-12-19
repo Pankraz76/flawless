@@ -46,7 +46,7 @@ public class JacksonJson implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		JacksonJsonConfig jacksonConfig = new JacksonJsonConfig();
+		var jacksonConfig = new JacksonJsonConfig();
 
 		jacksonConfig.appendFeatureToToggle(features);
 		jacksonConfig.appendJsonFeatureToToggle(jsonFeatures);

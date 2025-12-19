@@ -35,20 +35,20 @@ import com.diffplug.spotless.extra.GitWorkarounds.RepositorySpecificResolver;
 class GitWorkaroundsTest extends ResourceHarness {
 	@Test
 	void inline() throws IOException, GitAPIException {
-		File projectFolder = newFolder("project");
+		var projectFolder = newFolder("project");
 		Git.init().setDirectory(projectFolder).call();
 
-		RepositorySpecificResolver repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(projectFolder);
+		var repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(projectFolder);
 		Assertions.assertThat(repositorySpecificResolver.getGitDir()).isEqualTo(new File(projectFolder, ".git"));
 	}
 
 	@Test
 	void external() throws IOException, GitAPIException {
-		File projectFolder = newFolder("project");
-		File gitDir = newFolder("project.git");
+		var projectFolder = newFolder("project");
+		var gitDir = newFolder("project.git");
 		Git.init().setDirectory(projectFolder).setGitDir(gitDir).call();
 
-		RepositorySpecificResolver repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(projectFolder);
+		var repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(projectFolder);
 		Assertions.assertThat(repositorySpecificResolver.getGitDir()).isEqualTo(gitDir);
 	}
 
@@ -86,14 +86,14 @@ class GitWorkaroundsTest extends ResourceHarness {
 		void resolveGitDir() {
 			// Test worktree 1
 			{
-				RepositorySpecificResolver repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(project1Tree);
+				var repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(project1Tree);
 				Assertions.assertThat(repositorySpecificResolver.getGitDir()).isEqualTo(project1GitDir);
 				Assertions.assertThat(repositorySpecificResolver.resolveWithCommonDir(Constants.CONFIG)).isEqualTo(new File(commonGitDir, Constants.CONFIG));
 			}
 
 			// Test worktree 2
 			{
-				RepositorySpecificResolver repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(project2Tree);
+				var repositorySpecificResolver = GitWorkarounds.fileRepositoryResolverForProject(project2Tree);
 				Assertions.assertThat(repositorySpecificResolver.getGitDir()).isEqualTo(project2GitDir);
 				Assertions.assertThat(repositorySpecificResolver.resolveWithCommonDir(Constants.CONFIG)).isEqualTo(new File(commonGitDir, Constants.CONFIG));
 			}

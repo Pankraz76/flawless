@@ -27,17 +27,17 @@ import com.diffplug.spotless.TestProvisioner;
 public class SortPomTest extends ResourceHarness {
 	@Test
 	public void testSortPomWithDefaultConfig() {
-		SortPomCfg cfg = new SortPomCfg();
-		FormatterStep step = SortPomStep.create(cfg, TestProvisioner.mavenCentral());
+		var cfg = new SortPomCfg();
+		var step = SortPomStep.create(cfg, TestProvisioner.mavenCentral());
 		StepHarness.forStep(step).testResource("pom/pom_dirty.xml", "pom/pom_clean_default.xml");
 	}
 
 	@ParameterizedTest
 	@ValueSource(strings = {"3.2.1", "3.3.0", "3.4.1", "4.0.0"})
 	public void testSortPomWithVersion(String version) {
-		SortPomCfg cfg = new SortPomCfg();
+		var cfg = new SortPomCfg();
 		cfg.version = version;
-		FormatterStep step = SortPomStep.create(cfg, TestProvisioner.mavenCentral());
+		var step = SortPomStep.create(cfg, TestProvisioner.mavenCentral());
 		StepHarness.forStep(step).testResource("pom/pom_dirty.xml", "pom/pom_clean_default.xml");
 	}
 }

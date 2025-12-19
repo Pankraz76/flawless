@@ -43,12 +43,12 @@ class ValuePerStep<T> extends AbstractList<T> {
 			this.value = newValue;
 			return null;
 		} else if (this.multipleValues != null) {
-			T previousValue = (T) multipleValues[index];
+			var previousValue = (T) multipleValues[index];
 			multipleValues[index] = newValue;
 			return previousValue;
 		} else {
 			if (index == valueIdx) {
-				T previousValue = this.value;
+				var previousValue = this.value;
 				this.value = newValue;
 				return previousValue;
 			} else {

@@ -29,7 +29,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 		for (int i = 0; i < N; i++) {
 			createSubproject(Integer.toString(i));
 		}
-		String settings = StringPrinter.buildString(printer -> {
+		var settings = StringPrinter.buildString(printer -> {
 			for (int i = 0; i < N; i++) {
 				printer.println("include '" + i + "'");
 			}

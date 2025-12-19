@@ -38,7 +38,7 @@ public class EclipseWtp implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		EclipseBasedStepBuilder eclipseConfig = type.createBuilder(stepConfig.getProvisioner());
+		var eclipseConfig = type.createBuilder(stepConfig.getProvisioner());
 		eclipseConfig.setVersion(version == null ? EclipseWtpFormatterStep.defaultVersion() : version);
 		if (files != null) {
 			eclipseConfig.setPreferences(

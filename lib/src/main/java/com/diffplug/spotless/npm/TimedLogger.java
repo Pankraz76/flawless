@@ -191,19 +191,19 @@ final class TimedLogger {
 		}
 
 		public void run(ThrowingEx.Runnable r) {
-			try (Timed ignore = timed()) {
+			try (var ignore = timed()) {
 				ThrowingEx.run(r);
 			}
 		}
 
 		public <T> T call(ThrowingEx.Supplier<T> s) {
-			try (Timed ignore = timed()) {
+			try (var ignore = timed()) {
 				return ThrowingEx.get(s);
 			}
 		}
 
 		public void runChecked(ThrowingEx.Runnable r) throws Exception {
-			try (Timed ignore = timed()) {
+			try (var ignore = timed()) {
 				r.run();
 			}
 		}

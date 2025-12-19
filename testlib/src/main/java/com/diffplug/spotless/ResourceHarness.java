@@ -64,7 +64,7 @@ public class ResourceHarness {
 
 	/** Creates and returns a new child-folder of the root folder. */
 	public File newFolder(String subpath) throws IOException {
-		File targetDir = newFile(subpath);
+		var targetDir = newFile(subpath);
 		if (!targetDir.mkdir()) {
 			throw new IOException("Failed to create " + targetDir);
 		}
@@ -84,7 +84,7 @@ public class ResourceHarness {
 		}
 		List<String> filenames = new ArrayList<>();
 
-		try (InputStream in = ResourceHarness.class.getResourceAsStream(path)) {
+		try (var in = ResourceHarness.class.getResourceAsStream(path)) {
 			if (in == null) {
 				if (new File(path).isAbsolute()) {
 					throw new RuntimeException("Resource not found in classpath: '%s'".formatted(path));
@@ -92,7 +92,7 @@ public class ResourceHarness {
 					throw new RuntimeException("Resource not found in classpath: '%s' - did you mean '/%1$s'?".formatted(path));
 				}
 			}
-			try (BufferedReader br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
+			try (var br = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
 				String resource;
 				while ((resource = br.readLine()) != null) {
 					filenames.add(resource);
@@ -115,8 +115,8 @@ public class ResourceHarness {
 	}
 
 	public void replace(String path, String toReplace, String replaceWith) throws IOException {
-		String before = read(path);
-		String after = before.replace(toReplace, replaceWith);
+		var before = read(path);
+		var after = before.replace(toReplace, replaceWith);
 		if (before.equals(after)) {
 			throw new IllegalArgumentException("Replace was ineffective! '" + toReplace + "' was not found in " + path);
 		}
@@ -137,7 +137,7 @@ public class ResourceHarness {
 	}
 
 	private static Optional<URL> getTestResourceUrl(String filename) {
-		URL url = ResourceHarness.class.getResource("/" + filename);
+		var url = ResourceHarness.class.getResource("/" + filename);
 		return Optional.ofNullable(url);
 	}
 
@@ -162,7 +162,7 @@ public class ResourceHarness {
 	public File createTestFile(String filename, UnaryOperator<String> fileContentsProcessor) {
 		int lastSlash = filename.lastIndexOf('/');
 		String name = lastSlash >= 0 ? filename.substring(lastSlash) : filename;
-		File file = newFile(name);
+		var file = newFile(name);
 		file.getParentFile().mkdirs();
 		ThrowingEx.run(() -> Files.write(file.toPath(), fileContentsProcessor.apply(getTestResource(filename)).getBytes(StandardCharsets.UTF_8)));
 		return file;

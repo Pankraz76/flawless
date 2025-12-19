@@ -25,7 +25,7 @@ class ForbidWildcardImportsStepTest extends MavenIntegrationHarness {
 	void testForbidWildcardImports() throws Exception {
 		writePomWithJavaSteps("<forbidWildcardImports/>");
 
-		String path = "src/main/java/test.java";
+		var path = "src/main/java/test.java";
 		setFile(path).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 		var selfie = expectSelfieErrorMsg(mavenRunner().withArguments("spotless:apply").runHasError());
 		assertFile(path).sameAsResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");

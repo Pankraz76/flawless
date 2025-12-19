@@ -31,7 +31,7 @@ final class SerializableMisc {
 	static void toFile(Serializable obj, File file) {
 		try {
 			java.nio.file.Files.createDirectories(file.getParentFile().toPath());
-			try (OutputStream output = Files.asByteSink(file).openBufferedStream()) {
+			try (var output = Files.asByteSink(file).openBufferedStream()) {
 				toStream(obj, output);
 			}
 		} catch (IOException e) {
@@ -40,7 +40,7 @@ final class SerializableMisc {
 	}
 
 	static <T> T fromFile(Class<T> clazz, File file) {
-		try (InputStream input = Files.asByteSource(file).openBufferedStream()) {
+		try (var input = Files.asByteSource(file).openBufferedStream()) {
 			return fromStream(clazz, input);
 		} catch (IOException e) {
 			throw Errors.asRuntime(e);
@@ -48,7 +48,7 @@ final class SerializableMisc {
 	}
 
 	static void toStream(Serializable obj, OutputStream stream) {
-		try (ObjectOutputStream objectOutput = new ObjectOutputStream(stream)) {
+		try (var objectOutput = new ObjectOutputStream(stream)) {
 			objectOutput.writeObject(obj);
 		} catch (IOException e) {
 			throw Errors.asRuntime(e);
@@ -57,8 +57,8 @@ final class SerializableMisc {
 
 	@SuppressWarnings("unchecked")
 	static <T> T fromStream(Class<T> clazz, InputStream stream) {
-		try (ObjectInputStream objectInput = new ObjectInputStream(stream)) {
-			T object = (T) objectInput.readObject();
+		try (var objectInput = new ObjectInputStream(stream)) {
+			var object = (T) objectInput.readObject();
 			Preconditions.checkArgument(clazz.isInstance(object), "Requires class %s, was %s", clazz, object);
 			return object;
 		} catch (ClassNotFoundException | IOException e) {

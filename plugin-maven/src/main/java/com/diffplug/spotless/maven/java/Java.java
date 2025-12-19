@@ -42,8 +42,8 @@ public class Java extends FormatterFactory {
 
 	@Override
 	public Set<String> defaultIncludes(MavenProject project) {
-		Path projectDir = project.getBasedir().toPath();
-		Build build = project.getBuild();
+		var projectDir = project.getBasedir().toPath();
+		var build = project.getBuild();
 		return Stream.of(build.getSourceDirectory(), build.getTestSourceDirectory())
 				.map(Paths::get)
 				.map(projectDir::relativize)
@@ -93,7 +93,7 @@ public class Java extends FormatterFactory {
 	}
 
 	private static String fileMask(Path path) {
-		String dir = path.toString();
+		var dir = path.toString();
 		if (!dir.endsWith(File.separator)) {
 			dir += File.separator;
 		}

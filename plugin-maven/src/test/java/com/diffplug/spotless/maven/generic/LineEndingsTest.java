@@ -44,7 +44,7 @@ class LineEndingsTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String sourceContent, String targetContent) throws Exception {
-		String path = "src/main/java/test.java";
+		var path = "src/main/java/test.java";
 		setFile(path).toContent(sourceContent);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).hasContent(targetContent);

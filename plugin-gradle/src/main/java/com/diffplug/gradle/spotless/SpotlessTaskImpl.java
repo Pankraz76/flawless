@@ -78,13 +78,13 @@ public abstract class SpotlessTaskImpl extends SpotlessTask {
 
 	@TaskAction
 	public void performAction(InputChanges inputs) throws Exception {
-		IdeHook.State ideHook = getIdeHookState().getOrNull();
+		var ideHook = getIdeHookState().getOrNull();
 		if (ideHook != null && ideHook.path != null) {
 			IdeHook.performHook(this, ideHook);
 			return;
 		}
 
-		SpotlessTaskService taskService = getTaskService().get();
+		var taskService = getTaskService().get();
 		taskService.registerSourceAlreadyRan(this);
 		if (target == null) {
 			throw new GradleException("You must specify 'Iterable<File> target'");
@@ -98,12 +98,12 @@ public abstract class SpotlessTaskImpl extends SpotlessTask {
 			Files.createDirectories(lintsDirectory.toPath());
 		}
 
-		try (Formatter formatter = buildFormatter()) {
-			GitRatchetGradle ratchet = getRatchet();
+		try (var formatter = buildFormatter()) {
+			var ratchet = getRatchet();
 			for (FileChange fileChange : inputs.getFileChanges(target)) {
-				File input = fileChange.getFile();
-				File projectDir = getProjectDir().get().getAsFile();
-				String relativePath = LintSuppression.relativizeAsUnix(projectDir, input);
+				var input = fileChange.getFile();
+				var projectDir = getProjectDir().get().getAsFile();
+				var relativePath = LintSuppression.relativizeAsUnix(projectDir, input);
 				if (relativePath == null) {
 					throw new IllegalArgumentException(StringPrinter.buildString(printer -> {
 						printer.println("Spotless error! All target files must be within the project dir.");
@@ -125,8 +125,8 @@ public abstract class SpotlessTaskImpl extends SpotlessTask {
 
 	@VisibleForTesting
 	void processInputFile(@Nullable GitRatchet ratchet, Formatter formatter, File input, String relativePath) throws IOException {
-		File cleanFile = new File(cleanDirectory, relativePath);
-		File lintFile = new File(lintsDirectory, relativePath);
+		var cleanFile = new File(cleanDirectory, relativePath);
+		var lintFile = new File(lintsDirectory, relativePath);
 		getLogger().debug("Applying format to {} and writing to {}", input, cleanFile);
 		LintState lintState;
 		if (ratchet != null && ratchet.isClean(getProjectDir().get().getAsFile(), getRootTreeSha(), input)) {
@@ -144,7 +144,7 @@ public abstract class SpotlessTaskImpl extends SpotlessTask {
 		} else if (lintState.getDirtyState().didNotConverge()) {
 			getLogger().warn("Skipping '{}' because it does not converge.  Run {@code spotlessDiagnose} to understand why", relativePath);
 		} else {
-			Path parentDir = cleanFile.toPath().getParent();
+			var parentDir = cleanFile.toPath().getParent();
 			if (parentDir == null) {
 				throw new IllegalStateException("Every file has a parent folder. But not: " + cleanFile);
 			}
@@ -164,7 +164,7 @@ public abstract class SpotlessTaskImpl extends SpotlessTask {
 	}
 
 	private void deletePreviousResults(File baseDir, String subpath) throws IOException {
-		File output = new File(baseDir, subpath);
+		var output = new File(baseDir, subpath);
 		if (output.isDirectory()) {
 			getFs().delete(d -> d.delete(output));
 		} else {

@@ -38,7 +38,7 @@ public final class DBeaverSQLFormatterStep {
 
 	private static FormatterFunc createFormat(FileSignature settings) {
 		FormatterProperties preferences = FormatterProperties.from(settings.files());
-		DBeaverSQLFormatter dbeaverSqlFormatter = new DBeaverSQLFormatter(preferences.getProperties());
+		var dbeaverSqlFormatter = new DBeaverSQLFormatter(preferences.getProperties());
 		return dbeaverSqlFormatter::format;
 	}
 }

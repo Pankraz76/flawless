@@ -98,7 +98,7 @@ class ReflectionHelper {
 		this.JenaRDFFormatClass = classLoader.loadClass("org.apache.jena.riot.RDFFormat");
 		this.TurtleFormatFormatterClass = classLoader.loadClass("de.atextor.turtle.formatter.TurtleFormatter");
 		this.TurtleFormatFormattingStyleClass = classLoader.loadClass("de.atextor.turtle.formatter.FormattingStyle");
-		Class<?>[] innerClasses = TurtleFormatFormattingStyleClass.getDeclaredClasses();
+		var innerClasses = TurtleFormatFormattingStyleClass.getDeclaredClasses();
 		this.TurtleFormatFormattingStyleBuilderClass = Arrays.stream(innerClasses)
 				.filter(c -> "FormattingStyleBuilder".equals(c.getSimpleName())).findFirst().orElseThrow();
 		this.TurtleFormatKnownPrefix = Arrays.stream(innerClasses).filter(c -> "KnownPrefix".equals(c.getSimpleName())).findFirst().orElseThrow();
@@ -131,39 +131,39 @@ class ReflectionHelper {
 
 	public Object listModelStatements(Object modelBefore)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Method listStatements = JenaModelClass.getMethod("listStatements");
+		var listStatements = JenaModelClass.getMethod("listStatements");
 		return listStatements.invoke(modelBefore);
 	}
 
 	public boolean hasNext(Object statementIterator)
 			throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-		Method hasNext = JenaStmtIteratorClass.getMethod("hasNext");
+		var hasNext = JenaStmtIteratorClass.getMethod("hasNext");
 		return (boolean) hasNext.invoke(statementIterator);
 	}
 
 	public Object next(Object statementIterator)
 			throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-		Method hasNext = JenaStmtIteratorClass.getMethod("next");
+		var hasNext = JenaStmtIteratorClass.getMethod("next");
 		return hasNext.invoke(statementIterator);
 	}
 
 	public boolean containsBlankNode(Object statement)
 			throws InvocationTargetException, IllegalAccessException {
-		Object subject = getSubject.invoke(statement);
+		var subject = getSubject.invoke(statement);
 		if ((boolean) isAnon.invoke(subject)) {
 			return true;
 		}
-		Object predicate = getPredicate.invoke(statement);
+		var predicate = getPredicate.invoke(statement);
 		if ((boolean) isAnon.invoke(predicate)) {
 			return true;
 		}
-		Object object = getObject.invoke(statement);
+		var object = getObject.invoke(statement);
 		return (boolean) isAnon.invoke(object);
 	}
 
 	public boolean containsStatement(Object model, Object statement)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Method contains = JenaModelClass.getMethod("contains", JenaStatementClass);
+		var contains = JenaModelClass.getMethod("contains", JenaStatementClass);
 		return (boolean) contains.invoke(model, statement);
 	}
 
@@ -174,9 +174,9 @@ class ReflectionHelper {
 		}
 		Iterator<Object> it = (Iterator<Object>) graphFindTriple.invoke(graph, triple);
 		while (it.hasNext()) {
-			Object foundTriple = it.next();
-			Object foundObject = tripleGetObject.invoke(foundTriple);
-			Object searchedObject = tripleGetObject.invoke(triple);
+			var foundTriple = it.next();
+			var foundObject = tripleGetObject.invoke(foundTriple);
+			var searchedObject = tripleGetObject.invoke(triple);
 			if (!foundObject.equals(searchedObject)) {
 				return false;
 			}
@@ -197,10 +197,10 @@ class ReflectionHelper {
 
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-			String message = (String) args[0];
+			var message = (String) args[0];
 			long line = (long) args[1];
 			long col = (long) args[2];
-			String severity = method.getName();
+			var severity = method.getName();
 			if ("warning".equals(severity) && !state.getConfig().isFailOnWarning()) {
 				LOGGER.warn("{}({},{}): {}", this.filePath, line, col, message);
 			} else {
@@ -217,7 +217,7 @@ class ReflectionHelper {
 
 	public Object getParser(Object lang, Object errorHandler, String rawUnix)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Object parserBuilder = JenaRdfParserClass.getMethod("create").invoke(JenaRdfParserClass);
+		var parserBuilder = JenaRdfParserClass.getMethod("create").invoke(JenaRdfParserClass);
 		parserBuilder = JenaRdfParserBuilderClass.getMethod("errorHandler", JenaErrorHandlerClass)
 				.invoke(parserBuilder, errorHandler);
 		parserBuilder = JenaRdfParserBuilderClass.getMethod("forceLang", JenaLangClass).invoke(parserBuilder, lang);
@@ -243,7 +243,7 @@ class ReflectionHelper {
 
 	public String formatWithJena(Object model, Object rdfFormat)
 			throws NoSuchMethodException, NoSuchFieldException, InvocationTargetException, IllegalAccessException {
-		StringWriter sw = new StringWriter();
+		var sw = new StringWriter();
 		JenaRdfDataMgrClass
 				.getMethod("write", StringWriter.class, JenaModelClass, JenaRDFFormatClass)
 				.invoke(JenaRdfDataMgrClass, sw, model, rdfFormat);
@@ -252,23 +252,23 @@ class ReflectionHelper {
 
 	public String formatWithTurtleFormatter(Object model)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-		Object formatter = getTurtleFormatter();
+		var formatter = getTurtleFormatter();
 		return (String) TurtleFormatFormatterClass.getMethod("apply", JenaModelClass).invoke(formatter, model);
 	}
 
 	private synchronized Object getTurtleFormatter()
 			throws InvocationTargetException, IllegalAccessException, NoSuchMethodException, InstantiationException {
 		if (this.turtleFormatter == null) {
-			Object style = newTurtleFormatterStyle();
+			var style = newTurtleFormatterStyle();
 			this.turtleFormatter = newTurtleFormatter(style);
 		}
 		return this.turtleFormatter;
 	}
 
 	private Object newTurtleFormatterStyle() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-		Object builder = TurtleFormatFormattingStyleClass.getMethod("builder").invoke(TurtleFormatFormatterClass);
+		var builder = TurtleFormatFormattingStyleClass.getMethod("builder").invoke(TurtleFormatFormatterClass);
 		for (String optionName : state.getTurtleFormatterStyle().keySet()) {
-			Method method = getBuilderMethod(optionName);
+			var method = getBuilderMethod(optionName);
 			callBuilderMethod(builder, method, state.getTurtleFormatterStyle().get(optionName));
 		}
 		return TurtleFormatFormattingStyleBuilderClass.getMethod("build").invoke(builder);
@@ -276,8 +276,8 @@ class ReflectionHelper {
 
 	public String formatWithTurtleFormatter(String ttlContent)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, InstantiationException {
-		Object style = newTurtleFormatterStyle();
-		Object formatter = newTurtleFormatter(style);
+		var style = newTurtleFormatterStyle();
+		var formatter = newTurtleFormatter(style);
 		return (String) TurtleFormatFormatterClass.getMethod("applyToContent", String.class).invoke(formatter, ttlContent);
 	}
 
@@ -371,7 +371,7 @@ class ReflectionHelper {
 		}
 		if (type.equals(JenaRDFNodeClass)) {
 			try {
-				String uri = tryToMakeUri(stringRepresentation);
+				var uri = tryToMakeUri(stringRepresentation);
 				return this.JenaModelClass.getMethod("createResource", String.class)
 						.invoke(this.jenaModelInstance, uri);
 			} catch (IllegalArgumentException e) {
@@ -383,10 +383,10 @@ class ReflectionHelper {
 			return this.JenaModelClass.getMethod("createResource", String.class).invoke(this.jenaModelInstance, tryToMakeUri(stringRepresentation));
 		}
 		if (type.equals(JenaPropertyClass)) {
-			String uri = tryToMakeUri(stringRepresentation);
+			var uri = tryToMakeUri(stringRepresentation);
 			if (uri != null) {
-				String localname = uri.replaceAll("^.+[#/]", "");
-				String namespace = uri.substring(0, uri.length() - localname.length());
+				var localname = uri.replaceAll("^.+[#/]", "");
+				var namespace = uri.substring(0, uri.length() - localname.length());
 				return this.JenaModelClass.getMethod("createProperty", String.class, String.class)
 						.invoke(this.jenaModelInstance, namespace, localname);
 			}
@@ -402,9 +402,9 @@ class ReflectionHelper {
 		if (stringRepresentation.matches("[^:/]+:[^:/]+")) {
 			int colonIndex = stringRepresentation.indexOf(':');
 			//could be a known prefix
-			String prefix = stringRepresentation.substring(0, colonIndex);
-			Object knownPrefix = getKnownPrefix(prefix);
-			String base = this.TurtleFormatKnownPrefix.getMethod("iri").invoke(knownPrefix).toString();
+			var prefix = stringRepresentation.substring(0, colonIndex);
+			var knownPrefix = getKnownPrefix(prefix);
+			var base = this.TurtleFormatKnownPrefix.getMethod("iri").invoke(knownPrefix).toString();
 			return base + stringRepresentation.substring(colonIndex + 1);
 		}
 		// try to parse a URI - throws an IllegalArgumentException if it is not a URI
@@ -414,12 +414,12 @@ class ReflectionHelper {
 
 	private Object getKnownPrefix(String stringRepresentation)
 			throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-		Field[] fields = TurtleFormatFormattingStyleClass.getDeclaredFields();
+		var fields = TurtleFormatFormattingStyleClass.getDeclaredFields();
 		List<String> options = new ArrayList<>();
 		for (Field field : fields) {
 			if (field.getType().equals(TurtleFormatKnownPrefix)) {
-				Object knownPrefix = field.get(TurtleFormatFormattingStyleClass);
-				String prefix = (String) TurtleFormatKnownPrefix.getMethod("prefix").invoke(knownPrefix);
+				var knownPrefix = field.get(TurtleFormatFormattingStyleClass);
+				var prefix = (String) TurtleFormatKnownPrefix.getMethod("prefix").invoke(knownPrefix);
 				options.add(prefix);
 				if (stringRepresentation.equals(prefix)) {
 					return knownPrefix;
@@ -438,7 +438,7 @@ class ReflectionHelper {
 	}
 
 	private Method getBuilderMethod(String optionName) {
-		Method[] allMethods = TurtleFormatFormattingStyleBuilderClass.getDeclaredMethods();
+		var allMethods = TurtleFormatFormattingStyleBuilderClass.getDeclaredMethods();
 		List<Method> methods = Arrays.stream(allMethods).filter(m -> m.getName().equals(optionName))
 				.collect(
 						Collectors.toList());
@@ -455,7 +455,7 @@ class ReflectionHelper {
 					"More than one builder method found for configuration parameter name: %s".formatted(
 							optionName));
 		}
-		Method method = methods.get(0);
+		var method = methods.get(0);
 		if (method.getParameterCount() != 1) {
 			throw new RuntimeException(
 					"Method with unexpected parameter count %s found for configuration parameter name: %s".formatted(
@@ -471,21 +471,21 @@ class ReflectionHelper {
 
 	public Object parseToModel(String rawUnix, File file, Object lang)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Object model = getModel();
-		Object errorHandler = getErrorHandler(file);
-		Object parser = getParser(lang, errorHandler, rawUnix);
+		var model = getModel();
+		var errorHandler = getErrorHandler(file);
+		var parser = getParser(lang, errorHandler, rawUnix);
 		parseModel(parser, model);
 		return model;
 	}
 
 	public boolean areModelsIsomorphic(Object leftModel, Object rightModel)
 			throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-		Method isIsomorphicWith = JenaModelClass.getMethod("isIsomorphicWith", JenaModelClass);
+		var isIsomorphicWith = JenaModelClass.getMethod("isIsomorphicWith", JenaModelClass);
 		return (boolean) isIsomorphicWith.invoke(leftModel, rightModel);
 	}
 
 	public long modelSize(Object model) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-		Method size = JenaModelClass.getMethod("size");
+		var size = JenaModelClass.getMethod("size");
 		return (long) size.invoke(model);
 	}
 
@@ -501,7 +501,7 @@ class ReflectionHelper {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			if ("listSubjects".equals(method.getName()) && method.getParameterCount() == 0) {
-				Object resIterator = method.invoke(jenaModel);
+				var resIterator = method.invoke(jenaModel);
 				List<Object> resources = new ArrayList<>();
 				while (hasNext(resIterator)) {
 					resources.add(next(resIterator));

@@ -68,7 +68,7 @@ public final class ClangFormatStep {
 	}
 
 	private RoundtripState createRoundtrip() throws IOException, InterruptedException {
-		String howToInstall = """
+		var howToInstall = """
 				You can download clang-format from https://releases.llvm.org and \
 				then point Spotless to it with {@code pathToExe('/path/to/clang-format')} \
 				or you can use your platform's package manager:
@@ -76,7 +76,7 @@ public final class ClangFormatStep {
 				  mac:   brew install clang-format (TODO: how to specify version?)
 				  linux: apt install clang-format  (try clang-format-{version} with dropped minor versions)
 				    github issue to handle this better: https://github.com/diffplug/spotless/issues/673""";
-		final ForeignExe exe = ForeignExe.nameAndVersion("clang-format", version)
+		final var exe = ForeignExe.nameAndVersion("clang-format", version)
 				.pathToExe(pathToExe)
 				.fixCantFind(howToInstall)
 				.fixWrongVersion(
@@ -128,13 +128,13 @@ public final class ClangFormatStep {
 				}
 				args = tmpArgs;
 			}
-			final String[] processArgs = args.toArray(new String[args.size() + 1]);
+			final var processArgs = args.toArray(new String[args.size() + 1]);
 			processArgs[processArgs.length - 1] = "--assume-filename=" + file.getName();
 			return runner.exec(input.getBytes(StandardCharsets.UTF_8), processArgs).assertExitZero(StandardCharsets.UTF_8);
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			ProcessRunner runner = new ProcessRunner();
+			var runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

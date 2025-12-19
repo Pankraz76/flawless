@@ -26,19 +26,19 @@ class CleanthatJavaFormatStepTest extends ResourceHarness {
 
 	@Test
 	void testDefault() {
-		FormatterStep step = CleanthatJavaStep.create(TestProvisioner.mavenCentral());
-		try (StepHarnessWithFile harness = StepHarnessWithFile.forStep(this, step)) {
+		var step = CleanthatJavaStep.create(TestProvisioner.mavenCentral());
+		try (var harness = StepHarnessWithFile.forStep(this, step)) {
 			harness.testResource("java/cleanthat/MultipleMutators.dirty.test", "java/cleanthat/MultipleMutators.dirty.test");
 		}
 	}
 
 	@Test
 	void test11IncludeDraft() {
-		FormatterStep step = CleanthatJavaStep.create("io.github.solven-eu.cleanthat:java",
+		var step = CleanthatJavaStep.create("io.github.solven-eu.cleanthat:java",
 				CleanthatJavaStep.defaultVersion(),
 				"11",
 				CleanthatJavaStep.defaultMutators(), CleanthatJavaStep.defaultExcludedMutators(), true, TestProvisioner.mavenCentral());
-		try (StepHarnessWithFile harness = StepHarnessWithFile.forStep(this, step)) {
+		try (var harness = StepHarnessWithFile.forStep(this, step)) {
 			harness.testResource("java/cleanthat/MultipleMutators.dirty.test", "java/cleanthat/MultipleMutators.clean.onlyOptionalIsPresent.test");
 		}
 	}

@@ -98,7 +98,7 @@ public class RdfFormatterConfig implements Serializable {
 		if (!(o instanceof RdfFormatterConfig)) {
 			return false;
 		}
-		RdfFormatterConfig that = (RdfFormatterConfig) o;
+		var that = (RdfFormatterConfig) o;
 		return isFailOnWarning() == that.isFailOnWarning()
 				&& Objects.equals(turtleFormatterVersion, that.turtleFormatterVersion);
 	}
