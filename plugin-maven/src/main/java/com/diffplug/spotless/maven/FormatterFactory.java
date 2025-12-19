@@ -189,7 +189,7 @@ public abstract class FormatterFactory {
 	}
 
 	private static List<FormatterStepFactory> gatherStepFactories(List<FormatterStepFactory> allGlobal, List<FormatterStepFactory> allConfigured) {
-		List<FormatterStepFactory> result = new ArrayList<>();
+		var result = new ArrayList<FormatterStepFactory>();
 		for (FormatterStepFactory global : allGlobal) {
 			if (!formatterStepOverriden(global, allConfigured)) {
 				result.add(global);

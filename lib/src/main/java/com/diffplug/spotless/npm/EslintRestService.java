@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2023 DiffPlug
+ * Copyright 2016-2025 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ public class EslintRestService extends BaseNpmRestService {
 	}
 
 	public String format(String fileContent, Map<FormatOption, Object> formatOptions) {
-		Map<String, Object> jsonProperties = new LinkedHashMap<>();
+		var jsonProperties = new LinkedHashMap<String, Object>();
 		jsonProperties.put("file_content", fileContent);
 		for (Entry<FormatOption, Object> option : formatOptions.entrySet()) {
 			jsonProperties.put(option.getKey().backendName, option.getValue());
