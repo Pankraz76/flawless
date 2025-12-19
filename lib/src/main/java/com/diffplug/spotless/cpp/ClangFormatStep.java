@@ -121,7 +121,7 @@ public final class ClangFormatStep {
 
 		String format(ProcessRunner runner, String input, File file) throws IOException, InterruptedException {
 			if (args == null) {
-				final List<String> tmpArgs = new ArrayList<>();
+				final var tmpArgs = new ArrayList<String>();
 				tmpArgs.add(exe.confirmVersionAndGetAbsolutePath());
 				if (style != null) {
 					tmpArgs.add("--style=" + style);

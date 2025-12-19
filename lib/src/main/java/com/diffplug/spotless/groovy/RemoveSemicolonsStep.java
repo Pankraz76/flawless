@@ -50,16 +50,16 @@ public final class RemoveSemicolonsStep implements Serializable {
 				StringBuilder result = new StringBuilder(raw.length());
 
 				// State tracking
-				boolean inSingleQuoteString = false;
-				boolean inDoubleQuoteString = false;
-				boolean inTripleSingleQuoteString = false;
-				boolean inTripleDoubleQuoteString = false;
-				boolean inSingleLineComment = false;
-				boolean inMultiLineComment = false;
-				boolean escaped = false;
+				var inSingleQuoteString = false;
+				var inDoubleQuoteString = false;
+				var inTripleSingleQuoteString = false;
+				var inTripleDoubleQuoteString = false;
+				var inSingleLineComment = false;
+				var inMultiLineComment = false;
+				var escaped = false;
 
-				for (int i = 0; i < raw.length(); i++) {
-					char c = raw.charAt(i);
+				for (var i = 0; i < raw.length(); i++) {
+					var c = raw.charAt(i);
 
 					// Check for triple quotes first (needs lookahead)
 					if (!inSingleLineComment && !inMultiLineComment && i + 2 < raw.length()) {
@@ -129,9 +129,9 @@ public final class RemoveSemicolonsStep implements Serializable {
 							!inSingleLineComment && !inMultiLineComment) {
 
 						// Look ahead to see if this semicolon is at the end of the line
-						boolean isEndOfLine = true;
-						for (int j = i + 1; j < raw.length(); j++) {
-							char next = raw.charAt(j);
+						var isEndOfLine = true;
+						for (var j = i + 1; j < raw.length(); j++) {
+							var next = raw.charAt(j);
 							if (next == '\n' || next == '\r') {
 								break; // End of line
 							} else if (!Character.isWhitespace(next)) {

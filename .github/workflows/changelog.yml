@@ -1,13 +1,13 @@
-name: Changelog Print 📝
+name: Changelog 📋
 on:
   push:
     branches: [main]
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Changelog Print 📝
+    name: Print 📝
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
       - name: Setup Java ☕️
         uses: actions/setup-java@v5

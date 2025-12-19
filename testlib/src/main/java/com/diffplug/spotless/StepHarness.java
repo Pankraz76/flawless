@@ -101,8 +101,8 @@ public final class StepHarness extends StepHarnessBase {
 		String assertAgainst = state.asStringOneLine(Formatter.NO_FILE_SENTINEL, formatter);
 		String cleaned = assertAgainst.replace("NO_FILE_SENTINEL:", "");
 
-		int numLines = 1;
-		int lineEnding = cleaned.indexOf('\n');
+		var numLines = 1;
+		var lineEnding = cleaned.indexOf('\n');
 		while (lineEnding != -1 && numLines < 10) {
 			++numLines;
 			lineEnding = cleaned.indexOf('\n', lineEnding + 1);

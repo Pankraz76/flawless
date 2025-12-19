@@ -21,7 +21,6 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nullable;
@@ -108,7 +107,7 @@ public final class GofmtFormatStep {
 		}
 
 		String format(ProcessRunner runner, String input, File file) throws IOException, InterruptedException {
-			final List<String> processArgs = new ArrayList<>();
+			final var processArgs = new ArrayList<String>();
 			String pathToGoBinary = exe.confirmVersionAndGetAbsolutePath();
 			Path goBasePath = Path.of(pathToGoBinary).getParent();
 			if (goBasePath == null) {

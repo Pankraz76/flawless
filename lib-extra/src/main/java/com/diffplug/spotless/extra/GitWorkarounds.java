@@ -174,7 +174,7 @@ public final class GitWorkarounds {
 						throw emptyFile(commonDirFile);
 					}
 
-					int lineEnd = RawParseUtils.nextLF(content, 0);
+					var lineEnd = RawParseUtils.nextLF(content, 0);
 					while (content[lineEnd - 1] == '\n' || (content[lineEnd - 1] == '\r' && SystemReader.getInstance().isWindows())) {
 						lineEnd--;
 					}

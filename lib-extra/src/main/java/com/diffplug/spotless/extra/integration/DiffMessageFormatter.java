@@ -173,7 +173,7 @@ public final class DiffMessageFormatter {
 			addFile(relativePath(file) + "\n" + diff(file));
 		}
 		if (problemIter.hasNext()) {
-			int remainingFiles = problemFiles.size() - problemIter.nextIndex();
+			var remainingFiles = problemFiles.size() - problemIter.nextIndex();
 			if (remainingFiles >= MAX_FILES_TO_LIST) {
 				buffer.append("Violations also present in ").append(remainingFiles).append(" other files.\n");
 			} else {
@@ -203,7 +203,7 @@ public final class DiffMessageFormatter {
 		if (!lines.isEmpty()) {
 			addIntendedLine(NORMAL_INDENT, lines.get(0));
 		}
-		for (int i = 1; i < Math.min(MIN_LINES_PER_FILE, lines.size()); i++) {
+		for (var i = 1; i < Math.min(MIN_LINES_PER_FILE, lines.size()); i++) {
 			addIntendedLine(DIFF_INDENT, lines.get(i));
 		}
 
@@ -216,7 +216,7 @@ public final class DiffMessageFormatter {
 		if (numLines >= MAX_CHECK_MESSAGE_LINES) {
 			// we're out of space
 			if (iter.hasNext()) {
-				int linesLeft = lines.size() - iter.nextIndex();
+				var linesLeft = lines.size() - iter.nextIndex();
 				addIntendedLine(NORMAL_INDENT, "... (" + linesLeft + " more lines that didn't fit)");
 			}
 		}

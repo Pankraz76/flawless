@@ -8,7 +8,7 @@
 #   gpg --export-secret-keys --armor KEY_ID | openssl base64 | pbcopy
 # GRADLE_KEY
 # GRADLE_SECRET
-name: Release Pipeline 🚀
+name: Deploy 📦
 on:
   workflow_dispatch:
     inputs:
@@ -25,17 +25,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Deploy Release 🚀
+    name: Publish Release 📡
     permissions:
       contents: write
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      ORG_GRADLE_PROJECT_nexus_user: ${{ secrets.NEXUS_USER }}
-      ORG_GRADLE_PROJECT_nexus_pass64: ${{ secrets.NEXUS_PASS64 }}
-      ORG_GRADLE_PROJECT_gpg_passphrase: ${{ secrets.GPG_PASSPHRASE }}
-      ORG_GRADLE_PROJECT_gpg_key64: ${{ secrets.GPG_KEY64 }}
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      ORG_GRADLE_PROJECT_nexus_user: ${{secrets.NEXUS_USER}}
+      ORG_GRADLE_PROJECT_nexus_pass64: ${{secrets.NEXUS_PASS64}}
+      ORG_GRADLE_PROJECT_gpg_passphrase: ${{secrets.GPG_PASSPHRASE}}
+      ORG_GRADLE_PROJECT_gpg_key64: ${{secrets.GPG_KEY64}}
     steps:
-      - name: Checkout Repository 📥
+      - name: Checkout 📥
         uses: actions/checkout@v6
       - name: Setup Java ☕️
         uses: actions/setup-java@v5
@@ -47,17 +47,17 @@ jobs:
       - name: Fetch Latest Main Branch 🔄
         run: git fetch origin main
       - name: Publish All Components 📦
-        if: "${{ github.event.inputs.to_publish == 'all' }}"
+        if: "${{github.event.inputs.to_publish == 'all'}}"
         run: |
           ./gradlew :changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
-          ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
+          ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{secrets.GRADLE_KEY}} -Pgradle.publish.secret=${{secrets.GRADLE_SECRET}} --stacktrace --warning-mode all --no-configuration-cache
           ./gradlew :plugin-maven:changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
       - name: Publish Gradle Plugin Only 📦
-        if: "${{ github.event.inputs.to_publish == 'plugin-gradle' }}"
-        run: ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{ secrets.GRADLE_KEY }} -Pgradle.publish.secret=${{ secrets.GRADLE_SECRET }} --stacktrace --warning-mode all --no-configuration-cache
+        if: "${{github.event.inputs.to_publish == 'plugin-gradle'}}"
+        run: ./gradlew :plugin-gradle:changelogPush -Prelease=true -Pgradle.publish.key=${{secrets.GRADLE_KEY}} -Pgradle.publish.secret=${{secrets.GRADLE_SECRET}} --stacktrace --warning-mode all --no-configuration-cache
       - name: Publish Maven Plugin Only 📦
-        if: "${{ github.event.inputs.to_publish == 'plugin-maven' }}"
+        if: "${{github.event.inputs.to_publish == 'plugin-maven'}}"
         run: ./gradlew :plugin-maven:changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache
       - name: Publish Library Only 📦
-        if: "${{ github.event.inputs.to_publish == 'lib' }}"
+        if: "${{github.event.inputs.to_publish == 'lib'}}"
         run: ./gradlew :changelogPush -Prelease=true --stacktrace --warning-mode all --no-configuration-cache

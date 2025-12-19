@@ -87,7 +87,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	 * @return the created parser options
 	 */
 	private static MutableDataHolder createParserOptions(ParserEmulationProfile emulationProfile, FlexmarkConfig config) {
-		int pegdownExtensions = buildPegdownExtensions(config.getPegdownExtensions());
+		var pegdownExtensions = buildPegdownExtensions(config.getPegdownExtensions());
 		Extension[] extensions = buildExtensions(config.getExtensions());
 		final MutableDataHolder parserOptions = PegdownOptionsAdapter.flexmarkOptions(
 				pegdownExtensions, extensions).toMutable();
@@ -103,7 +103,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	 * @return bit-wise or'd extensions
 	 */
 	private static int buildPegdownExtensions(List<String> config) {
-		int extensions = PegdownExtensions.NONE;
+		var extensions = PegdownExtensions.NONE;
 		for (String str : config) {
 			if (str.matches("\\d+")) {
 				extensions |= Integer.parseInt(str);
@@ -130,7 +130,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	 */
 	private static Extension[] buildExtensions(List<String> config) {
 		Extension[] extensions = new Extension[config.size()];
-		for (int i = 0; i < extensions.length; i++) {
+		for (var i = 0; i < extensions.length; i++) {
 			String className = KNOWN_EXTENSIONS.getOrDefault(config.get(i), config.get(i));
 			try {
 				Class<?> c = Extension.class.getClassLoader().loadClass(className);
