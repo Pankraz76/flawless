@@ -1,4 +1,4 @@
-# <img align="left" src="_images/flaw_logo.png"> Flawless: Keep your code flawless
+# <img align="left" src="_images/flawless_logo.png"> Flawless: Keep your code flawless
 
 [![Gradle Plugin](https://img.shields.io/gradle-plugin-portal/v/com.diffplug.spotless?color=blue&label=gradle%20plugin)](plugin-gradle)
 [![Maven Plugin](https://img.shields.io/maven-central/v/com.diffplug.spotless/spotless-maven-plugin?color=blue&label=maven%20plugin)](plugin-maven)
