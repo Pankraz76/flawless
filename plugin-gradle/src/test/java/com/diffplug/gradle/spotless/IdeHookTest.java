@@ -71,10 +71,10 @@ class IdeHookTest extends GradleIntegrationHarness {
 	}
 
 	private void runWith(boolean configurationCache, String... arguments) throws IOException {
-		var output = new StringBuilder();
-		var error = new StringBuilder();
-		try (var outputWriter = new StringPrinter(output::append).toWriter();
-				var errorWriter = new StringPrinter(error::append).toWriter()) {
+		StringBuilder output = new StringBuilder();
+		StringBuilder error = new StringBuilder();
+		try (Writer outputWriter = new StringPrinter(output::append).toWriter();
+				Writer errorWriter = new StringPrinter(error::append).toWriter()) {
 			gradleRunner(configurationCache)
 					.withArguments(arguments)
 					.forwardStdOutput(outputWriter)
@@ -90,11 +90,11 @@ class IdeHookTest extends GradleIntegrationHarness {
 			setFile("gradle.properties").toContent("org.gradle.unsafe.configuration-cache=true");
 			return super.gradleRunner();
 		} else {
-			var gradleProps = new File(rootFolder(), "gradle.properties");
+			File gradleProps = new File(rootFolder(), "gradle.properties");
 			if (gradleProps.exists()) {
 				gradleProps.delete();
 			}
-			var settingsGradle = new File(rootFolder(), "settings.gradle");
+			File settingsGradle = new File(rootFolder(), "settings.gradle");
 			if (settingsGradle.exists()) {
 				settingsGradle.delete();
 			}

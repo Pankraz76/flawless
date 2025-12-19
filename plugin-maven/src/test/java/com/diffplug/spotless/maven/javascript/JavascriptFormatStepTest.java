@@ -50,13 +50,13 @@ class JavascriptFormatStepTest extends MavenIntegrationHarness {
 			setFile(".eslintrc.js").toResource("npm/eslint/javascript/custom_rules/.eslintrc.js");
 			setFile(TEST_FILE_PATH).toResource("npm/eslint/javascript/custom_rules/javascript-es6.dirty");
 
-			var result = mavenRunner().withArguments("spotless:apply").runNoError();
+			ProcessRunner.Result result = mavenRunner().withArguments("spotless:apply").runNoError();
 			assertFile(TEST_FILE_PATH).sameAsResource("npm/eslint/javascript/custom_rules/javascript-es6.clean");
 		}
 
 		@Test
 		void eslintConfigJs() throws Exception {
-			final var configJs = ResourceHarness.getTestResource("npm/eslint/javascript/custom_rules/.eslintrc.js")
+			final String configJs = ResourceHarness.getTestResource("npm/eslint/javascript/custom_rules/.eslintrc.js")
 					.replace("module.exports = ", "");
 			writePomWithJavascriptSteps(
 					TEST_FILE_PATH,
@@ -78,7 +78,7 @@ class JavascriptFormatStepTest extends MavenIntegrationHarness {
 		@ParameterizedTest(name = "{index}: eslint js formatting with configFile using styleguide {0}")
 		@ValueSource(strings = {"airbnb", "google", "standard", "xo"})
 		void eslintJsStyleguideUsingConfigFile(String styleGuide) throws Exception {
-			final var styleGuidePath = "npm/eslint/javascript/styleguide/" + styleGuide;
+			final String styleGuidePath = "npm/eslint/javascript/styleguide/" + styleGuide;
 
 			writePomWithJavascriptSteps(
 					TEST_FILE_PATH,
@@ -96,9 +96,9 @@ class JavascriptFormatStepTest extends MavenIntegrationHarness {
 		@ParameterizedTest(name = "{index}: eslint js formatting with inline config using styleguide {0}")
 		@ValueSource(strings = {"airbnb", "google", "standard", "xo"})
 		void eslintJsStyleguideUsingInlineConfig(String styleGuide) throws Exception {
-			final var styleGuidePath = "npm/eslint/javascript/styleguide/" + styleGuide;
+			final String styleGuidePath = "npm/eslint/javascript/styleguide/" + styleGuide;
 
-			final var escapedInlineConfig = ResourceHarness.getTestResource(styleGuidePath + "/.eslintrc.js")
+			final String escapedInlineConfig = ResourceHarness.getTestResource(styleGuidePath + "/.eslintrc.js")
 					.replace("<", "&lt;")
 					.replace(">", "&gt;");
 			writePomWithJavascriptSteps(
@@ -115,7 +115,7 @@ class JavascriptFormatStepTest extends MavenIntegrationHarness {
 
 		@Test
 		void provideCustomDependenciesForStyleguideStandard() throws Exception {
-			final var styleGuidePath = "npm/eslint/javascript/styleguide/standard";
+			final String styleGuidePath = "npm/eslint/javascript/styleguide/standard";
 
 			writePomWithJavascriptSteps(
 					TEST_FILE_PATH,

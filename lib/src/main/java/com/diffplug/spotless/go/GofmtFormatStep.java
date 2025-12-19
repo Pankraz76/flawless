@@ -67,9 +67,9 @@ public final class GofmtFormatStep {
 	}
 
 	private RoundtripState createRountrip() throws IOException, InterruptedException {
-		var howToInstall = "gofmt is a part of standard go distribution. If spotless can't discover it automatically, "
+		String howToInstall = "gofmt is a part of standard go distribution. If spotless can't discover it automatically, "
 				+ "you can point Spotless to the go binary with {@code pathToExe('/path/to/go')}";
-		final var exe = ForeignExe.nameAndVersion("go", version)
+		final ForeignExe exe = ForeignExe.nameAndVersion("go", version)
 				.pathToExe(pathToExe)
 				.versionFlag("version")
 				.fixCantFind(howToInstall)
@@ -109,18 +109,18 @@ public final class GofmtFormatStep {
 
 		String format(ProcessRunner runner, String input, File file) throws IOException, InterruptedException {
 			final List<String> processArgs = new ArrayList<>();
-			var pathToGoBinary = exe.confirmVersionAndGetAbsolutePath();
-			var goBasePath = Path.of(pathToGoBinary).getParent();
+			String pathToGoBinary = exe.confirmVersionAndGetAbsolutePath();
+			Path goBasePath = Path.of(pathToGoBinary).getParent();
 			if (goBasePath == null) {
 				throw new IllegalStateException("Unable to resolve base path of Go installation directory");
 			}
-			var pathToGoFmt = goBasePath.resolve("gofmt").toString();
+			String pathToGoFmt = goBasePath.resolve("gofmt").toString();
 			processArgs.add(pathToGoFmt);
 			return runner.exec(input.getBytes(StandardCharsets.UTF_8), processArgs).assertExitZero(StandardCharsets.UTF_8);
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			var runner = new ProcessRunner();
+			ProcessRunner runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

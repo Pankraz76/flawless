@@ -57,7 +57,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 			// make sure node binary is there
 			gradleRunner().withArguments("nodeSetup", "npmSetup").build();
 			// then run spotless using that node installation
-			final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+			final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 		} catch (Exception e) {
@@ -77,7 +77,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 		try {
 			setFile("build.gradle").toResource("com/diffplug/gradle/spotless/NpmTestsWithoutNpmInstallationTest_gradle_node_plugin_example_1.gradle");
 			setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-			final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+			final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 		} catch (Exception e) {
@@ -91,7 +91,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 		try {
 			setFile("build.gradle").toResource("com/diffplug/gradle/spotless/NpmTestsWithoutNpmInstallationTest_gradle_node_plugin_example_2.gradle");
 			setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-			final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+			final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 		} catch (Exception e) {
@@ -130,7 +130,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 			// make sure node binary is there
 			gradleRunner().withArguments("nodeSetup", "npmSetup").build();
 			// then run spotless using that node installation
-			final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+			final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 		} catch (Exception e) {
@@ -169,7 +169,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 			// make sure node binary is there
 			gradleRunner().withArguments("nodeSetup", "npmSetup").build();
 			// then run spotless using that node installation
-			final var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
+			final BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").build();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 			assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 		} catch (Exception e) {
@@ -182,7 +182,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 	public void supportsConfigurationCache() throws Exception {
 		setFile("build.gradle").toResource("com/diffplug/gradle/spotless/NpmTestsWithoutNpmInstallationTest_gradle_node_plugin_example_1.gradle");
 		setFile("test.ts").toResource("npm/prettier/config/typescript.dirty");
-		var spotlessApply = gradleRunner().withArguments("--stacktrace", "--configuration-cache", "spotlessApply").build();
+		BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "--configuration-cache", "spotlessApply").build();
 		Assertions.assertThat(spotlessApply.getOutput()).contains("BUILD SUCCESSFUL");
 		assertFile("test.ts").sameAsResource("npm/prettier/config/typescript.configfile_prettier_2.clean");
 	}

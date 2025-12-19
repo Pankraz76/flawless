@@ -112,7 +112,7 @@ class SQLTokensParser {
 		char fChar = fBefore.charAt(fPos);
 
 		if (isSpace(fChar)) {
-			var workString = new StringBuilder();
+			StringBuilder workString = new StringBuilder();
 			for (;;) {
 				workString.append(fChar);
 				fChar = fBefore.charAt(fPos);
@@ -128,7 +128,7 @@ class SQLTokensParser {
 			fPos++;
 			return new FormatterToken(TokenType.SYMBOL, ";", start_pos);
 		} else if (isDigit(fChar)) {
-			var s = new StringBuilder();
+			StringBuilder s = new StringBuilder();
 			while (isDigit(fChar) || fChar == '.' || fChar == 'e' || fChar == 'E') {
 				// if (ch == '.') type = Token.REAL;
 				s.append(fChar);
@@ -165,7 +165,7 @@ class SQLTokensParser {
 			commentString = fBefore.substring(start_pos, fPos);
 			return new FormatterToken(TokenType.COMMENT, commentString, start_pos);
 		} else if (isLetter(fChar)) {
-			var s = new StringBuilder();
+			StringBuilder s = new StringBuilder();
 			while (isLetter(fChar) || isDigit(fChar) || fChar == '*' || structSeparator == fChar || catalogSeparator.indexOf(fChar) != -1) {
 				s.append(fChar);
 				fPos++;
@@ -175,7 +175,7 @@ class SQLTokensParser {
 
 				fChar = fBefore.charAt(fPos);
 			}
-			var word = s.toString();
+			String word = s.toString();
 			if (commands.contains(word.toUpperCase(Locale.ENGLISH))) {
 				s.setLength(0);
 				for (; fPos < fBefore.length(); fPos++) {
@@ -199,7 +199,7 @@ class SQLTokensParser {
 				return new FormatterToken(TokenType.SYMBOL, "/", start_pos);
 			}
 
-			var s = new StringBuilder("/*");
+			StringBuilder s = new StringBuilder("/*");
 			fPos++;
 			for (;;) {
 				int ch0 = fChar;
@@ -224,7 +224,7 @@ class SQLTokensParser {
 					}
 				}
 
-				var s = new StringBuilder();
+				StringBuilder s = new StringBuilder();
 				s.append(fChar);
 				for (;;) {
 					fChar = fBefore.charAt(fPos);
@@ -244,7 +244,7 @@ class SQLTokensParser {
 			}
 
 			else if (isSymbol(fChar)) {
-				var s = new StringBuilder(String.valueOf(fChar));
+				StringBuilder s = new StringBuilder(String.valueOf(fChar));
 				fPos++;
 				if (fPos >= fBefore.length()) {
 					return new FormatterToken(TokenType.SYMBOL, s.toString(), start_pos);
@@ -282,7 +282,7 @@ class SQLTokensParser {
 
 		final List<FormatterToken> list = new ArrayList<>();
 		for (;;) {
-			final var token = nextToken();
+			final FormatterToken token = nextToken();
 			if (token.getType() == TokenType.END) {
 				break;
 			}

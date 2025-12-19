@@ -41,7 +41,7 @@ class RegisterDependenciesTaskTest extends GradleIntegrationHarness {
 				"}");
 
 		setFile("gradle.properties").toLines();
-		var newestSupported = gradleRunner().withArguments("spotlessCheck").build().getOutput();
+		String newestSupported = gradleRunner().withArguments("spotlessCheck").build().getOutput();
 		Assertions.assertThat(newestSupported.replace("\r", ""))
 				.startsWith(
 						"> Task :spotlessInternalRegisterDependencies\n")

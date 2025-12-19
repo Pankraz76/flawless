@@ -20,7 +20,6 @@ import java.util.function.Function;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.JavaPluginExtension;
@@ -31,7 +30,7 @@ import org.gradle.api.tasks.SourceSetContainer;
 interface JvmLang {
 
 	default SourceSetContainer getSourceSets(Project project, String message) {
-		final var javaPluginExtension = project.getExtensions().findByType(JavaPluginExtension.class);
+		final JavaPluginExtension javaPluginExtension = project.getExtensions().findByType(JavaPluginExtension.class);
 		if (javaPluginExtension == null) {
 			throw new GradleException(message);
 		}
@@ -39,9 +38,9 @@ interface JvmLang {
 	}
 
 	default FileCollection getSources(Project project, String message, Function<SourceSet, SourceDirectorySet> sourceSetSourceDirectory, Spec<? super File> filterSpec) {
-		var union = project.files();
+		FileCollection union = project.files();
 		for (SourceSet sourceSet : getSourceSets(project, message)) {
-			union = (ConfigurableFileCollection) union.plus(sourceSetSourceDirectory.apply(sourceSet).filter(filterSpec));
+			union = union.plus(sourceSetSourceDirectory.apply(sourceSet).filter(filterSpec));
 		}
 		return union;
 	}

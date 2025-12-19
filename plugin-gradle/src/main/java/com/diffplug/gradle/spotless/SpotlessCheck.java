@@ -58,8 +58,8 @@ public abstract class SpotlessCheck extends SpotlessTaskService.ClientTask {
 	}
 
 	private void performAction(boolean isTest) throws IOException {
-		var cleanFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessCleanDirectory().get());
-		var lintsFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessLintsDirectory().get());
+		ConfigurableFileTree cleanFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessCleanDirectory().get());
+		ConfigurableFileTree lintsFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessLintsDirectory().get());
 		if (cleanFiles.isEmpty() && lintsFiles.isEmpty()) {
 			getState().setDidWork(sourceDidWork());
 		} else if (!isTest && applyHasRun()) {
@@ -97,15 +97,15 @@ public abstract class SpotlessCheck extends SpotlessTaskService.ClientTask {
 
 			@Override
 			public void visitFile(FileVisitDetails fileVisitDetails) {
-				var path = fileVisitDetails.getPath();
-				var originalSource = new File(getProjectDir().get().getAsFile(), path);
+				String path = fileVisitDetails.getPath();
+				File originalSource = new File(getProjectDir().get().getAsFile(), path);
 				try {
 					// read the file on disk
 					byte[] userFile = Files.readAllBytes(originalSource.toPath());
 					// and the formatted version from spotlessOutDirectory
 					byte[] formatted;
 					{
-						var clean = new ByteArrayOutputStream();
+						ByteArrayOutputStream clean = new ByteArrayOutputStream();
 						fileVisitDetails.copyTo(clean);
 						formatted = clean.toByteArray();
 					}

@@ -36,7 +36,7 @@ class GitAttributesTest extends ResourceHarness {
 	private List<File> testFiles(String prefix) {
 		List<File> result = new ArrayList<>();
 		for (String path : TEST_PATHS) {
-			var prefixedPath = prefix + path;
+			String prefixedPath = prefix + path;
 			setFile(prefixedPath).toContent("");
 			result.add(newFile(prefixedPath));
 		}
@@ -55,7 +55,7 @@ class GitAttributesTest extends ResourceHarness {
 				"* eol=lf",
 				"*.MF eol=crlf"));
 		{
-			var cache = new GitAttributesLineEndings.AttributesCache();
+			GitAttributesLineEndings.AttributesCache cache = new GitAttributesLineEndings.AttributesCache();
 			Assertions.assertThat(cache.valueFor(newFile("someFile"), "eol")).isEqualTo("lf");
 			Assertions.assertThat(cache.valueFor(newFile("subfolder/someFile"), "eol")).isEqualTo("lf");
 			Assertions.assertThat(cache.valueFor(newFile("MANIFEST.MF"), "eol")).isEqualTo("crlf");
@@ -72,7 +72,7 @@ class GitAttributesTest extends ResourceHarness {
 		}
 		{
 			// but if we make a new cache, it should change
-			var cache = new GitAttributesLineEndings.AttributesCache();
+			GitAttributesLineEndings.AttributesCache cache = new GitAttributesLineEndings.AttributesCache();
 			Assertions.assertThat(cache.valueFor(newFile("someFile"), "eol")).isEqualTo("lf");
 			Assertions.assertThat(cache.valueFor(newFile("subfolder/someFile"), "eol")).isEqualTo("lf");
 			Assertions.assertThat(cache.valueFor(newFile("MANIFEST.MF"), "eol")).isEqualTo("crlf");
@@ -85,7 +85,7 @@ class GitAttributesTest extends ResourceHarness {
 		setFile(".gitattributes").toContent(StringPrinter.buildStringFromLines(
 				"* eol=lf",
 				"*.MF eol=crlf"));
-		var policy = LineEnding.GIT_ATTRIBUTES.createPolicy(rootFolder(), this::testFiles);
+		LineEnding.Policy policy = LineEnding.GIT_ATTRIBUTES.createPolicy(rootFolder(), this::testFiles);
 		Assertions.assertThat(policy.getEndingFor(newFile("someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("subfolder/someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("MANIFEST.MF"))).isEqualTo("\r\n");
@@ -94,26 +94,26 @@ class GitAttributesTest extends ResourceHarness {
 
 	@Test
 	void policyDefaultLineEndingTest() throws GitAPIException {
-		var git = Git.init().setDirectory(rootFolder()).call();
+		Git git = Git.init().setDirectory(rootFolder()).call();
 		git.close();
 		setFile(".git/config").toContent(StringPrinter.buildStringFromLines(
 				"[core]",
 				"autocrlf=true",
 				"eol=lf"));
-		var policy = LineEnding.GIT_ATTRIBUTES.createPolicy(rootFolder(), this::testFiles);
+		LineEnding.Policy policy = LineEnding.GIT_ATTRIBUTES.createPolicy(rootFolder(), this::testFiles);
 		Assertions.assertThat(policy.getEndingFor(newFile("someFile"))).isEqualTo("\r\n");
 	}
 
 	@Test
 	void policyTestWithExternalGitDir() throws IOException, GitAPIException {
-		var projectFolder = newFolder("project");
-		var gitDir = newFolder("project.git");
+		File projectFolder = newFolder("project");
+		File gitDir = newFolder("project.git");
 		Git.init().setDirectory(projectFolder).setGitDir(gitDir).call();
 
 		setFile("project.git/info/attributes").toContent(StringPrinter.buildStringFromLines(
 				"* eol=lf",
 				"*.MF eol=crlf"));
-		var policy = LineEnding.GIT_ATTRIBUTES.createPolicy(projectFolder, () -> testFiles("project/"));
+		LineEnding.Policy policy = LineEnding.GIT_ATTRIBUTES.createPolicy(projectFolder, () -> testFiles("project/"));
 		Assertions.assertThat(policy.getEndingFor(newFile("project/someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("project/subfolder/someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("project/MANIFEST.MF"))).isEqualTo("\r\n");
@@ -122,12 +122,12 @@ class GitAttributesTest extends ResourceHarness {
 
 	@Test
 	void policyTestWithCommonDir() throws IOException, GitAPIException {
-		var projectFolder = newFolder("project");
-		var commonGitDir = newFolder("project.git");
+		File projectFolder = newFolder("project");
+		File commonGitDir = newFolder("project.git");
 		Git.init().setDirectory(projectFolder).setGitDir(commonGitDir).call();
 		newFolder("project.git/worktrees/");
 
-		var projectGitDir = newFolder("project.git/worktrees/project/");
+		File projectGitDir = newFolder("project.git/worktrees/project/");
 		setFile("project.git/worktrees/project/gitdir").toContent(projectFolder.getAbsolutePath() + "/.git");
 		setFile("project.git/worktrees/project/commondir").toContent("../..");
 		setFile("project/.git").toContent("gitdir: " + projectGitDir.getAbsolutePath());
@@ -135,7 +135,7 @@ class GitAttributesTest extends ResourceHarness {
 		setFile("project.git/info/attributes").toContent(StringPrinter.buildStringFromLines(
 				"* eol=lf",
 				"*.MF eol=crlf"));
-		var policy = LineEnding.GIT_ATTRIBUTES.createPolicy(projectFolder, () -> testFiles("project/"));
+		LineEnding.Policy policy = LineEnding.GIT_ATTRIBUTES.createPolicy(projectFolder, () -> testFiles("project/"));
 		Assertions.assertThat(policy.getEndingFor(newFile("project/someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("project/subfolder/someFile"))).isEqualTo("\n");
 		Assertions.assertThat(policy.getEndingFor(newFile("project/MANIFEST.MF"))).isEqualTo("\r\n");

@@ -50,29 +50,29 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 
 	@Test
 	void sameFingerprintWhenVersionAndFormattersAreTheSame() throws Exception {
-		var project = mavenProject(VERSION_1);
+		MavenProject project = mavenProject(VERSION_1);
 
-		var fingerprint1 = PluginFingerprint.from(project, FORMATTERS);
-		var fingerprint2 = PluginFingerprint.from(project, FORMATTERS);
+		PluginFingerprint fingerprint1 = PluginFingerprint.from(project, FORMATTERS);
+		PluginFingerprint fingerprint2 = PluginFingerprint.from(project, FORMATTERS);
 
 		assertThat(fingerprint1).isEqualTo(fingerprint2);
 	}
 
 	@Test
 	void differentFingerprintForDifferentPluginVersions() throws Exception {
-		var project1 = mavenProject(VERSION_1);
-		var project2 = mavenProject(VERSION_2);
+		MavenProject project1 = mavenProject(VERSION_1);
+		MavenProject project2 = mavenProject(VERSION_2);
 
-		var fingerprint1 = PluginFingerprint.from(project1, FORMATTERS);
-		var fingerprint2 = PluginFingerprint.from(project2, FORMATTERS);
+		PluginFingerprint fingerprint1 = PluginFingerprint.from(project1, FORMATTERS);
+		PluginFingerprint fingerprint2 = PluginFingerprint.from(project2, FORMATTERS);
 
 		assertThat(fingerprint1).isNotEqualTo(fingerprint2);
 	}
 
 	@Test
 	void differentFingerprintForFormattersWithDifferentSteps() throws Exception {
-		var project1 = mavenProject(VERSION_1);
-		var project2 = mavenProject(VERSION_1);
+		MavenProject project1 = mavenProject(VERSION_1);
+		MavenProject project2 = mavenProject(VERSION_1);
 
 		FormatterStep step1 = formatterStep("step1");
 		FormatterStep step2 = formatterStep("step2");
@@ -80,37 +80,37 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 		List<Formatter> formatters1 = singletonList(formatter(step1, step2));
 		List<Formatter> formatters2 = singletonList(formatter(step2, step3));
 
-		var fingerprint1 = PluginFingerprint.from(project1, formatters1);
-		var fingerprint2 = PluginFingerprint.from(project2, formatters2);
+		PluginFingerprint fingerprint1 = PluginFingerprint.from(project1, formatters1);
+		PluginFingerprint fingerprint2 = PluginFingerprint.from(project2, formatters2);
 
 		assertThat(fingerprint1).isNotEqualTo(fingerprint2);
 	}
 
 	@Test
 	void differentFingerprintForFormattersWithDifferentLineEndings() throws Exception {
-		var project1 = mavenProject(VERSION_1);
-		var project2 = mavenProject(VERSION_1);
+		MavenProject project1 = mavenProject(VERSION_1);
+		MavenProject project2 = mavenProject(VERSION_1);
 
 		FormatterStep step = formatterStep("step");
 		List<Formatter> formatters1 = singletonList(formatter(LineEnding.UNIX, step));
 		List<Formatter> formatters2 = singletonList(formatter(LineEnding.WINDOWS, step));
 
-		var fingerprint1 = PluginFingerprint.from(project1, formatters1);
-		var fingerprint2 = PluginFingerprint.from(project2, formatters2);
+		PluginFingerprint fingerprint1 = PluginFingerprint.from(project1, formatters1);
+		PluginFingerprint fingerprint2 = PluginFingerprint.from(project2, formatters2);
 
 		assertThat(fingerprint1).isNotEqualTo(fingerprint2);
 	}
 
 	@Test
 	void emptyFingerprint() {
-		var fingerprint = PluginFingerprint.empty();
+		PluginFingerprint fingerprint = PluginFingerprint.empty();
 
 		assertThat(fingerprint.value()).isEmpty();
 	}
 
 	@Test
 	void failsForProjectWithoutSpotlessPlugin() {
-		var projectWithoutSpotless = new MavenProject();
+		MavenProject projectWithoutSpotless = new MavenProject();
 
 		assertThatThrownBy(() -> PluginFingerprint.from(projectWithoutSpotless, FORMATTERS))
 				.isInstanceOf(IllegalArgumentException.class)
@@ -119,44 +119,44 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 
 	@Test
 	void buildsFingerprintForProjectWithSpotlessPluginInBuildPlugins() {
-		var project = new MavenProject();
-		var spotlessPlugin = new Plugin();
+		MavenProject project = new MavenProject();
+		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.diffplug.spotless");
 		spotlessPlugin.setArtifactId("spotless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);
 
-		var fingerprint = PluginFingerprint.from(project, Collections.emptyList());
+		PluginFingerprint fingerprint = PluginFingerprint.from(project, Collections.emptyList());
 
 		assertThat(fingerprint).isNotNull();
 	}
 
 	@Test
 	void buildsFingerprintForProjectWithSpotlessPluginInPluginManagement() {
-		var project = new MavenProject();
-		var spotlessPlugin = new Plugin();
+		MavenProject project = new MavenProject();
+		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.diffplug.spotless");
 		spotlessPlugin.setArtifactId("spotless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);
-		var pluginManagement = new PluginManagement();
+		PluginManagement pluginManagement = new PluginManagement();
 		pluginManagement.addPlugin(spotlessPlugin);
 		project.getBuild().setPluginManagement(pluginManagement);
 
-		var fingerprint = PluginFingerprint.from(project, Collections.emptyList());
+		PluginFingerprint fingerprint = PluginFingerprint.from(project, Collections.emptyList());
 
 		assertThat(fingerprint).isNotNull();
 	}
 
 	private MavenProject mavenProject(String spotlessVersion) throws Exception {
-		var xml = createPomXmlContent(spotlessVersion, new String[0], new String[0]);
+		String xml = createPomXmlContent(spotlessVersion, new String[0], new String[0]);
 		return new MavenProject(readPom(xml));
 	}
 
 	private static Model readPom(String xml) throws Exception {
-		var bytes = xml.getBytes(UTF_8);
-		try (var xmlReader = ReaderFactory.newXmlReader(new ByteArrayInputStream(bytes))) {
-			var pomReader = new MavenXpp3Reader();
+		byte[] bytes = xml.getBytes(UTF_8);
+		try (XmlStreamReader xmlReader = ReaderFactory.newXmlReader(new ByteArrayInputStream(bytes))) {
+			MavenXpp3Reader pomReader = new MavenXpp3Reader();
 			return pomReader.read(xmlReader);
 		}
 	}

@@ -75,7 +75,7 @@ public final class GrEclipseFormatterStep {
 			@Override
 			public void setVersion(String version) {
 				if (version.endsWith(".0")) {
-					var newVersion = version.substring(0, version.length() - 2);
+					String newVersion = version.substring(0, version.length() - 2);
 					System.err.println("Recommend replacing '" + version + "' with '" + newVersion + "' for eclipse JDT");
 					version = newVersion;
 				}
@@ -94,7 +94,7 @@ public final class GrEclipseFormatterStep {
 					try {
 						return (String) method.invoke(formatter, input);
 					} catch (InvocationTargetException exceptionWrapper) {
-						var throwable = exceptionWrapper.getTargetException();
+						Throwable throwable = exceptionWrapper.getTargetException();
 						Exception exception = throwable instanceof Exception e ? e : null;
 						throw exception == null ? exceptionWrapper : exception;
 					}

@@ -32,8 +32,8 @@ public abstract class SpotlessApply extends SpotlessTaskService.ClientTask {
 	@TaskAction
 	public void performAction() {
 		getTaskService().get().registerApplyAlreadyRan(this);
-		var cleanFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessCleanDirectory().get());
-		var lintsFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessLintsDirectory().get());
+		ConfigurableFileTree cleanFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessCleanDirectory().get());
+		ConfigurableFileTree lintsFiles = getConfigCacheWorkaround().fileTree().from(getSpotlessLintsDirectory().get());
 		if (cleanFiles.isEmpty() && lintsFiles.isEmpty()) {
 			getState().setDidWork(sourceDidWork());
 		} else {
@@ -45,8 +45,8 @@ public abstract class SpotlessApply extends SpotlessTaskService.ClientTask {
 
 				@Override
 				public void visitFile(FileVisitDetails fileVisitDetails) {
-					var path = fileVisitDetails.getPath();
-					var originalSource = new File(getProjectDir().get().getAsFile(), path);
+					String path = fileVisitDetails.getPath();
+					File originalSource = new File(getProjectDir().get().getAsFile(), path);
 					try {
 						getLogger().debug("Copying " + fileVisitDetails.getFile() + " to " + originalSource);
 						Files.copy(fileVisitDetails.getFile().toPath(), originalSource.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.COPY_ATTRIBUTES);

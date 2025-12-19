@@ -141,7 +141,7 @@ public final class ConfigurationCacheHackList implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		var stepList = (ConfigurationCacheHackList) o;
+		ConfigurationCacheHackList stepList = (ConfigurationCacheHackList) o;
 		return optimizeForEquality == stepList.optimizeForEquality
 				&& backingList.equals(stepList.backingList);
 	}

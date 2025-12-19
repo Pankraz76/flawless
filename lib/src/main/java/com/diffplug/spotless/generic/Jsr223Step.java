@@ -77,7 +77,7 @@ public final class Jsr223Step implements Serializable {
 			} else {
 				scriptEngineManager = new ScriptEngineManager(jarState.getClassLoader());
 			}
-			var scriptEngine = scriptEngineManager.getEngineByName(engine);
+			ScriptEngine scriptEngine = scriptEngineManager.getEngineByName(engine);
 
 			if (scriptEngine == null) {
 				throw new IllegalArgumentException("Unknown script engine '" + engine + "'. Available engines: "

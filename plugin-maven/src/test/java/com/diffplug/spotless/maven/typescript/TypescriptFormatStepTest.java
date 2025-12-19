@@ -39,7 +39,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 	}
 
 	private void runTsfmt(String kind) throws IOException, InterruptedException {
-		var path = prepareRunTsfmt(kind);
+		String path = prepareRunTsfmt(kind);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("npm/tsfmt/" + kind + "/" + kind + ".clean");
 	}
@@ -113,7 +113,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 
 	@Test
 	void testTypescript_2_Configs() throws Exception {
-		var path = "src/main/typescript/test.ts";
+		String path = "src/main/typescript/test.ts";
 
 		writePomWithTypescriptSteps(
 				path,
@@ -125,7 +125,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 		setFile("tsfmt.json").toResource("npm/tsfmt/tsfmt/tsfmt.json");
 
 		setFile(path).toResource("npm/tsfmt/tsfmt/tsfmt.dirty");
-		var result = mavenRunner().withArguments("spotless:apply").runHasError();
+		ProcessRunner.Result result = mavenRunner().withArguments("spotless:apply").runHasError();
 		assertThat(result.stdOutUtf8()).contains("must specify exactly one configFile or config");
 	}
 
@@ -142,7 +142,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 				"  <tslintFile>${basedir}/tslint.json</tslintFile>",
 				"</tsfmt>");
 		setFile("tslint.json").toResource("npm/tsfmt/tslint/tslint.json");
-		var result = runExpectingErrorTsfmt("tslint");
+		ProcessRunner.Result result = runExpectingErrorTsfmt("tslint");
 		assertThat(result.stdOutUtf8()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 
@@ -160,7 +160,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 				"  <npmrc>${basedir}/.custom_npmrc</npmrc>",
 				"</tsfmt>");
 		setFile("tslint.json").toResource("npm/tsfmt/tslint/tslint.json");
-		var result = runExpectingErrorTsfmt("tslint");
+		ProcessRunner.Result result = runExpectingErrorTsfmt("tslint");
 		assertThat(result.stdOutUtf8()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 
@@ -180,7 +180,7 @@ class TypescriptFormatStepTest extends MavenIntegrationHarness {
 
 	@Test
 	void eslintConfigJs() throws Exception {
-		final var configJs = ResourceHarness.getTestResource("npm/eslint/typescript/custom_rules/.eslintrc.js")
+		final String configJs = ResourceHarness.getTestResource("npm/eslint/typescript/custom_rules/.eslintrc.js")
 				.replace("module.exports = ", "");
 		writePomWithTypescriptSteps(
 				TEST_FILE_PATH,

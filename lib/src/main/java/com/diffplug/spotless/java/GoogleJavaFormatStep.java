@@ -105,7 +105,7 @@ public final class GoogleJavaFormatStep implements Serializable {
 		Objects.requireNonNull(style, "style");
 		Objects.requireNonNull(provisioner, "provisioner");
 
-		var step = new GoogleJavaFormatStep(JarState.promise(() -> JarState.from(groupArtifact + ":" + version, provisioner)), version, style, reflowLongStrings, reorderImports, formatJavadoc);
+		GoogleJavaFormatStep step = new GoogleJavaFormatStep(JarState.promise(() -> JarState.from(groupArtifact + ":" + version, provisioner)), version, style, reflowLongStrings, reorderImports, formatJavadoc);
 		if (removeImports) {
 			return FormatterStep.create(name,
 					step,
@@ -180,19 +180,19 @@ public final class GoogleJavaFormatStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			final var classLoader = jarState.getClassLoader();
+			final ClassLoader classLoader = jarState.getClassLoader();
 			Class<?> formatterFunc = classLoader.loadClass("com.diffplug.spotless.glue.java.GoogleJavaFormatFormatterFunc");
 			Constructor<?> constructor = formatterFunc.getConstructor(String.class, String.class, boolean.class, boolean.class, boolean.class);
-			var googleJavaFormatFormatterFunc = (FormatterFunc) constructor.newInstance(version, style, reflowLongStrings, reorderImports, formatJavadoc);
+			FormatterFunc googleJavaFormatFormatterFunc = (FormatterFunc) constructor.newInstance(version, style, reflowLongStrings, reorderImports, formatJavadoc);
 
 			return JVM_SUPPORT.suggestLaterVersionOnError(version, googleJavaFormatFormatterFunc);
 		}
 
 		FormatterFunc createRemoveUnusedImportsOnly() throws Exception {
-			var classLoader = jarState.getClassLoader();
+			ClassLoader classLoader = jarState.getClassLoader();
 			Class<?> formatterFunc = classLoader.loadClass("com.diffplug.spotless.glue.java.GoogleJavaFormatRemoveUnusedImporterFormatterFunc");
 			Constructor<?> constructor = formatterFunc.getConstructor(String.class); //version
-			var googleJavaFormatRemoveUnusedImporterFormatterFunc = (FormatterFunc) constructor.newInstance(version);
+			FormatterFunc googleJavaFormatRemoveUnusedImporterFormatterFunc = (FormatterFunc) constructor.newInstance(version);
 
 			return JVM_SUPPORT.suggestLaterVersionOnError(version, googleJavaFormatRemoveUnusedImporterFormatterFunc);
 		}

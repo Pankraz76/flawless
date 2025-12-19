@@ -468,11 +468,11 @@ public final class FormatAnnotationsStep implements Serializable {
 		 */
 		String fixupTypeAnnotations(String unixStr) {
 			// Each element of `lines` ends with a newline.
-			var lines = unixStr.split("((?<=\n))");
+			String[] lines = unixStr.split("((?<=\n))");
 			for (int i = 0; i < lines.length - 1; i++) {
-				var line = lines[i];
+				String line = lines[i];
 				if (endsWithTypeAnnotation(line)) {
-					var nextLine = lines[i + 1];
+					String nextLine = lines[i + 1];
 					if (STARTS_WITH_COMMENT_PATTERN.matcher(nextLine).find()) {
 						continue;
 					}
@@ -489,13 +489,13 @@ public final class FormatAnnotationsStep implements Serializable {
 		 */
 		boolean endsWithTypeAnnotation(String unixLine) {
 			// Remove trailing newline.
-			var line = unixLine.replaceAll("\\s+$", "");
-			var m = TRAILING_ANNO_PATTERN.matcher(line);
+			String line = unixLine.replaceAll("\\s+$", "");
+			Matcher m = TRAILING_ANNO_PATTERN.matcher(line);
 			if (!m.find()) {
 				return false;
 			}
-			var preceding = line.substring(0, m.start());
-			var basename = m.group(1);
+			String preceding = line.substring(0, m.start());
+			String basename = m.group(1);
 
 			if (WITHIN_COMMENT_PATTERN.matcher(preceding).find()) {
 				return false;

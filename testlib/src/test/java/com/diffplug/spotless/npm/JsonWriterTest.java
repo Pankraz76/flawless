@@ -67,7 +67,7 @@ class JsonWriterTest extends ResourceHarness {
 	@Test
 	void itWritesToFile() throws IOException {
 		jsonWriter.put("mystring", "stringvalue");
-		final var file = newFile("target.json");
+		final File file = newFile("target.json");
 		jsonWriter.toJsonFile(file);
 		assertFile(file).hasContent("{\n    \"mystring\": \"stringvalue\"\n}");
 	}

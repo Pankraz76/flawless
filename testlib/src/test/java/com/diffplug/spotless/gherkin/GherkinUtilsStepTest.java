@@ -75,22 +75,22 @@ public class GherkinUtilsStepTest {
 	@Disabled("gherkin-utils does not allow custom indentation")
 	@Test
 	public void canSetCustomIndentationLevel() throws Exception {
-		var step = GherkinUtilsStep.create(new GherkinUtilsConfig(6), VERSION, TestProvisioner.mavenCentral());
-		var stepHarness = StepHarness.forStep(step);
+		FormatterStep step = GherkinUtilsStep.create(new GherkinUtilsConfig(6), VERSION, TestProvisioner.mavenCentral());
+		StepHarness stepHarness = StepHarness.forStep(step);
 
-		var before = "gherkin/minimalBefore.feature";
-		var after = "gherkin/minimalAfter6Spaces.feature";
+		String before = "gherkin/minimalBefore.feature";
+		String after = "gherkin/minimalAfter6Spaces.feature";
 		stepHarness.testResource(before, after);
 	}
 
 	@Disabled("gherkin-utils does not allow custom indentation")
 	@Test
 	public void canSetIndentationLevelTo0() throws Exception {
-		var step = GherkinUtilsStep.create(new GherkinUtilsConfig(0), VERSION, TestProvisioner.mavenCentral());
-		var stepHarness = StepHarness.forStep(step);
+		FormatterStep step = GherkinUtilsStep.create(new GherkinUtilsConfig(0), VERSION, TestProvisioner.mavenCentral());
+		StepHarness stepHarness = StepHarness.forStep(step);
 
-		var before = "gherkin/minimalBefore.feature";
-		var after = "gherkin/minimalAfter0Spaces.feature";
+		String before = "gherkin/minimalBefore.feature";
+		String after = "gherkin/minimalAfter0Spaces.feature";
 		stepHarness.testResource(before, after);
 	}
 
@@ -117,8 +117,8 @@ public class GherkinUtilsStepTest {
 	}
 
 	private static void doWithResource(StepHarness stepHarness, String name) {
-		var before = "gherkin/%sBefore.feature".formatted(name);
-		var after = "gherkin/%sAfter.feature".formatted(name);
+		String before = "gherkin/%sBefore.feature".formatted(name);
+		String after = "gherkin/%sAfter.feature".formatted(name);
 		stepHarness.testResource(before, after);
 	}
 }

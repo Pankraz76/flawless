@@ -142,7 +142,7 @@ class MultiModuleProjectTest extends MavenIntegrationHarness {
 			List<String> modulesList = new ArrayList<>();
 			modulesList.add(configSubProject);
 			modulesList.addAll(subProjects.keySet());
-			var modules = modulesList.toArray(new String[0]);
+			String[] modules = modulesList.toArray(new String[0]);
 
 			Map<String, Object> rootPomParams = buildPomXmlParams(null, null, null, configuration, modules, null, null);
 			setFile("pom.xml").toContent(createPomXmlContent("/multi-module/pom-parent.xml.mustache", rootPomParams));
@@ -150,7 +150,7 @@ class MultiModuleProjectTest extends MavenIntegrationHarness {
 
 		private void createConfigSubProject() throws IOException {
 			if (configSubProject != null) {
-				var content = createPomXmlContent("/multi-module/pom-config.xml.mustache", emptyMap());
+				String content = createPomXmlContent("/multi-module/pom-config.xml.mustache", emptyMap());
 				setFile(configSubProject + "/pom.xml").toContent(content);
 
 				createSubProjectFiles(configSubProject, asList(configSubProjectFiles));
@@ -159,10 +159,10 @@ class MultiModuleProjectTest extends MavenIntegrationHarness {
 
 		private void createSubProjects() throws IOException {
 			for (Map.Entry<String, List<SubProjectFile>> entry : subProjects.entrySet()) {
-				var subProjectName = entry.getKey();
+				String subProjectName = entry.getKey();
 				List<SubProjectFile> subProjectFiles = entry.getValue();
 
-				var content = createPomXmlContent("/multi-module/pom-child.xml.mustache", Map.of(CHILD_ID, subProjectName));
+				String content = createPomXmlContent("/multi-module/pom-child.xml.mustache", Map.of(CHILD_ID, subProjectName));
 				setFile(subProjectName + "/pom.xml").toContent(content);
 
 				createSubProjectFiles(subProjectName, subProjectFiles);

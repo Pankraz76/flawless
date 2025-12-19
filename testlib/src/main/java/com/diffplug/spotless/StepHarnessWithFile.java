@@ -50,15 +50,15 @@ public final class StepHarnessWithFile extends StepHarnessBase {
 
 	/** Asserts that the given element is transformed as expected, and that the result is idempotent. */
 	public StepHarnessWithFile test(String filename, String before, String after) {
-		var file = harness.setFile(filename).toContent(before);
-		var actual = formatter().compute(LineEnding.toUnix(before), file);
+		File file = harness.setFile(filename).toContent(before);
+		String actual = formatter().compute(LineEnding.toUnix(before), file);
 		assertEquals(after, actual, "Step application failed");
 		return testUnaffected(file, after);
 	}
 
 	/** Asserts that the given element is idempotent w.r.t the step under test. */
 	public StepHarnessWithFile testUnaffected(File file, String idempotentElement) {
-		var actual = formatter().compute(LineEnding.toUnix(idempotentElement), file);
+		String actual = formatter().compute(LineEnding.toUnix(idempotentElement), file);
 		assertEquals(idempotentElement, actual, "Step is not idempotent");
 		return this;
 	}
@@ -81,7 +81,7 @@ public final class StepHarnessWithFile extends StepHarnessBase {
 	/** Asserts that the given elements in the resources directory are transformed as expected. */
 	public StepHarnessWithFile testResourceUnaffected(String resourceIdempotent) {
 		String contentBefore = ResourceHarness.getTestResource(resourceIdempotent);
-		var file = harness.setFile(resourceIdempotent).toContent(contentBefore);
+		File file = harness.setFile(resourceIdempotent).toContent(contentBefore);
 		return testUnaffected(file, contentBefore);
 	}
 
@@ -91,8 +91,8 @@ public final class StepHarnessWithFile extends StepHarnessBase {
 
 	public StringSelfie expectLintsOfResource(String filename, String resource) {
 		try {
-			var file = harness.setFile(filename).toResource(resource);
-			var state = LintState.of(formatter(), file);
+			File file = harness.setFile(filename).toResource(resource);
+			LintState state = LintState.of(formatter(), file);
 			return StepHarness.expectLintsOf(state, formatter());
 		} catch (IOException e) {
 			throw new AssertionError(e);
@@ -101,8 +101,8 @@ public final class StepHarnessWithFile extends StepHarnessBase {
 
 	public StringSelfie expectLintsOfFileAndContent(String filename, String content) {
 		try {
-			var file = harness.setFile(filename).toContent(content);
-			var state = LintState.of(formatter(), file);
+			File file = harness.setFile(filename).toContent(content);
+			LintState state = LintState.of(formatter(), file);
 			return StepHarness.expectLintsOf(state, formatter());
 		} catch (IOException e) {
 			throw new AssertionError(e);

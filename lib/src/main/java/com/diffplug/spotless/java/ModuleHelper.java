@@ -65,7 +65,7 @@ final class ModuleHelper {
 				openPackages(unavailableRequiredPackages);
 				final List<String> failedToOpen = unavailableRequiredPackages();
 				if (!failedToOpen.isEmpty()) {
-					final var message = new StringBuilder();
+					final StringBuilder message = new StringBuilder();
 					message.append("WARNING: Some required internal classes are unavailable. Please consider adding the following JVM arguments\n");
 					message.append("WARNING: ");
 					for (String name : failedToOpen) {
@@ -83,8 +83,8 @@ final class ModuleHelper {
 	private static List<String> unavailableRequiredPackages() {
 		final List<String> packages = new ArrayList<>();
 		for (Map.Entry<String, String> e : REQUIRED_PACKAGES_TO_TEST_CLASSES.entrySet()) {
-			final var key = e.getKey();
-			final var value = e.getValue();
+			final String key = e.getKey();
+			final String value = e.getValue();
 			try {
 				final Class<?> clazz = Class.forName(key + "." + value);
 				if (clazz.isEnum()) {
@@ -107,15 +107,15 @@ final class ModuleHelper {
 		if (modules == null) {
 			return;
 		}
-		final var unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
+		final Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
 		unsafeField.setAccessible(true);
-		final var unsafe = (Unsafe) unsafeField.get(null);
-		final var implLookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
-		final var lookup = (MethodHandles.Lookup) unsafe.getObject(
+		final Unsafe unsafe = (Unsafe) unsafeField.get(null);
+		final Field implLookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+		final MethodHandles.Lookup lookup = (MethodHandles.Lookup) unsafe.getObject(
 				unsafe.staticFieldBase(implLookupField),
 				unsafe.staticFieldOffset(implLookupField));
-		final var modifiers = lookup.findSetter(Method.class, "modifiers", Integer.TYPE);
-		final var exportMethod = Class.forName("java.lang.Module").getDeclaredMethod("implAddOpens", String.class);
+		final MethodHandle modifiers = lookup.findSetter(Method.class, "modifiers", Integer.TYPE);
+		final Method exportMethod = Class.forName("java.lang.Module").getDeclaredMethod("implAddOpens", String.class);
 		modifiers.invokeExact(exportMethod, Modifier.PUBLIC);
 		for (Object module : modules) {
 			final Collection<String> packages = (Collection<String>) module.getClass().getMethod("getPackages").invoke(module);
@@ -131,11 +131,11 @@ final class ModuleHelper {
 	private static Collection<?> allModules() {
 		// calling ModuleLayer.boot().modules() by reflection
 		try {
-			final var boot = Class.forName("java.lang.ModuleLayer").getMethod("boot").invoke(null);
+			final Object boot = Class.forName("java.lang.ModuleLayer").getMethod("boot").invoke(null);
 			if (boot == null) {
 				return null;
 			}
-			final var modules = boot.getClass().getMethod("modules").invoke(boot);
+			final Object modules = boot.getClass().getMethod("modules").invoke(boot);
 			return (Collection<?>) modules;
 		} catch (Exception ignore) {
 			return null;

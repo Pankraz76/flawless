@@ -100,7 +100,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 
 	private void writeState(String state) throws IOException {
 		for (char c : state.toCharArray()) {
-			var letter = new String(new char[]{c});
+			String letter = new String(new char[]{c});
 			boolean exists = new File(rootFolder(), filename(letter)).exists();
 			boolean needsChanging = exists && !read(filename(letter)).trim().equals(letter);
 			if (!exists || needsChanging) {
@@ -111,7 +111,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 
 	private void assertState(String state) throws IOException {
 		for (char c : state.toCharArray()) {
-			var letter = new String(new char[]{c});
+			String letter = new String(new char[]{c});
 			if (Character.isLowerCase(c)) {
 				assertEquals(letter.toLowerCase(Locale.ROOT), read(filename(letter)).trim());
 			} else {
@@ -129,13 +129,13 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 	}
 
 	private AbstractStringAssert<?> checkRanAgainstNoneButError() throws IOException {
-		var console = taskRanAgainst("spotlessCheck");
+		String console = taskRanAgainst("spotlessCheck");
 		return Assertions.assertThat(console);
 	}
 
 	private String taskRanAgainst(String task, String... ranAgainst) throws IOException {
 		pauseForFilesystem();
-		var console = StringPrinter.buildString(Errors.rethrow().wrap(printer -> {
+		String console = StringPrinter.buildString(Errors.rethrow().wrap(printer -> {
 			boolean expectFailure = "spotlessCheck".equals(task) && !isClean();
 			if (expectFailure) {
 				gradleRunner().withArguments(task).forwardStdOutput(printer.toWriter()).forwardStdError(printer.toWriter()).buildAndFail();
@@ -145,7 +145,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 		}));
 		SortedSet<String> added = new TreeSet<>();
 		for (String line : console.split("\n")) {
-			var trimmed = line.trim();
+			String trimmed = line.trim();
 			if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
 				added.add(trimmed.substring(1, trimmed.length() - 1));
 			}
@@ -155,7 +155,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 	}
 
 	private String concat(Iterable<String> iterable) {
-		var result = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		for (String item : iterable) {
 			result.append(item);
 		}
@@ -165,7 +165,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 	private boolean isClean() throws IOException {
 		for (File file : rootFolder().listFiles()) {
 			if (file.isFile() && file.getName().length() == 4 && file.getName().endsWith(".md")) {
-				var content = read(file.getName());
+				String content = read(file.getName());
 				if (!content.toLowerCase(Locale.ROOT).equals(content)) {
 					return false;
 				}

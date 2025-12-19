@@ -43,7 +43,7 @@ public class JacksonYaml implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		var jacksonConfig = new JacksonYamlConfig();
+		JacksonYamlConfig jacksonConfig = new JacksonYamlConfig();
 
 		jacksonConfig.appendFeatureToToggle(features);
 		jacksonConfig.appendYamlFeatureToToggle(yamlFeatures);

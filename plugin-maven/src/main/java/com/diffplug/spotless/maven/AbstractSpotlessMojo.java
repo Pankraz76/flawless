@@ -259,7 +259,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 		}
 
 		List<FormatterFactory> formatterFactories = getFormatterFactories();
-		var config = getFormatterConfig();
+		FormatterConfig config = getFormatterConfig();
 
 		Map<FormatterFactory, Supplier<Iterable<File>>> formatterFactoryToFiles = new LinkedHashMap<>();
 		for (FormatterFactory formatterFactory : formatterFactories) {
@@ -268,9 +268,9 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 		}
 
 		try (FormattersHolder formattersHolder = FormattersHolder.create(formatterFactoryToFiles, config);
-				var upToDateChecker = createUpToDateChecker(formattersHolder.openFormatters.values())) {
+				UpToDateChecker upToDateChecker = createUpToDateChecker(formattersHolder.openFormatters.values())) {
 			for (FormatterFactory factory : formattersHolder.openFormatters.keySet()) {
-				var formatter = formattersHolder.openFormatters.get(factory);
+				Formatter formatter = formattersHolder.openFormatters.get(factory);
 				Iterable<File> files = formattersHolder.factoryToFiles.get(factory).get();
 				process(formattersHolder.nameFor(factory), files, formatter, upToDateChecker);
 			}
@@ -312,7 +312,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 			if (isNullOrEmpty(filePatterns)) {
 				return files;
 			}
-			final var includePatterns = this.filePatterns.split(",");
+			final String[] includePatterns = this.filePatterns.split(",");
 			final List<Pattern> compiledIncludePatterns = Arrays.stream(includePatterns)
 					.map(Pattern::compile)
 					.collect(Collectors.toList());
@@ -391,10 +391,10 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 	}
 
 	private FormatterConfig getFormatterConfig() {
-		var resolver = new ArtifactResolver(repositorySystem, repositorySystemSession, repositories, getLog());
+		ArtifactResolver resolver = new ArtifactResolver(repositorySystem, repositorySystemSession, repositories, getLog());
 		Provisioner provisioner = MavenProvisioner.create(resolver);
 		List<FormatterStepFactory> formatterStepFactories = getFormatterStepFactories();
-		var fileLocator = getFileLocator();
+		FileLocator fileLocator = getFileLocator();
 		final Optional<String> optionalRatchetFrom = Optional.ofNullable(this.ratchetFrom)
 				.filter(ratchet -> !RATCHETFROM_NONE.equals(ratchet));
 		return new FormatterConfig(baseDir, encoding, lineEndings, optionalRatchetFrom, provisioner, fileLocator, formatterStepFactories, Optional.ofNullable(setLicenseHeaderYearsFromGitHistory), lintSuppressions);
@@ -422,7 +422,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 	private UpToDateChecker createUpToDateChecker(Iterable<Formatter> formatters) {
 		Path indexFile = upToDateChecking == null ? null : upToDateChecking.getIndexFile();
 		if (indexFile == null) {
-			var targetDir = project.getBasedir().toPath().resolve(project.getBuild().getDirectory());
+			Path targetDir = project.getBasedir().toPath().resolve(project.getBuild().getDirectory());
 			indexFile = targetDir.resolve(DEFAULT_INDEX_FILE_NAME);
 		}
 		final UpToDateChecker checker;

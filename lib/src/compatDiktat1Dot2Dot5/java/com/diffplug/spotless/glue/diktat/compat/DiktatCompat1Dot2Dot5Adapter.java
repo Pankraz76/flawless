@@ -64,7 +64,7 @@ public class DiktatCompat1Dot2Dot5Adapter implements DiktatCompatAdapter {
 	@Override
 	public String format(final File file, final String content, final boolean isScript) {
 		errors.clear();
-		var result = KtLint.INSTANCE.format(new KtLint.ExperimentalParams(
+		String result = KtLint.INSTANCE.format(new KtLint.ExperimentalParams(
 				// Unlike Ktlint, Diktat requires full path to the file.
 				// See https://github.com/diffplug/spotless/issues/1189, https://github.com/analysis-dev/diktat/issues/1202
 				file.getAbsolutePath(),

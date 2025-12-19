@@ -28,59 +28,59 @@ import com.diffplug.spotless.TestProvisioner;
 class KtfmtStepTest extends ResourceHarness {
 	@Test
 	void behavior() throws Exception {
-		var step = KtfmtStep.create(TestProvisioner.mavenCentral());
+		FormatterStep step = KtfmtStep.create(TestProvisioner.mavenCentral());
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic.clean");
 	}
 
 	@Test
 	void behaviorWithOptions() {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
 		options.setMaxWidth(100);
-		var step = KtfmtStep.create(KtfmtStep.defaultVersion(), TestProvisioner.mavenCentral(), KtfmtStep.Style.GOOGLE, options);
+		FormatterStep step = KtfmtStep.create(KtfmtStep.defaultVersion(), TestProvisioner.mavenCentral(), KtfmtStep.Style.GOOGLE, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic.clean");
 	}
 
 	@Test
 	void dropboxStyle_0_16() throws Exception {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
-		var step = KtfmtStep.create("0.16", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
+		FormatterStep step = KtfmtStep.create("0.16", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic-dropboxstyle.clean");
 	}
 
 	@Test
 	void dropboxStyle_0_18() throws Exception {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
-		var step = KtfmtStep.create("0.18", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
+		FormatterStep step = KtfmtStep.create("0.18", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic-dropboxstyle.clean");
 	}
 
 	@Test
 	void dropboxStyle_0_22() throws Exception {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
-		var step = KtfmtStep.create("0.22", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
+		FormatterStep step = KtfmtStep.create("0.22", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic-dropboxstyle.clean");
 	}
 
 	@Test
 	void dropboxStyle_0_50() throws Exception {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
-		var step = KtfmtStep.create("0.50", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
+		FormatterStep step = KtfmtStep.create("0.50", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/basic.dirty", "kotlin/ktfmt/basic-dropboxstyle.clean");
 	}
 
 	@Test
 	void behaviorWithTrailingCommas() throws Exception {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
 		options.setTrailingCommaManagementStrategy(KtfmtStep.TrailingCommaManagementStrategy.COMPLETE);
-		var step = KtfmtStep.create("0.49", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
+		FormatterStep step = KtfmtStep.create("0.49", TestProvisioner.mavenCentral(), KtfmtStep.Style.DROPBOX, options);
 		StepHarness.forStep(step).testResource("kotlin/ktfmt/trailing-commas.dirty", "kotlin/ktfmt/trailing-commas.clean");
 	}
 
 	@Test
 	void behaviorWithTrailingCommaManagementStrategyOnlyAdd() {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
 		options.setTrailingCommaManagementStrategy(KtfmtStep.TrailingCommaManagementStrategy.ONLY_ADD);
-		var step = KtfmtStep.create("0.58", TestProvisioner.mavenCentral(), KtfmtStep.Style.KOTLINLANG, options);
+		FormatterStep step = KtfmtStep.create("0.58", TestProvisioner.mavenCentral(), KtfmtStep.Style.KOTLINLANG, options);
 		StepHarness.forStep(step).testResource(
 				"kotlin/ktfmt/trailing-commas-only-add.dirty",
 				"kotlin/ktfmt/trailing-commas-only-add.clean");
@@ -88,7 +88,7 @@ class KtfmtStepTest extends ResourceHarness {
 
 	@Test
 	void trailingCommaManagementStrategyOnlyAddUnsupportedBefore_0_57() {
-		var options = new KtfmtStep.KtfmtFormattingOptions();
+		KtfmtStep.KtfmtFormattingOptions options = new KtfmtStep.KtfmtFormattingOptions();
 		options.setTrailingCommaManagementStrategy(KtfmtStep.TrailingCommaManagementStrategy.ONLY_ADD);
 		var step = KtfmtStep.create("0.56", TestProvisioner.mavenCentral(), KtfmtStep.Style.KOTLINLANG, options);
 
@@ -113,7 +113,7 @@ class KtfmtStepTest extends ResourceHarness {
 
 			@Override
 			protected FormatterStep create() {
-				var finalVersion = this.version;
+				String finalVersion = this.version;
 				return KtfmtStep.create(finalVersion, TestProvisioner.mavenCentral());
 			}
 		}.testEquals();

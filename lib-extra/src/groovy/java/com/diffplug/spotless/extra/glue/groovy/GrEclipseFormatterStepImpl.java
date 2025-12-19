@@ -88,11 +88,11 @@ public class GrEclipseFormatterStepImpl {
 
 	/** Formatting Groovy string  */
 	public String format(String raw) throws Exception {
-		var doc = new Document(raw);
-		var errorListener = new GroovyErrorListener();
-		var selectAll = new TextSelection(doc, 0, doc.getLength());
-		var codeFormatter = new DefaultGroovyFormatter(selectAll, doc, preferencesStore, false);
-		var edit = codeFormatter.format();
+		IDocument doc = new Document(raw);
+		GroovyErrorListener errorListener = new GroovyErrorListener();
+		TextSelection selectAll = new TextSelection(doc, 0, doc.getLength());
+		GroovyFormatter codeFormatter = new DefaultGroovyFormatter(selectAll, doc, preferencesStore, false);
+		TextEdit edit = codeFormatter.format();
 		if (!ignoreFormatterProblems && errorListener.errorsDetected()) {
 			throw new IllegalArgumentException(errorListener.toString());
 		}
@@ -112,7 +112,7 @@ public class GrEclipseFormatterStepImpl {
 			 * run in parallel.
 			 */
 			errors = Collections.synchronizedList(new ArrayList<>());
-			var groovyLogger = GroovyCoreActivator.getDefault().getLog();
+			ILog groovyLogger = GroovyCoreActivator.getDefault().getLog();
 			groovyLogger.addLogListener(this);
 			synchronized (GroovyLogManager.manager) {
 				GroovyLogManager.manager.addLogger(this);
@@ -125,7 +125,7 @@ public class GrEclipseFormatterStepImpl {
 		}
 
 		public boolean errorsDetected() {
-			var groovyLogger = GroovyCoreActivator.getDefault().getLog();
+			ILog groovyLogger = GroovyCoreActivator.getDefault().getLog();
 			groovyLogger.removeLogListener(this);
 			synchronized (GroovyLogManager.manager) {
 				GroovyLogManager.manager.removeLogger(this);
@@ -135,7 +135,7 @@ public class GrEclipseFormatterStepImpl {
 
 		@Override
 		public String toString() {
-			var string = new StringBuilder();
+			StringBuilder string = new StringBuilder();
 			if (1 < errors.size()) {
 				string.append("Multiple problems detected during step execution:");
 			} else if (errors.isEmpty()) {
@@ -172,10 +172,10 @@ public class GrEclipseFormatterStepImpl {
 	}
 
 	private static PreferenceStore createPreferences(final Properties properties) throws IOException {
-		final var preferences = new PreferenceStore();
-		var output = new ByteArrayOutputStream();
+		final PreferenceStore preferences = new PreferenceStore();
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		properties.store(output, null);
-		var input = new ByteArrayInputStream(output.toByteArray());
+		ByteArrayInputStream input = new ByteArrayInputStream(output.toByteArray());
 		preferences.load(input);
 		return preferences;
 	}

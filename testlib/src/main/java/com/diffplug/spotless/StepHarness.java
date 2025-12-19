@@ -59,14 +59,14 @@ public final class StepHarness extends StepHarnessBase {
 
 	/** Asserts that the given element is transformed as expected, and that the result is idempotent. */
 	public StepHarness test(String before, String after) {
-		var actual = formatter().compute(LineEnding.toUnix(before), new File(""));
+		String actual = formatter().compute(LineEnding.toUnix(before), new File(""));
 		assertEquals(after, actual, "Step application failed");
 		return testUnaffected(after);
 	}
 
 	/** Asserts that the given element is idempotent w.r.t the step under test. */
 	public StepHarness testUnaffected(String idempotentElement) {
-		var actual = formatter().compute(LineEnding.toUnix(idempotentElement), new File(""));
+		String actual = formatter().compute(LineEnding.toUnix(idempotentElement), new File(""));
 		assertEquals(idempotentElement, actual, "Step is not idempotent");
 		return this;
 	}
@@ -75,7 +75,7 @@ public final class StepHarness extends StepHarnessBase {
 	public StepHarness testResource(String resourceBefore, String resourceAfter) {
 		String before = ResourceHarness.getTestResource(resourceBefore);
 		String after = ResourceHarness.getTestResource(resourceAfter);
-		var actual = formatter().compute(LineEnding.toUnix(before), new File(resourceBefore));
+		String actual = formatter().compute(LineEnding.toUnix(before), new File(resourceBefore));
 		assertEquals(after, actual, "Step application failed");
 		actual = formatter().compute(LineEnding.toUnix(after), new File(resourceAfter));
 		assertEquals(after, actual, "Step is not idempotent");
@@ -93,13 +93,13 @@ public final class StepHarness extends StepHarnessBase {
 	}
 
 	public StringSelfie expectLintsOf(String before) {
-		var state = LintState.of(formatter(), Formatter.NO_FILE_SENTINEL, before.getBytes(formatter().getEncoding()));
+		LintState state = LintState.of(formatter(), Formatter.NO_FILE_SENTINEL, before.getBytes(formatter().getEncoding()));
 		return expectLintsOf(state, formatter());
 	}
 
 	static StringSelfie expectLintsOf(LintState state, Formatter formatter) {
-		var assertAgainst = state.asStringOneLine(Formatter.NO_FILE_SENTINEL, formatter);
-		var cleaned = assertAgainst.replace("NO_FILE_SENTINEL:", "");
+		String assertAgainst = state.asStringOneLine(Formatter.NO_FILE_SENTINEL, formatter);
+		String cleaned = assertAgainst.replace("NO_FILE_SENTINEL:", "");
 
 		int numLines = 1;
 		int lineEnding = cleaned.indexOf('\n');

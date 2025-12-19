@@ -75,7 +75,7 @@ final class ImportSorterImpl {
 
 	static List<String> sort(List<String> imports, List<String> importsOrder, boolean wildcardsLast,
 			boolean semanticSort, Set<String> treatAsPackage, Set<String> treatAsClass, String lineFormat) {
-		var importsSorter = new ImportSorterImpl(importsOrder, wildcardsLast, semanticSort, treatAsPackage,
+		ImportSorterImpl importsSorter = new ImportSorterImpl(importsOrder, wildcardsLast, semanticSort, treatAsPackage,
 				treatAsClass);
 		return importsSorter.sort(imports, lineFormat);
 	}
@@ -133,7 +133,7 @@ final class ImportSorterImpl {
 	 */
 	private void filterMatchingImports(List<String> imports) {
 		for (String anImport : imports) {
-			var orderItem = getBestMatchingImportOrderItem(anImport);
+			String orderItem = getBestMatchingImportOrderItem(anImport);
 			if (orderItem != null) {
 				matchingImports.computeIfAbsent(orderItem, key -> new ArrayList<>());
 				matchingImports.get(orderItem).add(anImport);
@@ -313,13 +313,13 @@ final class ImportSorterImpl {
 			 * provide hints to the auto-detection.
 			 */
 			if (string1.startsWith(STATIC_KEYWORD)) {
-				var split = splitFqcnAndMember(string1);
-				var fqcn1 = split[0];
-				var member1 = split[1];
+				String[] split = splitFqcnAndMember(string1);
+				String fqcn1 = split[0];
+				String member1 = split[1];
 
 				split = splitFqcnAndMember(string2);
-				var fqcn2 = split[0];
-				var member2 = split[1];
+				String fqcn2 = split[0];
+				String member2 = split[1];
 
 				int result = compareFullyQualifiedClassName(fqcn1, fqcn2);
 				if (result != 0) {
@@ -337,13 +337,13 @@ final class ImportSorterImpl {
 		 * (nested) class names.
 		 */
 		private int compareFullyQualifiedClassName(String fqcn1, String fqcn2) {
-			var split = splitPackageAndClasses(fqcn1);
-			var p1 = split[0];
-			var c1 = split[1];
+			String[] split = splitPackageAndClasses(fqcn1);
+			String p1 = split[0];
+			String c1 = split[1];
 
 			split = splitPackageAndClasses(fqcn2);
-			var p2 = split[0];
-			var c2 = split[1];
+			String p2 = split[0];
+			String c2 = split[1];
 
 			int result = p1.compareTo(p2);
 			if (result != 0) {
@@ -358,15 +358,15 @@ final class ImportSorterImpl {
 		 * the imported static member (field, method or type).
 		 */
 		private String[] splitFqcnAndMember(String importString) {
-			var s = importString.substring(STATIC_KEYWORD.length()).trim();
+			String s = importString.substring(STATIC_KEYWORD.length()).trim();
 
 			/*
 			 * Static imports always contain a member or wildcard and it's always the last
 			 * segment.
 			 */
 			int dot = s.lastIndexOf(".");
-			var fqcn = s.substring(0, dot);
-			var member = s.substring(dot + 1);
+			String fqcn = s.substring(0, dot);
+			String member = s.substring(dot + 1);
 			return new String[]{fqcn, member};
 		}
 

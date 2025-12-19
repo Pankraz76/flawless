@@ -48,7 +48,7 @@ class IndentTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String source, String target) throws Exception {
-		var path = "src/main/java/test.java";
+		String path = "src/main/java/test.java";
 		setFile(path).toResource(source);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource(target);

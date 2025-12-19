@@ -33,7 +33,7 @@ class MultiProjectAfterEvaluate extends GradleIntegrationHarness {
 						"}",
 						"repositories { mavenCentral() }",
 						"spotless { java { googleJavaFormat() } }");
-		var output = gradleRunner().withArguments("spotlessApply", "--warning-mode", "all").build().getOutput().replace("\r\n", "\n");
+		String output = gradleRunner().withArguments("spotlessApply", "--warning-mode", "all").build().getOutput().replace("\r\n", "\n");
 		Assertions.assertThat(output).doesNotContain("Using method Project#afterEvaluate(Action) when the project is already evaluated has been deprecated.");
 	}
 }

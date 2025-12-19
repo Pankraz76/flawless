@@ -30,9 +30,9 @@ public class NativeCmdStepTest extends ResourceHarness {
 
 	@Test
 	public void testWithSed() {
-		var sed = new File("/usr/bin/sed");
+		File sed = new File("/usr/bin/sed");
 		assumeThat(sed).exists();
-		var step = NativeCmdStep.create("format-native", sed, List.of("s/placeholder/replaced/g"));
+		FormatterStep step = NativeCmdStep.create("format-native", sed, List.of("s/placeholder/replaced/g"));
 		StepHarnessWithFile.forStep(this, step)
 				.testResource("native_cmd/dirty.txt", "native_cmd/clean.txt");
 	}

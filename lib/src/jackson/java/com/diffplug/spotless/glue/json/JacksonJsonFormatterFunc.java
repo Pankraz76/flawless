@@ -54,13 +54,13 @@ public class JacksonJsonFormatterFunc extends AJacksonFormatterFunc {
 	 */
 	@Override
 	protected JsonFactory makeJsonFactory() {
-		var jsonFactory = new JsonFactoryBuilder().build();
+		JsonFactory jsonFactory = new JsonFactoryBuilder().build();
 
 		// Configure the ObjectMapper
 		// https://github.com/FasterXML/jackson-databind#commonly-used-features
 		jacksonConfig.getJsonFeatureToToggle().forEach((rawFeature, toggle) -> {
 			// https://stackoverflow.com/questions/3735927/java-instantiating-an-enum-using-reflection
-			var feature = JsonGenerator.Feature.valueOf(rawFeature);
+			JsonGenerator.Feature feature = JsonGenerator.Feature.valueOf(rawFeature);
 
 			jsonFactory.configure(feature, toggle);
 		});
@@ -74,8 +74,8 @@ public class JacksonJsonFormatterFunc extends AJacksonFormatterFunc {
 
 		// DefaultIndenter default constructor relies on 2 whitespaces as default tabulation
 		// By we want to force '\n' as eol given Spotless provides LF-input (whatever the actual File content/current OS)
-		var indenter = new DefaultIndenter("  ", "\n");
-		var printer = new SpotlessJsonPrettyPrinter(spaceBeforeSeparator);
+		DefaultPrettyPrinter.Indenter indenter = new DefaultIndenter("  ", "\n");
+		DefaultPrettyPrinter printer = new SpotlessJsonPrettyPrinter(spaceBeforeSeparator);
 
 		printer.indentObjectsWith(indenter);
 		printer.indentArraysWith(indenter);

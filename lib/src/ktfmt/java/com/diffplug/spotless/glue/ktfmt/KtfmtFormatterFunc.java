@@ -54,7 +54,7 @@ public final class KtfmtFormatterFunc implements FormatterFunc {
 	}
 
 	private FormattingOptions createFormattingOptions() throws Exception {
-		var formattingOptions = switch (style) {
+		FormattingOptions formattingOptions = switch (style) {
 			case META -> Formatter.META_FORMAT;
 			case GOOGLE -> Formatter.GOOGLE_FORMAT;
 			case KOTLIN_LANG -> Formatter.KOTLINLANG_FORMAT;

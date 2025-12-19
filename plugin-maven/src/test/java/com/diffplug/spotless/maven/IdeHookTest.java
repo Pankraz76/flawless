@@ -51,7 +51,7 @@ class IdeHookTest extends MavenIntegrationHarness {
 	}
 
 	private void runWith(String... arguments) throws IOException, InterruptedException {
-		var result = mavenRunner()
+		ProcessRunner.Result result = mavenRunner()
 				.withArguments(arguments)
 				.runNoError();
 

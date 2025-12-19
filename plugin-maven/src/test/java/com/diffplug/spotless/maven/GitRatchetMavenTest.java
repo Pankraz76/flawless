@@ -32,8 +32,8 @@ class GitRatchetMavenTest extends MavenIntegrationHarness {
 	private static final String TEST_PATH = "src/markdown/test.md";
 
 	private Git initRepo() throws IllegalStateException, GitAPIException, IOException {
-		var git = Git.init().setDirectory(rootFolder()).call();
-		var refDB = git.getRepository().getRefDatabase();
+		Git git = Git.init().setDirectory(rootFolder()).call();
+		RefDatabase refDB = git.getRepository().getRefDatabase();
 		refDB.newUpdate(Constants.R_HEADS + "main", false).setNewObjectId(ObjectId.zeroId());
 		refDB.newUpdate(Constants.HEAD, false).link(Constants.R_HEADS + "main");
 		refDB.newUpdate(Constants.R_HEADS + Constants.MASTER, false).delete();
@@ -67,7 +67,7 @@ class GitRatchetMavenTest extends MavenIntegrationHarness {
 
 	@Test
 	void singleProjectExhaustive() throws Exception {
-		try (var git = initRepo()) {
+		try (Git git = initRepo()) {
 			writePom(RATCHET_FROM_POM);
 			checkBehavior(git);
 		}
@@ -75,7 +75,7 @@ class GitRatchetMavenTest extends MavenIntegrationHarness {
 
 	@Test
 	void singleProjectExhaustiveGlobal() throws Exception {
-		try (var git = initRepo()) {
+		try (Git git = initRepo()) {
 			writePom(RATCHET_FROM_POM
 					.replace("<ratchetFrom>baseline</ratchetFrom>", "")
 					.replace("<formats>", "<ratchetFrom>baseline</ratchetFrom>\n<formats>"));

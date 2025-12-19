@@ -29,7 +29,7 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 	void testNoSuppressionFailsOnWildcardImports() throws Exception {
 		writePomWithJavaSteps("<forbidWildcardImports/>");
 
-		var path = "src/main/java/TestFile.java";
+		String path = "src/main/java/TestFile.java";
 		setFile(path).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 
 		expectSelfieErrorMsg(mavenRunner().withArguments("spotless:check").runHasError()).toBe("""
@@ -55,8 +55,8 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 				"  </lintSuppression>",
 				"</lintSuppressions>");
 
-		var suppressedFile = "src/main/java/TestFile1.java";
-		var unsuppressedFile = "src/main/java/TestFile2.java";
+		String suppressedFile = "src/main/java/TestFile1.java";
+		String unsuppressedFile = "src/main/java/TestFile2.java";
 
 		setFile(suppressedFile).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 		setFile(unsuppressedFile).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
@@ -78,7 +78,7 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 				"  </lintSuppression>",
 				"</lintSuppressions>");
 
-		var path = "src/main/java/TestFile.java";
+		String path = "src/main/java/TestFile.java";
 		setFile(path).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 
 		// Should succeed because we suppressed the entire step
@@ -98,7 +98,7 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 				"  </lintSuppression>",
 				"</lintSuppressions>");
 
-		var path = "src/main/java/TestFile.java";
+		String path = "src/main/java/TestFile.java";
 		setFile(path).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 
 		// Should succeed because we suppressed all error codes
@@ -122,9 +122,9 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 				"  </lintSuppression>",
 				"</lintSuppressions>");
 
-		var file1 = "src/main/java/TestFile1.java";
-		var file2 = "src/main/java/TestFile2.java";
-		var file3 = "src/main/java/TestFile3.java";
+		String file1 = "src/main/java/TestFile1.java";
+		String file2 = "src/main/java/TestFile2.java";
+		String file3 = "src/main/java/TestFile3.java";
 
 		setFile(file1).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 		setFile(file2).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
@@ -141,8 +141,8 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 	 */
 	private void writePomWithLintSuppressions(String... stepsAndSuppressions) throws IOException {
 		// Separate java steps from lint suppressions
-		var javaSteps = new StringBuilder();
-		var globalConfig = new StringBuilder();
+		StringBuilder javaSteps = new StringBuilder();
+		StringBuilder globalConfig = new StringBuilder();
 
 		boolean inSuppressions = false;
 		for (String line : stepsAndSuppressions) {
@@ -161,8 +161,8 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 		}
 
 		// Create the configuration
-		var javaGroup = "<java>" + javaSteps + "</java>";
-		var fullConfiguration = javaGroup + globalConfig;
+		String javaGroup = "<java>" + javaSteps + "</java>";
+		String fullConfiguration = javaGroup + globalConfig;
 
 		writePom(fullConfiguration);
 	}

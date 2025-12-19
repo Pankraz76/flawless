@@ -40,7 +40,7 @@ public abstract class AJacksonFormatterFunc implements FormatterFunc {
 
 	@Override
 	public String apply(String input) throws Exception {
-		var objectMapper = makeObjectMapper();
+		ObjectMapper objectMapper = makeObjectMapper();
 
 		return format(objectMapper, input);
 	}
@@ -48,7 +48,7 @@ public abstract class AJacksonFormatterFunc implements FormatterFunc {
 	protected String format(ObjectMapper objectMapper, String input) throws IllegalArgumentException, IOException {
 		try {
 			// ObjectNode is not compatible with SerializationFeature.ORDER_MAP_ENTRIES_BY_KEYS
-			var objectNode = objectMapper.readValue(input, inferType(input));
+			Object objectNode = objectMapper.readValue(input, inferType(input));
 			return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
 		} catch (JsonProcessingException e) {
 			throw new IllegalArgumentException("Unable to format. input='" + input + "'", e);
@@ -69,8 +69,8 @@ public abstract class AJacksonFormatterFunc implements FormatterFunc {
 	protected abstract JsonFactory makeJsonFactory();
 
 	protected ObjectMapper makeObjectMapper() {
-		var jsonFactory = makeJsonFactory();
-		var objectMapper = new ObjectMapper(jsonFactory);
+		JsonFactory jsonFactory = makeJsonFactory();
+		ObjectMapper objectMapper = new ObjectMapper(jsonFactory);
 
 		objectMapper.setDefaultPrettyPrinter(makePrettyPrinter());
 
@@ -78,7 +78,7 @@ public abstract class AJacksonFormatterFunc implements FormatterFunc {
 		// https://github.com/FasterXML/jackson-databind#commonly-used-features
 		jacksonConfig.getFeatureToToggle().forEach((rawFeature, toggle) -> {
 			// https://stackoverflow.com/questions/3735927/java-instantiating-an-enum-using-reflection
-			var feature = SerializationFeature.valueOf(rawFeature);
+			SerializationFeature feature = SerializationFeature.valueOf(rawFeature);
 
 			objectMapper.configure(feature, toggle);
 		});

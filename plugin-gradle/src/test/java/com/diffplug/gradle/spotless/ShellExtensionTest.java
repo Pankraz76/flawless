@@ -26,7 +26,7 @@ public class ShellExtensionTest extends GradleIntegrationHarness {
 
 	@Test
 	void shfmtWithEditorconfig() throws IOException {
-		var fileDir = "shell/shfmt/with-config/";
+		String fileDir = "shell/shfmt/with-config/";
 
 		setFile("build.gradle.kts").toLines(
 				"plugins {",
@@ -51,7 +51,7 @@ public class ShellExtensionTest extends GradleIntegrationHarness {
 
 	@Test
 	void shfmtWithoutEditorconfig() throws IOException {
-		var fileDir = "shell/shfmt/without-config/";
+		String fileDir = "shell/shfmt/without-config/";
 
 		setFile("build.gradle.kts").toLines(
 				"plugins {",

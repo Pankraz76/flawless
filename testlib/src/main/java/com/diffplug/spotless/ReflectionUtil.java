@@ -41,7 +41,7 @@ public class ReflectionUtil {
 		System.out.print(" " + method.getName() + "(");
 		Iterator<Parameter> paramIter = Arrays.asList(method.getParameters()).iterator();
 		while (paramIter.hasNext()) {
-			var param = paramIter.next();
+			Parameter param = paramIter.next();
 
 			System.out.print(param.getType().getName());
 			if (paramIter.hasNext()) {

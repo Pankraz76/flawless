@@ -52,7 +52,7 @@ public class KotlinExtension extends BaseKotlinExtension implements HasBuiltinDe
 					"You must either specify 'target' manually or apply a kotlin plugin.",
 					SourceSet::getAllSource,
 					file -> {
-						final var name = file.getName();
+						final String name = file.getName();
 						return name.endsWith(".kt") || name.endsWith(".kts");
 					});
 		}

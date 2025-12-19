@@ -44,7 +44,6 @@ import javax.inject.Inject;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
-import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.FileCollection;
@@ -181,7 +180,7 @@ public class FormatExtension {
 
 	/** Suppresses any lints which meet the supplied criteria. */
 	public void suppressLintsFor(Action<LintSuppression> lintSuppression) {
-		var suppression = new LintSuppression();
+		LintSuppression suppression = new LintSuppression();
 		lintSuppression.execute(suppression);
 		suppression.ensureDoesNotSuppressAll();
 		lintSuppressions.add(suppression);
@@ -225,7 +224,7 @@ public class FormatExtension {
 	@Nullable protected String targetExcludeContentPattern;
 
 	protected boolean isLicenseHeaderStep(FormatterStep formatterStep) {
-		var formatterStepName = formatterStep.getName();
+		String formatterStepName = formatterStep.getName();
 		return formatterStepName.startsWith(LicenseHeaderStep.class.getName());
 	}
 
@@ -287,9 +286,9 @@ public class FormatExtension {
 		} else if (targets.length == 1) {
 			return parseTargetIsExclude(targets[0], isExclude);
 		} else {
-			var union = getProject().files();
+			FileCollection union = getProject().files();
 			for (Object target : targets) {
-				union = (ConfigurableFileCollection) union.plus(parseTargetIsExclude(target, isExclude));
+				union = union.plus(parseTargetIsExclude(target, isExclude));
 			}
 			return union;
 		}
@@ -311,8 +310,8 @@ public class FormatExtension {
 		} else if (target instanceof FileCollection) {
 			return (FileCollection) target;
 		} else if (target instanceof String targetString) {
-			var dir = getProject().getProjectDir();
-			var matchedFiles = getProject().fileTree(dir);
+			File dir = getProject().getProjectDir();
+			ConfigurableFileTree matchedFiles = getProject().fileTree(dir);
 			matchedFiles.include(targetString);
 
 			// since people are likely to do '**/*.md', we want to make sure to exclude
@@ -346,7 +345,7 @@ public class FormatExtension {
 	}
 
 	private static void relativizeIfSubdir(List<String> relativePaths, File root, File dest) {
-		var relativized = LintSuppression.relativizeAsUnix(root, dest);
+		String relativized = LintSuppression.relativizeAsUnix(root, dest);
 		if (relativized != null) {
 			relativePaths.add(relativized);
 		}
@@ -369,7 +368,7 @@ public class FormatExtension {
 	/** Adds a new step that requires a Provisioner. */
 	public void addStep(Function<Provisioner, FormatterStep> createStepFn) {
 		requireNonNull(createStepFn);
-		var newStep = createStepFn.apply(provisioner());
+		FormatterStep newStep = createStepFn.apply(provisioner());
 		addStep(newStep);
 	}
 
@@ -569,7 +568,7 @@ public class FormatExtension {
 		Boolean updateYearWithLatest;
 
 		public LicenseHeaderConfig named(String name) {
-			var existingStepName = builder.getName();
+			String existingStepName = builder.getName();
 			builder = builder.withName(name);
 			int existingStepIdx = getExistingStepIdx(existingStepName);
 			if (existingStepIdx != -1) {
@@ -647,7 +646,7 @@ public class FormatExtension {
 	 *                      regular expression pattern to know what the "top" is.
 	 */
 	public LicenseHeaderConfig licenseHeader(String licenseHeader, String delimiter) {
-		var config = new LicenseHeaderConfig(
+		LicenseHeaderConfig config = new LicenseHeaderConfig(
 				LicenseHeaderStep.headerDelimiter(licenseHeader, delimiter));
 		addStep(config.createStep());
 		return config;
@@ -660,8 +659,8 @@ public class FormatExtension {
 	 *                          is.
 	 */
 	public LicenseHeaderConfig licenseHeaderFile(Object licenseHeaderFile, String delimiter) {
-		var config = new LicenseHeaderConfig(LicenseHeaderStep.headerDelimiter(() -> {
-			var file = getProject().file(licenseHeaderFile);
+		LicenseHeaderConfig config = new LicenseHeaderConfig(LicenseHeaderStep.headerDelimiter(() -> {
+			File file = getProject().file(licenseHeaderFile);
 			byte[] data = Files.readAllBytes(file.toPath());
 			return new String(data, getEncoding());
 		}, delimiter));
@@ -778,7 +777,7 @@ public class FormatExtension {
 
 		@Override
 		protected FormatterStep createStep() {
-			final var project = getProject();
+			final Project project = getProject();
 			return PrettierFormatterStep.create(devDependencies, provisioner(), project.getProjectDir(),
 					project.getLayout().getBuildDirectory().getAsFile().get(), npmModulesCacheOrNull(),
 					new NpmPathResolver(npmFileOrNull(), nodeFileOrNull(), npmrcFileOrNull(),
@@ -858,7 +857,7 @@ public class FormatExtension {
 
 	/** Uses exactly the npm packages specified in the map. */
 	public PrettierConfig prettier(Map<String, String> devDependencies) {
-		var prettierConfig = new PrettierConfig(devDependencies);
+		PrettierConfig prettierConfig = new PrettierConfig(devDependencies);
 		addStep(prettierConfig.createStep());
 		return prettierConfig;
 	}
@@ -926,7 +925,7 @@ public class FormatExtension {
 
 		public void configFile(Object... configFiles) {
 			requireElementsNonNull(configFiles);
-			var project = getProject();
+			Project project = getProject();
 			builder.setPreferences(project.files(configFiles).getFiles());
 			replaceStep(builder.build());
 		}
@@ -1035,11 +1034,11 @@ public class FormatExtension {
 	private <T extends FormatExtension> void withinBlocksHelper(FenceStep fence, Class<T> clazz,
 			Action<T> configure) {
 		// create the sub-extension
-		var formatExtension = spotless.instantiateFormatExtension(clazz);
+		T formatExtension = spotless.instantiateFormatExtension(clazz);
 		// configure it
 		configure.execute(formatExtension);
 		// create a step which applies all of those steps as sub-steps
-		var step = fence.applyWithin(formatExtension.steps);
+		FormatterStep step = fence.applyWithin(formatExtension.steps);
 		addStep(step);
 	}
 
@@ -1090,8 +1089,8 @@ public class FormatExtension {
 					formatterStep -> formatterStep.filterByContent(OnMatch.EXCLUDE, targetExcludeContentPattern));
 		}
 		task.setSteps(steps);
-		var projectDir = getProject().getLayout().getProjectDirectory();
-		var lineEndings = getLineEndings();
+		Directory projectDir = getProject().getLayout().getProjectDirectory();
+		LineEnding lineEndings = getLineEndings();
 		task.setLineEndingsPolicy(
 				getProject().provider(() -> lineEndings.createPolicy(projectDir.getAsFile(), () -> totalTarget)));
 		spotless.getRegisterDependenciesTask().hookSubprojectTask(task);

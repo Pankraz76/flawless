@@ -63,11 +63,11 @@ public class EclipseWtpFormatterStepTest {
 		 */
 		@Test
 		void multipleConfigurations() throws Exception {
-			var tabPropertyFile = createPropertyFile(config -> {
+			File tabPropertyFile = createPropertyFile(config -> {
 				config.setProperty("indentationChar", "tab");
 				config.setProperty("indentationSize", "1");
 			});
-			var spacePropertyFile = createPropertyFile(config -> {
+			File spacePropertyFile = createPropertyFile(config -> {
 				config.setProperty("indentationChar", "space");
 				config.setProperty("indentationSize", "5");
 			});
@@ -76,10 +76,10 @@ public class EclipseWtpFormatterStepTest {
 		}
 
 		private File createPropertyFile(Consumer<Properties> config) throws IOException {
-			var configProps = new Properties();
+			Properties configProps = new Properties();
 			config.accept(configProps);
-			var tempFile = Files.createTempFile("EclipseWtpFormatterStepTest-", ".properties").toFile();
-			var tempOut = new FileOutputStream(tempFile);
+			File tempFile = Files.createTempFile("EclipseWtpFormatterStepTest-", ".properties").toFile();
+			OutputStream tempOut = new FileOutputStream(tempFile);
 			configProps.store(tempOut, "test properties");
 			tempOut.flush();
 			return tempFile;

@@ -24,7 +24,7 @@ import com.diffplug.spotless.StepHarness;
 class EndWithNewlineStepTest {
 	@Test
 	void behavior() throws Exception {
-		var harness = StepHarness.forStep(EndWithNewlineStep.create());
+		StepHarness harness = StepHarness.forStep(EndWithNewlineStep.create());
 		harness.test("", "\n");
 		harness.test("\n\n\n\n", "\n");
 		harness.test("line", "line\n");

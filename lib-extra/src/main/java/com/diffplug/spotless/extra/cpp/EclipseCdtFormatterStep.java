@@ -68,7 +68,7 @@ public final class EclipseCdtFormatterStep {
 					try {
 						return (String) method.invoke(formatter, input);
 					} catch (InvocationTargetException exceptionWrapper) {
-						var throwable = exceptionWrapper.getTargetException();
+						Throwable throwable = exceptionWrapper.getTargetException();
 						Exception exception = throwable instanceof Exception e ? e : null;
 						throw exception == null ? exceptionWrapper : exception;
 					}

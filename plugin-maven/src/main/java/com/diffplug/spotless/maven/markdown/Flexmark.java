@@ -40,7 +40,7 @@ public class Flexmark implements FormatterStepFactory {
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
 		String version = this.version != null ? this.version : FlexmarkStep.defaultVersion();
-		var flexmarkConfig = new FlexmarkConfig();
+		FlexmarkConfig flexmarkConfig = new FlexmarkConfig();
 		if (this.emulationProfile != null) {
 			flexmarkConfig.setEmulationProfile(this.emulationProfile);
 		}

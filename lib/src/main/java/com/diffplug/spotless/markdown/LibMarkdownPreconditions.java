@@ -25,7 +25,7 @@ final class LibMarkdownPreconditions {
 	static <K, V> Map<K, V> requireKeysAndValuesNonNull(Map<K, V> map) {
 		Objects.requireNonNull(map);
 		map.forEach((key, value) -> {
-			var errorMessage = key + "=" + value;
+			String errorMessage = key + "=" + value;
 			Objects.requireNonNull(key, errorMessage);
 			Objects.requireNonNull(value, errorMessage);
 		});

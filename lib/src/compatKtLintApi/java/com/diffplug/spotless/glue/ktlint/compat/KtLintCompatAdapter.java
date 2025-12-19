@@ -32,7 +32,7 @@ public interface KtLintCompatAdapter {
 	static void setCodeContent(Object code, String content) {
 		AccessController.doPrivileged((PrivilegedAction<Void>) () -> {
 			try {
-				var contentField = code.getClass().getDeclaredField("content");
+				Field contentField = code.getClass().getDeclaredField("content");
 				contentField.setAccessible(true);
 				contentField.set(code, content);
 			} catch (NoSuchFieldException | IllegalAccessException e) {

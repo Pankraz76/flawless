@@ -52,7 +52,7 @@ public final class EndWithNewlineStep {
 		} else if (lastContentCharacter == rawUnix.length() - 2 && rawUnix.charAt(rawUnix.length() - 1) == '\n') {
 			return rawUnix;
 		} else {
-			var builder = new StringBuilder(lastContentCharacter + 2);
+			StringBuilder builder = new StringBuilder(lastContentCharacter + 2);
 			builder.append(rawUnix, 0, lastContentCharacter + 1);
 			builder.append('\n');
 			return builder.toString();

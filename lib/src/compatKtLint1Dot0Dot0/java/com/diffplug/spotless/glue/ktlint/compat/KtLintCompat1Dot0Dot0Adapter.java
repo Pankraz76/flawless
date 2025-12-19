@@ -86,14 +86,14 @@ public class KtLintCompat1Dot0Dot0Adapter implements KtLintCompatAdapter {
 			Path path,
 			Path editorConfigPath,
 			Map<String, Object> editorConfigOverrideMap) {
-		final var formatterCallback = new FormatterCallback();
+		final FormatterCallback formatterCallback = new FormatterCallback();
 
 		Set<RuleProvider> allRuleProviders = ServiceLoader.load(RuleSetProviderV3.class, RuleSetProviderV3.class.getClassLoader())
 				.stream()
 				.flatMap(loader -> loader.get().getRuleProviders().stream())
 				.collect(Collectors.toUnmodifiableSet());
 
-		var editorConfig = EditorConfigDefaults.Companion.load(editorConfigPath, RuleProviderKt.propertyTypes(allRuleProviders));
+		EditorConfigDefaults editorConfig = EditorConfigDefaults.Companion.load(editorConfigPath, RuleProviderKt.propertyTypes(allRuleProviders));
 		EditorConfigOverride editorConfigOverride;
 		if (editorConfigOverrideMap.isEmpty()) {
 			editorConfigOverride = EditorConfigOverride.Companion.getEMPTY_EDITOR_CONFIG_OVERRIDE();
@@ -105,7 +105,7 @@ public class KtLintCompat1Dot0Dot0Adapter implements KtLintCompatAdapter {
 		}
 
 		// create Code and then set the content to match previous steps in the Spotless pipeline
-		var code = Code.Companion.fromPath(path);
+		Code code = Code.Companion.fromPath(path);
 		KtLintCompatAdapter.setCodeContent(code, unix);
 		return new KtLintRuleEngine(
 				allRuleProviders,
@@ -139,19 +139,19 @@ public class KtLintCompat1Dot0Dot0Adapter implements KtLintCompatAdapter {
 
 		// Create config properties based on provided property names and values
 		@SuppressWarnings("unchecked")
-		var properties = editorConfigOverrideMap.entrySet().stream()
+		Pair<EditorConfigProperty<?>, ?>[] properties = editorConfigOverrideMap.entrySet().stream()
 				.map(entry -> {
 					EditorConfigProperty<?> property = supportedProperties.get(entry.getKey());
 
 					if (property == null && entry.getKey().startsWith("ktlint_")) {
-						var parts = entry.getKey().substring(7).split("_", 2);
+						String[] parts = entry.getKey().substring(7).split("_", 2);
 						if (parts.length == 1) {
 							// convert ktlint_{ruleset} to RuleSetId
-							var id = new RuleSetId(parts[0]);
+							RuleSetId id = new RuleSetId(parts[0]);
 							property = RuleExecutionEditorConfigPropertyKt.createRuleSetExecutionEditorConfigProperty(id, RuleExecution.enabled);
 						} else {
 							// convert ktlint_{ruleset}_{rulename} to RuleId
-							var id = new RuleId(parts[0] + ":" + parts[1]);
+							RuleId id = new RuleId(parts[0] + ":" + parts[1]);
 							property = RuleExecutionEditorConfigPropertyKt.createRuleExecutionEditorConfigProperty(id, RuleExecution.enabled);
 						}
 					}

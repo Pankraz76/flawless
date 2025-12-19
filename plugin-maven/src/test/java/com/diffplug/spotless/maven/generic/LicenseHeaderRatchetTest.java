@@ -69,7 +69,7 @@ class LicenseHeaderRatchetTest extends MavenIntegrationHarness {
 
 	@Test
 	void ratchetFrom() throws Exception {
-		try (var git = Git.init().setDirectory(rootFolder()).call()) {
+		try (Git git = Git.init().setDirectory(rootFolder()).call()) {
 			git.commit().setMessage("First commit").call();
 		}
 		setRatchetFrom("<ratchetFrom>HEAD</ratchetFrom>");

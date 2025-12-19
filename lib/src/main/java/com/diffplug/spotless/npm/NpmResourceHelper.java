@@ -47,7 +47,7 @@ final class NpmResourceHelper {
 	}
 
 	static void writeUtf8StringToOutputStream(String stringToWrite, OutputStream outputStream) throws IOException {
-		final var bytes = stringToWrite.getBytes(StandardCharsets.UTF_8);
+		final byte[] bytes = stringToWrite.getBytes(StandardCharsets.UTF_8);
 		outputStream.write(bytes);
 	}
 
@@ -66,7 +66,7 @@ final class NpmResourceHelper {
 	}
 
 	static String readUtf8StringFromClasspath(Class<?> clazz, String resourceName) {
-		try (var input = clazz.getResourceAsStream(resourceName)) {
+		try (InputStream input = clazz.getResourceAsStream(resourceName)) {
 			return readUtf8StringFromInputStream(input);
 		} catch (IOException e) {
 			throw ThrowingEx.asRuntime(e);
@@ -83,7 +83,7 @@ final class NpmResourceHelper {
 
 	static String readUtf8StringFromInputStream(InputStream input) {
 		try {
-			var output = new ByteArrayOutputStream();
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];
 			int numRead;
 			while ((numRead = input.read(buffer)) != -1) {
@@ -153,12 +153,12 @@ final class NpmResourceHelper {
 				Stream.of(fileContent),
 				Stream.of(additionalFileContents));
 		MessageDigest md = ThrowingEx.get(() -> MessageDigest.getInstance("MD5"));
-		var stringToHash = additionalFileContentStream.collect(Collectors.joining(MD5_STRING_DELIMITER));
+		String stringToHash = additionalFileContentStream.collect(Collectors.joining(MD5_STRING_DELIMITER));
 		md.update(stringToHash.getBytes(StandardCharsets.UTF_8));
 
-		var digest = md.digest();
+		byte[] digest = md.digest();
 		// convert byte array digest to hex string
-		var sb = new StringBuilder();
+		StringBuilder sb = new StringBuilder();
 		for (byte b : digest) {
 			sb.append("%02x".formatted(b & 0xff));
 		}

@@ -110,8 +110,8 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	private File copy(String path) throws IOException {
-		var bytes = Resources.toByteArray(ResourceHarness.class.getResource("/" + path));
-		var target = newFile(path).toPath();
+		byte[] bytes = Resources.toByteArray(ResourceHarness.class.getResource("/" + path));
+		Path target = newFile(path).toPath();
 		Files.createDirectories(target.getParent());
 		Files.write(target, bytes);
 		return target.toFile();
@@ -215,12 +215,12 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	protected void writePom(String[] executions, String[] configuration, String[] dependencies, String[] plugins) throws IOException {
-		var pomXmlContent = createPomXmlContent(null, executions, configuration, dependencies, plugins);
+		String pomXmlContent = createPomXmlContent(null, executions, configuration, dependencies, plugins);
 		setFile("pom.xml").toContent(pomXmlContent);
 	}
 
 	protected MavenRunner mavenRunner() throws IOException {
-		var mavenRunner = MavenRunner.create()
+		MavenRunner mavenRunner = MavenRunner.create()
 				.withProjectDir(rootFolder())
 				.withRunner(runner);
 		System.getProperties().forEach((key, value) -> {
@@ -271,10 +271,10 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	protected String createPomXmlContent(String pomTemplate, Map<String, Object> params) throws IOException {
-		var url = MavenIntegrationHarness.class.getResource(pomTemplate);
-		try (var reader = Resources.asCharSource(url, StandardCharsets.UTF_8).openBufferedStream()) {
-			var mustache = mustacheFactory.compile(reader, "pom");
-			var writer = new StringWriter();
+		URL url = MavenIntegrationHarness.class.getResource(pomTemplate);
+		try (BufferedReader reader = Resources.asCharSource(url, StandardCharsets.UTF_8).openBufferedStream()) {
+			Mustache mustache = mustacheFactory.compile(reader, "pom");
+			StringWriter writer = new StringWriter();
 			mustache.execute(writer, params);
 			return writer.toString();
 		}
@@ -349,7 +349,7 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	protected static String[] formats(String[]... formats) {
-		var formatsArray = Arrays.stream(formats)
+		String[] formatsArray = Arrays.stream(formats)
 				.flatMap(Arrays::stream)
 				.toArray(String[]::new);
 		return formats(formatsArray);
@@ -358,20 +358,20 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	private static final String ERROR_PREFIX = "[ERROR] ";
 
 	protected StringSelfie expectSelfieErrorMsg(ProcessRunner.Result result) {
-		var concatenatedError = result.stdOutUtf8().lines()
+		String concatenatedError = result.stdOutUtf8().lines()
 				.map(line -> line.startsWith(ERROR_PREFIX) ? line.substring(ERROR_PREFIX.length()) : null)
 				.filter(Objects::nonNull)
 				.collect(Collectors.joining("\n"));
 
-		var sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:spotless-maven-plugin:([^:]+):", "com.diffplug.spotless:spotless-maven-plugin:VERSION:");
+		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:spotless-maven-plugin:([^:]+):", "com.diffplug.spotless:spotless-maven-plugin:VERSION:");
 
 		int help1 = sanitizedVersion.indexOf("-> [Help 1]");
-		var trimTrailingString = sanitizedVersion.substring(0, help1);
+		String trimTrailingString = sanitizedVersion.substring(0, help1);
 
-		var sanitizeBiomeNative = trimTrailingString.replaceAll("[/|\\\\].m2(.*)[/|\\\\]biome\\-(.+),", "biome-exe");
-		var sanitizeFilePath = sanitizeBiomeNative.replace(rootFolder().getAbsolutePath(), "${PROJECT_DIR}");
-		var sanitizeUserHome = sanitizeFilePath.replace(System.getProperty("user.home"), "${user.home}");
-		var sanitizeWindowsPathSep = sanitizeUserHome.replace('\\', '/');
+		String sanitizeBiomeNative = trimTrailingString.replaceAll("[/|\\\\].m2(.*)[/|\\\\]biome\\-(.+),", "biome-exe");
+		String sanitizeFilePath = sanitizeBiomeNative.replace(rootFolder().getAbsolutePath(), "${PROJECT_DIR}");
+		String sanitizeUserHome = sanitizeFilePath.replace(System.getProperty("user.home"), "${user.home}");
+		String sanitizeWindowsPathSep = sanitizeUserHome.replace('\\', '/');
 		return Selfie.expectSelfie(sanitizeWindowsPathSep);
 	}
 }

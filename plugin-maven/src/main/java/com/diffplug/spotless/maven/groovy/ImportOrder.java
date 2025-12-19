@@ -35,7 +35,7 @@ public class ImportOrder implements FormatterStepFactory {
 	public FormatterStep newFormatterStep(FormatterStepConfig config) {
 		if (file != null ^ order != null) {
 			if (file != null) {
-				var importsFile = config.getFileLocator().locateFile(file);
+				File importsFile = config.getFileLocator().locateFile(file);
 				return ImportOrderStep.forGroovy().createFrom(importsFile);
 			} else {
 				return ImportOrderStep.forGroovy().createFrom(order.split(",", -1));

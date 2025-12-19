@@ -29,7 +29,7 @@ final class PlatformInfo {
 		if (osNameProperty == null) {
 			throw new RuntimeException("No info about OS available, cannot decide which implementation of j2v8 to use");
 		}
-		final var normalizedOsName = osNameProperty.toLowerCase(Locale.ROOT);
+		final String normalizedOsName = osNameProperty.toLowerCase(Locale.ROOT);
 		if (normalizedOsName.contains("win")) {
 			return OS.WINDOWS;
 		}
@@ -51,7 +51,7 @@ final class PlatformInfo {
 		if (osArchProperty == null) {
 			throw new RuntimeException("No info about ARCH available, cannot decide which implementation of j2v8 to use");
 		}
-		final var normalizedOsArch = osArchProperty.toLowerCase(Locale.ROOT);
+		final String normalizedOsArch = osArchProperty.toLowerCase(Locale.ROOT);
 
 		if (normalizedOsArch.contains("64")) {
 			return "x86_64";

@@ -43,7 +43,7 @@ class LineEndingTest {
 	}
 
 	static void assertLineEnding(String ending, String input) throws IOException {
-		try (var reader = new StringReader(input)) {
+		try (Reader reader = new StringReader(input)) {
 			Assertions.assertEquals(ending, LineEnding.PreserveLineEndingPolicy.getEndingFor(reader));
 		}
 	}

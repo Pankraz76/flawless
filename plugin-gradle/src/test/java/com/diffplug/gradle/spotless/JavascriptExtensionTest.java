@@ -125,7 +125,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 					"    }",
 					"}");
 			setFile("test.js").toResource("npm/eslint/javascript/styleguide/standard/javascript-es6.dirty");
-			var spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
+			BuildResult spotlessApply = gradleRunner().withArguments("--stacktrace", "spotlessApply").buildAndFail();
 			Assertions.assertThat(spotlessApply.getOutput()).contains("ESLint must be configured");
 		}
 
@@ -163,7 +163,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 		@ValueSource(strings = {"airbnb", "google", "standard", "xo"})
 		void formattingUsingStyleguide(String styleguide) throws Exception {
 
-			final var styleguidePath = "npm/eslint/javascript/styleguide/" + styleguide + "/";
+			final String styleguidePath = "npm/eslint/javascript/styleguide/" + styleguide + "/";
 
 			setFile(".eslintrc.js").toResource(styleguidePath + ".eslintrc.js");
 			setFile("build.gradle").toLines(

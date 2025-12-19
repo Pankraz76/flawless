@@ -58,7 +58,7 @@ public class NpmPathResolver implements Serializable {
 			return this.explicitNpmExecutable;
 		}
 		if (this.explicitNodeExecutable != null) {
-			var nodeExecutableCandidate = new File(this.explicitNodeExecutable.getParentFile(), NpmExecutableResolver.npmExecutableName());
+			File nodeExecutableCandidate = new File(this.explicitNodeExecutable.getParentFile(), NpmExecutableResolver.npmExecutableName());
 			if (nodeExecutableCandidate.canExecute()) {
 				return nodeExecutableCandidate;
 			}
@@ -79,7 +79,7 @@ public class NpmPathResolver implements Serializable {
 		if (this.explicitNodeExecutable != null) {
 			return this.explicitNodeExecutable;
 		}
-		var npmExecutable = resolveNpmExecutable();
+		File npmExecutable = resolveNpmExecutable();
 		return NodeExecutableResolver.tryFindNextTo(npmExecutable)
 				.orElseThrow(() -> new IllegalStateException("Can't automatically determine node executable and none was specifically supplied!\n\n" + NodeExecutableResolver.explainMessage()));
 	}

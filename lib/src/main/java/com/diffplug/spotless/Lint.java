@@ -135,7 +135,7 @@ public final class Lint implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		var lint = (Lint) o;
+		Lint lint = (Lint) o;
 		return lineStart == lint.lineStart && lineEnd == lint.lineEnd && Objects.equals(shortCode, lint.shortCode) && Objects.equals(detail, lint.detail);
 	}
 
@@ -146,21 +146,21 @@ public final class Lint implements Serializable {
 
 	/** Attempts to parse a line number from the given exception. */
 	static Lint createFromThrowable(FormatterStep step, Throwable e) {
-		var current = e;
+		Throwable current = e;
 		while (current != null) {
-			var message = current.getMessage();
+			String message = current.getMessage();
 			int lineNumber = lineNumberFor(message);
 			if (lineNumber != -1) {
 				return new Lint(lineNumber, step.getName(), msgFrom(message));
 			}
 			current = current.getCause();
 		}
-		var exceptionName = e.getClass().getName();
+		String exceptionName = e.getClass().getName();
 		String detail = ThrowingEx.stacktrace(e);
 		if (detail.startsWith(exceptionName + ": ")) {
 			detail = detail.substring(exceptionName.length() + 2);
 		}
-		var matcher = Pattern.compile("line (\\d+)").matcher(detail);
+		Matcher matcher = Pattern.compile("line (\\d+)").matcher(detail);
 		int line = LINE_UNDEFINED;
 		if (matcher.find()) {
 			line = Integer.parseInt(matcher.group(1));
@@ -176,7 +176,7 @@ public final class Lint implements Serializable {
 		if (firstColon == -1) {
 			return -1;
 		}
-		var candidateNum = message.substring(0, firstColon);
+		String candidateNum = message.substring(0, firstColon);
 		try {
 			return Integer.parseInt(candidateNum);
 		} catch (NumberFormatException e) {

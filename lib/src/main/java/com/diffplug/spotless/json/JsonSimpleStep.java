@@ -75,7 +75,7 @@ public final class JsonSimpleStep implements Serializable {
 			Constructor<?> objectConstructor;
 			Constructor<?> arrayConstructor;
 			try {
-				var classLoader = jarState.getClassLoader();
+				ClassLoader classLoader = jarState.getClassLoader();
 				Class<?> jsonObject = classLoader.loadClass("org.json.JSONObject");
 				Class<?>[] constructorArguments = new Class[]{String.class};
 				objectConstructor = jsonObject.getConstructor(constructorArguments);
@@ -106,7 +106,7 @@ public final class JsonSimpleStep implements Serializable {
 
 		private String format(Constructor<?> constructor, Method toString, String input) throws Exception {
 			try {
-				var parsed = constructor.newInstance(input);
+				Object parsed = constructor.newInstance(input);
 				return toString.invoke(parsed, indentSpaces) + "\n";
 			} catch (InvocationTargetException e) {
 				throw new IllegalArgumentException("Unable to format JSON", e);

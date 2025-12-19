@@ -105,8 +105,8 @@ public abstract class LazyForwardingEquality<T extends Serializable> implements 
 	}
 
 	static byte[] toBytes(Serializable obj) {
-		var byteOutput = new ByteArrayOutputStream();
-		try (var objectOutput = new ObjectOutputStream(byteOutput)) {
+		ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+		try (ObjectOutputStream objectOutput = new ObjectOutputStream(byteOutput)) {
 			objectOutput.writeObject(obj);
 		} catch (IOException e) {
 			throw ThrowingEx.asRuntime(e);
@@ -115,8 +115,8 @@ public abstract class LazyForwardingEquality<T extends Serializable> implements 
 	}
 
 	static Object fromBytes(byte[] bytes) {
-		var byteOutput = new ByteArrayInputStream(bytes);
-		try (var objectOutput = new ObjectInputStream(byteOutput)) {
+		ByteArrayInputStream byteOutput = new ByteArrayInputStream(bytes);
+		try (ObjectInputStream objectOutput = new ObjectInputStream(byteOutput)) {
 			return objectOutput.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			throw ThrowingEx.asRuntime(e);

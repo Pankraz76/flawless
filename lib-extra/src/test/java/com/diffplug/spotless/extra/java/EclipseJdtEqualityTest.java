@@ -54,8 +54,8 @@ public class EclipseJdtEqualityTest extends ResourceHarness {
 	}
 
 	private static byte[] toBytes(Serializable obj) {
-		var byteOutput = new ByteArrayOutputStream();
-		try (var objectOutput = new ObjectOutputStream(byteOutput)) {
+		ByteArrayOutputStream byteOutput = new ByteArrayOutputStream();
+		try (ObjectOutputStream objectOutput = new ObjectOutputStream(byteOutput)) {
 			objectOutput.writeObject(obj);
 		} catch (IOException e) {
 			throw ThrowingEx.asRuntime(e);

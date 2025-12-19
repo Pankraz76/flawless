@@ -67,7 +67,7 @@ public abstract class BaseGroovyExtension extends FormatExtension {
 
 		public GrEclipseConfig configFile(Object... configFiles) {
 			requireElementsNonNull(configFiles);
-			var project = extension.getProject();
+			Project project = extension.getProject();
 			builder.setPreferences(project.files(configFiles).getFiles());
 			extension.replaceStep(builder.build());
 			return this;

@@ -34,11 +34,11 @@ public class NpmTestsWithDynamicallyInstalledNpmInstallationTest extends MavenIn
 				"    <npmExecutable>" + installedNpmPath() + "</npmExecutable>",
 				"</prettier>");
 
-		var kind = "typescript";
-		var suffix = "ts";
-		var configPath = ".prettierrc.yml";
+		String kind = "typescript";
+		String suffix = "ts";
+		String configPath = ".prettierrc.yml";
 		setFile(configPath).toResource("npm/prettier/filetypes/" + kind + "/" + ".prettierrc.yml");
-		var path = "src/main/" + kind + "/test." + suffix;
+		String path = "src/main/" + kind + "/test." + suffix;
 		setFile(path).toResource("npm/prettier/filetypes/" + kind + "/" + kind + ".dirty");
 
 		mavenRunner().withArguments(installNpmMavenGoal(), "spotless:apply").runNoError();

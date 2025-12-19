@@ -59,13 +59,13 @@ class NoopCheckerTest extends ResourceHarness {
 
 	@Test
 	void deletesExistingIndexFileWhenCreated() {
-		var log = mock();
-		try (var realChecker = UpToDateChecker.forProject(project, indexFile, singletonList(dummyFormatter()), log)) {
+		Log log = mock();
+		try (UpToDateChecker realChecker = UpToDateChecker.forProject(project, indexFile, singletonList(dummyFormatter()), log)) {
 			realChecker.setUpToDate(existingSourceFile);
 		}
 		assertThat(indexFile).exists();
 
-		try (var noopChecker = UpToDateChecker.noop(project, indexFile, log)) {
+		try (UpToDateChecker noopChecker = UpToDateChecker.noop(project, indexFile, log)) {
 			assertThat(noopChecker).isNotNull();
 		}
 		assertThat(indexFile).doesNotExist();
@@ -76,8 +76,8 @@ class NoopCheckerTest extends ResourceHarness {
 	void doesNothingWhenIndexFileDoesNotExist() {
 		assertThat(indexFile).doesNotExist();
 
-		var log = mock();
-		try (var noopChecker = UpToDateChecker.noop(project, indexFile, log)) {
+		Log log = mock();
+		try (UpToDateChecker noopChecker = UpToDateChecker.noop(project, indexFile, log)) {
 			assertThat(noopChecker).isNotNull();
 		}
 		assertThat(indexFile).doesNotExist();
@@ -86,25 +86,25 @@ class NoopCheckerTest extends ResourceHarness {
 
 	@Test
 	void neverUpToDate() {
-		try (var noopChecker = UpToDateChecker.noop(project, indexFile, mock(Log.class))) {
+		try (UpToDateChecker noopChecker = UpToDateChecker.noop(project, indexFile, mock(Log.class))) {
 			assertThat(noopChecker.isUpToDate(existingSourceFile)).isFalse();
 			assertThat(noopChecker.isUpToDate(nonExistingSourceFile)).isFalse();
 		}
 	}
 
 	private MavenProject buildMavenProject() throws IOException {
-		var projectDir = newFolder("project");
-		var targetDir = new File(projectDir, "target");
-		var pomFile = new File(projectDir, "pom.xml");
+		File projectDir = newFolder("project");
+		File targetDir = new File(projectDir, "target");
+		File pomFile = new File(projectDir, "pom.xml");
 
 		assertThat(targetDir.mkdir()).isTrue();
 		assertThat(pomFile.createNewFile()).isTrue();
 
-		var project = new MavenProject();
+		MavenProject project = new MavenProject();
 		project.setFile(pomFile);
-		var build = new Build();
+		Build build = new Build();
 		build.setDirectory(targetDir.getName());
-		var spotlessPlugin = new Plugin();
+		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.diffplug.spotless");
 		spotlessPlugin.setArtifactId("spotless-maven-plugin");
 		build.addPlugin(spotlessPlugin);

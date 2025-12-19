@@ -85,14 +85,14 @@ public class EclipseBasedStepBuilder {
 
 	/** Set dependencies for the corresponding Eclipse version */
 	public void setVersion(String version) {
-		var url = "/" + ECLIPSE_FORMATTER_RESOURCES + "/" + formatterName.replace(' ', '_') + "/v" + version + ".lockfile";
-		var depsFile = EclipseBasedStepBuilder.class.getResourceAsStream(url);
+		String url = "/" + ECLIPSE_FORMATTER_RESOURCES + "/" + formatterName.replace(' ', '_') + "/v" + version + ".lockfile";
+		InputStream depsFile = EclipseBasedStepBuilder.class.getResourceAsStream(url);
 		if (depsFile == null) {
 			throw new IllegalArgumentException("No such version " + version + ", expected at " + url);
 		}
 		byte[] content = toByteArray(depsFile);
-		var allLines = new String(content, StandardCharsets.UTF_8);
-		var lines = allLines.split("\n");
+		String allLines = new String(content, StandardCharsets.UTF_8);
+		String[] lines = allLines.split("\n");
 		dependencies.clear();
 		for (String line : lines) {
 			if (!line.startsWith("#")) {
@@ -103,7 +103,7 @@ public class EclipseBasedStepBuilder {
 	}
 
 	private static byte[] toByteArray(InputStream in) {
-		var to = new ByteArrayOutputStream();
+		ByteArrayOutputStream to = new ByteArrayOutputStream();
 		byte[] buf = new byte[8192];
 		try {
 			while (true) {
@@ -167,7 +167,7 @@ public class EclipseBasedStepBuilder {
 		}
 
 		private static String convertEclipseVersion(String version) {
-			var semanticVersion = version;
+			String semanticVersion = version;
 			//Old Eclipse versions used a character at the end. For example '4.7.3a'.
 			if (1 < version.length()) {
 				char lastChar = version.charAt(version.length() - 1);
@@ -186,7 +186,7 @@ public class EclipseBasedStepBuilder {
 		/** Get formatter preferences */
 		public Properties getPreferences() {
 			//Keep the IllegalArgumentException since it contains detailed information
-			var preferences = FormatterProperties.from(settingsFiles.files());
+			FormatterProperties preferences = FormatterProperties.from(settingsFiles.files());
 			return preferences.getProperties();
 		}
 

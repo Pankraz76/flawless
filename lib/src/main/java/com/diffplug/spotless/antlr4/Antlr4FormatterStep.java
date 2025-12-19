@@ -68,11 +68,11 @@ public final class Antlr4FormatterStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws ClassNotFoundException, NoSuchMethodException {
-			var classLoader = jarState.getClassLoader();
+			ClassLoader classLoader = jarState.getClassLoader();
 
 			// String Antlr4Formatter::format(String input)
 			Class<?> formatter = classLoader.loadClass("com.khubla.antlr4formatter.Antlr4Formatter");
-			var formatterMethod = formatter.getMethod("format", String.class);
+			Method formatterMethod = formatter.getMethod("format", String.class);
 
 			return input -> {
 				try {

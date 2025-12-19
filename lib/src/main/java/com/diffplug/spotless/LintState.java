@@ -57,7 +57,7 @@ public class LintState {
 		for (int i = 0; i < lintsPerStep.size(); i++) {
 			List<Lint> lints = lintsPerStep.get(i);
 			if (lints != null) {
-				var step = formatter.getSteps().get(i);
+				FormatterStep step = formatter.getSteps().get(i);
 				result.put(step.getName(), lints);
 			}
 		}
@@ -74,13 +74,13 @@ public class LintState {
 		boolean changed = false;
 		ValuePerStep<List<Lint>> perStepFiltered = new ValuePerStep<>(formatter);
 		for (int i = 0; i < lintsPerStep.size(); i++) {
-			var step = formatter.getSteps().get(i);
+			FormatterStep step = formatter.getSteps().get(i);
 			List<Lint> lintsOriginal = lintsPerStep.get(i);
 			if (lintsOriginal != null) {
 				List<Lint> lints = new ArrayList<>(lintsOriginal);
 				Iterator<Lint> iter = lints.iterator();
 				while (iter.hasNext()) {
-					var lint = iter.next();
+					Lint lint = iter.next();
 					for (LintSuppression suppression : suppressions) {
 						if (suppression.suppresses(relativePath, step, lint)) {
 							changed = true;
@@ -113,11 +113,11 @@ public class LintState {
 		if (!isHasLints()) {
 			return "(none)";
 		} else {
-			var result = new StringBuilder();
+			StringBuilder result = new StringBuilder();
 			for (int i = 0; i < lintsPerStep.size(); i++) {
 				List<Lint> lints = lintsPerStep.get(i);
 				if (lints != null) {
-					var step = formatter.getSteps().get(i);
+					FormatterStep step = formatter.getSteps().get(i);
 					for (Lint lint : lints) {
 						result.append(file.getName()).append(":");
 						lint.addWarningMessageTo(result, step.getName(), oneLine);
@@ -144,8 +144,8 @@ public class LintState {
 		var lints = new ValuePerStep<List<Lint>>(formatter);
 		// if a step did not throw an exception, then it gets to check for lints if it wants
 		for (int i = 0; i < formatter.getSteps().size(); i++) {
-			var step = formatter.getSteps().get(i);
-			var exception = exceptions.get(i);
+			FormatterStep step = formatter.getSteps().get(i);
+			Throwable exception = exceptions.get(i);
 			if (exception == null || exception == formatStepCausedNoChange()) {
 				try {
 					var lintsForStep = step.lint(toLint, file);
@@ -163,8 +163,8 @@ public class LintState {
 		// gets changed by a step. if it does, we rerun the steps to get an exception with accurate line numbers.
 		boolean nothingHasChangedSinceLast = true;
 		for (int i = formatter.getSteps().size() - 1; i >= 0; i--) {
-			var step = formatter.getSteps().get(i);
-			var exception = exceptions.get(i);
+			FormatterStep step = formatter.getSteps().get(i);
+			Throwable exception = exceptions.get(i);
 			if (exception != null && exception != formatStepCausedNoChange()) {
 				nothingHasChangedSinceLast = false;
 			}

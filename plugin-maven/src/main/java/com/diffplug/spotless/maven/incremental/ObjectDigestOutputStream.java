@@ -40,7 +40,7 @@ final class ObjectDigestOutputStream extends ObjectOutputStream {
 	}
 
 	private static DigestOutputStream createDigestOutputStream() {
-		var nullOutputStream = new OutputStream() {
+		OutputStream nullOutputStream = new OutputStream() {
 			@Override
 			public void write(int b) {}
 		};

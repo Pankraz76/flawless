@@ -25,7 +25,7 @@ final class NodeExecutableResolver {
 	}
 
 	static String nodeExecutableName() {
-		var nodeName = "node";
+		String nodeName = "node";
 		if (PlatformInfo.normalizedOS() == PlatformInfo.OS.WINDOWS) {
 			nodeName += ".exe";
 		}
@@ -36,7 +36,7 @@ final class NodeExecutableResolver {
 		if (npmExecutable == null) {
 			return Optional.empty();
 		}
-		var nodeExecutable = new File(npmExecutable.getParentFile(), nodeExecutableName());
+		File nodeExecutable = new File(npmExecutable.getParentFile(), nodeExecutableName());
 		if (nodeExecutable.exists() && nodeExecutable.isFile() && nodeExecutable.canExecute()) {
 			return Optional.of(nodeExecutable);
 		}

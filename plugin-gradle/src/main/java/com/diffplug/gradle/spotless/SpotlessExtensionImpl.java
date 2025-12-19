@@ -55,11 +55,11 @@ public class SpotlessExtensionImpl extends SpotlessExtension {
 
 	@Override
 	protected void createFormatTasks(String name, FormatExtension formatExtension) {
-		var ideHook = new IdeHook.State(project);
-		var tasks = project.getTasks();
+		IdeHook.State ideHook = new IdeHook.State(project);
+		TaskContainer tasks = project.getTasks();
 
 		// create the SpotlessTask
-		var taskName = EXTENSION + SpotlessPlugin.capitalize(name);
+		String taskName = EXTENSION + SpotlessPlugin.capitalize(name);
 		TaskProvider<SpotlessTaskImpl> spotlessTask = tasks.register(taskName, SpotlessTaskImpl.class, task -> {
 			task.init(getRegisterDependenciesTask().getTaskService());
 			task.setGroup(TASK_GROUP);

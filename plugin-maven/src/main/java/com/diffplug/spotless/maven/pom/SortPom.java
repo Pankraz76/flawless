@@ -91,7 +91,7 @@ public class SortPom implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		var cfg = new SortPomCfg();
+		SortPomCfg cfg = new SortPomCfg();
 		cfg.version = version;
 		cfg.encoding = encoding;
 		cfg.lineSeparator = lineSeparator;

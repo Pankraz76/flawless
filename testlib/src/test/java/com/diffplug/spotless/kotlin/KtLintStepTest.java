@@ -26,7 +26,7 @@ import com.diffplug.spotless.TestProvisioner;
 class KtLintStepTest extends ResourceHarness {
 	@Test
 	void works1_0_0() {
-		var step = KtLintStep.create("1.0.0", TestProvisioner.mavenCentral());
+		FormatterStep step = KtLintStep.create("1.0.0", TestProvisioner.mavenCentral());
 		StepHarnessWithFile.forStep(this, step)
 				.testResource("kotlin/ktlint/basic.dirty", "kotlin/ktlint/basic.clean")
 				.expectLintsOfResource("kotlin/ktlint/unsolvable.dirty").toBe("L1 ktlint(standard:no-empty-file) File 'unsolvable.dirty' should not be empty");
@@ -34,7 +34,7 @@ class KtLintStepTest extends ResourceHarness {
 
 	@Test
 	void behavior() {
-		var step = KtLintStep.create(TestProvisioner.mavenCentral());
+		FormatterStep step = KtLintStep.create(TestProvisioner.mavenCentral());
 		StepHarnessWithFile.forStep(this, step)
 				.testResource("kotlin/ktlint/basic.dirty", "kotlin/ktlint/basic.clean")
 				.expectLintsOfResource("kotlin/ktlint/unsolvable.dirty").toBe("L1 ktlint(standard:no-empty-file) File 'unsolvable.dirty' should not be empty");
@@ -56,7 +56,7 @@ class KtLintStepTest extends ResourceHarness {
 
 			@Override
 			protected FormatterStep create() {
-				var finalVersion = this.version;
+				String finalVersion = this.version;
 				return KtLintStep.create(finalVersion, TestProvisioner.mavenCentral());
 			}
 		}.testEquals();

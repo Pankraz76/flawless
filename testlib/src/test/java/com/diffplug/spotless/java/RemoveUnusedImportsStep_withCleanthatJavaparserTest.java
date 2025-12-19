@@ -25,7 +25,7 @@ import com.diffplug.spotless.TestProvisioner;
 class RemoveUnusedImportsStep_withCleanthatJavaparserTest {
 	@Test
 	void behavior() throws Exception {
-		var step = RemoveUnusedImportsStep.create(RemoveUnusedImportsStep.CLEANTHAT, TestProvisioner.mavenCentral());
+		FormatterStep step = RemoveUnusedImportsStep.create(RemoveUnusedImportsStep.CLEANTHAT, TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("java/removeunusedimports/JavaCodeUnformatted.test", "java/removeunusedimports/JavaCodeFormatted.test")
 				.testResource("java/removeunusedimports/JavaCodeWithLicenseUnformatted.test", "java/removeunusedimports/JavaCodeWithLicenseFormatted.test")

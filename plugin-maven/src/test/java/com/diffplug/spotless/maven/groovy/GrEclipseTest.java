@@ -27,7 +27,7 @@ class GrEclipseTest extends MavenIntegrationHarness {
 	void testEclipse() throws Exception {
 		writePomWithGrEclipse();
 
-		var path = "src/main/groovy/test.groovy";
+		String path = "src/main/groovy/test.groovy";
 		setFile(path).toResource("groovy/greclipse/format/unformatted.test");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("groovy/greclipse/format/formatted.test");
@@ -37,13 +37,13 @@ class GrEclipseTest extends MavenIntegrationHarness {
 	void doesNotFormatJavaFiles() throws Exception {
 		writePomWithGrEclipse();
 
-		var javaPath = "src/main/java/test.java";
-		var testJavaPath = "src/test/java/test.java";
+		String javaPath = "src/main/java/test.java";
+		String testJavaPath = "src/test/java/test.java";
 		setFile(javaPath).toResource("java/googlejavaformat/JavaCodeUnformatted.test");
 		setFile(testJavaPath).toResource("java/googlejavaformat/JavaCodeUnformatted.test");
 
-		var groovyPath = "src/main/groovy/test.groovy";
-		var testGroovyPath = "src/test/groovy/test.groovy";
+		String groovyPath = "src/main/groovy/test.groovy";
+		String testGroovyPath = "src/test/groovy/test.groovy";
 		setFile(groovyPath).toResource("groovy/greclipse/format/unformatted.test");
 		setFile(testGroovyPath).toResource("groovy/greclipse/format/unformatted.test");
 

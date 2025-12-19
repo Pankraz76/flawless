@@ -41,14 +41,14 @@ class IndexBasedChecker implements UpToDateChecker {
 
 	static IndexBasedChecker create(MavenProject project, Path indexFile, Iterable<Formatter> formatters, Log log) {
 		PluginFingerprint pluginFingerprint = PluginFingerprint.from(project, formatters);
-		var indexConfig = new FileIndexConfig(project, indexFile, pluginFingerprint);
+		FileIndexConfig indexConfig = new FileIndexConfig(project, indexFile, pluginFingerprint);
 		FileIndex fileIndex = FileIndex.read(indexConfig, log);
 		return new IndexBasedChecker(fileIndex, log);
 	}
 
 	@Override
 	public boolean isUpToDate(Path file) {
-		var storedLastModifiedTime = index.getLastModifiedTime(file);
+		Instant storedLastModifiedTime = index.getLastModifiedTime(file);
 		return Objects.equals(storedLastModifiedTime, lastModifiedTime(file));
 	}
 

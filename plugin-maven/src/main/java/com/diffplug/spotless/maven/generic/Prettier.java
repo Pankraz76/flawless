@@ -103,11 +103,11 @@ public class Prettier extends AbstractNpmFormatterStepFactory {
 		}
 
 		// create the format step
-		var baseDir = baseDir(stepConfig);
-		var buildDir = buildDir(stepConfig);
-		var cacheDir = cacheDir(stepConfig);
-		var prettierConfig = new PrettierConfig(configFileHandler, configInline);
-		var npmPathResolver = npmPathResolver(stepConfig);
+		File baseDir = baseDir(stepConfig);
+		File buildDir = buildDir(stepConfig);
+		File cacheDir = cacheDir(stepConfig);
+		PrettierConfig prettierConfig = new PrettierConfig(configFileHandler, configInline);
+		NpmPathResolver npmPathResolver = npmPathResolver(stepConfig);
 		return PrettierFormatterStep.create(devDependencies, stepConfig.getProvisioner(), baseDir, buildDir, cacheDir, npmPathResolver, prettierConfig);
 	}
 

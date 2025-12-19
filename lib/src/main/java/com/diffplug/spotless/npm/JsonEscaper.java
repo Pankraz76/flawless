@@ -36,7 +36,7 @@ final class JsonEscaper {
 		}
 		if (ListableAdapter.canAdapt(val)) {
 			// create an array
-			var sb = new StringBuilder();
+			StringBuilder sb = new StringBuilder();
 			sb.append('[');
 			boolean first = true;
 			for (Object o : ListableAdapter.adapt(val)) {
@@ -72,7 +72,7 @@ final class JsonEscaper {
 		 * additionally we handle xhtml '</bla>' string
 		 * and non-ascii chars
 		 */
-		var escaped = new StringBuilder();
+		StringBuilder escaped = new StringBuilder();
 		escaped.append('"');
 		char b;
 		char c = 0;

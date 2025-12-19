@@ -39,7 +39,7 @@ public class PalantirJavaFormatFormatterFunc implements FormatterFunc {
 	 */
 	public PalantirJavaFormatFormatterFunc(String style, boolean formatJavadoc) {
 		this.formatterStyle = JavaFormatterOptions.Style.valueOf(style);
-		var builder = JavaFormatterOptions.builder();
+		JavaFormatterOptions.Builder builder = JavaFormatterOptions.builder();
 		builder.style(formatterStyle);
 		if (formatJavadoc) {
 			applyFormatJavadoc(builder);
@@ -49,7 +49,7 @@ public class PalantirJavaFormatFormatterFunc implements FormatterFunc {
 
 	@Override
 	public String apply(String input) throws Exception {
-		var source = input;
+		String source = input;
 		source = ImportOrderer.reorderImports(source, formatterStyle);
 		source = RemoveUnusedImports.removeUnusedImports(source);
 		return formatter.formatSource(source);
@@ -64,7 +64,7 @@ public class PalantirJavaFormatFormatterFunc implements FormatterFunc {
 		// The formatJavadoc option is available since Palantir 2.36.0
 		// To support older versions for now, attempt to invoke the builder method via reflection.
 		try {
-			var formatJavadoc = JavaFormatterOptions.Builder.class.getMethod("formatJavadoc", boolean.class);
+			Method formatJavadoc = JavaFormatterOptions.Builder.class.getMethod("formatJavadoc", boolean.class);
 			formatJavadoc.invoke(builder, true);
 		} catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
 			throw new IllegalStateException("Cannot enable formatJavadoc option, make sure you are using Palantir with version 2.36.0 or later", e);

@@ -44,7 +44,7 @@ import com.diffplug.common.io.Files;
 
 public class TestProvisioner {
 	public static Project gradleProject(File dir) {
-		var userHome = new File(StandardSystemProperty.USER_HOME.value());
+		File userHome = new File(StandardSystemProperty.USER_HOME.value());
 		return ProjectBuilder.builder()
 				.withGradleUserHomeDir(new File(userHome, ".gradle"))
 				.withProjectDir(dir)
@@ -61,14 +61,14 @@ public class TestProvisioner {
 	 */
 	private static Provisioner createWithRepositories(Consumer<RepositoryHandler> repoConfig) {
 		// Running this takes ~3 seconds the first time it is called. Probably because of classloading.
-		var tempDir = Files.createTempDir();
+		File tempDir = Files.createTempDir();
 		Project project = TestProvisioner.gradleProject(tempDir);
 		repoConfig.accept(project.getRepositories());
 		return (withTransitives, mavenCoords) -> {
-			var deps = mavenCoords.stream()
+			Dependency[] deps = mavenCoords.stream()
 					.map(project.getDependencies()::create)
 					.toArray(Dependency[]::new);
-			var config = project.getConfigurations().detachedConfiguration(deps);
+			Configuration config = project.getConfigurations().detachedConfiguration(deps);
 			config.setTransitive(withTransitives);
 			config.setDescription(mavenCoords.toString());
 			config.attributes(attr -> {
@@ -99,13 +99,13 @@ public class TestProvisioner {
 	/** Creates a Provisioner which will cache the result of previous calls. */
 	@SuppressWarnings("unchecked")
 	private static Provisioner caching(String name, Supplier<Provisioner> input) {
-		var spotlessDir = new File(StandardSystemProperty.USER_DIR.value()).getParentFile();
-		var testlib = new File(spotlessDir, "testlib");
-		var cacheFile = new File(testlib, "build/tmp/testprovisioner." + name + ".cache");
+		File spotlessDir = new File(StandardSystemProperty.USER_DIR.value()).getParentFile();
+		File testlib = new File(spotlessDir, "testlib");
+		File cacheFile = new File(testlib, "build/tmp/testprovisioner." + name + ".cache");
 
 		Map<ImmutableSet<String>, ImmutableSet<File>> cached;
 		if (cacheFile.exists()) {
-			try (var inputStream = new ObjectInputStream(Files.asByteSource(cacheFile).openBufferedStream())) {
+			try (ObjectInputStream inputStream = new ObjectInputStream(Files.asByteSource(cacheFile).openBufferedStream())) {
 				cached = (Map<ImmutableSet<String>, ImmutableSet<File>>) inputStream.readObject();
 			} catch (IOException | ClassNotFoundException e) {
 				throw Errors.asRuntime(e);
@@ -127,7 +127,7 @@ public class TestProvisioner {
 				if (needsToBeSet) {
 					result = ImmutableSet.copyOf(input.get().provisionWithTransitives(withTransitives, mavenCoords));
 					cached.put(mavenCoords, result);
-					try (var outputStream = new ObjectOutputStream(Files.asByteSink(cacheFile).openBufferedStream())) {
+					try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.asByteSink(cacheFile).openBufferedStream())) {
 						outputStream.writeObject(cached);
 					} catch (IOException e) {
 						throw Errors.asRuntime(e);

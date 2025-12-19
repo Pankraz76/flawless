@@ -41,7 +41,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 				"</java>");
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).doesNotContain(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -52,7 +52,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(true);
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).doesNotContain(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -63,7 +63,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(false);
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).contains(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -74,7 +74,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithPluginManagementAndDependency();
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).doesNotContain(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -87,7 +87,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		setFile(".mvn/wrapper/maven-wrapper.properties").toContent("distributionUrl=https://repo1.maven.org/maven2/org/apache/maven/apache-maven/3.6.3/apache-maven-3.6.3-bin.zip\n");
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).doesNotContain(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -95,14 +95,14 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 
 	@Test
 	void enableUpToDateCheckingCustomIndexFile() throws Exception {
-		var tempDirectory = newFolder("index-files").toPath();
-		var indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
+		Path tempDirectory = newFolder("index-files").toPath();
+		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
 		assertThat(indexFile.getParent()).doesNotExist();
 		assertThat(indexFile).doesNotExist();
 		writePomWithUpToDateCheckingEnabledIndexFile(true, tempDirectory + "/${project.groupId}/${project.artifactId}.index");
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).doesNotContain(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -112,8 +112,8 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 
 	@Test
 	void disableUpToDateCheckingCustomIndexFile() throws Exception {
-		var tempDirectory = newFolder("index-files").toPath();
-		var indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
+		Path tempDirectory = newFolder("index-files").toPath();
+		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
 		Files.createDirectories(indexFile.getParent());
 		Files.createFile(indexFile);
 		assertThat(indexFile.getParent()).exists();
@@ -121,7 +121,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabledIndexFile(false, tempDirectory + "/${project.groupId}/${project.artifactId}.index");
 
 		List<File> files = writeUnformattedFiles(1);
-		var output = runSpotlessApply();
+		String output = runSpotlessApply();
 
 		assertThat(output).contains(DISABLED_MESSAGE);
 		assertFormatted(files);
@@ -134,14 +134,14 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(true);
 		List<File> files = writeFormattedFiles(5);
 
-		var applyOutput1 = runSpotlessApply();
+		String applyOutput1 = runSpotlessApply();
 		assertSpotlessApplyDidNotSkipAnyFiles(applyOutput1);
 		assertFormatted(files);
 
-		var applyOutput2 = runSpotlessApply();
+		String applyOutput2 = runSpotlessApply();
 		assertSpotlessApplySkipped(files, applyOutput2);
 
-		var checkOutput = runSpotlessCheck();
+		String checkOutput = runSpotlessCheck();
 		assertSpotlessCheckSkipped(files, checkOutput);
 	}
 
@@ -150,14 +150,14 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(true);
 		List<File> files = writeUnformattedFiles(4);
 
-		var applyOutput1 = runSpotlessApply();
+		String applyOutput1 = runSpotlessApply();
 		assertSpotlessApplyDidNotSkipAnyFiles(applyOutput1);
 		assertFormatted(files);
 
-		var applyOutput2 = runSpotlessApply();
+		String applyOutput2 = runSpotlessApply();
 		assertSpotlessApplySkipped(files, applyOutput2);
 
-		var checkOutput = runSpotlessCheck();
+		String checkOutput = runSpotlessCheck();
 		assertSpotlessCheckSkipped(files, checkOutput);
 	}
 
@@ -166,13 +166,13 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(true);
 		List<File> files = writeFormattedFiles(7);
 
-		var checkOutput1 = runSpotlessCheck();
+		String checkOutput1 = runSpotlessCheck();
 		assertSpotlessCheckDidNotSkipAnyFiles(checkOutput1);
 
-		var checkOutput2 = runSpotlessCheck();
+		String checkOutput2 = runSpotlessCheck();
 		assertSpotlessCheckSkipped(files, checkOutput2);
 
-		var applyOutput = runSpotlessApply();
+		String applyOutput = runSpotlessApply();
 		assertSpotlessApplySkipped(files, applyOutput);
 	}
 
@@ -181,17 +181,17 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 		writePomWithUpToDateCheckingEnabled(true);
 		List<File> files = writeUnformattedFiles(6);
 
-		var checkOutput1 = runSpotlessCheckOnUnformattedFiles();
+		String checkOutput1 = runSpotlessCheckOnUnformattedFiles();
 		assertSpotlessCheckDidNotSkipAnyFiles(checkOutput1);
 
-		var checkOutput2 = runSpotlessCheckOnUnformattedFiles();
+		String checkOutput2 = runSpotlessCheckOnUnformattedFiles();
 		assertSpotlessCheckDidNotSkipAnyFiles(checkOutput2);
 
-		var applyOutput = runSpotlessApply();
+		String applyOutput = runSpotlessApply();
 		assertSpotlessApplyDidNotSkipAnyFiles(applyOutput);
 		assertFormatted(files);
 
-		var checkOutput3 = runSpotlessCheck();
+		String checkOutput3 = runSpotlessCheck();
 		assertSpotlessCheckSkipped(files, checkOutput3);
 	}
 
@@ -246,8 +246,8 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 	private List<File> writeFiles(String resource, String suffix, int count) throws IOException {
 		List<File> result = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
-			var path = "src/main/java/test_" + suffix + "_" + i + ".java";
-			var file = setFile(path).toResource(resource);
+			String path = "src/main/java/test_" + suffix + "_" + i + ".java";
+			File file = setFile(path).toResource(resource);
 			result.add(file);
 		}
 		return result;

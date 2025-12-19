@@ -56,7 +56,7 @@ public class GroovyExtension extends BaseGroovyExtension implements HasBuiltinDe
 	@Override
 	protected void setupTask(SpotlessTask task) {
 		if (target == null) {
-			final var message = "You must either specify 'target' manually or apply the 'groovy' plugin.";
+			final String message = "You must either specify 'target' manually or apply the 'groovy' plugin.";
 			if (!getProject().getPlugins().hasPlugin(GroovyBasePlugin.class)) {
 				throw new GradleException(message);
 			}
@@ -64,7 +64,7 @@ public class GroovyExtension extends BaseGroovyExtension implements HasBuiltinDe
 					message,
 					sourceSet -> sourceSet.getExtensions().getByType(GroovySourceDirectorySet.class),
 					file -> {
-						final var name = file.getName();
+						final String name = file.getName();
 						if (excludeJava) {
 							return name.endsWith(".groovy");
 						} else {

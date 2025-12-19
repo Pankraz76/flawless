@@ -277,7 +277,7 @@ public abstract class SpotlessExtension {
 
 	@SuppressWarnings("unchecked")
 	protected final <T extends FormatExtension> T maybeCreate(String name, Class<T> clazz) {
-		var existing = formats.get(name);
+		FormatExtension existing = formats.get(name);
 		if (existing != null) {
 			if (!clazz.isInstance(existing)) {
 				throw new GradleException("Tried to add format named '" + name + "'"
@@ -286,7 +286,7 @@ public abstract class SpotlessExtension {
 				return (T) existing;
 			}
 		} else {
-			var formatExtension = instantiateFormatExtension(clazz);
+			T formatExtension = instantiateFormatExtension(clazz);
 			formats.put(name, formatExtension);
 			createFormatTasks(name, formatExtension);
 			return formatExtension;
@@ -316,7 +316,7 @@ public abstract class SpotlessExtension {
 	}
 
 	private TaskProvider<RegisterDependenciesTask> findRegisterDepsTask(String taskName) {
-		var rootProjectTasks = project.getRootProject().getTasks();
+		TaskContainer rootProjectTasks = project.getRootProject().getTasks();
 		if (!rootProjectTasks.getNames().contains(taskName)) {
 			return rootProjectTasks.register(taskName, RegisterDependenciesTask.class, RegisterDependenciesTask::setup);
 		} else {

@@ -44,11 +44,11 @@ abstract class FileIndexHarness {
 	void beforeEach(@TempDir Path tempDir) throws Exception {
 		this.tempDir = tempDir;
 
-		var projectDir = tempDir.resolve("my-project");
+		Path projectDir = tempDir.resolve("my-project");
 		Files.createDirectory(projectDir);
 		when(config.getProjectDir()).thenReturn(projectDir);
 
-		var indexFile = projectDir.resolve("target").resolve("spotless-index");
+		Path indexFile = projectDir.resolve("target").resolve("spotless-index");
 		when(config.getIndexFile()).thenReturn(indexFile);
 
 		when(config.getPluginFingerprint()).thenReturn(FINGERPRINT);
@@ -60,7 +60,7 @@ abstract class FileIndexHarness {
 
 		List<Path> sourceFiles = new ArrayList<>();
 		for (String file : files) {
-			var path = createSourceFile(file);
+			Path path = createSourceFile(file);
 			lines.add(file + " " + Files.getLastModifiedTime(path).toInstant());
 			sourceFiles.add(path);
 		}
@@ -76,7 +76,7 @@ abstract class FileIndexHarness {
 	}
 
 	protected Path createSourceFile(String name) throws IOException {
-		var file = config.getProjectDir().resolve(name);
+		Path file = config.getProjectDir().resolve(name);
 		Files.createFile(file);
 		return file;
 	}

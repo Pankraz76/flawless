@@ -80,7 +80,7 @@ class GoogleJavaFormatTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String targetResource, String sourceResource) throws Exception {
-		var path = "src/main/java/test.java";
+		String path = "src/main/java/test.java";
 		setFile(path).toResource(sourceResource);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource(targetResource);

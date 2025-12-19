@@ -70,7 +70,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 
 		// The emulation profile generally determines the markdown flavor. We use the same one for both the parser and
 		// the formatter, to make sure this formatter func is idempotent.
-		final var emulationProfile = ParserEmulationProfile.valueOf(config.getEmulationProfile());
+		final ParserEmulationProfile emulationProfile = ParserEmulationProfile.valueOf(config.getEmulationProfile());
 
 		final MutableDataHolder parserOptions = createParserOptions(emulationProfile, config);
 		final MutableDataHolder formatterOptions = createFormatterOptions(parserOptions, emulationProfile);
@@ -89,7 +89,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	private static MutableDataHolder createParserOptions(ParserEmulationProfile emulationProfile, FlexmarkConfig config) {
 		int pegdownExtensions = buildPegdownExtensions(config.getPegdownExtensions());
 		Extension[] extensions = buildExtensions(config.getExtensions());
-		final var parserOptions = PegdownOptionsAdapter.flexmarkOptions(
+		final MutableDataHolder parserOptions = PegdownOptionsAdapter.flexmarkOptions(
 				pegdownExtensions, extensions).toMutable();
 		parserOptions.set(Parser.PARSER_EMULATION_PROFILE, emulationProfile);
 		return parserOptions;
@@ -111,7 +111,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 				extensions |= Integer.decode(str);
 			} else {
 				try {
-					var field = PegdownExtensions.class.getField(str);
+					Field field = PegdownExtensions.class.getField(str);
 					extensions |= field.getInt(null);
 				} catch (ReflectiveOperationException e) {
 					throw new IllegalArgumentException("Unknown PegdownExtension '" + str + "'");
@@ -131,10 +131,10 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	private static Extension[] buildExtensions(List<String> config) {
 		Extension[] extensions = new Extension[config.size()];
 		for (int i = 0; i < extensions.length; i++) {
-			var className = KNOWN_EXTENSIONS.getOrDefault(config.get(i), config.get(i));
+			String className = KNOWN_EXTENSIONS.getOrDefault(config.get(i), config.get(i));
 			try {
 				Class<?> c = Extension.class.getClassLoader().loadClass(className);
-				var create = c.getMethod("create");
+				Method create = c.getMethod("create");
 				extensions[i] = Extension.class.cast(create.invoke(null));
 			} catch (ReflectiveOperationException e) {
 				throw new IllegalArgumentException("Unknown flexmark extension '" + config.get(i) + "'");
@@ -153,7 +153,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 	 */
 	private static MutableDataHolder createFormatterOptions(MutableDataHolder parserOptions,
 			ParserEmulationProfile emulationProfile) {
-		final var formatterOptions = new MutableDataSet();
+		final MutableDataHolder formatterOptions = new MutableDataSet();
 		formatterOptions.set(Parser.EXTENSIONS, Parser.EXTENSIONS.get(parserOptions));
 		formatterOptions.set(Formatter.FORMATTER_EMULATION_PROFILE, emulationProfile);
 		return formatterOptions;
@@ -161,7 +161,7 @@ public class FlexmarkFormatterFunc implements FormatterFunc {
 
 	@Override
 	public String apply(String input) throws Exception {
-		final var parsedMarkdown = parser.parse(input);
+		final Document parsedMarkdown = parser.parse(input);
 		return formatter.render(parsedMarkdown);
 	}
 }

@@ -30,44 +30,44 @@ class NodeServerLayoutTest extends ResourceHarness {
 
 	@Test
 	void itCalculatesSameNodeModulesDirForSameContent() throws IOException {
-		var testDir = newFolder("build");
+		File testDir = newFolder("build");
 		String packageJsonContent = prettierPackageJson(Collections.emptyMap());
-		var serveJsContent = "fun main() { console.log('Hello, world!'); }";
-		var layout1 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent);
-		var layout2 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent);
+		String serveJsContent = "fun main() { console.log('Hello, world!'); }";
+		NodeServerLayout layout1 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent);
+		NodeServerLayout layout2 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent);
 
 		assertThat(layout1.nodeModulesDir()).isEqualTo(layout2.nodeModulesDir());
 	}
 
 	@Test
 	void itCalculatesDifferentNodeModulesDirForDifferentPackageJson() throws IOException {
-		var testDir = newFolder("build");
+		File testDir = newFolder("build");
 		String packageJsonContent1 = prettierPackageJson(Map.of("prettier-plugin-xy", "^2.0.0"));
 		String packageJsonContent2 = prettierPackageJson(Map.of("prettier-plugin-xy", "^2.1.0"));
-		var serveJsContent = "fun main() { console.log('Hello, world!'); }";
+		String serveJsContent = "fun main() { console.log('Hello, world!'); }";
 
-		var layout1 = new NodeServerLayout(testDir, packageJsonContent1, serveJsContent);
-		var layout2 = new NodeServerLayout(testDir, packageJsonContent2, serveJsContent);
+		NodeServerLayout layout1 = new NodeServerLayout(testDir, packageJsonContent1, serveJsContent);
+		NodeServerLayout layout2 = new NodeServerLayout(testDir, packageJsonContent2, serveJsContent);
 
 		assertThat(layout1.nodeModulesDir()).isNotEqualTo(layout2.nodeModulesDir());
 	}
 
 	@Test
 	void itCalculatesDifferentNodeModulesDirForDifferentServeJs() throws IOException {
-		var testDir = newFolder("build");
+		File testDir = newFolder("build");
 		String packageJsonContent = prettierPackageJson(Collections.emptyMap());
-		var serveJsContent1 = "fun main() { console.log('Hello, world!'); }";
-		var serveJsContent2 = "fun main() { console.log('Goodbye, world!'); }";
+		String serveJsContent1 = "fun main() { console.log('Hello, world!'); }";
+		String serveJsContent2 = "fun main() { console.log('Goodbye, world!'); }";
 
-		var layout1 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent1);
-		var layout2 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent2);
+		NodeServerLayout layout1 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent1);
+		NodeServerLayout layout2 = new NodeServerLayout(testDir, packageJsonContent, serveJsContent2);
 
 		assertThat(layout1.nodeModulesDir()).isNotEqualTo(layout2.nodeModulesDir());
 	}
 
 	static String prettierPackageJson(Map<String, String> dependencies) {
-		var templateContent = NpmResourceHelper.readUtf8StringFromClasspath(NodeServerLayoutTest.class, "/com/diffplug/spotless/npm/prettier-package.json");
-		var dependenciesList = dependencies.entrySet().stream()
+		String templateContent = NpmResourceHelper.readUtf8StringFromClasspath(NodeServerLayoutTest.class, "/com/diffplug/spotless/npm/prettier-package.json");
+		String dependenciesList = dependencies.entrySet().stream()
 				.map(entry -> "\"%s\": \"%s\"".formatted(entry.getKey(), entry.getValue()))
 				.reduce((a, b) -> a + ",\n  " + b)
 				.orElse("");

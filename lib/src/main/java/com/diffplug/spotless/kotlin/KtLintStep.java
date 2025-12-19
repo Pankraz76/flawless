@@ -73,7 +73,7 @@ public final class KtLintStep implements Serializable {
 			List<String> customRuleSets) {
 		Objects.requireNonNull(version, "version");
 		Objects.requireNonNull(provisioner, "provisioner");
-		var ktlintCoordinate = (version.startsWith("0.") ? MAVEN_COORDINATE_0_DOT : MAVEN_COORDINATE_1_DOT) + version;
+		String ktlintCoordinate = (version.startsWith("0.") ? MAVEN_COORDINATE_0_DOT : MAVEN_COORDINATE_1_DOT) + version;
 		Set<String> mavenCoordinates = new HashSet<>(customRuleSets);
 		mavenCoordinates.add(ktlintCoordinate);
 		return FormatterStep.create(NAME,
@@ -110,7 +110,7 @@ public final class KtLintStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			final var classLoader = jarState.getClassLoader();
+			final ClassLoader classLoader = jarState.getClassLoader();
 			Class<?> formatterFunc = classLoader.loadClass("com.diffplug.spotless.glue.ktlint.KtlintFormatterFunc");
 			Constructor<?> constructor = formatterFunc.getConstructor(
 					String.class, FileSignature.class, Map.class);

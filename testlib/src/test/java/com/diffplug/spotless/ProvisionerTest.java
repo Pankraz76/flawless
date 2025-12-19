@@ -25,7 +25,7 @@ import org.junit.jupiter.api.Test;
 class ProvisionerTest {
 	@Test
 	void testManipulation() {
-		var provisioner = (withTransitives, deps) -> deps.stream().map(File::new).collect(Collectors.toSet());
+		Provisioner provisioner = (withTransitives, deps) -> deps.stream().map(File::new).collect(Collectors.toSet());
 		Assertions.assertThat(provisioner.provisionWithTransitives(true, "a"))
 				.containsExactlyInAnyOrder(new File("a"));
 		Assertions.assertThat(provisioner.provisionWithTransitives(true, "a", "a"))

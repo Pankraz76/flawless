@@ -29,17 +29,17 @@ import com.diffplug.spotless.Formatter;
 public class SpotlessTaskImplTest {
 	@Test
 	public void testThrowsMessageContainsFilename() throws Exception {
-		var task = Mockito.mock(Mockito.CALLS_REAL_METHODS);
+		SpotlessTaskImpl task = Mockito.mock(Mockito.CALLS_REAL_METHODS);
 		Mockito.when(task.getLogger()).thenReturn(Mockito.mock(Logger.class));
 
-		var projectDir = Path.of("unitTests", "projectDir").toFile();
-		var projectDirProperty = Mockito.mock(Mockito.RETURNS_DEEP_STUBS);
+		File projectDir = Path.of("unitTests", "projectDir").toFile();
+		DirectoryProperty projectDirProperty = Mockito.mock(Mockito.RETURNS_DEEP_STUBS);
 		Mockito.when(projectDirProperty.get().getAsFile()).thenReturn(projectDir);
 
 		Mockito.when(task.getProjectDir()).thenReturn(projectDirProperty);
 
-		var input = Path.of("unitTests", "projectDir", "someInput").toFile();
-		var formatter = Mockito.mock();
+		File input = Path.of("unitTests", "projectDir", "someInput").toFile();
+		Formatter formatter = Mockito.mock();
 
 		Assertions.assertThatThrownBy(() -> task.processInputFile(null, formatter, input, "someInput")).hasMessageContaining(input.toString());
 	}

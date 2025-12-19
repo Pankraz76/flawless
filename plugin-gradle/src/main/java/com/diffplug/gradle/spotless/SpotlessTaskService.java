@@ -135,7 +135,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 		}
 
 		String sourceTaskPath() {
-			var path = getPath();
+			String path = getPath();
 			if (this instanceof SpotlessApply) {
 				if (path.endsWith(SpotlessExtension.APPLY)) {
 					return path.substring(0, path.length() - SpotlessExtension.APPLY.length());
@@ -155,7 +155,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 		}
 
 		protected boolean sourceDidWork() {
-			var sourceTask = service().source.get(sourceTaskPath());
+			SpotlessTask sourceTask = service().source.get(sourceTaskPath());
 			if (sourceTask != null) {
 				return sourceTask.getDidWork();
 			} else {
@@ -168,7 +168,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 		}
 
 		protected String allLintsErrorMsgDetailed(ConfigurableFileTree lintsFiles, boolean detailed) {
-			var total = new AtomicInteger(0);
+			AtomicInteger total = new AtomicInteger(0);
 			TreeMap<String, LinkedHashMap<String, List<Lint>>> allLints = new TreeMap<>();
 			lintsFiles.visit(new FileVisitor() {
 				@Override
@@ -178,18 +178,18 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 
 				@Override
 				public void visitFile(FileVisitDetails fileVisitDetails) {
-					var path = fileVisitDetails.getPath();
+					String path = fileVisitDetails.getPath();
 					getLogger().debug("Reading lints for " + path);
 					LinkedHashMap<String, List<Lint>> lints = SerializableMisc.fromFile(LinkedHashMap.class, fileVisitDetails.getFile());
 					allLints.put(path, lints);
 					lints.values().forEach(list -> total.addAndGet(list.size()));
 				}
 			});
-			var builder = new StringBuilder();
+			StringBuilder builder = new StringBuilder();
 			builder.append("There were ").append(total.get()).append(" lint error(s), they must be fixed or suppressed.\n");
 			for (Map.Entry<String, LinkedHashMap<String, List<Lint>>> lintsPerFile : allLints.entrySet()) {
 				for (Map.Entry<String, List<Lint>> stepLints : lintsPerFile.getValue().entrySet()) {
-					var stepName = stepLints.getKey();
+					String stepName = stepLints.getKey();
 					for (Lint lint : stepLints.getValue()) {
 						builder.append(lintsPerFile.getKey());
 						builder.append(":");

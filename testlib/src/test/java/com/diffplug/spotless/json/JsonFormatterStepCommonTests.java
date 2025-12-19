@@ -54,21 +54,21 @@ public abstract class JsonFormatterStepCommonTests {
 
 	@Test
 	void canSetCustomIndentationLevel() throws Exception {
-		var step = createFormatterStep(6, TestProvisioner.mavenCentral());
-		var stepHarness = StepHarness.forStep(step);
+		FormatterStep step = createFormatterStep(6, TestProvisioner.mavenCentral());
+		StepHarness stepHarness = StepHarness.forStep(step);
 
-		var before = "json/singletonArrayBefore.json";
-		var after = "json/singletonArrayAfter6Spaces.json";
+		String before = "json/singletonArrayBefore.json";
+		String after = "json/singletonArrayAfter6Spaces.json";
 		stepHarness.testResource(before, after);
 	}
 
 	@Test
 	void canSetIndentationLevelTo0() throws Exception {
-		var step = createFormatterStep(0, TestProvisioner.mavenCentral());
-		var stepHarness = StepHarness.forStep(step);
+		FormatterStep step = createFormatterStep(0, TestProvisioner.mavenCentral());
+		StepHarness stepHarness = StepHarness.forStep(step);
 
-		var before = "json/singletonArrayBefore.json";
-		var after = "json/singletonArrayAfter0Spaces.json";
+		String before = "json/singletonArrayBefore.json";
+		String after = "json/singletonArrayAfter0Spaces.json";
 		stepHarness.testResource(before, after);
 	}
 
@@ -101,8 +101,8 @@ public abstract class JsonFormatterStepCommonTests {
 	}
 
 	protected void doWithResource(String name) {
-		var before = "json/%sBefore.json".formatted(name);
-		var after = "json/%sAfter.json".formatted(name);
+		String before = "json/%sBefore.json".formatted(name);
+		String after = "json/%sAfter.json".formatted(name);
 		getStepHarness().testResource(before, after);
 	}
 }

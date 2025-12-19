@@ -24,14 +24,14 @@ import com.diffplug.spotless.StepHarness;
 class ReplaceRegexStepTest {
 	@Test
 	void formatter() throws Exception {
-		var step = ReplaceRegexStep.create("replace", "bad", "good");
+		FormatterStep step = ReplaceRegexStep.create("replace", "bad", "good");
 		StepHarness.forStep(step)
 				.test("bad bad", "good good");
 	}
 
 	@Test
 	void lint() throws Exception {
-		var step = ReplaceRegexStep.lint("stayPositive", "(bad|awful)", "no negative words");
+		FormatterStep step = ReplaceRegexStep.lint("stayPositive", "(bad|awful)", "no negative words");
 		StepHarness.forStep(step)
 				.expectLintsOf(StringPrinter.buildStringFromLines(
 						"bad",

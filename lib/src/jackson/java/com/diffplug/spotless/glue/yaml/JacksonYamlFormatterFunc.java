@@ -45,13 +45,13 @@ public class JacksonYamlFormatterFunc extends AJacksonFormatterFunc {
 
 	@Override
 	protected JsonFactory makeJsonFactory() {
-		var yamlFactoryBuilder = new YAMLFactoryBuilder(new YAMLFactory());
+		YAMLFactoryBuilder yamlFactoryBuilder = new YAMLFactoryBuilder(new YAMLFactory());
 
 		// Configure the ObjectMapper
 		// https://github.com/FasterXML/jackson-databind#commonly-used-features
 		yamlConfig.getYamlFeatureToToggle().forEach((rawFeature, toggle) -> {
 			// https://stackoverflow.com/questions/3735927/java-instantiating-an-enum-using-reflection
-			var feature = YAMLGenerator.Feature.valueOf(rawFeature);
+			YAMLGenerator.Feature feature = YAMLGenerator.Feature.valueOf(rawFeature);
 
 			yamlFactoryBuilder.configure(feature, toggle);
 		});
@@ -69,12 +69,12 @@ public class JacksonYamlFormatterFunc extends AJacksonFormatterFunc {
 		try {
 			// https://stackoverflow.com/questions/25222327/deserialize-pojos-from-multiple-yaml-documents-in-a-single-file-in-jackson
 			// https://github.com/FasterXML/jackson-dataformats-text/issues/66#issuecomment-375328648
-			var yamlParser = objectMapper.getFactory().createParser(input);
+			JsonParser yamlParser = objectMapper.getFactory().createParser(input);
 			List<?> documents = objectMapper.readValues(yamlParser, inferType(input)).readAll();
 
 			// https://github.com/FasterXML/jackson-dataformats-text/issues/66#issuecomment-554265055
 			// https://github.com/FasterXML/jackson-dataformats-text/issues/66#issuecomment-554265055
-			var stringWriter = new StringWriter();
+			StringWriter stringWriter = new StringWriter();
 			objectMapper.writer().writeValues(stringWriter).writeAll(documents).close();
 			return stringWriter.toString();
 		} catch (JsonProcessingException e) {

@@ -93,7 +93,7 @@ class KotlinExtensionTest extends GradleIntegrationHarness {
 
 	@Test
 	void testWithInvalidEditorConfigFile() throws IOException {
-		var invalidPath = "invalid/path/to/.editorconfig".replace('/', File.separatorChar);
+		String invalidPath = "invalid/path/to/.editorconfig".replace('/', File.separatorChar);
 
 		setFile("build.gradle").toLines(
 				"plugins {",
@@ -107,7 +107,7 @@ class KotlinExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("src/main/kotlin/Main.kt").toResource("kotlin/ktlint/experimentalEditorConfigOverride.dirty");
-		var buildOutput = gradleRunner().withArguments("spotlessApply").buildAndFail().getOutput();
+		String buildOutput = gradleRunner().withArguments("spotlessApply").buildAndFail().getOutput();
 		assertThat(buildOutput).contains("EditorConfig file does not exist: ");
 		assertThat(buildOutput).contains(invalidPath);
 	}
@@ -187,7 +187,7 @@ class KotlinExtensionTest extends GradleIntegrationHarness {
 				"    }",
 				"}");
 		setFile("src/main/kotlin/Main.kt").toResource("kotlin/ktlint/listScreen.dirty");
-		var buildOutput = gradleRunner().withArguments("spotlessCheck").buildAndFail().getOutput();
+		String buildOutput = gradleRunner().withArguments("spotlessCheck").buildAndFail().getOutput();
 		assertThat(buildOutput).contains("Composable functions that return Unit should start with an uppercase letter.");
 	}
 
@@ -232,7 +232,7 @@ class KotlinExtensionTest extends GradleIntegrationHarness {
 	}
 
 	private void checkKtlintOfficialStyle() throws IOException {
-		var path = "src/main/kotlin/Main.kt";
+		String path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/ktlint/experimentalEditorConfigOverride.dirty");
 		gradleRunner().withArguments("spotlessApply").build();
 		assertFile(path).sameAsResource("kotlin/ktlint/experimentalEditorConfigOverride.ktlintOfficial.clean");

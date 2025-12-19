@@ -32,7 +32,7 @@ final class IdeHook {
 
 	//No need to check ratchet (using isClean()) as it is performed in Gradle's IDE hook, since we have already gathered the available git files from ratchet.
 	static void performHook(Iterable<File> projectFiles, Formatter formatter, String path, boolean spotlessIdeHookUseStdIn, boolean spotlessIdeHookUseStdOut) {
-		var file = new File(path);
+		File file = new File(path);
 		if (!file.isAbsolute()) {
 			System.err.println("Argument passed to spotlessIdeHook must be an absolute path");
 			return;

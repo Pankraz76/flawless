@@ -57,7 +57,7 @@ public class FileLocator {
 			return null;
 		}
 
-		var localFile = new File(path);
+		File localFile = new File(path);
 		if (localFile.exists() && localFile.isFile()) {
 			return localFile;
 		}
@@ -107,7 +107,7 @@ public class FileLocator {
 	private static String tmpOutputFileName(String path) {
 		String extension = FileUtils.extension(path);
 		byte[] pathHash = hash(path);
-		var pathBase64 = Base64.getEncoder().encodeToString(pathHash);
+		String pathBase64 = Base64.getEncoder().encodeToString(pathHash);
 		return TMP_RESOURCE_FILE_PREFIX + pathBase64 + '.' + extension;
 	}
 

@@ -63,8 +63,8 @@ class FeatureClassLoader extends URLClassLoader {
 	@Override
 	protected Class<?> findClass(String name) throws ClassNotFoundException {
 		if (name.startsWith("com.diffplug.spotless.glue.") || name.startsWith("com.diffplug.spotless.extra.glue.")) {
-			var path = name.replace('.', '/') + ".class";
-			var url = findResource(path);
+			String path = name.replace('.', '/') + ".class";
+			URL url = findResource(path);
 			if (url == null) {
 				throw new ClassNotFoundException(name);
 			}
@@ -92,7 +92,7 @@ class FeatureClassLoader extends URLClassLoader {
 
 	@Override
 	public URL findResource(String name) {
-		var resource = super.findResource(name);
+		URL resource = super.findResource(name);
 		if (resource != null) {
 			return resource;
 		}
@@ -100,8 +100,8 @@ class FeatureClassLoader extends URLClassLoader {
 	}
 
 	private static ByteBuffer urlToByteBuffer(URL url) throws IOException {
-		var buffer = new ByteArrayOutputStream();
-		try (var inputStream = url.openStream()) {
+		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+		try (InputStream inputStream = url.openStream()) {
 			inputStream.transferTo(buffer);
 		}
 		buffer.flush();

@@ -247,7 +247,7 @@ public final class KtfmtStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			final var classLoader = jarState.getClassLoader();
+			final ClassLoader classLoader = jarState.getClassLoader();
 
 			if (BadSemver.version(version) < BadSemver.version(0, 51)) {
 				return new KtfmtFormatterFuncCompat(version, style, options, classLoader).getFormatterFunc();
@@ -275,7 +275,7 @@ public final class KtfmtStep implements Serializable {
 			final Object ktfmtTrailingCommaManagementStrategy = options.trailingCommaManagementStrategy == null
 					? null
 					: Enum.valueOf((Class<? extends Enum>) ktfmtTrailingCommaManagmentStrategyClass, options.trailingCommaManagementStrategy.name());
-			final var ktfmtFormattingOptions = optionsConstructor.newInstance(
+			final Object ktfmtFormattingOptions = optionsConstructor.newInstance(
 					options.maxWidth, options.blockIndent, options.continuationIndent, options.removeUnusedImports, ktfmtTrailingCommaManagementStrategy);
 			if (style == null) {
 				final Constructor<?> constructor = formatterFuncClass.getConstructor(ktfmtFormattingOptionsClass);
@@ -373,17 +373,17 @@ public final class KtfmtStep implements Serializable {
 		protected String applyFormat(String input) throws Exception {
 			Class<?> formatterClass = getFormatterClazz();
 			if (style == null && options == null || style == DEFAULT) {
-				var formatterMethod = formatterClass.getMethod(FORMATTER_METHOD, String.class);
+				Method formatterMethod = formatterClass.getMethod(FORMATTER_METHOD, String.class);
 				return (String) formatterMethod.invoke(formatterClass, input);
 			} else {
-				var formatterMethod = formatterClass.getMethod(FORMATTER_METHOD, getFormattingOptionsClazz(), String.class);
-				var formattingOptions = getCustomFormattingOptions(formatterClass);
+				Method formatterMethod = formatterClass.getMethod(FORMATTER_METHOD, getFormattingOptionsClazz(), String.class);
+				Object formattingOptions = getCustomFormattingOptions(formatterClass);
 				return (String) formatterMethod.invoke(formatterClass, formattingOptions, input);
 			}
 		}
 
 		private Object getCustomFormattingOptions(Class<?> formatterClass) throws Exception {
-			var formattingOptions = getFormattingOptionsFromStyle(formatterClass);
+			Object formattingOptions = getFormattingOptionsFromStyle(formatterClass);
 			Class<?> formattingOptionsClass = formattingOptions.getClass();
 
 			if (options != null) {
@@ -435,7 +435,7 @@ public final class KtfmtStep implements Serializable {
 		}
 
 		private Object getFormattingOptionsFromStyle(Class<?> formatterClass) throws Exception {
-			var style = this.style;
+			Style style = this.style;
 			if (style == null) {
 				if (BadSemver.version(version) < BadSemver.version(0, 51)) {
 					style = DEFAULT;
@@ -448,8 +448,8 @@ public final class KtfmtStep implements Serializable {
 					throw new IllegalStateException("Invalid style " + style + " for version " + version);
 				}
 				Class<?> formattingOptionsCompanionClazz = classLoader.loadClass(PACKAGE + ".FormattingOptions$Companion");
-				var companion = formattingOptionsCompanionClazz.getConstructors()[0].newInstance((Object) null);
-				var formattingOptionsMethod = formattingOptionsCompanionClazz.getDeclaredMethod("dropboxStyle");
+				Object companion = formattingOptionsCompanionClazz.getConstructors()[0].newInstance((Object) null);
+				Method formattingOptionsMethod = formattingOptionsCompanionClazz.getDeclaredMethod("dropboxStyle");
 				return formattingOptionsMethod.invoke(companion);
 			} else {
 				return formatterClass.getField(style.getFormat()).get(null);

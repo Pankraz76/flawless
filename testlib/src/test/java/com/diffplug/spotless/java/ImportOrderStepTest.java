@@ -27,92 +27,92 @@ import com.diffplug.spotless.StepHarness;
 class ImportOrderStepTest extends ResourceHarness {
 	@Test
 	void sortImportsDefault() {
-		var step = ImportOrderStep.forJava().createFrom();
+		FormatterStep step = ImportOrderStep.forJava().createFrom();
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImports.test", "java/importsorter/JavaCodeSortedImportsDefault.test");
 	}
 
 	@Test
 	void sortImportsFromArray() {
-		var step = ImportOrderStep.forJava().createFrom("java", "javax", "org", "\\#com");
+		FormatterStep step = ImportOrderStep.forJava().createFrom("java", "javax", "org", "\\#com");
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImports.test", "java/importsorter/JavaCodeSortedImports.test");
 	}
 
 	@Test
 	void sortImportsFromArrayWithSubgroups() {
-		var step = ImportOrderStep.forJava().createFrom("java|javax", "org|\\#com", "\\#");
+		FormatterStep step = ImportOrderStep.forJava().createFrom("java|javax", "org|\\#com", "\\#");
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImportsSubgroups.test", "java/importsorter/JavaCodeSortedImportsSubgroups.test");
 	}
 
 	@Test
 	void sortImportsFromArrayWithDuplicateEntries() {
-		var step = ImportOrderStep.forJava().createFrom("java|javax", "java", "org|\\#com", "\\#");
+		FormatterStep step = ImportOrderStep.forJava().createFrom("java|javax", "java", "org|\\#com", "\\#");
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImportsSubgroups.test", "java/importsorter/JavaCodeSortedImportsSubgroups.test");
 	}
 
 	@Test
 	void sortImportsFromArrayWithSubgroupsLeadingCatchAll() {
-		var step = ImportOrderStep.forJava().createFrom("\\#|");
+		FormatterStep step = ImportOrderStep.forJava().createFrom("\\#|");
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImportsSubgroups.test", "java/importsorter/JavaCodeSortedImportsSubgroupsLeadingCatchAll.test");
 	}
 
 	@Test
 	void sortImportsFromFile() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImports.test", "java/importsorter/JavaCodeSortedImports.test");
 	}
 
 	@Test
 	void sortImportsUnmatched() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import_unmatched.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import_unmatched.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImportsUnmatched.test", "java/importsorter/JavaCodeSortedImportsUnmatched.test");
 	}
 
 	@Test
 	void sortImportsWildcardsLast() {
-		var step = ImportOrderStep.forJava().createFrom(true, true, null, null);
+		FormatterStep step = ImportOrderStep.forJava().createFrom(true, true, null, null);
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedImports.test", "java/importsorter/JavaCodeSortedImportsWildcardsLast.test");
 	}
 
 	@Test
 	void removeDuplicates() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import_unmatched.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import_unmatched.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeSortedDuplicateImportsUnmatched.test", "java/importsorter/JavaCodeSortedImportsUnmatched.test");
 	}
 
 	@Test
 	void removeComments() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeImportComments.test", "java/importsorter/JavaCodeSortedImports.test");
 	}
 
 	@Test
 	void misplacedImports() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedMisplacedImports.test", "java/importsorter/JavaCodeSortedMisplacedImports.test");
 	}
 
 	@Test
 	void empty() {
-		var step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeEmptyFile.test", "java/importsorter/JavaCodeEmptyFile.test");
 	}
 
 	@Test
 	void lexicographicSort() {
-		var step = ImportOrderStep.forJava().createFrom(false, false, null, null, createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forJava().createFrom(false, false, null, null, createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedSemanticSort.test", "java/importsorter/JavaCodeSortedLexicographic.test");
 	}
 
 	@Test
 	void semanticSort() {
-		var step = ImportOrderStep.forJava().createFrom(false, true, Set.of("com.sun.jna.platform.win32.COM"),
+		FormatterStep step = ImportOrderStep.forJava().createFrom(false, true, Set.of("com.sun.jna.platform.win32.COM"),
 				Set.of("com.example.b"), createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/JavaCodeUnsortedSemanticSort.test", "java/importsorter/JavaCodeSortedSemanticSort.test");
 	}
 
 	@Test
 	void groovyImports() {
-		var step = ImportOrderStep.forGroovy().createFrom(createTestFile("java/importsorter/import.properties"));
+		FormatterStep step = ImportOrderStep.forGroovy().createFrom(createTestFile("java/importsorter/import.properties"));
 		StepHarness.forStep(step).testResource("java/importsorter/GroovyCodeUnsortedMisplacedImports.test", "java/importsorter/GroovyCodeSortedMisplacedImports.test");
 	}
 

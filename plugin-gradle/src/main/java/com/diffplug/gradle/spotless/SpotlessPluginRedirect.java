@@ -29,12 +29,12 @@ public class SpotlessPluginRedirect implements Plugin<Project> {
 	private static final Pattern BAD_SEMVER = Pattern.compile("(\\d+)\\.(\\d+)");
 
 	static int badSemver(String input) {
-		var matcher = BAD_SEMVER.matcher(input);
+		Matcher matcher = BAD_SEMVER.matcher(input);
 		if (!matcher.find() || matcher.start() != 0) {
 			throw new IllegalArgumentException("Version must start with " + BAD_SEMVER.pattern());
 		}
-		var major = matcher.group(1);
-		var minor = matcher.group(2);
+		String major = matcher.group(1);
+		String minor = matcher.group(2);
 		return badSemver(Integer.parseInt(major), Integer.parseInt(minor));
 	}
 
@@ -53,7 +53,7 @@ public class SpotlessPluginRedirect implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		var errorMsg = StringPrinter.buildStringFromLines(
+		String errorMsg = StringPrinter.buildStringFromLines(
 				"We have moved from 'com.diffplug.gradle.spotless'",
 				"                to 'com.diffplug.spotless'",
 				"To migrate:",

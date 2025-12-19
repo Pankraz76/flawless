@@ -56,13 +56,13 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 		}
 
 		private void runTestUsingPrettier(String fileType, Map<String, String> dependencies) throws Exception {
-			var filedir = "npm/prettier/filetypes/" + fileType + "/";
+			String filedir = "npm/prettier/filetypes/" + fileType + "/";
 
-			final var prettierRc = createTestFile(filedir + ".prettierrc.yml");
-			final var dirtyFile = filedir + fileType + ".dirty";
-			final var cleanFile = filedir + fileType + ".clean";
+			final File prettierRc = createTestFile(filedir + ".prettierrc.yml");
+			final String dirtyFile = filedir + fileType + ".dirty";
+			final String cleanFile = filedir + fileType + ".clean";
 
-			final var formatterStep = PrettierFormatterStep.create(
+			final FormatterStep formatterStep = PrettierFormatterStep.create(
 					dependencies,
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -71,7 +71,7 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 					npmPathResolver(),
 					new PrettierConfig(prettierRc, null));
 
-			try (var stepHarness = StepHarness.forStep(formatterStep)) {
+			try (StepHarness stepHarness = StepHarness.forStep(formatterStep)) {
 				stepHarness.testResource(dirtyFile, cleanFile);
 			}
 		}
@@ -84,12 +84,12 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 		@ParameterizedTest(name = "{index}: parser inference based on explicit filepath is working with prettier {0}")
 		@ValueSource(strings = {PRETTIER_VERSION_2, PRETTIER_VERSION_3})
 		void parserInferenceBasedOnExplicitFilepathIsWorking(String prettierVersion) throws Exception {
-			var filedir = "npm/prettier/filetypes/json/";
+			String filedir = "npm/prettier/filetypes/json/";
 
-			final var dirtyFile = filedir + "json.dirty";
-			final var cleanFile = filedir + "json.clean";
+			final String dirtyFile = filedir + "json.dirty";
+			final String cleanFile = filedir + "json.clean";
 
-			final var formatterStep = PrettierFormatterStep.create(
+			final FormatterStep formatterStep = PrettierFormatterStep.create(
 					ImmutableMap.of("prettier", prettierVersion),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -98,7 +98,7 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 					npmPathResolver(),
 					new PrettierConfig(null, ImmutableMap.of("filepath", "anyname.json"))); // should select parser based on this name
 
-			try (var stepHarness = StepHarness.forStep(formatterStep)) {
+			try (StepHarness stepHarness = StepHarness.forStep(formatterStep)) {
 				stepHarness.testResource(dirtyFile, cleanFile);
 			}
 		}
@@ -106,12 +106,12 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 		@ParameterizedTest(name = "{index}: parser inference based on filename is working with prettier {0}")
 		@ValueSource(strings = {PRETTIER_VERSION_2, PRETTIER_VERSION_3})
 		void parserInferenceBasedOnFilenameIsWorking(String prettierVersion) throws Exception {
-			var filedir = "npm/prettier/filename/";
+			String filedir = "npm/prettier/filename/";
 
-			final var dirtyFile = filedir + "dirty.json";
-			final var cleanFile = filedir + "clean.json";
+			final String dirtyFile = filedir + "dirty.json";
+			final String cleanFile = filedir + "clean.json";
 
-			final var formatterStep = PrettierFormatterStep.create(
+			final FormatterStep formatterStep = PrettierFormatterStep.create(
 					ImmutableMap.of("prettier", prettierVersion),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -120,14 +120,14 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 					npmPathResolver(),
 					new PrettierConfig(null, Collections.emptyMap()));
 
-			try (var stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
+			try (StepHarnessWithFile stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
 				stepHarness.testResource("test.json", dirtyFile, cleanFile);
 			}
 		}
 
 		@Test
 		void verifyPrettierErrorMessageIsRelayed() throws Exception {
-			var formatterStep = PrettierFormatterStep.create(
+			FormatterStep formatterStep = PrettierFormatterStep.create(
 					PrettierFormatterStep.defaultDevDependenciesWithPrettier("2.8.8"),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -135,7 +135,7 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 					null,
 					npmPathResolver(),
 					new PrettierConfig(null, ImmutableMap.of("parser", "postcss")));
-			try (var stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
+			try (StepHarnessWithFile stepHarness = StepHarnessWithFile.forStep(this, formatterStep)) {
 				stepHarness.expectLintsOfResource("npm/prettier/filetypes/scss/scss.dirty")
 						.toBe("LINE_UNDEFINED prettier-format(com.diffplug.spotless.npm.SimpleRestClient$SimpleRestResponseException) Unexpected response status code at /prettier/format [HTTP 500] -- (Error while formatting: Error: Couldn't resolve parser \"postcss\") (...)");
 			}
@@ -150,10 +150,10 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 
 		void runFormatTest(String prettierVersion, PrettierConfig config, String cleanFileNameSuffix) throws Exception {
 
-			final var dirtyFile = FILEDIR + "typescript.dirty";
-			final var cleanFile = FILEDIR + "typescript." + cleanFileNameSuffix + ".clean";
+			final String dirtyFile = FILEDIR + "typescript.dirty";
+			final String cleanFile = FILEDIR + "typescript." + cleanFileNameSuffix + ".clean";
 
-			final var formatterStep = PrettierFormatterStep.create(
+			final FormatterStep formatterStep = PrettierFormatterStep.create(
 					ImmutableMap.of("prettier", prettierVersion),
 					TestProvisioner.mavenCentral(),
 					projectDir(),
@@ -162,7 +162,7 @@ class PrettierFormatterStepTest extends NpmFormatterStepCommonTests {
 					npmPathResolver(),
 					config); // should select parser based on this name
 
-			try (var stepHarness = StepHarness.forStep(formatterStep)) {
+			try (StepHarness stepHarness = StepHarness.forStep(formatterStep)) {
 				stepHarness.testResource(dirtyFile, cleanFile);
 			}
 		}

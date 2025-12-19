@@ -22,14 +22,14 @@ import org.junit.jupiter.api.Test;
 
 public class SpecificFilesTest extends MavenIntegrationHarness {
 	private String testFile(int number, boolean absolute) throws IOException {
-		var rel = "src/main/java/test" + number + ".java";
+		String rel = "src/main/java/test" + number + ".java";
 		Path path;
 		if (absolute) {
 			path = Path.of(rootFolder().getAbsolutePath(), rel);
 		} else {
 			path = Path.of(rel);
 		}
-		var result = path.toString();
+		String result = path.toString();
 		if (!isOnWindows()) {
 			return result;
 		} else {

@@ -63,7 +63,7 @@ final class FilterByContentPatternFormatterStep extends DelegateFormatterStep {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		var that = (FilterByContentPatternFormatterStep) o;
+		FilterByContentPatternFormatterStep that = (FilterByContentPatternFormatterStep) o;
 		return Objects.equals(delegateStep, that.delegateStep)
 				&& onMatch == that.onMatch
 				&& Objects.equals(contentPattern.pattern(), that.contentPattern.pattern());

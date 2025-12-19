@@ -46,7 +46,7 @@ final class PluginFingerprint {
 	static PluginFingerprint from(MavenProject project, Iterable<Formatter> formatters) {
 		Plugin spotlessPlugin = findSpotlessPlugin(project);
 		byte[] digest = digest(spotlessPlugin, formatters);
-		var value = Base64.getEncoder().encodeToString(digest);
+		String value = Base64.getEncoder().encodeToString(digest);
 		return new PluginFingerprint(value);
 	}
 
@@ -70,7 +70,7 @@ final class PluginFingerprint {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		var that = (PluginFingerprint) o;
+		PluginFingerprint that = (PluginFingerprint) o;
 		return value.equals(that.value);
 	}
 
@@ -86,11 +86,11 @@ final class PluginFingerprint {
 
 	private static Plugin findSpotlessPlugin(MavenProject project) {
 		// Try to find the plugin instance from <build><plugins><plugin> XML element
-		var plugin = project.getPlugin(SPOTLESS_PLUGIN_KEY);
+		Plugin plugin = project.getPlugin(SPOTLESS_PLUGIN_KEY);
 		if (plugin == null) {
 			// Try to find the plugin instance from <build><pluginManagement><plugins><plugin> XML element. Useful when
 			// the current module is a parent of a multimodule project
-			var pluginManagement = project.getPluginManagement();
+			PluginManagement pluginManagement = project.getPluginManagement();
 			if (pluginManagement != null) {
 				plugin = pluginManagement.getPluginsAsMap().get(SPOTLESS_PLUGIN_KEY);
 			}

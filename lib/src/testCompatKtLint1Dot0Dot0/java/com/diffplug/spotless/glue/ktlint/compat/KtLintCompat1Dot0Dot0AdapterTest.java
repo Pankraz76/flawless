@@ -30,19 +30,19 @@ import org.junit.jupiter.api.io.TempDir;
 public class KtLintCompat1Dot0Dot0AdapterTest {
 	@Test
 	public void testDefaults(@TempDir Path path) throws IOException {
-		var KtLintCompat1Dot0Dot0Adapter = new KtLintCompat1Dot0Dot0Adapter();
+		KtLintCompat1Dot0Dot0Adapter KtLintCompat1Dot0Dot0Adapter = new KtLintCompat1Dot0Dot0Adapter();
 		var content = loadAndWriteText(path, "EmptyClassBody.kt");
 		final Path filePath = Path.of(path.toString(), "EmptyClassBody.kt");
 
 		Map<String, Object> editorConfigOverrideMap = new HashMap<>();
 
-		var formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
+		String formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
 		assertEquals("class EmptyClassBody\n", formatted);
 	}
 
 	@Test
 	public void testEditorConfigCanDisable(@TempDir Path path) throws IOException {
-		var KtLintCompat1Dot0Dot0Adapter = new KtLintCompat1Dot0Dot0Adapter();
+		KtLintCompat1Dot0Dot0Adapter KtLintCompat1Dot0Dot0Adapter = new KtLintCompat1Dot0Dot0Adapter();
 		var content = loadAndWriteText(path, "FailsNoSemicolons.kt");
 		final Path filePath = Path.of(path.toString(), "FailsNoSemicolons.kt");
 
@@ -50,12 +50,12 @@ public class KtLintCompat1Dot0Dot0AdapterTest {
 		editorConfigOverrideMap.put("indent_style", "tab");
 		editorConfigOverrideMap.put("ktlint_standard_no-semi", "disabled");
 
-		var formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
+		String formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
 		assertEquals("class FailsNoSemicolons {\n\tval i = 0;\n}\n", formatted);
 	}
 
 	private static String loadAndWriteText(Path path, String name) throws IOException {
-		try (var is = KtLintCompat1Dot0Dot0AdapterTest.class.getResourceAsStream("/" + name)) {
+		try (InputStream is = KtLintCompat1Dot0Dot0AdapterTest.class.getResourceAsStream("/" + name)) {
 			Files.copy(is, path.resolve(name));
 		}
 		return Files.readString(path.resolve(name));

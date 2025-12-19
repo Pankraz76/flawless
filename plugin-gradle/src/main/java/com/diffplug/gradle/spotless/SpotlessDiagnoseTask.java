@@ -44,24 +44,24 @@ public class SpotlessDiagnoseTask extends DefaultTask {
 	@TaskAction
 	@SuppressFBWarnings("NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE")
 	public void performAction() throws IOException {
-		var srcRoot = getProject().getProjectDir().toPath();
-		var diagnoseRoot = getProject().getLayout().getBuildDirectory().getAsFile().get()
+		Path srcRoot = getProject().getProjectDir().toPath();
+		Path diagnoseRoot = getProject().getLayout().getBuildDirectory().getAsFile().get()
 				.toPath().resolve("spotless-diagnose-" + source.get().formatName());
 		getProject().delete(diagnoseRoot.toFile());
-		try (var formatter = source.get().buildFormatter()) {
+		try (Formatter formatter = source.get().buildFormatter()) {
 			for (File file : source.get().target) {
 				getLogger().debug("Running padded cell check on " + file);
-				var padded = PaddedCell.check(formatter, file);
+				PaddedCell padded = PaddedCell.check(formatter, file);
 				if (!padded.misbehaved()) {
 					getLogger().debug("    well-behaved.");
 				} else {
 					// the file is misbehaved, so we'll write all its steps to DIAGNOSE_DIR
-					var relative = srcRoot.relativize(file.toPath());
-					var diagnoseFile = diagnoseRoot.resolve(relative);
+					Path relative = srcRoot.relativize(file.toPath());
+					Path diagnoseFile = diagnoseRoot.resolve(relative);
 					for (int i = 0; i < padded.steps().size(); i++) {
 						Path path = Path.of(diagnoseFile + "." + padded.type().name().toLowerCase(Locale.ROOT) + i);
 						Files.createDirectories(path.getParent());
-						var version = padded.steps().get(i);
+						String version = padded.steps().get(i);
 						Files.write(path, version.getBytes(formatter.getEncoding()));
 					}
 					// dump the type of the misbehavior to console

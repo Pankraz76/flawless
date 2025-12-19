@@ -105,7 +105,7 @@ public final class StandardNpmProcessFactory implements NpmProcessFactory {
 
 		@Override
 		public ProcessRunner.Result waitFor() {
-			try (var npmProcess = doStart()) {
+			try (ProcessRunner.LongRunningProcess npmProcess = doStart()) {
 				if (npmProcess.waitFor() != 0) {
 					throw new NpmProcessException("Running npm command '" + describe() + "' failed with exit code: " + npmProcess.exitValue() + "\n\n" + npmProcess.result(), npmProcess.result());
 				}

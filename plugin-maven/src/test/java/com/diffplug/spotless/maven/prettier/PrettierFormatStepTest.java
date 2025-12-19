@@ -30,27 +30,27 @@ import com.diffplug.spotless.tag.NpmTest;
 class PrettierFormatStepTest extends MavenIntegrationHarness {
 
 	private void run(String kind, String suffix) throws IOException, InterruptedException {
-		var path = prepareRun(kind, suffix);
+		String path = prepareRun(kind, suffix);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("npm/prettier/filetypes/" + kind + "/" + kind + ".clean");
 	}
 
 	private String prepareRun(String kind, String suffix) throws IOException {
-		var configPath = ".prettierrc.yml";
+		String configPath = ".prettierrc.yml";
 		setFile(configPath).toResource("npm/prettier/filetypes/" + kind + "/" + ".prettierrc.yml");
-		var path = "src/main/" + kind + "/test." + suffix;
+		String path = "src/main/" + kind + "/test." + suffix;
 		setFile(path).toResource("npm/prettier/filetypes/" + kind + "/" + kind + ".dirty");
 		return path;
 	}
 
 	private ProcessRunner.Result runExpectingError(String kind, String suffix) throws IOException, InterruptedException {
-		var path = prepareRun(kind, suffix);
+		String path = prepareRun(kind, suffix);
 		return mavenRunner().withArguments("spotless:apply").runHasError();
 	}
 
 	@Test
 	void prettier_typescript() throws Exception {
-		var suffix = "ts";
+		String suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
@@ -61,7 +61,7 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 
 	@Test
 	void prettier_html() throws Exception {
-		var suffix = "html";
+		String suffix = "html";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
@@ -72,7 +72,7 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 
 	@Test
 	void prettier_tsx() throws Exception {
-		var suffix = "tsx";
+		String suffix = "tsx";
 		writePomWithPrettierSteps("src/main/**/*." + suffix,
 				"<includes><include>src/**/*.tsx</include></includes>",
 				"<prettier>",
@@ -84,7 +84,7 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 
 	@Test
 	void prettier_tsx_inline_config() throws Exception {
-		var suffix = "tsx";
+		String suffix = "tsx";
 		writePomWithPrettierSteps("src/main/**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
@@ -102,7 +102,7 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 				"  <devDependencies><prettier>1.16.4</prettier></devDependencies>",
 				"</prettier>");
 
-		var result = mavenRunner().withArguments("spotless:apply").runHasError();
+		ProcessRunner.Result result = mavenRunner().withArguments("spotless:apply").runHasError();
 		assertThat(result.stdOutUtf8()).contains(Prettier.ERROR_MESSAGE_ONLY_ONE_CONFIG);
 	}
 
@@ -252,13 +252,13 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 				"fetch-timeout=250",
 				"fetch-retry-mintimeout=250",
 				"fetch-retry-maxtimeout=250");
-		var suffix = "ts";
+		String suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"</prettier>");
-		var result = runExpectingError("typescript", suffix);
+		ProcessRunner.Result result = runExpectingError("typescript", suffix);
 		assertThat(result.stdOutUtf8()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 
@@ -269,14 +269,14 @@ class PrettierFormatStepTest extends MavenIntegrationHarness {
 				"fetch-timeout=250",
 				"fetch-retry-mintimeout=250",
 				"fetch-retry-maxtimeout=250");
-		var suffix = "ts";
+		String suffix = "ts";
 		writePomWithPrettierSteps("**/*." + suffix,
 				"<prettier>",
 				"  <prettierVersion>1.16.4</prettierVersion>",
 				"  <configFile>.prettierrc.yml</configFile>",
 				"  <npmrc>${basedir}/.custom_npmrc</npmrc>",
 				"</prettier>");
-		var result = runExpectingError("typescript", suffix);
+		ProcessRunner.Result result = runExpectingError("typescript", suffix);
 		assertThat(result.stdOutUtf8()).containsPattern("Running npm command.*npm install.* failed with exit code: 1");
 	}
 }

@@ -71,14 +71,14 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 		int[] memberCategoryOffsets = new int[9];
 		boolean success = fillMemberCategoryOffsets(memberCategoryPreferences, memberCategoryOffsets);
 		if (!success) {
-			var defaultValue = "T,SF,SI,SM,F,I,C,M";
+			String defaultValue = "T,SF,SI,SM,F,I,C,M";
 			fillMemberCategoryOffsets(defaultValue, memberCategoryOffsets);
 		}
 
 		int[] visibilityOffsets = new int[4];
 		boolean success2 = fillVisibilityOffsets(visibilityPreferences, visibilityOffsets);
 		if (!success2) {
-			var defaultValue = "B,V,R,D";
+			String defaultValue = "B,V,R,D";
 			fillVisibilityOffsets(defaultValue, visibilityOffsets);
 		}
 
@@ -99,10 +99,10 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 
 	@SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "we only accept valid tokens in the order string, otherwise we fall back to default value")
 	static boolean fillVisibilityOffsets(String preferencesString, int[] offsets) {
-		var tokenizer = new StringTokenizer(preferencesString, ",");
+		StringTokenizer tokenizer = new StringTokenizer(preferencesString, ",");
 		int i = 0;
 		while (tokenizer.hasMoreTokens()) {
-			var token = tokenizer.nextToken();
+			String token = tokenizer.nextToken();
 			switch (token) {
 			case "B":
 				offsets[PUBLIC_INDEX] = i++;
@@ -122,11 +122,11 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 
 	@SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "we only accept valid tokens in the order string, otherwise we fall back to default value")
 	static boolean fillMemberCategoryOffsets(String orderString, int[] offsets) {
-		var tokenizer = new StringTokenizer(orderString, ",");
+		StringTokenizer tokenizer = new StringTokenizer(orderString, ",");
 		int i = 0;
 		offsets[8] = i++;
 		while (tokenizer.hasMoreTokens()) {
-			var token = tokenizer.nextToken();
+			String token = tokenizer.nextToken();
 			switch (token) {
 			case "C":
 				offsets[CONSTRUCTORS_INDEX] = i++;
@@ -159,7 +159,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	private int category(BodyDeclaration bodyDeclaration) {
 		switch (bodyDeclaration.getNodeType()) {
 		case ASTNode.METHOD_DECLARATION: {
-			var method = (MethodDeclaration) bodyDeclaration;
+			MethodDeclaration method = (MethodDeclaration) bodyDeclaration;
 			if (method.isConstructor()) {
 				return CONSTRUCTORS_INDEX;
 			}
@@ -257,8 +257,8 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 
 		switch (bodyDeclaration1.getNodeType()) {
 		case ASTNode.METHOD_DECLARATION: {
-			var method1 = (MethodDeclaration) bodyDeclaration1;
-			var method2 = (MethodDeclaration) bodyDeclaration2;
+			MethodDeclaration method1 = (MethodDeclaration) bodyDeclaration1;
+			MethodDeclaration method2 = (MethodDeclaration) bodyDeclaration2;
 
 			if (sortByVisibility) {
 				int vis = getVisibilityIndex(method1.getModifiers()) - getVisibilityIndex(method2.getModifiers());
@@ -267,8 +267,8 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 				}
 			}
 
-			var name1 = method1.getName().getIdentifier();
-			var name2 = method2.getName().getIdentifier();
+			String name1 = method1.getName().getIdentifier();
+			String name2 = method2.getName().getIdentifier();
 
 			// method declarations (constructors) are sorted by name
 			int cmp = name1.compareTo(name2);
@@ -284,8 +284,8 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 
 			int len = Math.min(length1, length2);
 			for (int i = 0; i < len; i++) {
-				var param1 = parameters1.get(i);
-				var param2 = parameters2.get(i);
+				SingleVariableDeclaration param1 = parameters1.get(i);
+				SingleVariableDeclaration param2 = parameters2.get(i);
 				cmp = buildSignature(param1.getType()).compareTo(buildSignature(param2.getType()));
 				if (cmp != 0) {
 					return cmp;
@@ -297,11 +297,11 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			return preserveRelativeOrder(bodyDeclaration1, bodyDeclaration2);
 		}
 		case ASTNode.FIELD_DECLARATION: {
-			var field1 = (FieldDeclaration) bodyDeclaration1;
-			var field2 = (FieldDeclaration) bodyDeclaration2;
+			FieldDeclaration field1 = (FieldDeclaration) bodyDeclaration1;
+			FieldDeclaration field2 = (FieldDeclaration) bodyDeclaration2;
 
-			var name1 = ((VariableDeclarationFragment) field1.fragments().get(0)).getName().getIdentifier();
-			var name2 = ((VariableDeclarationFragment) field2.fragments().get(0)).getName().getIdentifier();
+			String name1 = ((VariableDeclarationFragment) field1.fragments().get(0)).getName().getIdentifier();
+			String name2 = ((VariableDeclarationFragment) field2.fragments().get(0)).getName().getIdentifier();
 
 			// field declarations are sorted by name
 			return compareNames(bodyDeclaration1, bodyDeclaration2, name1, name2);
@@ -313,31 +313,31 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 		case ASTNode.TYPE_DECLARATION:
 		case ASTNode.ENUM_DECLARATION:
 		case ASTNode.ANNOTATION_TYPE_DECLARATION: {
-			var type1 = (AbstractTypeDeclaration) bodyDeclaration1;
-			var type2 = (AbstractTypeDeclaration) bodyDeclaration2;
+			AbstractTypeDeclaration type1 = (AbstractTypeDeclaration) bodyDeclaration1;
+			AbstractTypeDeclaration type2 = (AbstractTypeDeclaration) bodyDeclaration2;
 
-			var name1 = type1.getName().getIdentifier();
-			var name2 = type2.getName().getIdentifier();
+			String name1 = type1.getName().getIdentifier();
+			String name2 = type2.getName().getIdentifier();
 
 			// typedeclarations are sorted by name
 			return compareNames(bodyDeclaration1, bodyDeclaration2, name1, name2);
 		}
 		case ASTNode.ENUM_CONSTANT_DECLARATION: {
-			var decl1 = (EnumConstantDeclaration) bodyDeclaration1;
-			var decl2 = (EnumConstantDeclaration) bodyDeclaration2;
+			EnumConstantDeclaration decl1 = (EnumConstantDeclaration) bodyDeclaration1;
+			EnumConstantDeclaration decl2 = (EnumConstantDeclaration) bodyDeclaration2;
 
-			var name1 = decl1.getName().getIdentifier();
-			var name2 = decl2.getName().getIdentifier();
+			String name1 = decl1.getName().getIdentifier();
+			String name2 = decl2.getName().getIdentifier();
 
 			// enum constants declarations are sorted by name
 			return compareNames(bodyDeclaration1, bodyDeclaration2, name1, name2);
 		}
 		case ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION: {
-			var decl1 = (AnnotationTypeMemberDeclaration) bodyDeclaration1;
-			var decl2 = (AnnotationTypeMemberDeclaration) bodyDeclaration2;
+			AnnotationTypeMemberDeclaration decl1 = (AnnotationTypeMemberDeclaration) bodyDeclaration1;
+			AnnotationTypeMemberDeclaration decl2 = (AnnotationTypeMemberDeclaration) bodyDeclaration2;
 
-			var name1 = decl1.getName().getIdentifier();
-			var name2 = decl2.getName().getIdentifier();
+			String name1 = decl1.getName().getIdentifier();
+			String name2 = decl2.getName().getIdentifier();
 
 			// enum constants declarations are sorted by name
 			return compareNames(bodyDeclaration1, bodyDeclaration2, name1, name2);
@@ -385,7 +385,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	}
 
 	private String buildSignature(Type type) {
-		var flattener = new NaiveASTFlattener();
+		NaiveASTFlattener flattener = new NaiveASTFlattener();
 		type.accept(flattener);
 		return flattener.getResult();
 	}

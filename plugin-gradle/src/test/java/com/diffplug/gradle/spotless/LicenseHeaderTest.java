@@ -89,7 +89,7 @@ class LicenseHeaderTest extends GradleIntegrationHarness {
 		setFile(TEST_JAVA).toContent(CONTENT);
 		gradleRunner().withArguments("spotlessApply", "--stacktrace").forwardOutput().build();
 		assertFile(TEST_JAVA).hasContent("/** New License Header */\n" + CONTENT);
-		var multipleLicenseHeaderConfiguration = """
+		String multipleLicenseHeaderConfiguration = """
 				licenseHeader('/** Base License Header */').named('PrimaryHeaderLicense').onlyIfContentMatches('Best')
 				licenseHeader('/** Alternate License Header */').named('SecondaryHeaderLicense').onlyIfContentMatches('.*Test.+')""";
 		setLicenseStep(multipleLicenseHeaderConfiguration);
@@ -100,7 +100,7 @@ class LicenseHeaderTest extends GradleIntegrationHarness {
 
 	@Test
 	void ratchetFrom() throws Exception {
-		try (var git = Git.init().setDirectory(rootFolder()).call()) {
+		try (Git git = Git.init().setDirectory(rootFolder()).call()) {
 			git.commit().setMessage("First commit").call();
 		}
 		setLicenseStep("licenseHeader('/** $YEAR */')\nratchetFrom 'HEAD'");
@@ -109,7 +109,7 @@ class LicenseHeaderTest extends GradleIntegrationHarness {
 
 	@Test
 	void ratchetFromButUpdateFalse() throws Exception {
-		try (var git = Git.init().setDirectory(rootFolder()).call()) {
+		try (Git git = Git.init().setDirectory(rootFolder()).call()) {
 			git.commit().setMessage("First commit").call();
 		}
 		Git.init().setDirectory(rootFolder()).call();

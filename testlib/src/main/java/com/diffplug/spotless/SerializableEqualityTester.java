@@ -37,7 +37,7 @@ public abstract class SerializableEqualityTester {
 	public void testEquals() {
 		List<List<Object>> allGroups = new ArrayList<>();
 		Box<List<Object>> currentGroup = Box.of(new ArrayList<>());
-		var api = new API() {
+		API api = new API() {
 			@Override
 			public void areDifferentThan() {
 				currentGroup.modify(current -> {
@@ -63,7 +63,7 @@ public abstract class SerializableEqualityTester {
 		if (!lastGroup.isEmpty()) {
 			throw new IllegalArgumentException("Looks like you forgot to make a final call to 'areDifferentThan()'.");
 		}
-		var tester = new EqualsTester();
+		EqualsTester tester = new EqualsTester();
 		for (List<Object> step : allGroups) {
 			tester.addEqualityGroup(step.toArray());
 		}
@@ -72,9 +72,9 @@ public abstract class SerializableEqualityTester {
 
 	@SuppressWarnings("unchecked")
 	static <T extends Serializable> T reserialize(T input) {
-		var asBytes = LazyForwardingEquality.toBytes(input);
-		var byteInput = new ByteArrayInputStream(asBytes);
-		try (var objectInput = new ObjectInputStream(byteInput)) {
+		byte[] asBytes = LazyForwardingEquality.toBytes(input);
+		ByteArrayInputStream byteInput = new ByteArrayInputStream(asBytes);
+		try (ObjectInputStream objectInput = new ObjectInputStream(byteInput)) {
 			return (T) objectInput.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			throw ThrowingEx.asRuntime(e);

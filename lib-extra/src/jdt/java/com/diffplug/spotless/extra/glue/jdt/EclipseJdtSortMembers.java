@@ -64,14 +64,14 @@ public final class EclipseJdtSortMembers {
 		}
 
 		try {
-			var compilationUnit = new CompilationUnit(code);
+			CompilationUnit compilationUnit = new CompilationUnit(code);
 			DefaultJavaElementComparator comparator = DefaultJavaElementComparator.of(
 					localProperties.doNotSortFields,
 					localProperties.membersOrder,
 					localProperties.sortByVisibility,
 					localProperties.visibilityOrder);
 			new Sorter(AST.getJLSLatest(), compilationUnit, null, comparator).sort();
-			var content = compilationUnit.getBuffer().getContents();
+			String content = compilationUnit.getBuffer().getContents();
 			if (content != null) {
 				code = content;
 			}
@@ -82,9 +82,9 @@ public final class EclipseJdtSortMembers {
 	}
 
 	static Optional<Boolean> testOverwriteProperty(Pattern pattern, String code) {
-		var matcher = pattern.matcher(code);
+		Matcher matcher = pattern.matcher(code);
 		if (matcher.find()) {
-			var flag = matcher.group(1);
+			String flag = matcher.group(1);
 			return Optional.of(Boolean.valueOf(flag));
 		}
 		return Optional.empty();
@@ -257,10 +257,10 @@ public final class EclipseJdtSortMembers {
 
 		static SortProperties from(Map<String, String> properties) {
 			boolean enabled = Boolean.parseBoolean(properties.getOrDefault("sp_cleanup.sort_members", "false"));
-			var membersOrder = properties.getOrDefault("outlinesortoption", "");
+			String membersOrder = properties.getOrDefault("outlinesortoption", "");
 			boolean doNotSortFields = !Boolean.parseBoolean(properties.getOrDefault("sp_cleanup.sort_members_all", "false"));
 			boolean sortByVisibility = Boolean.parseBoolean(properties.getOrDefault("org.eclipse.jdt.ui.enable.visibility.order", "false"));
-			var visibilityOrder = properties.getOrDefault("org.eclipse.jdt.ui.visibility.order", "");
+			String visibilityOrder = properties.getOrDefault("org.eclipse.jdt.ui.visibility.order", "");
 			return new SortProperties(enabled, membersOrder, doNotSortFields, sortByVisibility, visibilityOrder);
 		}
 	}

@@ -51,9 +51,9 @@ class ConfigAvoidanceTest extends GradleIntegrationHarness {
 				"}");
 		setFile("src/main/java/test.java").toResource("java/googlejavaformat/JavaCodeUnformatted.test");
 
-		var help = gradleRunner().withArguments("help").build().getOutput();
+		String help = gradleRunner().withArguments("help").build().getOutput();
 		Assertions.assertThat(help).doesNotContain("Canary was configured");
-		var check = gradleRunner().withArguments("check").buildAndFail().getOutput();
+		String check = gradleRunner().withArguments("check").buildAndFail().getOutput();
 		Assertions.assertThat(check).contains("Canary was configured", "Canary ran", "Execution failed for task ':spotlessJavaCheck'");
 	}
 }

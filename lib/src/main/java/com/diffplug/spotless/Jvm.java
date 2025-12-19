@@ -40,7 +40,7 @@ public final class Jvm {
 		if (jre.startsWith("1.8")) {
 			VERSION = 8;
 		} else {
-			var matcher = Pattern.compile("(\\d+)").matcher(jre);
+			Matcher matcher = Pattern.compile("(\\d+)").matcher(jre);
 			if (!matcher.find()) {
 				throw new IllegalArgumentException("Expected " + jre + " to start with an integer");
 			}
@@ -121,12 +121,12 @@ public final class Jvm {
 
 		/** @return Highest formatter version recommended for this JVM (null, if JVM not supported) */
 		@Nullable public V getRecommendedFormatterVersion() {
-			var configuredJvmVersionOrNull = jvm2fmtMaxVersion.floorKey(Jvm.version());
+			Integer configuredJvmVersionOrNull = jvm2fmtMaxVersion.floorKey(Jvm.version());
 			return configuredJvmVersionOrNull == null ? null : jvm2fmtMaxVersion.get(configuredJvmVersionOrNull);
 		}
 
 		@Nullable public V getMinimumRequiredFormatterVersion() {
-			var configuredJvmVersionOrNull = jvm2fmtMinVersion.floorKey(Jvm.version());
+			Integer configuredJvmVersionOrNull = jvm2fmtMinVersion.floorKey(Jvm.version());
 			return configuredJvmVersionOrNull == null ? null : jvm2fmtMinVersion.get(configuredJvmVersionOrNull);
 		}
 
@@ -137,7 +137,7 @@ public final class Jvm {
 		 */
 		public void assertFormatterSupported(V formatterVersion) {
 			Objects.requireNonNull(formatterVersion);
-			var error = buildUnsupportedFormatterMessage(formatterVersion);
+			String error = buildUnsupportedFormatterMessage(formatterVersion);
 			if (!error.isEmpty()) {
 				throw Lint.atUndefinedLine(LINT_CODE, error).shortcut();
 			}
@@ -150,7 +150,7 @@ public final class Jvm {
 				return buildUpgradeJvmMessage(fmtVersion) + "Upgrade your JVM or try " + toString();
 			}
 			// check if the formatter version is too low for the jvm version
-			var minimumFormatterVersion = getMinimumRequiredFormatterVersion();
+			V minimumFormatterVersion = getMinimumRequiredFormatterVersion();
 			if ((minimumFormatterVersion != null) && (fmtVersionComparator.compare(fmtVersion, minimumFormatterVersion) < 0)) {
 				return "You are running Spotless on JVM %d. This requires %s of at least %s (you are using %s).%n".formatted(Jvm.version(), fmtName, minimumFormatterVersion, fmtVersion);
 			}
@@ -159,9 +159,9 @@ public final class Jvm {
 		}
 
 		private String buildUpgradeJvmMessage(V fmtVersion) {
-			var builder = new StringBuilder();
+			StringBuilder builder = new StringBuilder();
 			builder.append("You are running Spotless on JVM %d".formatted(Jvm.version()));
-			var recommendedFmtVersionOrNull = getRecommendedFormatterVersion();
+			V recommendedFmtVersionOrNull = getRecommendedFormatterVersion();
 			if (recommendedFmtVersionOrNull != null) {
 				builder.append(", which limits you to %s %s.%n".formatted(fmtName, recommendedFmtVersionOrNull));
 			} else {
@@ -180,7 +180,7 @@ public final class Jvm {
 				entry = fmtMaxVersion2jvmVersion.lastEntry();
 			}
 			if (entry != null) {
-				var maxKnownFmtVersion = jvm2fmtMaxVersion.get(entry.getValue());
+				V maxKnownFmtVersion = jvm2fmtMaxVersion.get(entry.getValue());
 				if (fmtVersionComparator.compare(fmtVersion, maxKnownFmtVersion) <= 0) {
 					return entry.getValue();
 				}
@@ -197,7 +197,7 @@ public final class Jvm {
 		public FormatterFunc suggestLaterVersionOnError(V formatterVersion, FormatterFunc originalFunc) {
 			Objects.requireNonNull(formatterVersion);
 			Objects.requireNonNull(originalFunc);
-			final var hintUnsupportedProblem = buildUnsupportedFormatterMessage(formatterVersion);
+			final String hintUnsupportedProblem = buildUnsupportedFormatterMessage(formatterVersion);
 			final String proposeDifferentFormatter = hintUnsupportedProblem.isEmpty() ? buildUpgradeFormatterMessage(formatterVersion) : hintUnsupportedProblem;
 			return proposeDifferentFormatter.isEmpty() ? originalFunc : new FormatterFunc() {
 
@@ -223,10 +223,10 @@ public final class Jvm {
 		}
 
 		private String buildUpgradeFormatterMessage(V fmtVersion) {
-			var builder = new StringBuilder();
+			StringBuilder builder = new StringBuilder();
 			// check if the formatter is not supported on this jvm
-			var minimumFormatterVersion = getMinimumRequiredFormatterVersion();
-			var recommendedFmtVersionOrNull = getRecommendedFormatterVersion();
+			V minimumFormatterVersion = getMinimumRequiredFormatterVersion();
+			V recommendedFmtVersionOrNull = getRecommendedFormatterVersion();
 			if ((minimumFormatterVersion != null) && (fmtVersionComparator.compare(fmtVersion, minimumFormatterVersion) < 0)) {
 				builder.append("You are running Spotless on JVM %d. This requires %s of at least %s.%n".formatted(Jvm.version(), fmtName, minimumFormatterVersion));
 				builder.append("You are using %s %s.%n".formatted(fmtName, fmtVersion));
@@ -239,10 +239,10 @@ public final class Jvm {
 				builder.append("%s %s is the recommended version, which may have fixed this problem.%n".formatted(fmtName, recommendedFmtVersionOrNull));
 				builder.append("%s %s requires JVM %d+.".formatted(fmtName, recommendedFmtVersionOrNull, getRequiredJvmVersion(recommendedFmtVersionOrNull)));
 			} else {
-				var higherFormatterVersionOrNull = fmtMaxVersion2jvmVersion.higherKey(fmtVersion);
+				V higherFormatterVersionOrNull = fmtMaxVersion2jvmVersion.higherKey(fmtVersion);
 				if (higherFormatterVersionOrNull != null) {
 					builder.append(buildUpgradeJvmMessage(fmtVersion));
-					var higherJvmVersion = fmtMaxVersion2jvmVersion.get(higherFormatterVersionOrNull);
+					Integer higherJvmVersion = fmtMaxVersion2jvmVersion.get(higherFormatterVersionOrNull);
 					builder.append("If you upgrade your JVM to %d+, then you can use %s %s, which may have fixed this problem.".formatted(higherJvmVersion, fmtName, higherFormatterVersionOrNull));
 				}
 			}
@@ -280,7 +280,7 @@ public final class Jvm {
 
 			private static <V> int[] convert(V versionObject) {
 				try {
-					var versionString = versionObject.toString();
+					String versionString = versionObject.toString();
 					if (versionString.endsWith("-SNAPSHOT")) {
 						versionString = versionString.substring(0, versionString.length() - "-SNAPSHOT".length());
 					}

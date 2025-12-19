@@ -134,12 +134,12 @@ class ErrorShouldRethrowTest extends GradleIntegrationHarness {
 	}
 
 	private StringSelfie expectFailureAndConsoleToBe() throws Exception {
-		var result = gradleRunner().withArguments("check").buildAndFail();
-		var output = result.getOutput();
+		BuildResult result = gradleRunner().withArguments("check").buildAndFail();
+		String output = result.getOutput();
 		int register = output.indexOf(":spotlessInternalRegisterDependencies");
 		int firstNewlineAfterThat = output.indexOf('\n', register + 1);
 		int firstTry = output.indexOf("\n* Try:");
-		var useThisToMatch = output.substring(firstNewlineAfterThat, firstTry).trim();
+		String useThisToMatch = output.substring(firstNewlineAfterThat, firstTry).trim();
 		return Selfie.expectSelfie(useThisToMatch);
 	}
 }

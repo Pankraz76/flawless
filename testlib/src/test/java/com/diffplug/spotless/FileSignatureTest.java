@@ -38,7 +38,7 @@ class FileSignatureTest extends ResourceHarness {
 	@Test
 	void testFromList() throws IOException {
 		Collection<File> inputFiles = getTestFiles(INPUT_PATHS);
-		var signature = FileSignature.signAsList(inputFiles);
+		FileSignature signature = FileSignature.signAsList(inputFiles);
 		Collection<File> expectedFiles = getTestFiles(EXPECTED_PATH_LIST);
 		Collection<File> outputFiles = signature.files();
 		assertThat(outputFiles).containsExactlyElementsOf(expectedFiles);
@@ -47,7 +47,7 @@ class FileSignatureTest extends ResourceHarness {
 	@Test
 	void testFromSet() throws IOException {
 		Collection<File> inputFiles = getTestFiles(INPUT_PATHS);
-		var signature = FileSignature.signAsSet(inputFiles);
+		FileSignature signature = FileSignature.signAsSet(inputFiles);
 		Collection<File> expectedFiles = getTestFiles(EXPECTED_PATH_SET);
 		Collection<File> outputFiles = signature.files();
 		assertThat(outputFiles).containsExactlyElementsOf(expectedFiles);
@@ -55,14 +55,14 @@ class FileSignatureTest extends ResourceHarness {
 
 	@Test
 	void testFromDirectory() {
-		var dir = new File(rootFolder(), "dir");
+		File dir = new File(rootFolder(), "dir");
 		assertThatThrownBy(() -> FileSignature.signAsList(dir))
 				.isInstanceOf(IllegalArgumentException.class);
 	}
 
 	@Test
 	void testFromFilesAndDirectory() throws IOException {
-		var dir = new File(rootFolder(), "dir");
+		File dir = new File(rootFolder(), "dir");
 		List<File> files = getTestFiles(INPUT_PATHS);
 		files.add(dir);
 		Collections.shuffle(files);
@@ -86,7 +86,7 @@ class FileSignatureTest extends ResourceHarness {
 	@Test
 	@EnabledOnOs(WINDOWS)
 	void windowsRoot() {
-		var subpath = FileSignature.subpath("S://", "S:/build.gradle");
+		String subpath = FileSignature.subpath("S://", "S:/build.gradle");
 		Assertions.assertThat(subpath).isEqualTo("build.gradle");
 	}
 }

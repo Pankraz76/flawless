@@ -36,7 +36,7 @@ class FileIndexTest extends FileIndexHarness {
 
 	@Test
 	void readFallsBackToEmptyIndexWhenIndexFileDoesNotExist() {
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		verify(log).info("Index file does not exist. Fallback to an empty index");
@@ -46,7 +46,7 @@ class FileIndexTest extends FileIndexHarness {
 	void readFallsBackToEmptyIndexWhenIndexFileIsEmpty() throws Exception {
 		writeIndexFile();
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		verify(log).info("Index file is empty. Fallback to an empty index");
@@ -56,7 +56,7 @@ class FileIndexTest extends FileIndexHarness {
 	void readFallsBackToEmptyIndexOnFingerprintMismatch() throws Exception {
 		createSourceFilesAndWriteIndexFile(PluginFingerprint.from("wrong"), "source1.txt", "source2.txt");
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		verify(log).info("Index file corresponds to a different configuration of the plugin. Either the plugin version or its configuration has changed. Fallback to an empty index");
@@ -67,7 +67,7 @@ class FileIndexTest extends FileIndexHarness {
 		createSourceFile("source.txt");
 		writeIndexFile(config.getPluginFingerprint().value(), "source.txt|" + Instant.now());
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		ArgumentCaptor<Throwable> errorCaptor = ArgumentCaptor.forClass(Throwable.class);
@@ -80,7 +80,7 @@ class FileIndexTest extends FileIndexHarness {
 		createSourceFile("source.txt");
 		writeIndexFile(config.getPluginFingerprint().value(), "source.txt 12345-bad-instant");
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		ArgumentCaptor<Throwable> errorCaptor = ArgumentCaptor.forClass(Throwable.class);
@@ -92,7 +92,7 @@ class FileIndexTest extends FileIndexHarness {
 	void readEmptyIndex() throws Exception {
 		writeIndexFile("foo");
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isZero();
 		verifyNoInteractions(log);
@@ -100,9 +100,9 @@ class FileIndexTest extends FileIndexHarness {
 
 	@Test
 	void readIndexWithSingleEntry() throws Exception {
-		var sourceFile = createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt").get(0);
+		Path sourceFile = createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt").get(0);
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isOne();
 		assertThat(index.getLastModifiedTime(sourceFile)).isEqualTo(Files.getLastModifiedTime(sourceFile).toInstant());
@@ -113,7 +113,7 @@ class FileIndexTest extends FileIndexHarness {
 	void readIndexWithMultipleEntries() throws Exception {
 		List<Path> sourceFiles = createSourceFilesAndWriteIndexFile(FINGERPRINT, "source1.txt", "source2.txt", "source3.txt");
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.size()).isEqualTo(3);
 		for (Path sourceFile : sourceFiles) {
@@ -127,7 +127,7 @@ class FileIndexTest extends FileIndexHarness {
 		createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt");
 		FileTime modifiedTimeBeforeRead = Files.getLastModifiedTime(config.getIndexFile());
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 		FileTime modifiedTimeAfterRead = Files.getLastModifiedTime(config.getIndexFile());
 
 		index.write();
@@ -140,17 +140,17 @@ class FileIndexTest extends FileIndexHarness {
 	@Test
 	void writeIndexContainingUpdates() throws Exception {
 		createSourceFilesAndWriteIndexFile(FINGERPRINT, "source1.txt", "source2.txt");
-		var sourceFile3 = createSourceFile("source3.txt");
-		var sourceFile4 = createSourceFile("source4.txt");
+		Path sourceFile3 = createSourceFile("source3.txt");
+		Path sourceFile4 = createSourceFile("source4.txt");
 		Instant modifiedTime3 = Instant.now();
-		var modifiedTime4 = Instant.now().plusSeconds(42);
+		Instant modifiedTime4 = Instant.now().plusSeconds(42);
 
-		var index1 = FileIndex.read(config, log);
+		FileIndex index1 = FileIndex.read(config, log);
 		index1.setLastModifiedTime(sourceFile3, modifiedTime3);
 		index1.setLastModifiedTime(sourceFile4, modifiedTime4);
 		index1.write();
 
-		var index2 = FileIndex.read(config, log);
+		FileIndex index2 = FileIndex.read(config, log);
 		assertThat(index2.getLastModifiedTime(sourceFile3)).isEqualTo(modifiedTime3);
 		assertThat(index2.getLastModifiedTime(sourceFile4)).isEqualTo(modifiedTime4);
 	}
@@ -158,15 +158,15 @@ class FileIndexTest extends FileIndexHarness {
 	@Test
 	void writeIndexWhenParentDirDoesNotExist() throws Exception {
 		assertThat(config.getIndexFile().getParent()).doesNotExist();
-		var index1 = FileIndex.read(config, log);
-		var sourceFile = createSourceFile("source.txt");
+		FileIndex index1 = FileIndex.read(config, log);
+		Path sourceFile = createSourceFile("source.txt");
 		Instant modifiedTime = Instant.now();
 		index1.setLastModifiedTime(sourceFile, modifiedTime);
 
 		index1.write();
 
 		assertThat(config.getIndexFile().getParent()).exists();
-		var index2 = FileIndex.read(config, log);
+		FileIndex index2 = FileIndex.read(config, log);
 		assertThat(index2.getLastModifiedTime(sourceFile)).isEqualTo(modifiedTime);
 	}
 
@@ -191,11 +191,11 @@ class FileIndexTest extends FileIndexHarness {
 	@Test
 	void getLastModifiedTimeReturnsEmptyOptionalForNonProjectFile() throws Exception {
 		createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt");
-		var nonProjectDir = tempDir.resolve("some-other-project");
+		Path nonProjectDir = tempDir.resolve("some-other-project");
 		Files.createDirectory(nonProjectDir);
 		Path nonProjectFile = Files.createFile(nonProjectDir.resolve("some-other-source.txt"));
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.getLastModifiedTime(nonProjectFile)).isNull();
 	}
@@ -203,16 +203,16 @@ class FileIndexTest extends FileIndexHarness {
 	@Test
 	void getLastModifiedTimeReturnsEmptyOptionalForUnknownFile() throws Exception {
 		createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt");
-		var unknownSourceFile = createSourceFile("unknown-source.txt");
+		Path unknownSourceFile = createSourceFile("unknown-source.txt");
 
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 
 		assertThat(index.getLastModifiedTime(unknownSourceFile)).isNull();
 	}
 
 	@Test
 	void setLastModifiedTimeThrowsForNonProjectFile() {
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 		Path nonProjectFile = Path.of("non-project-file");
 
 		assertThatThrownBy(() -> index.setLastModifiedTime(nonProjectFile, Instant.now())).isInstanceOf(IllegalArgumentException.class);
@@ -220,13 +220,13 @@ class FileIndexTest extends FileIndexHarness {
 
 	@Test
 	void setLastModifiedTimeUpdatesModifiedTime() throws Exception {
-		var sourceFile = createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt").get(0);
-		var index = FileIndex.read(config, log);
+		Path sourceFile = createSourceFilesAndWriteIndexFile(FINGERPRINT, "source.txt").get(0);
+		FileIndex index = FileIndex.read(config, log);
 
-		var oldTime = index.getLastModifiedTime(sourceFile);
+		Instant oldTime = index.getLastModifiedTime(sourceFile);
 		assertThat(oldTime).isNotNull();
 
-		var newTime = Instant.now().plusSeconds(42);
+		Instant newTime = Instant.now().plusSeconds(42);
 		assertThat(oldTime).isNotEqualTo(newTime);
 
 		index.setLastModifiedTime(sourceFile, newTime);
@@ -236,27 +236,27 @@ class FileIndexTest extends FileIndexHarness {
 	@Test
 	void rewritesIndexFileThatReferencesNonExistingFile() throws Exception {
 		createSourceFilesAndWriteIndexFile(FINGERPRINT, "source1.txt", "source2.txt");
-		var nonExistingSourceFile = config.getProjectDir().resolve("non-existing-source.txt");
-		var index1 = FileIndex.read(config, log);
+		Path nonExistingSourceFile = config.getProjectDir().resolve("non-existing-source.txt");
+		FileIndex index1 = FileIndex.read(config, log);
 		assertThat(index1.size()).isEqualTo(2);
 
 		index1.setLastModifiedTime(nonExistingSourceFile, Instant.now());
 		assertThat(index1.size()).isEqualTo(3);
 		index1.write();
 
-		var index2 = FileIndex.read(config, log);
+		FileIndex index2 = FileIndex.read(config, log);
 		verify(log).info("File stored in the index does not exist: " + nonExistingSourceFile.getFileName());
 		assertThat(index2.size()).isEqualTo(2);
 		index2.write();
 
-		var index3 = FileIndex.read(config, log);
+		FileIndex index3 = FileIndex.read(config, log);
 		assertThat(index3.size()).isEqualTo(2);
 	}
 
 	@Test
 	void writeFailsWhenIndexFilesDoesNotHaveParentDir() {
 		when(config.getIndexFile()).thenReturn(Path.of("file-without-parent"));
-		var index = FileIndex.read(config, log);
+		FileIndex index = FileIndex.read(config, log);
 		assertThat(index.size()).isZero();
 
 		assertThatThrownBy(index::write).isInstanceOf(IllegalStateException.class)

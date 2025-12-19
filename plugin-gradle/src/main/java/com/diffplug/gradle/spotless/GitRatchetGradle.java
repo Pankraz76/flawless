@@ -39,13 +39,13 @@ public class GitRatchetGradle extends GitRatchet<File> {
 	}
 
 	static void redirectJGitExecutions() {
-		var existing = SystemReader.getInstance();
+		SystemReader existing = SystemReader.getInstance();
 		SystemReader.setInstance(new DelegatingSystemReader(existing) {
 			private AtomicReference<FileBasedConfig> systemConfig = new AtomicReference<>();
 
 			@Override
 			public StoredConfig getSystemConfig() throws ConfigInvalidException, IOException {
-				var c = systemConfig.get();
+				FileBasedConfig c = systemConfig.get();
 				if (c == null) {
 					systemConfig.compareAndSet(null,
 							this.openSystemConfig(this.getJGitConfig(), FS.DETECTED));
@@ -63,7 +63,7 @@ public class GitRatchetGradle extends GitRatchet<File> {
 
 				updateAll(config.getBaseConfig());
 				if (config instanceof FileBasedConfig) {
-					var cfg = (FileBasedConfig) config;
+					FileBasedConfig cfg = (FileBasedConfig) config;
 					if (cfg.isOutdated()) {
 						cfg.load();
 					}
@@ -75,7 +75,7 @@ public class GitRatchetGradle extends GitRatchet<File> {
 				// cgit logic: https://git.kernel.org/pub/scm/git/git.git/tree/config.c#n1973 - in git_system_config()
 				// They check the GIT_CONFIG_SYSTEM env var first, then follow up with logic based on compile-time parameters
 				// We can't replicate this exactly so we'll do the closest approximation that Gradle will allow.
-				final var systemPath = this.getenv("GIT_CONFIG_SYSTEM");
+				final String systemPath = this.getenv("GIT_CONFIG_SYSTEM");
 				if (systemPath != null) {
 					fs.setGitSystemConfig(new File(systemPath).getAbsoluteFile());
 					return super.openSystemConfig(parent, fs);
@@ -83,11 +83,11 @@ public class GitRatchetGradle extends GitRatchet<File> {
 
 				// match FS.searchPath
 				File gitExec = null;
-				final var path = this.getenv("PATH");
+				final String path = this.getenv("PATH");
 				if (path != null) {
 					outer: for (final String p : path.split(File.pathSeparator)) {
 						for (final String name : GIT_EXEC_CANDIDATES) {
-							final var candidate = new File(p, name);
+							final File candidate = new File(p, name);
 							if (candidate.isFile() && candidate.canExecute()) {
 								gitExec = candidate.getAbsoluteFile();
 								break outer;
@@ -99,10 +99,10 @@ public class GitRatchetGradle extends GitRatchet<File> {
 				// Guess at common locations
 				if (gitExec != null) {
 					// If git exec is at <prefix>/bin/git, this returns <prefix>
-					var prefix = gitExec.getParentFile().getParentFile();
+					File prefix = gitExec.getParentFile().getParentFile();
 
 					// Then we try to resolve a config
-					final var systemConfig = new File(prefix, "etc/gitconfig");
+					final File systemConfig = new File(prefix, "etc/gitconfig");
 					if (systemConfig.exists()) {
 						fs.setGitSystemConfig(systemConfig);
 						return super.openSystemConfig(parent, fs);

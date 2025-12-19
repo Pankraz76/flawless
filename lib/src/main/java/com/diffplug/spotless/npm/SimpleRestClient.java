@@ -41,7 +41,7 @@ final class SimpleRestClient {
 
 	String postJson(String endpoint, Map<String, Object> jsonParams) throws SimpleRestException {
 		final JsonWriter jsonWriter = JsonWriter.of(jsonParams);
-		final var jsonString = jsonWriter.toJsonString();
+		final String jsonString = jsonWriter.toJsonString();
 
 		return postJson(endpoint, jsonString);
 	}
@@ -52,15 +52,15 @@ final class SimpleRestClient {
 
 	String postJson(String endpoint, @Nullable String rawJson) throws SimpleRestException {
 		try {
-			var url = new URL(this.baseUrl + endpoint);
-			var con = (HttpURLConnection) url.openConnection();
+			URL url = new URL(this.baseUrl + endpoint);
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
 			con.setConnectTimeout(60 * 1000); // one minute
 			con.setReadTimeout(2 * 60 * 1000); // two minutes - who knows how large those files can actually get
 			con.setRequestMethod("POST");
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setDoOutput(true);
 			if (rawJson != null) {
-				try (var out = con.getOutputStream()) {
+				try (OutputStream out = con.getOutputStream()) {
 					NpmResourceHelper.writeUtf8StringToOutputStream(rawJson, out);
 					out.flush();
 				}
@@ -87,7 +87,7 @@ final class SimpleRestClient {
 	}
 
 	private String readInputStream(InputStream inputStream) throws IOException {
-		try (var input = new BufferedInputStream(inputStream)) {
+		try (BufferedInputStream input = new BufferedInputStream(inputStream)) {
 			return NpmResourceHelper.readUtf8StringFromInputStream(input);
 		}
 	}

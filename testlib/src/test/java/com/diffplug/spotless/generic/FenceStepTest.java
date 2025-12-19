@@ -30,9 +30,9 @@ import com.diffplug.spotless.StepHarnessWithFile;
 class FenceStepTest extends ResourceHarness {
 	@Test
 	void single() {
-		var fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
+		FormatterStep fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
 				.preserveWithin(Arrays.asList(ToCaseStep.lower()));
-		var harness = StepHarness.forStep(fence);
+		StepHarness harness = StepHarness.forStep(fence);
 		harness.test(
 				StringPrinter.buildStringFromLines(
 						"A B C",
@@ -50,9 +50,9 @@ class FenceStepTest extends ResourceHarness {
 
 	@Test
 	void multiple() {
-		var fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
+		FormatterStep fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
 				.preserveWithin(Arrays.asList(ToCaseStep.lower()));
-		var harness = StepHarness.forStep(fence);
+		StepHarness harness = StepHarness.forStep(fence);
 		harness.test(
 				StringPrinter.buildStringFromLines(
 						"A B C",
@@ -84,7 +84,7 @@ class FenceStepTest extends ResourceHarness {
 
 	@Test
 	void broken() {
-		var fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
+		FormatterStep fence = FenceStep.named("fence").openClose("spotless:off", "spotless:on")
 				.preserveWithin(Arrays.asList(ReplaceStep.create("replace", "spotless:on", "REMOVED")));
 		// this fails because uppercase turns spotless:off into SPOTLESS:OFF, etc
 		StepHarnessWithFile.forStep(this, fence).expectLintsOfFileAndContent("README.md", StringPrinter.buildStringFromLines("A B C",
@@ -96,7 +96,7 @@ class FenceStepTest extends ResourceHarness {
 
 	@Test
 	void andApply() {
-		var fence = FenceStep.named("fence").openClose("<lower>", "</lower>")
+		FormatterStep fence = FenceStep.named("fence").openClose("<lower>", "</lower>")
 				.applyWithin(Arrays.asList(ToCaseStep.lower()));
 		StepHarness.forStep(fence).test(
 				StringPrinter.buildStringFromLines(

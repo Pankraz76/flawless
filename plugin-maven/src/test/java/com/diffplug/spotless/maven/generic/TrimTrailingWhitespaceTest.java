@@ -26,13 +26,13 @@ class TrimTrailingWhitespaceTest extends MavenIntegrationHarness {
 		writePomWithFormatSteps(
 				"<trimTrailingWhitespace />");
 
-		var target = "This line ends with whitespaces";
-		var source = target + "                    ";
+		String target = "This line ends with whitespaces";
+		String source = target + "                    ";
 		runTest(source, target);
 	}
 
 	private void runTest(String sourceContent, String targetContent) throws Exception {
-		var path = "src/main/java/test.java";
+		String path = "src/main/java/test.java";
 		setFile(path).toContent(sourceContent);
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).hasContent(targetContent);

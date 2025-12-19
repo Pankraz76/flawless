@@ -80,7 +80,7 @@ public class ScalaExtension extends FormatExtension implements JvmLang {
 					"You must either specify 'target' manually or apply the 'scala' plugin.",
 					SourceSet::getAllSource,
 					file -> {
-						final var name = file.getName();
+						final String name = file.getName();
 						return name.endsWith(".scala") || name.endsWith(".sc");
 					});
 		}

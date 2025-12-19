@@ -25,7 +25,7 @@ import com.diffplug.spotless.tag.GofmtTest;
 public class GofmtFormatStepTest extends ResourceHarness {
 	@Test
 	void test() {
-		try (var harness = StepHarness.forStep(GofmtFormatStep.withVersion("go1.21.5").create())) {
+		try (StepHarness harness = StepHarness.forStep(GofmtFormatStep.withVersion("go1.21.5").create())) {
 			harness.testResource("go/gofmt/go.dirty", "go/gofmt/go.clean")
 					.close();
 		}

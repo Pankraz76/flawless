@@ -43,7 +43,7 @@ final class EncodingErrorMsg {
 		// so we have to handle that corner case
 		ByteBuffer byteBuf = ByteBuffer.wrap(bytes);
 		CharBuffer charBuf = CharBuffer.allocate(chars.length());
-		var result = charset.newDecoder()
+		CoderResult result = charset.newDecoder()
 				.onMalformedInput(CodingErrorAction.REPORT)
 				.onUnmappableCharacter(CodingErrorAction.REPORT)
 				.decode(byteBuf, charBuf, true);
@@ -118,10 +118,10 @@ final class EncodingErrorMsg {
 		byteBuf.clear();
 		charBuf.clear();
 
-		var decoder = charset.newDecoder();
+		CharsetDecoder decoder = charset.newDecoder();
 		if (!must) {
 			// bail early if we can
-			var r = decoder
+			CoderResult r = decoder
 					.onMalformedInput(CodingErrorAction.REPORT)
 					.onUnmappableCharacter(CodingErrorAction.REPORT)
 					.decode(byteBuf, charBuf, true);

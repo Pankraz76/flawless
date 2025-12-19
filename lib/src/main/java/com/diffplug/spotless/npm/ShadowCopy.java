@@ -49,7 +49,7 @@ class ShadowCopy {
 	}
 
 	private File shadowCopyRoot() {
-		var shadowCopyRoot = shadowCopyRootSupplier.get();
+		File shadowCopyRoot = shadowCopyRootSupplier.get();
 		if (!shadowCopyRoot.isDirectory()) {
 			throw new IllegalStateException("Shadow copy root must be a directory: " + shadowCopyRoot);
 		}
@@ -57,7 +57,7 @@ class ShadowCopy {
 	}
 
 	public void addEntry(String key, File orig) {
-		var target = entry(key, orig.getName());
+		File target = entry(key, orig.getName());
 		if (target.exists()) {
 			LOGGER.debug("Shadow copy entry already exists, not overwriting: {}", key);
 		} else {
@@ -111,7 +111,7 @@ class ShadowCopy {
 	}
 
 	public File copyEntryInto(String key, String origName, File targetParentFolder) {
-		var target = Path.of(targetParentFolder.getAbsolutePath(), origName).toFile();
+		File target = Path.of(targetParentFolder.getAbsolutePath(), origName).toFile();
 		if (target.exists()) {
 			LOGGER.warn("Shadow copy destination already exists, deleting! {}: {}", key, target);
 			ThrowingEx.run(() -> Files.walkFileTree(target.toPath(), new DeleteDirectoryRecursively()));

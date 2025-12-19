@@ -72,7 +72,7 @@ public final class JarState implements Serializable {
 		public JarState get() {
 			try {
 				if (cached == null) {
-					var result = supplier.get();
+					JarState result = supplier.get();
 					cached = result.fileSignature.asPromise();
 					return result;
 				}

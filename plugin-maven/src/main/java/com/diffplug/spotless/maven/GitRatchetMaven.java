@@ -56,13 +56,13 @@ final class GitRatchetMaven extends GitRatchet<File> {
 	}
 
 	Iterable<String> getDirtyFiles(File baseDir, String ratchetFrom) throws IOException {
-		var repository = repositoryFor(baseDir);
-		var sha = rootTreeShaOf(baseDir, ratchetFrom);
+		Repository repository = repositoryFor(baseDir);
+		ObjectId sha = rootTreeShaOf(baseDir, ratchetFrom);
 
-		var indexDiff = new IndexDiff(repository, sha, new FileTreeIterator(repository));
+		IndexDiff indexDiff = new IndexDiff(repository, sha, new FileTreeIterator(repository));
 		indexDiff.diff();
 
-		var workTreePath = repository.getWorkTree().getPath();
+		String workTreePath = repository.getWorkTree().getPath();
 		Path baseDirPath = Path.of(baseDir.getPath());
 
 		Set<String> dirtyPaths = new HashSet<>(indexDiff.getChanged());

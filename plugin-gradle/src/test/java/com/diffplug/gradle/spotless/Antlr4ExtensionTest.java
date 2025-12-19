@@ -56,12 +56,12 @@ class Antlr4ExtensionTest extends GradleIntegrationHarness {
 	}
 
 	private void assertAppliedFormat(String... buildScript) throws IOException {
-		var testFile = "src/main/antlr4/Hello.g4";
+		String testFile = "src/main/antlr4/Hello.g4";
 
 		setFile("build.gradle").toLines(buildScript);
 
-		var unformatted = "antlr4/Hello.unformatted.g4";
-		var formatted = "antlr4/Hello.formatted.g4";
+		String unformatted = "antlr4/Hello.unformatted.g4";
+		String formatted = "antlr4/Hello.formatted.g4";
 		setFile(testFile).toResource(unformatted);
 
 		gradleRunner().withArguments("spotlessApply").build();

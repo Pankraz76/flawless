@@ -32,7 +32,7 @@ class GroovyGradleExtensionTest extends GroovyExtensionTest {
 	@ValueSource(booleans = {true, false})
 	void testTarget(boolean useDefaultTarget) throws IOException {
 		String target = useDefaultTarget ? "" : "target 'other.gradle'";
-		var buildContent = StringPrinter.buildStringFromLines(
+		String buildContent = StringPrinter.buildStringFromLines(
 				"plugins {",
 				"    id 'com.diffplug.spotless'",
 				"}",

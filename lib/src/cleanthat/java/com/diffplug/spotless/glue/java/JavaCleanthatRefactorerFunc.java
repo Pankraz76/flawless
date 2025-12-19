@@ -60,7 +60,7 @@ public class JavaCleanthatRefactorerFunc implements FormatterFunc.NeedsFile {
 	@Override
 	public String applyWithFile(String unix, File file) throws Exception {
 		// https://stackoverflow.com/questions/1771679/difference-between-threads-context-class-loader-and-normal-classloader
-		var originalClassLoader = Thread.currentThread().getContextClassLoader();
+		ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
 		try {
 			// Ensure CleanThat main Thread has its custom classLoader while executing its refactoring
 			Thread.currentThread().setContextClassLoader(getClass().getClassLoader());
@@ -73,24 +73,24 @@ public class JavaCleanthatRefactorerFunc implements FormatterFunc.NeedsFile {
 
 	private String doApply(String input, File file) throws IOException {
 		// call some API that uses reflection without taking ClassLoader param
-		var engineProperties = CleanthatEngineProperties.builder().engineVersion(jdkVersion).build();
+		CleanthatEngineProperties engineProperties = CleanthatEngineProperties.builder().engineVersion(jdkVersion).build();
 
 		// Spotless will push us LF content
 		engineProperties.setSourceCode(SourceCodeProperties.builder().lineEnding(LineEnding.LF).build());
 
-		var refactorerProperties = new JavaRefactorerProperties();
+		JavaRefactorerProperties refactorerProperties = new JavaRefactorerProperties();
 
 		refactorerProperties.setIncluded(included);
 		refactorerProperties.setExcluded(excluded);
 
 		refactorerProperties.setIncludeDraft(includeDraft);
 
-		var refactorer = new JavaRefactorer(engineProperties, refactorerProperties);
+		JavaRefactorer refactorer = new JavaRefactorer(engineProperties, refactorerProperties);
 
 		LOGGER.debug("Processing sourceJdk={} included={} excluded={}", jdkVersion, included, excluded, includeDraft);
 		LOGGER.debug("Available mutators: {}", JavaRefactorer.getAllIncluded());
 
-		var pathAndContent = new PathAndContent(file.toPath(), input);
+		PathAndContent pathAndContent = new PathAndContent(file.toPath(), input);
 
 		return refactorer.doFormat(pathAndContent);
 	}

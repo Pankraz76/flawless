@@ -40,7 +40,7 @@ class ScalafmtTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String s) throws Exception {
-		var path = "src/main/scala/test.scala";
+		String path = "src/main/scala/test.scala";
 		setFile(path).toResource("scala/scalafmt/basic.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource(s);

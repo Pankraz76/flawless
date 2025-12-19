@@ -67,16 +67,16 @@ class FileLocatorTest extends ResourceHarness {
 	@Test
 	void locateConfFileWithIncorrectSeparators() throws Exception {
 		String oppositeSeparator = "/".equals(File.separator) ? "\\" : "/";
-		var path = "tmp" + oppositeSeparator + "configs" + oppositeSeparator + "hello.conf";
+		String path = "tmp" + oppositeSeparator + "configs" + oppositeSeparator + "hello.conf";
 
 		testFileLocator(path, "conf");
 	}
 
 	private void testFileLocator(String path, String extension) throws Exception {
-		var tmpOutputFile = new File("tmp-file");
+		File tmpOutputFile = new File("tmp-file");
 		when(resourceManager.getResourceAsFile(any(), any())).thenReturn(tmpOutputFile);
 
-		var locatedFile = fileLocator.locateFile(path);
+		File locatedFile = fileLocator.locateFile(path);
 		assertThat(locatedFile).isEqualTo(tmpOutputFile);
 
 		ArgumentCaptor<String> argCaptor = ArgumentCaptor.forClass(String.class);

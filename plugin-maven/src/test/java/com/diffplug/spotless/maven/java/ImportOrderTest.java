@@ -59,7 +59,7 @@ class ImportOrderTest extends MavenIntegrationHarness {
 	}
 
 	private void runTest(String expectedResource) throws Exception {
-		var path = "src/main/java/test.java";
+		String path = "src/main/java/test.java";
 		setFile(path).toResource("java/importsorter/JavaCodeUnsortedImports.test");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource(expectedResource);

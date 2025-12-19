@@ -27,7 +27,7 @@ class FlexmarkStepTest {
 
 	@Test
 	void behaviorOldest() {
-		var config = new FlexmarkConfig();
+		FlexmarkConfig config = new FlexmarkConfig();
 		config.setExtensions(List.of("YamlFrontMatter"));
 		StepHarness.forStep(FlexmarkStep.create(OLDEST_SUPPORTED, TestProvisioner.mavenCentral(), config))
 				.testResource(
@@ -37,7 +37,7 @@ class FlexmarkStepTest {
 
 	@Test
 	void behaviorLatest() {
-		var config = new FlexmarkConfig();
+		FlexmarkConfig config = new FlexmarkConfig();
 		config.setExtensions(List.of("YamlFrontMatter"));
 		StepHarness.forStep(FlexmarkStep.create(TestProvisioner.mavenCentral(), config))
 				.testResource(

@@ -41,7 +41,7 @@ public class RdfFormatterStep implements Serializable {
 			throws ClassNotFoundException {
 		JarState.Promised jarState;
 		jarState = JarState.promise(() -> JarState.from(TURTLE_FORMATTER_COORDINATES + ":" + config.getTurtleFormatterVersion(), provisioner));
-		var step = new RdfFormatterStep(jarState, config, turtleOptions);
+		RdfFormatterStep step = new RdfFormatterStep(jarState, config, turtleOptions);
 		return FormatterStep.create("RdfFormatter", step, RdfFormatterStep::state, RdfFormatterStep::formatterFunc);
 	}
 
@@ -98,7 +98,7 @@ public class RdfFormatterStep implements Serializable {
 			if (!(o instanceof State)) {
 				return false;
 			}
-			var state = (State) o;
+			State state = (State) o;
 			return Objects.equals(getConfig(), state.getConfig()) && Objects.equals(
 					getTurtleFormatterStyle(), state.getTurtleFormatterStyle())
 					&& Objects.equals(

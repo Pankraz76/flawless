@@ -62,8 +62,8 @@ public final class BufStep {
 	}
 
 	private RoundtripState createRoundtrip() {
-		var instructions = "https://docs.buf.build/installation";
-		var exe = ForeignExe.nameAndVersion("buf", version)
+		String instructions = "https://docs.buf.build/installation";
+		ForeignExe exe = ForeignExe.nameAndVersion("buf", version)
 				.pathToExe(pathToExe)
 				.versionRegex(Pattern.compile("(\\S*)"))
 				.fixCantFind("Try following the instructions at " + instructions + ", or else tell Spotless where it is with {@code buf().pathToExe('path/to/executable')}");
@@ -110,7 +110,7 @@ public final class BufStep {
 		}
 
 		FormatterFunc.Closeable toFunc() {
-			var runner = new ProcessRunner();
+			ProcessRunner runner = new ProcessRunner();
 			return FormatterFunc.Closeable.of(runner, this::format);
 		}
 	}

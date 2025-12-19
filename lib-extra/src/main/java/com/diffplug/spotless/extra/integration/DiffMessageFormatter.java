@@ -78,7 +78,7 @@ public final class DiffMessageFormatter {
 
 		@Override
 		public String getFormatted(File file, String rawUnix) {
-			var unix = PaddedCell.check(formatter, file, rawUnix).canonical();
+			String unix = PaddedCell.check(formatter, file, rawUnix).canonical();
 			return formatter.computeLineEndings(unix, file);
 		}
 	}
@@ -106,8 +106,8 @@ public final class DiffMessageFormatter {
 
 		@Override
 		public String getFormatted(File file, String rawUnix) {
-			var clean = cleanDir.resolve(rootDir.relativize(file.toPath()));
-			var content = Errors.rethrow().get(() -> Files.readAllBytes(clean));
+			Path clean = cleanDir.resolve(rootDir.relativize(file.toPath()));
+			byte[] content = Errors.rethrow().get(() -> Files.readAllBytes(clean));
 			return new String(content, encoding);
 		}
 	}
@@ -147,7 +147,7 @@ public final class DiffMessageFormatter {
 				Objects.requireNonNull(runToFix, "runToFix");
 				Objects.requireNonNull(formatter, "formatter");
 				Objects.requireNonNull(problemFiles, "problemFiles");
-				var diffFormater = new DiffMessageFormatter(formatter, problemFiles);
+				DiffMessageFormatter diffFormater = new DiffMessageFormatter(formatter, problemFiles);
 				return "The following files had format violations:\n"
 						+ diffFormater.buffer
 						+ runToFix;
@@ -169,7 +169,7 @@ public final class DiffMessageFormatter {
 		this.formatter = Objects.requireNonNull(formatter, "formatter");
 		ListIterator<File> problemIter = problemFiles.listIterator();
 		while (problemIter.hasNext() && numLines < MAX_CHECK_MESSAGE_LINES) {
-			var file = problemIter.next();
+			File file = problemIter.next();
 			addFile(relativePath(file) + "\n" + diff(file));
 		}
 		if (problemIter.hasNext()) {
@@ -252,9 +252,9 @@ public final class DiffMessageFormatter {
 
 	private static Map.Entry<Integer, String> diff(CleanProvider formatter, File file) throws IOException {
 		String raw = Files.readString(file.toPath(), formatter.getEncoding());
-		var rawUnix = LineEnding.toUnix(raw);
-		var formatted = formatter.getFormatted(file, rawUnix);
-		var formattedUnix = LineEnding.toUnix(formatted);
+		String rawUnix = LineEnding.toUnix(raw);
+		String formatted = formatter.getFormatted(file, rawUnix);
+		String formattedUnix = LineEnding.toUnix(formatted);
 
 		if (rawUnix.equals(formattedUnix)) {
 			// the formatting is fine, so it's a line-ending issue
@@ -275,16 +275,16 @@ public final class DiffMessageFormatter {
 		dirty = visibleWhitespaceLineEndings(dirty, whitespace, lineEndings);
 		clean = visibleWhitespaceLineEndings(clean, whitespace, lineEndings);
 
-		var a = new RawText(dirty.getBytes(StandardCharsets.UTF_8));
-		var b = new RawText(clean.getBytes(StandardCharsets.UTF_8));
-		var edits = new EditList();
+		RawText a = new RawText(dirty.getBytes(StandardCharsets.UTF_8));
+		RawText b = new RawText(clean.getBytes(StandardCharsets.UTF_8));
+		EditList edits = new EditList();
 		edits.addAll(MyersDiff.INSTANCE.diff(RawTextComparator.DEFAULT, a, b));
 
-		var out = new ByteArrayOutputStream();
-		try (var formatter = new DiffFormatter(out)) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try (DiffFormatter formatter = new DiffFormatter(out)) {
 			formatter.format(edits, a, b);
 		}
-		var formatted = out.toString(StandardCharsets.UTF_8.name());
+		String formatted = out.toString(StandardCharsets.UTF_8.name());
 
 		// we don't need the diff to show this, since we display newlines ourselves
 		formatted = formatted.replace("\\ No newline at end of file\n", "");

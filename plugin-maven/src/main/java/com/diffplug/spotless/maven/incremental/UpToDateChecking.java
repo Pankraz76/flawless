@@ -39,7 +39,7 @@ public class UpToDateChecking {
 	}
 
 	public static UpToDateChecking enabled() {
-		var upToDateChecking = new UpToDateChecking();
+		UpToDateChecking upToDateChecking = new UpToDateChecking();
 		upToDateChecking.enabled = true;
 		return upToDateChecking;
 	}

@@ -29,7 +29,7 @@ interface NativeCmdIntegrationTest {
 		// This will only work if /usr/bin/sed is available
 		assumeThat(new File("/usr/bin/sed")).exists();
 
-		var harness = (GradleIntegrationHarness) this;
+		GradleIntegrationHarness harness = (GradleIntegrationHarness) this;
 		harness.setFile("build.gradle").toLines(
 				"plugins {",
 				"  id 'com.diffplug.spotless'",

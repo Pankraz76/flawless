@@ -72,10 +72,10 @@ class SpotlessCheckMojoTest extends MavenIntegrationHarness {
 		setFile("license.txt").toResource("license/TestLicense");
 		setFile("src/main/java/com.github.youribonnaffe.gradle.format/Java8Test.java").toResource(fileName);
 
-		var mavenRunner = mavenRunner().withArguments(command);
+		MavenRunner mavenRunner = mavenRunner().withArguments(command);
 
 		if (expectError) {
-			var result = mavenRunner.runHasError();
+			ProcessRunner.Result result = mavenRunner.runHasError();
 			assertThat(result.stdOutUtf8()).contains("The following files had format violations");
 		} else {
 			mavenRunner.runNoError();

@@ -60,20 +60,20 @@ final class FileIndex {
 	}
 
 	static FileIndex read(FileIndexConfig config, Log log) {
-		var indexFile = config.getIndexFile();
+		Path indexFile = config.getIndexFile();
 		if (Files.notExists(indexFile)) {
 			log.info("Index file does not exist. Fallback to an empty index");
 			return emptyIndexFallback(config);
 		}
 
 		try (BufferedReader reader = newBufferedReader(indexFile, UTF_8)) {
-			var firstLine = reader.readLine();
+			String firstLine = reader.readLine();
 			if (firstLine == null) {
 				log.info("Index file is empty. Fallback to an empty index");
 				return emptyIndexFallback(config);
 			}
 
-			var computedFingerprint = config.getPluginFingerprint();
+			PluginFingerprint computedFingerprint = config.getPluginFingerprint();
 			PluginFingerprint storedFingerprint = PluginFingerprint.from(firstLine);
 			if (!computedFingerprint.equals(storedFingerprint)) {
 				log.info("Index file corresponds to a different configuration of the plugin. Either the plugin version or its configuration has changed. Fallback to an empty index");
@@ -89,7 +89,7 @@ final class FileIndex {
 	}
 
 	static void delete(FileIndexConfig config, Log log) {
-		var indexFile = config.getIndexFile();
+		Path indexFile = config.getIndexFile();
 		boolean deleted = false;
 		try {
 			deleted = Files.deleteIfExists(indexFile);
@@ -105,12 +105,12 @@ final class FileIndex {
 		if (!file.startsWith(projectDir)) {
 			return null;
 		}
-		var relativeFile = projectDir.relativize(file);
+		Path relativeFile = projectDir.relativize(file);
 		return fileToLastModifiedTime.get(relativeFile);
 	}
 
 	void setLastModifiedTime(Path file, Instant time) {
-		var relativeFile = projectDir.relativize(file);
+		Path relativeFile = projectDir.relativize(file);
 		fileToLastModifiedTime.put(relativeFile, time);
 		modified = true;
 	}
@@ -126,7 +126,7 @@ final class FileIndex {
 		}
 
 		ensureParentDirExists();
-		try (var writer = new PrintWriter(newBufferedWriter(indexFile, UTF_8, CREATE, TRUNCATE_EXISTING))) {
+		try (PrintWriter writer = new PrintWriter(newBufferedWriter(indexFile, UTF_8, CREATE, TRUNCATE_EXISTING))) {
 			writer.println(pluginFingerprint.value());
 
 			for (Entry<Path, Instant> entry : fileToLastModifiedTime.entrySet()) {
@@ -138,13 +138,13 @@ final class FileIndex {
 	}
 
 	private void ensureParentDirExists() {
-		var parentDir = indexFile.getParent();
+		Path parentDir = indexFile.getParent();
 		if (parentDir == null) {
 			throw new IllegalStateException("Index file does not have a parent dir: " + indexFile);
 		}
 		try {
 			if (Files.exists(parentDir, LinkOption.NOFOLLOW_LINKS)) {
-				var realPath = parentDir.toRealPath();
+				Path realPath = parentDir.toRealPath();
 				if (!Files.exists(realPath)) {
 					Files.createDirectories(realPath);
 				}
@@ -168,7 +168,7 @@ final class FileIndex {
 			}
 
 			Path relativeFile = Path.of(line.substring(0, separatorIndex));
-			var absoluteFile = projectDir.resolve(relativeFile);
+			Path absoluteFile = projectDir.resolve(relativeFile);
 			if (Files.notExists(absoluteFile)) {
 				log.info("File stored in the index does not exist: " + relativeFile);
 				needsRewrite = true;

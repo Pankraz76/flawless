@@ -45,7 +45,7 @@ class FilePermissionsTest extends GradleIntegrationHarness {
 				"}");
 		setFile("test.java").toResource("java/googlejavaformat/JavaCodeUnformatted.test");
 
-		var path = rootFolder().toPath().resolve("test.java");
+		Path path = rootFolder().toPath().resolve("test.java");
 		Files.setPosixFilePermissions(path, PosixFilePermissions.fromString("rwxr--r--"));
 		assertPermissions(path).isEqualTo("rwxr--r--");
 

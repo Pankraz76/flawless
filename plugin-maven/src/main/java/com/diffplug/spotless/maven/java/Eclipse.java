@@ -62,7 +62,7 @@ public class Eclipse implements FormatterStepFactory {
 		EclipseJdtFormatterStep.Builder eclipseConfig = EclipseJdtFormatterStep.createBuilder(stepConfig.getProvisioner());
 		eclipseConfig.setVersion(version == null ? EclipseJdtFormatterStep.defaultVersion() : version);
 		if (file != null) {
-			var settingsFile = stepConfig.getFileLocator().locateFile(file);
+			File settingsFile = stepConfig.getFileLocator().locateFile(file);
 			eclipseConfig.setPreferences(Arrays.asList(settingsFile));
 		}
 		eclipseConfig.setP2Mirrors(p2Mirrors);

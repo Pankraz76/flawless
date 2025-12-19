@@ -108,15 +108,15 @@ public final class FreshMarkStep implements Serializable {
 		}
 
 		FormatterFunc createFormat() throws Exception {
-			var logger = LoggerFactory.getLogger(FreshMarkStep.class);
+			Logger logger = LoggerFactory.getLogger(FreshMarkStep.class);
 			Consumer<String> loggingStream = logger::warn;
 
-			var classLoader = jarState.getClassLoader();
+			ClassLoader classLoader = jarState.getClassLoader();
 
 			// instantiate the formatter and get its format method
 			Class<?> formatterClazz = classLoader.loadClass(FORMATTER_CLASS);
-			var formatter = formatterClazz.getConstructor(Map.class, Consumer.class).newInstance(properties, loggingStream);
-			var method = formatterClazz.getMethod(FORMATTER_METHOD, String.class);
+			Object formatter = formatterClazz.getConstructor(Map.class, Consumer.class).newInstance(properties, loggingStream);
+			Method method = formatterClazz.getMethod(FORMATTER_METHOD, String.class);
 			return input -> (String) method.invoke(formatter, input);
 		}
 	}

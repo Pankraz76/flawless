@@ -49,27 +49,27 @@ public class GsonStepTest extends JsonFormatterStepCommonTests {
 
 	@Test
 	void handlesSortingWhenSortByKeyEnabled() {
-		var step = GsonStep.create(new GsonConfig(true, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
+		FormatterStep step = GsonStep.create(new GsonConfig(true, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
 		StepHarness.forStep(step).testResource("json/sortByKeysBefore.json", "json/sortByKeysAfter.json");
 	}
 
 	@Test
 	void doesNoSortingWhenSortByKeyDisabled() {
-		var step = GsonStep.create(new GsonConfig(false, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
+		FormatterStep step = GsonStep.create(new GsonConfig(false, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("json/sortByKeysBefore.json", "json/sortByKeysAfterDisabled.json");
 	}
 
 	@Test
 	void handlesHtmlEscapeWhenEnabled() {
-		var step = GsonStep.create(new GsonConfig(false, true, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
+		FormatterStep step = GsonStep.create(new GsonConfig(false, true, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("json/escapeHtmlGsonBefore.json", "json/escapeHtmlGsonAfter.json");
 	}
 
 	@Test
 	void writesRawHtmlWhenHtmlEscapeDisabled() {
-		var step = GsonStep.create(new GsonConfig(false, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
+		FormatterStep step = GsonStep.create(new GsonConfig(false, false, INDENT, DEFAULT_VERSION), TestProvisioner.mavenCentral());
 		StepHarness.forStep(step)
 				.testResource("json/escapeHtmlGsonBefore.json", "json/escapeHtmlGsonAfterDisabled.json");
 	}

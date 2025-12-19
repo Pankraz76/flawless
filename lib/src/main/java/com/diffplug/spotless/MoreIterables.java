@@ -51,9 +51,9 @@ final class MoreIterables {
 		// remove any duplicates (normally there won't be any)
 		if (toBeSorted.size() > 1) {
 			Iterator<T> iter = toBeSorted.iterator();
-			var last = iter.next();
+			T last = iter.next();
 			while (iter.hasNext()) {
-				var next = iter.next();
+				T next = iter.next();
 				if (comparator.compare(next, last) == 0) {
 					iter.remove();
 				} else {

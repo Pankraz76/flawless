@@ -28,7 +28,7 @@ class DiktatTest extends MavenIntegrationHarness {
 
 		writePomWithKotlinSteps("<diktat/>");
 
-		var path = "src/main/kotlin/Main.kt";
+		String path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/diktat/main.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/diktat/main.clean");
@@ -43,7 +43,7 @@ class DiktatTest extends MavenIntegrationHarness {
 				"  <version>1.2.1</version>",
 				"</diktat>");
 
-		var path = "src/main/kotlin/Main.kt";
+		String path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/diktat/main.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/diktat/main.clean");
@@ -52,15 +52,15 @@ class DiktatTest extends MavenIntegrationHarness {
 	@Test
 	void testDiktatConfig() throws Exception {
 
-		var configPath = "src/main/kotlin/diktat-analysis.yml";
-		var conf = setFile(configPath).toResource("kotlin/diktat/diktat-analysis.yml");
+		String configPath = "src/main/kotlin/diktat-analysis.yml";
+		File conf = setFile(configPath).toResource("kotlin/diktat/diktat-analysis.yml");
 		writePomWithKotlinSteps(
 				"<diktat>",
 				"  <version>1.2.1</version>",
 				"  <configFile>" + conf.getAbsolutePath() + "</configFile>",
 				"</diktat>");
 
-		var path = "src/main/kotlin/Main.kt";
+		String path = "src/main/kotlin/Main.kt";
 		setFile(path).toResource("kotlin/diktat/main.dirty");
 		mavenRunner().withArguments("spotless:apply").runNoError();
 		assertFile(path).sameAsResource("kotlin/diktat/main.clean");
