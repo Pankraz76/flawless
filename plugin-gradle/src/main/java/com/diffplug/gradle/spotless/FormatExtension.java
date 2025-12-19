@@ -44,6 +44,7 @@ import javax.inject.Inject;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.Directory;
 import org.gradle.api.file.FileCollection;
@@ -288,7 +289,7 @@ public class FormatExtension {
 		} else {
 			var union = getProject().files();
 			for (Object target : targets) {
-				union = union.plus(parseTargetIsExclude(target, isExclude));
+				union = (ConfigurableFileCollection) union.plus(parseTargetIsExclude(target, isExclude));
 			}
 			return union;
 		}
