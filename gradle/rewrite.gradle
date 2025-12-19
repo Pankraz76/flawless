@@ -1,6 +1,6 @@
 apply plugin: 'org.openrewrite.rewrite'
 rewrite {
-	activeRecipe('com.diffplug.spotless.openrewrite.SanityCheck')
+	activeRecipe('com.opencohesion.flawless.openrewrite.SanityCheck')
 	configFile = project.getRootProject().file("${rootDir}/gradle/sanity.yml")
 	exclusions.addAll(
 			'**.dirty.java',
