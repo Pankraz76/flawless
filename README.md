@@ -1,4 +1,4 @@
-# <img align="left" src="_images/flawless_logo.png"> Flawless: Keep your code flawless
+# <img align="left" src="_images/flawless_logo.png"> Flawless: Keep your code flawless ✨️
 
 [![Gradle Plugin](https://img.shields.io/gradle-plugin-portal/v/com.diffplug.spotless?color=blue&label=gradle%20plugin)](plugin-gradle)
 [![Maven Plugin](https://img.shields.io/maven-central/v/com.diffplug.spotless/spotless-maven-plugin?color=blue&label=maven%20plugin)](plugin-maven)
@@ -7,40 +7,39 @@
 Flawless can format &lt;antlr | c | c# | c++ | css | flow | graphql | groovy | html | java | javascript | json | jsx | kotlin | less | license headers | markdown | objective-c | protobuf | python | scala | scss | shell | sql | typeScript | vue | yaml | anything> using &lt;gradle | maven | sbt | anything>.
 
 You probably want one of the links below:
-
-## [❇️ Flawless for Gradle](plugin-gradle) (with integrations for [VS Code](https://marketplace.visualstudio.com/items?itemName=richardwillis.vscode-spotless-gradle) and [IntelliJ](https://plugins.jetbrains.com/plugin/18321-spotless-gradle))
+## [Flawless ✨️ Gradle](plugin-gradle) (with integrations for [VS Code](https://marketplace.visualstudio.com/items?itemName=richardwillis.vscode-spotless-gradle) and [IntelliJ](https://plugins.jetbrains.com/plugin/18321-spotless-gradle))
 
 ```console
 user@machine repo % ./gradlew build
-:spotlessJavaCheck FAILED
+:flawlessJavaCheck FAILED
   The following files had format violations:
-  src\main\java\com\diffplug\gradle\spotless\FormatExtension.java
+  src\main\java\com\obsolete\gradle\flawless\FormatExtension.java
     -\t\t····if·(targets.length·==·0)·{
     +\t\tif·(targets.length·==·0)·{
-  Run './gradlew spotlessApply' to fix these violations.
-user@machine repo % ./gradlew spotlessApply
-:spotlessApply
+  Run './gradlew flawlessApply' to fix these violations.
+user@machine repo % ./gradlew flawlessApply
+:flawlessApply
 BUILD SUCCESSFUL
 user@machine repo % ./gradlew build
 BUILD SUCCESSFUL
 ```
 
-## [❇️ Flawless for Maven](plugin-maven)
+## [Flawless ✨️ Maven](plugin-maven)
 
 ```console
-user@machine repo % mvn spotless:check
+user@machine repo % mvn flawless:check
 [ERROR]  > The following files had format violations:
-[ERROR]  src\main\java\com\diffplug\gradle\spotless\FormatExtension.java
+[ERROR]  src\main\java\com\obsolete\gradle\flawless\FormatExtension.java
 [ERROR]    -\t\t····if·(targets.length·==·0)·{
 [ERROR]    +\t\tif·(targets.length·==·0)·{
-[ERROR]  Run 'mvn spotless:apply' to fix these violations.
-user@machine repo % mvn spotless:apply
+[ERROR]  Run 'mvn flawless:apply' to fix these violations.
+user@machine repo % mvn flawless:apply
 [INFO] BUILD SUCCESS
-user@machine repo % mvn spotless:check
+user@machine repo % mvn flawless:check
 [INFO] BUILD SUCCESS
 ```
 
-## [❇️ Flawless for SBT (external for now)](https://github.com/moznion/sbt-spotless)
+## [Flawless ✨️ SBT (external for now)](https://github.com/moznion/sbt-spotless)
 ## [Other build systems](CONTRIBUTING.md#how-to-add-a-new-plugin-for-a-build-system)
 
 ## How it works (for potential contributors)
