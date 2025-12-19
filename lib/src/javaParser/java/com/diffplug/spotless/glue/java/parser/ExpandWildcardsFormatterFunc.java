@@ -135,7 +135,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 
 		private void matchTypeName(Map<ImportDeclaration, Set<ImportDeclaration>> importMap, String qualifiedName,
 				boolean isStatic) {
-			int lastDot = qualifiedName.lastIndexOf('.');
+			var lastDot = qualifiedName.lastIndexOf('.');
 			if (lastDot < 0) {
 				return;
 			}

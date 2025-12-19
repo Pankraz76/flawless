@@ -173,8 +173,8 @@ public abstract class GitPrePushHookInstaller {
 	 */
 	private void uninstall(File gitHookFile) throws Exception {
 		final var hook = Files.readString(gitHookFile.toPath());
-		final int hookStart = hook.indexOf(HOOK_HEADER);
-		final int hookEnd = hook.indexOf(HOOK_FOOTER) + HOOK_FOOTER.length(); // hookEnd exclusive, so must be last symbol \n
+		final var hookStart = hook.indexOf(HOOK_HEADER);
+		final var hookEnd = hook.indexOf(HOOK_FOOTER) + HOOK_FOOTER.length(); // hookEnd exclusive, so must be last symbol \n
 
 		/* Detailed explanation:
 		 * 1. hook.indexOf(HOOK_FOOTER) - finds the starting position of footer "##### SPOTLESS HOOK END #####"

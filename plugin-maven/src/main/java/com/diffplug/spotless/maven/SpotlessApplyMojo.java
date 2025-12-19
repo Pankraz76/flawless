@@ -67,8 +67,8 @@ public class SpotlessApplyMojo extends AbstractSpotlessMojo {
 
 			try {
 				LintState lintState = super.calculateLintState(formatter, file);
-				boolean hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
-				boolean hasUnsuppressedLints = lintState.isHasLints();
+				var hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
+				var hasUnsuppressedLints = lintState.isHasLints();
 
 				if (hasDirtyState) {
 					getLog().info("clean file: %s".formatted(file));
@@ -81,7 +81,7 @@ public class SpotlessApplyMojo extends AbstractSpotlessMojo {
 
 				// In apply mode, any lints should fail the build (matching Gradle behavior)
 				if (hasUnsuppressedLints) {
-					int lintCount = lintState.getLintsByStep(formatter).values().stream()
+					var lintCount = lintState.getLintsByStep(formatter).values().stream()
 							.mapToInt(List::size)
 							.sum();
 					StringBuilder message = new StringBuilder();

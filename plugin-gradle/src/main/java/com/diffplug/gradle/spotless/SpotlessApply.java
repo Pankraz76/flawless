@@ -56,7 +56,7 @@ public abstract class SpotlessApply extends SpotlessTaskService.ClientTask {
 				}
 			});
 			if (!lintsFiles.isEmpty()) {
-				boolean detailed = false;
+				var detailed = false;
 				throw new GradleException(super.allLintsErrorMsgDetailed(lintsFiles, detailed));
 			}
 		}

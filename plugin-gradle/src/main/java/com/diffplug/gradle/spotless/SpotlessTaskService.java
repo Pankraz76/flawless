@@ -193,7 +193,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 					for (Lint lint : stepLints.getValue()) {
 						builder.append(lintsPerFile.getKey());
 						builder.append(":");
-						boolean oneLine = !detailed;
+						var oneLine = !detailed;
 						lint.addWarningMessageTo(builder, stepName, oneLine);
 						builder.append("\n");
 					}

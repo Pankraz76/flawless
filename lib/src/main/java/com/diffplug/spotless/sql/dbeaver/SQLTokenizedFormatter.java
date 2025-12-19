@@ -53,7 +53,7 @@ public class SQLTokenizedFormatter {
 
 		functionBracket.clear();
 
-		boolean isSqlEndsWithNewLine = false;
+		var isSqlEndsWithNewLine = false;
 		if (argSql.endsWith("\n")) {
 			isSqlEndsWithNewLine = true;
 		}
@@ -103,7 +103,7 @@ public class SQLTokenizedFormatter {
 		}
 
 		// Remove extra tokens (spaces, etc)
-		for (int index = argList.size() - 1; index >= 1; index--) {
+		for (var index = argList.size() - 1; index >= 1; index--) {
 			token = argList.get(index);
 			FormatterToken prevToken = argList.get(index - 1);
 			if (token.getType() == TokenType.SPACE && (prevToken.getType() == TokenType.SYMBOL || prevToken.getType() == TokenType.COMMENT)) {
@@ -115,7 +115,7 @@ public class SQLTokenizedFormatter {
 			}
 		}
 
-		for (int index = 0; index < argList.size() - 2; index++) {
+		for (var index = 0; index < argList.size() - 2; index++) {
 			FormatterToken t0 = argList.get(index);
 			FormatterToken t1 = argList.get(index + 1);
 			FormatterToken t2 = argList.get(index + 2);
@@ -147,11 +147,11 @@ public class SQLTokenizedFormatter {
 			}
 		}
 
-		int indent = 0;
+		var indent = 0;
 		final List<Integer> bracketIndent = new ArrayList<>();
 		FormatterToken prev = new FormatterToken(TokenType.SPACE, " ");
-		boolean encounterBetween = false;
-		for (int index = 0; index < argList.size(); index++) {
+		var encounterBetween = false;
+		for (var index = 0; index < argList.size(); index++) {
 			token = argList.get(index);
 			String tokenString = token.getString().toUpperCase(Locale.ENGLISH);
 			if (token.getType() == TokenType.SYMBOL) {
@@ -250,7 +250,7 @@ public class SQLTokenizedFormatter {
 					break;
 				}
 			} else if (token.getType() == TokenType.COMMENT) {
-				boolean isComment = false;
+				var isComment = false;
 				String[] slComments = SQL_DIALECT.getSingleLineComments();
 				for (String slc : slComments) {
 					if (token.getString().startsWith(slc)) {
@@ -281,7 +281,7 @@ public class SQLTokenizedFormatter {
 			prev = token;
 		}
 
-		for (int index = argList.size() - 1; index >= 4; index--) {
+		for (var index = argList.size() - 1; index >= 4; index--) {
 			if (index >= argList.size()) {
 				continue;
 			}
@@ -304,7 +304,7 @@ public class SQLTokenizedFormatter {
 			}
 		}
 
-		for (int index = 1; index < argList.size(); index++) {
+		for (var index = 1; index < argList.size(); index++) {
 			prev = argList.get(index - 1);
 			token = argList.get(index);
 
@@ -355,7 +355,7 @@ public class SQLTokenizedFormatter {
 			return false;
 		}
 		// check previous token
-		for (int i = index - 1; i >= 0; i--) {
+		for (var i = index - 1; i >= 0; i--) {
 			FormatterToken token = argList.get(i);
 			if (token.getType() == TokenType.SPACE) {
 				continue;
@@ -368,7 +368,7 @@ public class SQLTokenizedFormatter {
 			}
 		}
 		// check last token
-		for (int i = index; i < argList.size(); i++) {
+		for (var i = index; i < argList.size(); i++) {
 			FormatterToken token = argList.get(i);
 			if (token.getType() == TokenType.SPACE) {
 				continue;
@@ -399,7 +399,7 @@ public class SQLTokenizedFormatter {
 		try {
 			final String defaultLineSeparator = getDefaultLineSeparator();
 			StringBuilder s = new StringBuilder(defaultLineSeparator);
-			for (int index = 0; index < argIndent; index++) {
+			for (var index = 0; index < argIndent; index++) {
 				s.append(formatterCfg.getIndentString());
 			}
 			if (argIndex > 0) {
@@ -422,7 +422,7 @@ public class SQLTokenizedFormatter {
 				token.setString(s.toString());
 				return 0;
 			}
-			boolean isDelimiter = statementDelimiters.contains(token.getString().toUpperCase(Locale.ENGLISH));
+			var isDelimiter = statementDelimiters.contains(token.getString().toUpperCase(Locale.ENGLISH));
 
 			if (!isDelimiter) {
 				token = argList.get(argIndex - 1);

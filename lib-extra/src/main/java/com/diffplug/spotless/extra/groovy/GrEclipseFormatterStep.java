@@ -46,7 +46,7 @@ public final class GrEclipseFormatterStep {
 				if (!version.startsWith("4.")) {
 					throw new IllegalArgumentException("Expected version 4.x");
 				}
-				int eVersion = Integer.parseInt(version.substring("4.".length()));
+				var eVersion = Integer.parseInt(version.substring("4.".length()));
 				if (eVersion < 8) {
 					throw new IllegalArgumentException("4.8 is the oldest version we support, this was " + version);
 				}

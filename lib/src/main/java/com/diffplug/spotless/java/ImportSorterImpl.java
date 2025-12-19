@@ -106,14 +106,14 @@ final class ImportSorterImpl {
 	}
 
 	private void putStaticItemIfNotExists(List<ImportsGroup> importsGroups) {
-		boolean catchAllSubGroupExist = importsGroups.stream().anyMatch(group -> group.getSubGroups().contains(STATIC_KEYWORD));
+		var catchAllSubGroupExist = importsGroups.stream().anyMatch(group -> group.getSubGroups().contains(STATIC_KEYWORD));
 		if (catchAllSubGroupExist) {
 			return;
 		}
 
-		int indexOfFirstStatic = 0;
-		for (int i = 0; i < importsGroups.size(); i++) {
-			boolean subgroupMatch = importsGroups.get(i).getSubGroups().stream().anyMatch(subgroup -> subgroup.startsWith(STATIC_KEYWORD));
+		var indexOfFirstStatic = 0;
+		for (var i = 0; i < importsGroups.size(); i++) {
+			var subgroupMatch = importsGroups.get(i).getSubGroups().stream().anyMatch(subgroup -> subgroup.startsWith(STATIC_KEYWORD));
 			if (subgroupMatch) {
 				indexOfFirstStatic = i;
 			}
@@ -122,7 +122,7 @@ final class ImportSorterImpl {
 	}
 
 	private void putCatchAllGroupIfNotExists(List<ImportsGroup> importsGroups) {
-		boolean catchAllSubGroupExist = importsGroups.stream().anyMatch(group -> group.getSubGroups().contains(CATCH_ALL_SUBGROUP));
+		var catchAllSubGroupExist = importsGroups.stream().anyMatch(group -> group.getSubGroups().contains(CATCH_ALL_SUBGROUP));
 		if (!catchAllSubGroupExist) {
 			importsGroups.add(new ImportsGroup(CATCH_ALL_SUBGROUP, this.knownGroupings));
 		}
@@ -166,7 +166,7 @@ final class ImportSorterImpl {
 			if (!matchesStatic(staticItems, notMatchingItem)) {
 				continue;
 			}
-			boolean isOrderItem = isOrderItem(notMatchingItem, staticItems);
+			var isOrderItem = isOrderItem(notMatchingItem, staticItems);
 			if (!isOrderItem) {
 				matchingImports.computeIfAbsent(CATCH_ALL_SUBGROUP, key -> new ArrayList<>());
 				matchingImports.get(CATCH_ALL_SUBGROUP).add(notMatchingItem);
@@ -175,19 +175,19 @@ final class ImportSorterImpl {
 	}
 
 	private boolean isOrderItem(String notMatchingItem, boolean staticItems) {
-		boolean contains = allImportOrderItems.contains(notMatchingItem);
+		var contains = allImportOrderItems.contains(notMatchingItem);
 		return contains && matchesStatic(staticItems, notMatchingItem);
 	}
 
 	private static boolean matchesStatic(boolean staticItems, String notMatchingItem) {
-		boolean isStatic = notMatchingItem.startsWith(STATIC_KEYWORD);
+		var isStatic = notMatchingItem.startsWith(STATIC_KEYWORD);
 		return (isStatic && staticItems) || (!isStatic && !staticItems);
 	}
 
 	private List<String> mergeMatchingItems() {
 		List<String> template = new ArrayList<>();
 		for (ImportsGroup group : importsGroups) {
-			boolean groupIsNotEmpty = false;
+			var groupIsNotEmpty = false;
 			for (String subgroup : group.getSubGroups()) {
 				List<String> strings = matchingImports.get(subgroup);
 				if (strings == null || strings.isEmpty()) {
@@ -230,7 +230,7 @@ final class ImportSorterImpl {
 		if (order1.equals(order2)) {
 			throw new IllegalArgumentException("orders are same");
 		}
-		for (int i = 0; i < anImport.length() - 1; i++) {
+		for (var i = 0; i < anImport.length() - 1; i++) {
 			if (order1.length() - 1 == i && order2.length() - 1 != i) {
 				return order2;
 			}
@@ -239,7 +239,7 @@ final class ImportSorterImpl {
 			}
 			char orderChar1 = order1.length() != 0 ? order1.charAt(i) : ' ';
 			char orderChar2 = order2.length() != 0 ? order2.charAt(i) : ' ';
-			char importChar = anImport.charAt(i);
+			var importChar = anImport.charAt(i);
 
 			if (importChar == orderChar1 && importChar != orderChar2) {
 				return order1;
@@ -252,15 +252,15 @@ final class ImportSorterImpl {
 	}
 
 	private static int compareWithWildcare(String string1, String string2, boolean wildcardsLast) {
-		int string1WildcardIndex = string1.indexOf('*');
-		int string2WildcardIndex = string2.indexOf('*');
-		boolean string1IsWildcard = string1WildcardIndex >= 0;
-		boolean string2IsWildcard = string2WildcardIndex >= 0;
+		var string1WildcardIndex = string1.indexOf('*');
+		var string2WildcardIndex = string2.indexOf('*');
+		var string1IsWildcard = string1WildcardIndex >= 0;
+		var string2IsWildcard = string2WildcardIndex >= 0;
 		if (string1IsWildcard == string2IsWildcard) {
 			return string1.compareTo(string2);
 		}
 		int prefixLength = string1IsWildcard ? string1WildcardIndex : string2WildcardIndex;
-		boolean samePrefix = string1.regionMatches(0, string2, 0, prefixLength);
+		var samePrefix = string1.regionMatches(0, string2, 0, prefixLength);
 		if (!samePrefix) {
 			return string1.compareTo(string2);
 		}
@@ -321,7 +321,7 @@ final class ImportSorterImpl {
 				String fqcn2 = split[0];
 				String member2 = split[1];
 
-				int result = compareFullyQualifiedClassName(fqcn1, fqcn2);
+				var result = compareFullyQualifiedClassName(fqcn1, fqcn2);
 				if (result != 0) {
 					return result;
 				}
@@ -345,7 +345,7 @@ final class ImportSorterImpl {
 			String p2 = split[0];
 			String c2 = split[1];
 
-			int result = p1.compareTo(p2);
+			var result = p1.compareTo(p2);
 			if (result != 0) {
 				return result;
 			}
@@ -364,7 +364,7 @@ final class ImportSorterImpl {
 			 * Static imports always contain a member or wildcard and it's always the last
 			 * segment.
 			 */
-			int dot = s.lastIndexOf(".");
+			var dot = s.lastIndexOf(".");
 			String fqcn = s.substring(0, dot);
 			String member = s.substring(dot + 1);
 			return new String[]{fqcn, member};
@@ -384,9 +384,9 @@ final class ImportSorterImpl {
 			 * then the last segment must be a class name (unless the method input is
 			 * garbage).
 			 */
-			int dot = fqcn.indexOf('.');
+			var dot = fqcn.indexOf('.');
 			while (dot > -1) {
-				int nextDot = fqcn.indexOf('.', dot + 1);
+				var nextDot = fqcn.indexOf('.', dot + 1);
 				if (nextDot > -1) {
 					if (Character.isUpperCase(fqcn.charAt(dot + 1))) {
 						// if upper case, check if should be treated as package nonetheless
@@ -409,7 +409,7 @@ final class ImportSorterImpl {
 			}
 
 			if (packageNames == null) {
-				int i = fqcn.lastIndexOf(".");
+				var i = fqcn.lastIndexOf(".");
 				packageNames = fqcn.substring(0, i);
 				classNames = fqcn.substring(i + 1);
 			}
