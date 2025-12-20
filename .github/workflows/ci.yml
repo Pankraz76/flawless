@@ -34,7 +34,7 @@ jobs:
         run: ./gradlew assemble testClasses
   build:
     needs: sanity
-    name: Build 🎲 # (Dice we play, every day.)
+    name: Build 🎲 # Dice we play, every day.
     strategy:
       fail-fast: false
       matrix:
