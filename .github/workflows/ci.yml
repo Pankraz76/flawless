@@ -63,13 +63,13 @@ jobs:
           java-version: ${{matrix.jre}}
       - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - name: Build Maven Plugin 🧱
+      - name: Maven Plugin 🏗️
         if: matrix.kind == 'maven'
         run: ./gradlew :plugin-maven:build -x spotlessCheck
-      - name: Build Gradle Plugin 🧱
+      - name: Gradle Plugin 🏗️
         if: matrix.kind == 'gradle'
         run: ./gradlew build -x spotlessCheck -PSPOTLESS_EXCLUDE_MAVEN=true
-      - name: Test NPM Integration 🧪
+      - name: NPM Integration 🧪
         if: matrix.kind == 'npm'
         run: ./gradlew testNpm
       - name: Setup Go for shfmt 🦫
@@ -80,10 +80,10 @@ jobs:
       - name: Install shfmt 🔧
         if: matrix.kind == 'shfmt'
         run: go install mvdan.cc/sh/v3/cmd/shfmt@${{matrix.shfmt-version}}
-      - name: Test Shfmt Integration 🧪
+      - name: shfmt Integration 🧪
         if: matrix.kind == 'shfmt'
         run: ./gradlew testShfmt
-      - name: Test IDEA Integration 🧪
+      - name: IDEA Integration 🧪
         if: matrix.kind == 'idea'
         run: |
           download_link=$(curl https://data.services.jetbrains.com/products/releases\?code\=IIC\&latest\=true\&type\=release | jq -r '.IIC[0].downloads.linux.link')
