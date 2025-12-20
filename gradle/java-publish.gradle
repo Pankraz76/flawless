@@ -8,8 +8,7 @@ static def decode64(String varName) {
 }
 
 if (project.parent == null) {
-	group = 'com.opencohesion.flawless'
-	// group = 'com.opencohesion.flawless'
+	group = 'com.diffplug.spotless'
 	def pass = System.env['ORG_GRADLE_PROJECT_nexus_pass64']
 	if (pass != null) {
 		pass = pass.decodeBase64()
@@ -91,13 +90,13 @@ javadoc {
 // PUBLISHING //
 ////////////////
 boolean isExt = project.name.startsWith('eclipse-')
-boolean isPluginMaven = project.ext.artifactId == 'flawless-maven-plugin'
+boolean isPluginMaven = project.ext.artifactId == 'spotless-maven-plugin'
 
 model {
 	publishing {
 		publications {
 			pluginMaven(MavenPublication) {
-				if (project.ext.artifactId != 'flawless-plugin-gradle') {
+				if (project.ext.artifactId != 'spotless-plugin-gradle') {
 					from components.java
 				}
 
