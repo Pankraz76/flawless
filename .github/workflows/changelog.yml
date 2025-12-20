@@ -9,12 +9,12 @@ jobs:
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v6
-      - name: Setup Java ☕️
+      - name: Java ☕️
         uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: Setup Gradle 🐘
+      - name: Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
       - name: Changelog Print 🖨️
         run: ./gradlew changelogPrint
