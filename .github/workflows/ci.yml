@@ -9,7 +9,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   sanity-check:
-    name: Sanity Check 🦢
+    name: Sanity 🦢
     runs-on: ubuntu-latest
     env:
       buildcacheuser: ${{secrets.BUILDCACHE_USER}}
@@ -26,9 +26,9 @@ jobs:
           java-version: 21
       - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - name: Run Spotless Check ✨
+      - name: Run Spotless ✨
         run: ./gradlew spotlessCheck
-      - name: Run Rewrite Dry Run ♻️
+      - name: Run Rewrite ♻️
         run: ./gradlew rewriteDryRun
       - name: Assemble Test Classes 🧱
         run: ./gradlew assemble testClasses
@@ -105,7 +105,7 @@ jobs:
     needs:
       - sanity-check
       - build
-    name: Final Status Check ✅
+    name: Finally ✅
     runs-on: ubuntu-latest
     if: always()
     steps:
