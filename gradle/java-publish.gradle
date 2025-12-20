@@ -114,7 +114,7 @@ model {
 				pom.withXml {
 					// add MavenCentral requirements to the POM
 					asNode().children().last() + {
-						resolveStrategy = DELEGATE_FIRST
+						resolveStrategy = Closure.DELEGATE_FIRST
 						name projectExtArtifactId
 						description projectDescription
 						url "https://github.com/${projectOrg}/${rootProjectName}"
