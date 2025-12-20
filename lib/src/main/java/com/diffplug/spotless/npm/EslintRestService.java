@@ -26,7 +26,7 @@ public class EslintRestService extends BaseNpmRestService {
 	}
 
 	public String format(String fileContent, Map<FormatOption, Object> formatOptions) {
-		var jsonProperties = new LinkedHashMap<String, Object>();
+		Map<String, Object> jsonProperties = new LinkedHashMap<>();
 		jsonProperties.put("file_content", fileContent);
 		for (Entry<FormatOption, Object> option : formatOptions.entrySet()) {
 			jsonProperties.put(option.getKey().backendName, option.getValue());

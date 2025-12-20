@@ -149,7 +149,7 @@ public final class Lint implements Serializable {
 		Throwable current = e;
 		while (current != null) {
 			String message = current.getMessage();
-			var lineNumber = lineNumberFor(message);
+			int lineNumber = lineNumberFor(message);
 			if (lineNumber != -1) {
 				return new Lint(lineNumber, step.getName(), msgFrom(message));
 			}
@@ -161,7 +161,7 @@ public final class Lint implements Serializable {
 			detail = detail.substring(exceptionName.length() + 2);
 		}
 		Matcher matcher = Pattern.compile("line (\\d+)").matcher(detail);
-		var line = LINE_UNDEFINED;
+		int line = LINE_UNDEFINED;
 		if (matcher.find()) {
 			line = Integer.parseInt(matcher.group(1));
 		}
@@ -172,7 +172,7 @@ public final class Lint implements Serializable {
 		if (message == null) {
 			return -1;
 		}
-		var firstColon = message.indexOf(':');
+		int firstColon = message.indexOf(':');
 		if (firstColon == -1) {
 			return -1;
 		}
@@ -185,7 +185,7 @@ public final class Lint implements Serializable {
 	}
 
 	private static String msgFrom(String message) {
-		for (var i = 0; i < message.length(); i++) {
+		for (int i = 0; i < message.length(); i++) {
 			if (Character.isLetter(message.charAt(i))) {
 				return message.substring(i);
 			}
@@ -208,7 +208,7 @@ public final class Lint implements Serializable {
 		buffer.append(" ");
 		buffer.append(stepName).append("(").append(shortCode).append(") ");
 
-		var firstNewline = detail.indexOf('\n');
+		int firstNewline = detail.indexOf('\n');
 		if (firstNewline == -1) {
 			buffer.append(detail);
 		} else if (oneLine) {

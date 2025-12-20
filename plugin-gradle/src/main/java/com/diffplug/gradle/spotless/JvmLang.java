@@ -29,17 +29,14 @@ import org.gradle.api.tasks.SourceSetContainer;
 
 interface JvmLang {
 
-	default SourceSetContainer getSourceSets(Project project, String message) {
+	default FileCollection getSources(Project project, String message, Function<SourceSet, SourceDirectorySet> sourceSetSourceDirectory, Spec<? super File> filterSpec) {
+		FileCollection union = project.files();
 		final JavaPluginExtension javaPluginExtension = project.getExtensions().findByType(JavaPluginExtension.class);
 		if (javaPluginExtension == null) {
 			throw new GradleException(message);
 		}
-		return javaPluginExtension.getSourceSets();
-	}
-
-	default FileCollection getSources(Project project, String message, Function<SourceSet, SourceDirectorySet> sourceSetSourceDirectory, Spec<? super File> filterSpec) {
-		FileCollection union = project.files();
-		for (SourceSet sourceSet : getSourceSets(project, message)) {
+		final SourceSetContainer sourceSets = javaPluginExtension.getSourceSets();
+		for (SourceSet sourceSet : sourceSets) {
 			union = union.plus(sourceSetSourceDirectory.apply(sourceSet).filter(filterSpec));
 		}
 		return union;

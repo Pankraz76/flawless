@@ -81,7 +81,7 @@ final class ModuleHelper {
 
 	@SuppressFBWarnings("REC_CATCH_EXCEPTION") // workaround JDK11
 	private static List<String> unavailableRequiredPackages() {
-		final var packages = new ArrayList<String>();
+		final List<String> packages = new ArrayList<>();
 		for (Map.Entry<String, String> e : REQUIRED_PACKAGES_TO_TEST_CLASSES.entrySet()) {
 			final String key = e.getKey();
 			final String value = e.getValue();

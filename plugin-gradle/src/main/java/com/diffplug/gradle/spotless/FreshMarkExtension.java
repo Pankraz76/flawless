@@ -62,7 +62,7 @@ public class FreshMarkExtension extends FormatExtension {
 			throw noDefaultTargetException();
 		}
 		// replace the step
-		var props = new TreeMap<String, Object>();
+		TreeMap<String, Object> props = new TreeMap<>();
 		propertyActions.forEach(action -> action.execute(props));
 		replaceStep(FreshMarkStep.create(props, provisioner()));
 		super.setupTask(task);

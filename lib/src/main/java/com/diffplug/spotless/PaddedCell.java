@@ -113,7 +113,7 @@ public final class PaddedCell {
 			return Type.CONVERGE.create(file, List.of(appliedOnce));
 		}
 
-		var appliedN = new ArrayList<String>();
+		List<String> appliedN = new ArrayList<>();
 		appliedN.add(appliedOnce);
 		appliedN.add(appliedTwice);
 		String input = appliedTwice;
@@ -122,7 +122,7 @@ public final class PaddedCell {
 			if (output.equals(input)) {
 				return Type.CONVERGE.create(file, appliedN);
 			} else {
-				var idx = appliedN.indexOf(output);
+				int idx = appliedN.indexOf(output);
 				if (idx >= 0) {
 					return Type.CYCLE.create(file, appliedN.subList(idx, appliedN.size()));
 				} else {
@@ -139,7 +139,7 @@ public final class PaddedCell {
 	 * (did not converge after a single iteration).
 	 */
 	public boolean misbehaved() {
-		var isWellBehaved = type == Type.CONVERGE && steps.size() <= 1;
+		boolean isWellBehaved = type == Type.CONVERGE && steps.size() <= 1;
 		return !isWellBehaved;
 	}
 

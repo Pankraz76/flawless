@@ -35,7 +35,7 @@ public abstract class SerializableEqualityTester {
 	}
 
 	public void testEquals() {
-		var allGroups = new ArrayList<List<Object>>();
+		List<List<Object>> allGroups = new ArrayList<>();
 		Box<List<Object>> currentGroup = Box.of(new ArrayList<>());
 		API api = new API() {
 			@Override

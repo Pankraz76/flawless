@@ -66,7 +66,7 @@ final class SimpleRestClient {
 				}
 			}
 
-			var status = con.getResponseCode();
+			int status = con.getResponseCode();
 
 			if (status != 200) {
 				throw new SimpleRestResponseException(status, readError(con), "Unexpected response status code at " + endpoint);
