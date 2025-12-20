@@ -45,31 +45,9 @@ gradlePlugin {
 	website = "https://github.com/diffplug/spotless"
 	vcsUrl = "https://github.com/diffplug/spotless"
 	plugins {
-		flawlessPlugin {
-			id = 'com.diffplug.spotless'
-			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
-			displayName = 'Flawless formatting plugin'
-			description = project.description
-			tags.set([
-				'format',
-				'style',
-				'license',
-				'header',
-				'google-java-format',
-				'eclipse',
-				'ktlint',
-				'ktfmt',
-				'diktat',
-				'tsfmt',
-				'prettier',
-				'scalafmt',
-				'scalafix',
-				'black',
-				'clang-format'
-			])
-		}
 		spotlessPlugin {
 			id = 'com.diffplug.spotless'
+			id = 'com.opencohesion.flawless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
 			displayName = 'Spotless formatting plugin'
 			description = project.description

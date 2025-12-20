@@ -25,8 +25,6 @@ import org.gradle.util.GradleVersion;
 import com.diffplug.spotless.Jvm;
 import com.diffplug.spotless.SpotlessCache;
 
-import static com.diffplug.gradle.spotless.SpotlessExtension.NAME;
-
 public class SpotlessPlugin implements Plugin<Project> {
 	static final String SPOTLESS_MODERN = "spotlessModern";
 	static final String VER_GRADLE_MIN = "8.1";
@@ -51,7 +49,7 @@ public class SpotlessPlugin implements Plugin<Project> {
 		project.getPlugins().apply(BasePlugin.class);
 
 		// setup the extension
-		project.getExtensions().create(SpotlessExtension.class, NAME, SpotlessExtensionImpl.class, project);
+		project.getExtensions().create(SpotlessExtension.class, SpotlessExtension.EXTENSION, SpotlessExtensionImpl.class, project);
 
 		// clear spotless' cache when the user does a clean
 		// resolution for: https://github.com/diffplug/spotless/issues/243#issuecomment-564323856
