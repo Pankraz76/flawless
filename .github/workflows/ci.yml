@@ -100,11 +100,11 @@ jobs:
           check_name: JUnit ${{matrix.kind}} ${{matrix.jre}} ${{matrix.os}}
           report_paths: '*/build/test-results/*/TEST-*.xml'
           check_retries: true
-  finally:
+  complete:
     needs:
       - sanity
       - build
-    name: Finally ✅
+    name: Complete ☑️
     runs-on: ubuntu-latest
     if: always()
     steps:
