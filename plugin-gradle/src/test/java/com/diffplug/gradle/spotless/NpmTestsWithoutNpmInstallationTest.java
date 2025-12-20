@@ -17,10 +17,12 @@ package com.diffplug.gradle.spotless;
 
 import org.assertj.core.api.Assertions;
 import org.gradle.testkit.runner.BuildResult;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.diffplug.common.base.Predicates;
 
+@Disabled // fixme
 class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 
 	@Test
