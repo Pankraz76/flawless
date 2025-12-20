@@ -4,12 +4,12 @@
 output = [
   link(shield('MavenCentral', 'mavencentral', '{{group}}:{{artifactIdMaven}}', 'blue'), 'https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22{{group}}%22%20AND%20a%3A%22{{artifactIdMaven}}%22'),
   link(shield('Changelog', 'changelog', '{{versionLast}}', 'blue'), 'CHANGES.md'),
-  link(shield('Javadoc', 'javadoc', 'here', 'blue'), 'https://javadoc.io/doc/com.diffplug.spotless/spotless-maven-plugin/{{versionLast}}/index.html')
+  link(shield('Javadoc', 'javadoc', 'here', 'blue'), 'https://javadoc.io/doc/com.diffplug.spotless/flawless-maven-plugin/{{versionLast}}/index.html')
   ].join('\n');
 -->
 [![MavenCentral](https://img.shields.io/badge/mavencentral-com.diffplug.spotless%3Aspotless--maven--plugin-blue.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.diffplug.spotless%22%20AND%20a%3A%22spotless-maven-plugin%22)
 [![Changelog](https://img.shields.io/badge/changelog-3.1.0-blue.svg)](CHANGES.md)
-[![Javadoc](https://img.shields.io/badge/javadoc-here-blue.svg)](https://javadoc.io/doc/com.diffplug.spotless/spotless-maven-plugin/3.1.0/index.html)
+[![Javadoc](https://img.shields.io/badge/javadoc-here-blue.svg)](https://javadoc.io/doc/com.diffplug.spotless/flawless-maven-plugin/3.1.0/index.html)
 <!---freshmark /shields -->
 
 <!---freshmark javadoc
@@ -84,7 +84,7 @@ To use it in your pom, just [add the Spotless plugin](https://search.maven.org/#
 ```xml
 <plugin>
   <groupId>com.diffplug.spotless</groupId>
-  <artifactId>spotless-maven-plugin</artifactId>
+  <artifactId>flawless-maven-plugin</artifactId>
   <version>${spotless.version}</version>
   <configuration>
     <!-- optional: limit format enforcement to just the files changed by this feature branch -->
@@ -1984,7 +1984,7 @@ To suppress these lints, you can use the `<lintSuppressions>` configuration:
 ```xml
 <plugin>
   <groupId>com.diffplug.spotless</groupId>
-  <artifactId>spotless-maven-plugin</artifactId>
+  <artifactId>flawless-maven-plugin</artifactId>
   <version>${spotless.version}</version>
   <configuration>
     <java>
@@ -2078,8 +2078,8 @@ Rather than copying the formatter files across many projects, it is possible to 
 ```xml
 <plugin>
   <groupId>com.diffplug.spotless</groupId>
-  <artifactId>spotless-maven-plugin</artifactId>
-  <version>${spotless-maven-plugin.version}</version>
+  <artifactId>flawless-maven-plugin</artifactId>
+  <version>${flawless-maven-plugin.version}</version>
   <dependencies>
     <dependency>
       <groupId>org.mycompany</groupId>

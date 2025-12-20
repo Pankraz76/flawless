@@ -209,7 +209,7 @@ pluginManagement {
   resolutionStrategy {
     eachPlugin {
       if (requested.id.id == 'com.opencohesion.flawless') {
-        useModule('com.diffplug.spotless:spotless-plugin-gradle:{latest-SNAPSHOT}')
+        useModule('com.diffplug.spotless:flawless-plugin-gradle:{latest-SNAPSHOT}')
       }
     }
   }
@@ -235,7 +235,7 @@ pluginManagement {
   resolutionStrategy {
     eachPlugin {
       if (requested.id.id == 'com.opencohesion.flawless') {
-        useModule('com.github.{{USER_OR_ORG}}.spotless:spotless-plugin-gradle:{{SHA_OF_COMMIT_YOU_WANT}}')
+        useModule('com.github.{{USER_OR_ORG}}.spotless:flawless-plugin-gradle:{{SHA_OF_COMMIT_YOU_WANT}}')
       }
     }
   }

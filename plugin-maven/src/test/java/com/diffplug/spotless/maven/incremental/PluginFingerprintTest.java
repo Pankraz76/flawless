@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2024 DiffPlug
+ * Copyright 2021-2025 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 		MavenProject project = new MavenProject();
 		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.opencohesion.flawless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
+		spotlessPlugin.setArtifactId("flawless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);
 
@@ -136,7 +136,7 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 		MavenProject project = new MavenProject();
 		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.opencohesion.flawless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
+		spotlessPlugin.setArtifactId("flawless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);
 		PluginManagement pluginManagement = new PluginManagement();

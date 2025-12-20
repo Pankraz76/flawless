@@ -33,7 +33,7 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 		setFile(path).toResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 
 		expectSelfieErrorMsg(mavenRunner().withArguments("spotless:check").runHasError()).toBe("""
-				Failed to execute goal com.diffplug.spotless:spotless-maven-plugin:VERSION:check (default-cli) on project spotless-maven-plugin-tests: Unable to format file ${PROJECT_DIR}/src/main/java/TestFile.java
+				Failed to execute goal com.diffplug.spotless:flawless-maven-plugin:VERSION:check (default-cli) on project flawless-maven-plugin-tests: Unable to format file ${PROJECT_DIR}/src/main/java/TestFile.java
 				Step 'forbidWildcardImports' found problem in 'TestFile.java':
 				TestFile.java:L1 forbidWildcardImports(import java.util.*;) Do not use wildcard imports (e.g. java.util.*) - replace with specific class imports (e.g. java.util.List) as 'spotlessApply' cannot auto-fix this
 				TestFile.java:L2 forbidWildcardImports(import static java.util.Collections.*;) Do not use wildcard imports (e.g. java.util.*) - replace with specific class imports (e.g. java.util.List) as 'spotlessApply' cannot auto-fix this

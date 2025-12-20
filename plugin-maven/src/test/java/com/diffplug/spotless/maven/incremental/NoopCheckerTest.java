@@ -106,7 +106,7 @@ class NoopCheckerTest extends ResourceHarness {
 		build.setDirectory(targetDir.getName());
 		Plugin spotlessPlugin = new Plugin();
 		spotlessPlugin.setGroupId("com.opencohesion.flawless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
+		spotlessPlugin.setArtifactId("flawless-maven-plugin");
 		build.addPlugin(spotlessPlugin);
 		project.setBuild(build);
 		return project;
