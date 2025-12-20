@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.condition.JRE.JAVA_23;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.junit.jupiter.api.Test;

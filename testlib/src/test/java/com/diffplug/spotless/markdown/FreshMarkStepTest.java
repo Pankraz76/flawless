@@ -55,9 +55,7 @@ class FreshMarkStepTest {
 
 			@Override
 			protected FormatterStep create() {
-				String finalVersion = this.version;
-				var finalProps = new HashMap<String, ?>(props);
-				return FreshMarkStep.create(finalVersion, finalProps, TestProvisioner.mavenCentral());
+				return FreshMarkStep.create(this.version, new HashMap<>(props), TestProvisioner.mavenCentral());
 			}
 		}.testEquals();
 	}
