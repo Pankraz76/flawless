@@ -35,7 +35,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 	void allowToSpecifyFormatterVersion() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def tsfmtconfig = [:]",
@@ -56,7 +56,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 	void allowToSpecifyMultipleVersionStrings() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def tsfmtconfig = [:]",
@@ -77,7 +77,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 	void useTsfmtInlineConfig() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def tsfmtconfig = [:]",
@@ -99,7 +99,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 		setFile("tsfmt.json").toResource("npm/tsfmt/tsfmt/tsfmt.json");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -118,7 +118,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 		setFile("tsconfig.json").toResource("npm/tsfmt/tsconfig/tsconfig.json");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -136,7 +136,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 	void usePrettier() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -155,7 +155,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 		setFile(".eslintrc.js").toResource("npm/eslint/typescript/custom_rules/.eslintrc.js");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -176,7 +176,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 		setFile("tsconfig.json").toResource("npm/eslint/typescript/styleguide/xo/tsconfig.json");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -196,7 +196,7 @@ class TypescriptExtensionTest extends GradleIntegrationHarness {
 		setFile("tsconfig.json").toResource("npm/eslint/typescript/styleguide/standard_with_typescript/tsconfig.json");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

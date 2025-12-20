@@ -66,7 +66,7 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 			}
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"  id 'com.diffplug.spotless'",
+					"  id 'com.opencohesion.flawless'",
 					"}",
 					"spotless {",
 					"  ratchetFrom 'baseline'",
@@ -166,13 +166,13 @@ class GitRatchetGradleTest extends GradleIntegrationHarness {
 			}
 			setFile("settings.gradle").toLines(
 					"plugins {",
-					"  id 'com.diffplug.spotless' apply false",
+					"  id 'com.opencohesion.flawless' apply false",
 					"}",
 					"include 'clean'",
 					"include 'dirty'",
 					"include 'added'");
 			setFile("spotless.gradle").toLines(
-					"apply plugin: 'com.diffplug.spotless'",
+					"apply plugin: 'com.opencohesion.flawless'",
 					"spotless {",
 					"  ratchetFrom 'main'",
 					"  format 'misc', {",

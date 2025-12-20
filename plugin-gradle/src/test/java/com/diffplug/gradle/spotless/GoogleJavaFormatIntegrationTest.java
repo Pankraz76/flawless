@@ -24,7 +24,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -50,7 +50,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integrationWithReorderImports() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -76,7 +76,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integrationWithSkipJavadocFormatting() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

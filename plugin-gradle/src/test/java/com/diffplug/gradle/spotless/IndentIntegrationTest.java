@@ -74,7 +74,7 @@ class IndentIntegrationTest extends GradleIntegrationHarness {
 	private BuildResult runIndentFormatter(String indentationMethodName, String resourceFile) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  format 'test', {",

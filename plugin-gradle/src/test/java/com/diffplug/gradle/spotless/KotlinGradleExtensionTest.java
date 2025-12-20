@@ -31,7 +31,7 @@ class KotlinGradleExtensionTest extends KotlinExtensionTest {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'org.jetbrains.kotlin.jvm' version '1.6.21'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

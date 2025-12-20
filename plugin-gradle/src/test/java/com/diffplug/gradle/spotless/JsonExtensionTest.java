@@ -25,7 +25,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -46,7 +46,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -65,7 +65,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -86,7 +86,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -105,7 +105,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -124,7 +124,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -143,7 +143,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -162,7 +162,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -182,7 +182,7 @@ class JsonExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

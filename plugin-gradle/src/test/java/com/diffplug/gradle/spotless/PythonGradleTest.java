@@ -27,7 +27,7 @@ class PythonGradleTest extends GradleIntegrationHarness {
 	void black() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  python {",

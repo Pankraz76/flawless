@@ -33,7 +33,7 @@ class ErrorShouldRethrowTest extends GradleIntegrationHarness {
 	private void writeBuild(String... toInsert) throws IOException {
 		var lines = new ArrayList<String>();
 		lines.add("plugins {");
-		lines.add("    id 'com.diffplug.spotless'");
+		lines.add("    id 'com.opencohesion.flawless'");
 		lines.add("    id 'java'");
 		lines.add("}");
 		lines.add("spotless {");

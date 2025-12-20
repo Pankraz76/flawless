@@ -28,7 +28,7 @@ class MultiProjectAfterEvaluate extends GradleIntegrationHarness {
 		setFile("sub/build.gradle")
 				.toLines(
 						"plugins {",
-						"  id 'com.diffplug.spotless'",
+						"  id 'com.opencohesion.flawless'",
 						"  id 'java'",
 						"}",
 						"repositories { mavenCentral() }",

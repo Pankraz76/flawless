@@ -33,7 +33,7 @@ class FilePermissionsTest extends GradleIntegrationHarness {
 	void spotlessApplyShouldPreservePermissions() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

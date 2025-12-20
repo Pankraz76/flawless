@@ -55,11 +55,11 @@ public class SpotlessPluginRedirect implements Plugin<Project> {
 	public void apply(Project project) {
 		String errorMsg = StringPrinter.buildStringFromLines(
 				"We have moved from 'com.diffplug.gradle.spotless'",
-				"                to 'com.diffplug.spotless'",
+				"                to 'com.opencohesion.flawless'",
 				"To migrate:",
 				"- Test your build with: id 'com.diffplug.gradle.spotless' version '4.5.1'",
 				"- Fix any deprecation warnings (shouldn't be many / any)",
-				"- Now you can use:      id 'com.diffplug.spotless' version '5.0.0'",
+				"- Now you can use:      id 'com.opencohesion.flawless' version '5.0.0'",
 				"",
 				"That's all you really need to know, but as always, there are more details in the changelog:",
 				"https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md",

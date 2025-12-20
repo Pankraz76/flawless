@@ -26,7 +26,7 @@ class RegisterDependenciesTaskTest extends GradleIntegrationHarness {
 		setFile("settings.gradle")
 				.toLines("include 'sub'");
 		setFile("sub/build.gradle").toLines(
-				"plugins { id 'com.diffplug.spotless' }",
+				"plugins { id 'com.opencohesion.flawless' }",
 				"",
 				"repositories { mavenCentral() }",
 				"spotless {",

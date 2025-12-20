@@ -36,7 +36,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asCssStepExperimental() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -64,7 +64,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asCssStepStable() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -89,7 +89,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asGenericStep() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -114,7 +114,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asJavaScriptStep() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -139,7 +139,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asJsonStep() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -164,7 +164,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void asTypeScriptStep() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -189,7 +189,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void canSetLanguageForGenericStep() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -215,7 +215,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 		var path = newFile("configs").getAbsolutePath();
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -243,7 +243,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 		var file = new File(path, "biome.json").getAbsolutePath();
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -270,7 +270,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void configPathLineWidth120() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -297,7 +297,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void configPathLineWidth80() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -324,7 +324,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 		var path = newFile("target/bin/biome").getAbsoluteFile().toString();
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -352,7 +352,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void downloadDirRelative() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -379,7 +379,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void failureWhenExeNotFound() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -406,7 +406,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void failureWhenNotParseable() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -439,7 +439,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void preservesIgnoredFiles() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -464,7 +464,7 @@ class BiomeIntegrationTest extends GradleIntegrationHarness {
 	void version2x() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

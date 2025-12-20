@@ -1,4 +1,4 @@
-apply plugin: 'com.diffplug.spotless'
+apply plugin: 'com.opencohesion.flawless'
 flawless {
 	if (project != rootProject) {
 		// the rootProject doesn't have any java

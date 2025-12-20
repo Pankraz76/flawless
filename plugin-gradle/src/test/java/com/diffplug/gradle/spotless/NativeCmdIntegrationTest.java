@@ -32,7 +32,7 @@ interface NativeCmdIntegrationTest {
 		GradleIntegrationHarness harness = (GradleIntegrationHarness) this;
 		harness.setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  lineEndings 'UNIX'",

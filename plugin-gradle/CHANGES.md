@@ -893,7 +893,7 @@ This release is *exactly* the same as `4.5.1`, except:
 - all deprecated functionality has been removed
 - `-PspotlessModern=true` (introduced in [`4.3.0`](#430---2020-06-05)) is now always on
 
-If `id 'com.diffplug.gradle.spotless' version '4.5.1'` works without deprecation warnings, then you can upgrade to `id 'com.diffplug.spotless' version '5.0.0'` and no changes will be required.
+If `id 'com.diffplug.gradle.spotless' version '4.5.1'` works without deprecation warnings, then you can upgrade to `id 'com.opencohesion.flawless' version '5.0.0'` and no changes will be required.
 
 * **BREAKING** All deprecated functionality has been removed ([#640](https://github.com/diffplug/spotless/pull/640)).
   * (dev-only) `SpotlessTask` was deleted, and `SpotlessTaskModern` was renamed to `SpotlessTask` (ditto for `SpotlessPlugin` and `SpotlessExtension`).
@@ -912,7 +912,7 @@ spotless {
 }
 println "isEager $isEager"
 // 'com.diffplug.gradle.spotless' -> isEager yup
-// 'com.diffplug.spotless'        -> isEager nope
+// 'com.opencohesion.flawless'        -> isEager nope
 ```
 
 ## [4.5.1] - 2020-07-04

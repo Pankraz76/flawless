@@ -70,7 +70,7 @@ class MultipleTargetsTest extends GradleIntegrationHarness {
 	private void runTest(String targets) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"    format 'singleFile', {",

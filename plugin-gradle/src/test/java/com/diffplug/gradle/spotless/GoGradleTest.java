@@ -27,7 +27,7 @@ class GoGradleTest extends GradleIntegrationHarness {
 	void gofmt() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  go {",

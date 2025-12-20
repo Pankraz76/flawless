@@ -24,7 +24,7 @@ class PalantirJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -50,7 +50,7 @@ class PalantirJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void formatJavaDoc() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

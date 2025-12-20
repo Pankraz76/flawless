@@ -25,7 +25,7 @@ class Antlr4ExtensionTest extends GradleIntegrationHarness {
 	void applyUsingDefaultVersion() throws IOException {
 		String[] buildScript = {
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -42,7 +42,7 @@ class Antlr4ExtensionTest extends GradleIntegrationHarness {
 	void applyUsingCustomVersion() throws IOException {
 		String[] buildScript = {
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

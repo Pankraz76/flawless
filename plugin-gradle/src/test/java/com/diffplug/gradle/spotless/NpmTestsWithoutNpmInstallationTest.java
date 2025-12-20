@@ -28,7 +28,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 		try {
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"    id 'com.github.node-gradle.node' version '3.5.1'",
 					"}",
 					"repositories { mavenCentral() }",
@@ -105,7 +105,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 		try {
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"    id 'com.github.node-gradle.node' version '3.5.1'",
 					"}",
 					"repositories { mavenCentral() }",
@@ -144,7 +144,7 @@ class NpmTestsWithoutNpmInstallationTest extends GradleIntegrationHarness {
 		try {
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"    id 'com.github.node-gradle.node' version '3.5.1'",
 					"}",
 					"repositories { mavenCentral() }",

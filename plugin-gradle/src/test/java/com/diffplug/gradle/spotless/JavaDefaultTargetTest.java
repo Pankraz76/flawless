@@ -24,7 +24,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void integration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -50,7 +50,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void multipleBlocksShouldWork() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",
@@ -67,7 +67,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void removeUnusedImportsWithCleanthat() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",
@@ -85,7 +85,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void forbidWildcardImports() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -105,7 +105,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void forbidModuleImports() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -129,7 +129,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void fenceWithTargetExcludeNoMatch() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",
@@ -155,7 +155,7 @@ class JavaDefaultTargetTest extends GradleIntegrationHarness {
 	void fenceWithTargetExcludeMatch() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",

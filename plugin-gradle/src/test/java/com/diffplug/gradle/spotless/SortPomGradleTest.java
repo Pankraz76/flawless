@@ -25,7 +25,7 @@ class SortPomGradleTest extends GradleIntegrationHarness {
 		// given
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -47,7 +47,7 @@ class SortPomGradleTest extends GradleIntegrationHarness {
 		// given
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -71,7 +71,7 @@ class SortPomGradleTest extends GradleIntegrationHarness {
 		// given
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -93,7 +93,7 @@ class SortPomGradleTest extends GradleIntegrationHarness {
 		// given
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

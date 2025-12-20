@@ -25,7 +25,7 @@ class ConfigAvoidanceTest extends GradleIntegrationHarness {
 	void noConfigOnHelp() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"apply plugin: 'java'",

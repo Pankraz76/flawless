@@ -53,7 +53,7 @@ abstract class BumpThisNumberIfACustomStepChangesTest extends GradleIntegrationH
 	private void writeBuildFile(String toInsert) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"    format 'misc', {",

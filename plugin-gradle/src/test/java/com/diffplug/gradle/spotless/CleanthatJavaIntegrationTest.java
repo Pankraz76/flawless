@@ -24,7 +24,7 @@ class CleanthatJavaIntegrationTest extends GradleIntegrationHarness {
 	void integration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

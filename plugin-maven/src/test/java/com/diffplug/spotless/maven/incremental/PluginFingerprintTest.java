@@ -121,7 +121,7 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 	void buildsFingerprintForProjectWithSpotlessPluginInBuildPlugins() {
 		MavenProject project = new MavenProject();
 		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
+		spotlessPlugin.setGroupId("com.opencohesion.flawless");
 		spotlessPlugin.setArtifactId("spotless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);
@@ -135,7 +135,7 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 	void buildsFingerprintForProjectWithSpotlessPluginInPluginManagement() {
 		MavenProject project = new MavenProject();
 		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
+		spotlessPlugin.setGroupId("com.opencohesion.flawless");
 		spotlessPlugin.setArtifactId("spotless-maven-plugin");
 		spotlessPlugin.setVersion("1.2.3");
 		project.getBuild().addPlugin(spotlessPlugin);

@@ -25,7 +25,7 @@ class SqlExtensionTest extends GradleIntegrationHarness {
 	void should_format_sql_with_default_configuration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"    sql {",
@@ -43,7 +43,7 @@ class SqlExtensionTest extends GradleIntegrationHarness {
 	void should_format_sql_with_alternative_configuration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"    sql {",

@@ -25,7 +25,7 @@ class WithinBlockTest extends GradleIntegrationHarness {
 		// make sure that the "typed-generic" closure works
 		// it does, and it doesn't need `it`
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.diffplug.spotless' }",
+				"plugins { id 'com.opencohesion.flawless' }",
 				"repositories { mavenCentral() }",
 				"import com.diffplug.gradle.spotless.JavaExtension",
 				"spotless {",
@@ -43,7 +43,7 @@ class WithinBlockTest extends GradleIntegrationHarness {
 	void withinBlocksTourDeForce() throws IOException {
 		// but down here, we need `it`, or it will bind to the parent context, why?
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.diffplug.spotless' }",
+				"plugins { id 'com.opencohesion.flawless' }",
 				"repositories { mavenCentral() }",
 				"import com.diffplug.gradle.spotless.JavaExtension",
 				"spotless {",

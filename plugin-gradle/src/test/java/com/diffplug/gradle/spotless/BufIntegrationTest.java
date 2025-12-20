@@ -27,7 +27,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void bufLarge() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  protobuf {",
@@ -43,7 +43,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void buf() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  protobuf {",
@@ -59,7 +59,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void bufWithLicense() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"  protobuf {",

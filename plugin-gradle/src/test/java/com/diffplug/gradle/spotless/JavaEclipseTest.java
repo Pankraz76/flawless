@@ -24,7 +24,7 @@ class JavaEclipseTest extends GradleIntegrationHarness {
 	void settingsWithProprtiesContent() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",
@@ -42,7 +42,7 @@ class JavaEclipseTest extends GradleIntegrationHarness {
 	void settingsWithXmlContent() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.diffplug.spotless'",
+				"  id 'com.opencohesion.flawless'",
 				"  id 'java'",
 				"}",
 				"repositories { mavenCentral() }",

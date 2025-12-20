@@ -43,7 +43,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 			setFile(".eslintrc.js").toResource("npm/eslint/javascript/styleguide/standard/.eslintrc.js");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -62,7 +62,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 			setFile(".eslintrc.js").toResource("npm/eslint/javascript/custom_rules/.eslintrc.js");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -96,7 +96,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 					"}");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -115,7 +115,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 			setFile(".eslintrc.js").toResource("npm/eslint/javascript/styleguide/standard/.eslintrc.js");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -134,7 +134,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 			setFile(".eslintrc.js").toResource("npm/eslint/javascript/styleguide/standard/.eslintrc.js");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -168,7 +168,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 			setFile(".eslintrc.js").toResource(styleguidePath + ".eslintrc.js");
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",
@@ -190,7 +190,7 @@ class JavascriptExtensionTest extends GradleIntegrationHarness {
 		void supportsPrettierFormattingForJavascript() throws IOException {
 			setFile("build.gradle").toLines(
 					"plugins {",
-					"    id 'com.diffplug.spotless'",
+					"    id 'com.opencohesion.flawless'",
 					"}",
 					"repositories { mavenCentral() }",
 					"spotless {",

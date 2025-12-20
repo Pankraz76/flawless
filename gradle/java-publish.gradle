@@ -8,7 +8,7 @@ static def decode64(String varName) {
 }
 
 if (project.parent == null) {
-	group = 'com.diffplug.spotless'
+	group = 'com.opencohesion.flawless'
 	// group = 'com.opencohesion.flawless'
 	def pass = System.env['ORG_GRADLE_PROJECT_nexus_pass64']
 	if (pass != null) {

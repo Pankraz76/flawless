@@ -25,7 +25,7 @@ class YamlExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -45,7 +45,7 @@ class YamlExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -66,7 +66,7 @@ class YamlExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -85,7 +85,7 @@ class YamlExtensionTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

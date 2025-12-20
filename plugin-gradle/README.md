@@ -3,7 +3,7 @@
 
 <!---freshmark shields
 output = [
-  link(shield('Gradle plugin', 'plugins.gradle.org', 'com.diffplug.spotless', 'blue'), 'https://plugins.gradle.org/plugin/com.diffplug.spotless'),
+  link(shield('Gradle plugin', 'plugins.gradle.org', 'com.opencohesion.flawless', 'blue'), 'https://plugins.gradle.org/plugin/com.diffplug.spotless'),
   link(shield('Changelog', 'changelog', '{{versionLast}}', 'blue'), 'CHANGES.md'),
   link(shield('MavenCentral', 'mavencentral', 'here', 'blue'), 'https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.diffplug.spotless%22%20AND%20a%3A%22spotless-plugin-gradle%22'),
   link(shield('Javadoc', 'javadoc', 'here', 'blue'), 'https://javadoc.io/doc/com.diffplug.spotless/spotless-plugin-gradle/{{versionLast}}/index.html'),
@@ -141,8 +141,8 @@ All the generic steps live in [`FormatExtension`](https://javadoc.io/doc/com.dif
 
 Spotless requires JRE 17+ and Gradle 7.3 or newer.
 
-- If you're stuck on JRE 11, use [`id 'com.diffplug.spotless' version '7.2.1'` or older](https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md#721---2025-07-21).
-- If you're stuck on JRE 8, use [`id 'com.diffplug.spotless' version '6.13.0'` or older](https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md#6130---2023-01-14).
+- If you're stuck on JRE 11, use [`id 'com.opencohesion.flawless' version '7.2.1'` or older](https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md#721---2025-07-21).
+- If you're stuck on JRE 8, use [`id 'com.opencohesion.flawless' version '6.13.0'` or older](https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md#6130---2023-01-14).
 - If you're stuck on a very old version of Gradle, [`id 'com.diffplug.gradle.spotless' version '4.5.1'` supports all the way back to Gradle 2.x](https://github.com/diffplug/spotless/blob/main/plugin-gradle/CHANGES.md#451---2020-07-04).
 
 ### Git hook

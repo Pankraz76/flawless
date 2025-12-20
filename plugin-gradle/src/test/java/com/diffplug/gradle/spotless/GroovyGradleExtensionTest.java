@@ -34,7 +34,7 @@ class GroovyGradleExtensionTest extends GroovyExtensionTest {
 		String target = useDefaultTarget ? "" : "target 'other.gradle'";
 		String buildContent = StringPrinter.buildStringFromLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"spotless {",
 				"    groovyGradle {",

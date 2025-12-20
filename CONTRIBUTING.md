@@ -201,14 +201,14 @@ pluginManagement {
   repositories {
     mavenLocal {
       content {
-        includeGroup 'com.diffplug.spotless'
+        includeGroup 'com.opencohesion.flawless'
       }
     }
     gradlePluginPortal()
   }
   resolutionStrategy {
     eachPlugin {
-      if (requested.id.id == 'com.diffplug.spotless') {
+      if (requested.id.id == 'com.opencohesion.flawless') {
         useModule('com.diffplug.spotless:spotless-plugin-gradle:{latest-SNAPSHOT}')
       }
     }
@@ -234,7 +234,7 @@ pluginManagement {
   }
   resolutionStrategy {
     eachPlugin {
-      if (requested.id.id == 'com.diffplug.spotless') {
+      if (requested.id.id == 'com.opencohesion.flawless') {
         useModule('com.github.{{USER_OR_ORG}}.spotless:spotless-plugin-gradle:{{SHA_OF_COMMIT_YOU_WANT}}')
       }
     }

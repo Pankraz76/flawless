@@ -40,7 +40,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 		String excludeStatement = excludeJava ? "excludeJava()" : "";
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"apply plugin: 'groovy'",
 				"",
@@ -72,7 +72,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 	void excludeJavaWithCustomTarget() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"apply plugin: 'groovy'",
 				"",
@@ -92,7 +92,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 	void removeSemicolons() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"apply plugin: 'groovy'",
 				"",
@@ -113,7 +113,7 @@ class GroovyExtensionTest extends GradleIntegrationHarness {
 	void groovyPluginMissingCheck() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.diffplug.spotless'",
+				"    id 'com.opencohesion.flawless'",
 				"}",
 				"apply plugin: 'java'",
 				"",
