@@ -8,7 +8,7 @@ concurrency:
   group: ${{github.workflow}}-${{github.ref}}
   cancel-in-progress: true
 jobs:
-  sanity-check:
+  sanity:
     name: Sanity 🦢
     runs-on: ubuntu-latest
     env:
@@ -33,7 +33,7 @@ jobs:
       - name: Assemble Test Classes 🧱
         run: ./gradlew assemble testClasses
   build:
-    needs: sanity-check
+    needs: sanity
     name: Build 🎲
     strategy:
       fail-fast: false
@@ -103,7 +103,7 @@ jobs:
           check_retries: true
   final-status:
     needs:
-      - sanity-check
+      - sanity
       - build
     name: Finally ✅
     runs-on: ubuntu-latest
