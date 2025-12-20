@@ -30,7 +30,7 @@ jobs:
         run: ./gradlew spotlessCheck
       - name: Rewrite ♻️
         run: ./gradlew rewriteDryRun
-      - name: Assemble Test Classes 🏗️
+      - name: Test Classes 🏗️
         run: ./gradlew assemble testClasses
   build:
     needs: sanity
