@@ -34,7 +34,7 @@ jobs:
         run: ./gradlew assemble testClasses
   build:
     needs: sanity
-    name: Build 🎲
+    name: Build 🎲 (Dice we play, everyday.)
     strategy:
       fail-fast: false
       matrix:
@@ -79,8 +79,7 @@ jobs:
           go-version: 'stable'
       - name: Install shfmt 🔧
         if: matrix.kind == 'shfmt'
-        run: |
-          go install mvdan.cc/sh/v3/cmd/shfmt@${{matrix.shfmt-version}}
+        run: go install mvdan.cc/sh/v3/cmd/shfmt@${{matrix.shfmt-version}}
       - name: Test shfmt Integration 🧪
         if: matrix.kind == 'shfmt'
         run: ./gradlew testShfmt
