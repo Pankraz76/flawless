@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2023 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -50,7 +50,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integrationWithReorderImports() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -76,7 +76,7 @@ class GoogleJavaFormatIntegrationTest extends GradleIntegrationHarness {
 	void integrationWithSkipJavadocFormatting() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

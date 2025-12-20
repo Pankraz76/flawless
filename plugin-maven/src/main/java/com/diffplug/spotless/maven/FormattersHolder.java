@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2025 DiffPlug
+ * Copyright 2021-2024 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ class FormattersHolder implements AutoCloseable {
 	}
 
 	static FormattersHolder create(Map<FormatterFactory, Supplier<Iterable<File>>> formatterFactoryToFiles, FormatterConfig config) {
-		var openFormatters = new LinkedHashMap<FormatterFactory, Formatter>();
+		Map<FormatterFactory, Formatter> openFormatters = new LinkedHashMap<>();
 		try {
 			for (Entry<FormatterFactory, Supplier<Iterable<File>>> entry : formatterFactoryToFiles.entrySet()) {
 				FormatterFactory formatterFactory = entry.getKey();

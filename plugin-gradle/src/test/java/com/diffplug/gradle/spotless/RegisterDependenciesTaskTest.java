@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2023 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ class RegisterDependenciesTaskTest extends GradleIntegrationHarness {
 		setFile("settings.gradle")
 				.toLines("include 'sub'");
 		setFile("sub/build.gradle").toLines(
-				"plugins { id 'com.opencohesion.flawless' }",
+				"plugins { id 'com.diffplug.spotless' }",
 				"",
 				"repositories { mavenCentral() }",
 				"spotless {",

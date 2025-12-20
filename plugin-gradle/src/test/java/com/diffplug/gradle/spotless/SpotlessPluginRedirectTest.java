@@ -32,7 +32,7 @@ class SpotlessPluginRedirectTest extends GradleIntegrationHarness {
 		Assertions.assertThat(gradleRunner().buildAndFail().getOutput().replace("\r", ""))
 				.contains(StringPrinter.buildStringFromLines(
 						"   > We have moved from 'com.diffplug.gradle.spotless'",
-						"                     to 'com.opencohesion.flawless'",
+						"                     to 'com.diffplug.spotless'",
 						"     To migrate:",
 						"     - Test your build with: id 'com.diffplug.gradle.spotless' version '4.5.1'"));
 	}

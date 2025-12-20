@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2021 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ class MultiProjectAfterEvaluate extends GradleIntegrationHarness {
 		setFile("sub/build.gradle")
 				.toLines(
 						"plugins {",
-						"  id 'com.opencohesion.flawless'",
+						"  id 'com.diffplug.spotless'",
 						"  id 'java'",
 						"}",
 						"repositories { mavenCentral() }",

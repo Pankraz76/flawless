@@ -96,7 +96,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 	@Test
 	void enableUpToDateCheckingCustomIndexFile() throws Exception {
 		Path tempDirectory = newFolder("index-files").toPath();
-		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/flawless-maven-plugin-tests.index");
+		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
 		assertThat(indexFile.getParent()).doesNotExist();
 		assertThat(indexFile).doesNotExist();
 		writePomWithUpToDateCheckingEnabledIndexFile(true, tempDirectory + "/${project.groupId}/${project.artifactId}.index");
@@ -113,7 +113,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 	@Test
 	void disableUpToDateCheckingCustomIndexFile() throws Exception {
 		Path tempDirectory = newFolder("index-files").toPath();
-		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/flawless-maven-plugin-tests.index");
+		Path indexFile = tempDirectory.resolve("com.diffplug.spotless/spotless-maven-plugin-tests.index");
 		Files.createDirectories(indexFile.getParent());
 		Files.createFile(indexFile);
 		assertThat(indexFile.getParent()).exists();
@@ -244,8 +244,8 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 	}
 
 	private List<File> writeFiles(String resource, String suffix, int count) throws IOException {
-		var result = new ArrayList<File>(count);
-		for (var i = 0; i < count; i++) {
+		List<File> result = new ArrayList<>(count);
+		for (int i = 0; i < count; i++) {
 			String path = "src/main/java/test_" + suffix + "_" + i + ".java";
 			File file = setFile(path).toResource(resource);
 			result.add(file);

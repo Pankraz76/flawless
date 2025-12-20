@@ -82,7 +82,7 @@ public class ResourceHarness {
 		if (!path.startsWith("/")) {
 			path = path + "/";
 		}
-		var filenames = new ArrayList<String>();
+		List<String> filenames = new ArrayList<>();
 
 		try (InputStream in = ResourceHarness.class.getResourceAsStream(path)) {
 			if (in == null) {
@@ -143,7 +143,7 @@ public class ResourceHarness {
 
 	/** Returns Files (in a temporary folder) which has the contents of the given file from the src/test/resources directory. */
 	public List<File> createTestFiles(String... filenames) {
-		var files = new ArrayList<File>(filenames.length);
+		List<File> files = new ArrayList<>(filenames.length);
 		for (String filename : filenames) {
 			files.add(createTestFile(filename));
 		}
@@ -160,7 +160,7 @@ public class ResourceHarness {
 	 * src/test/resources directory.
 	 */
 	public File createTestFile(String filename, UnaryOperator<String> fileContentsProcessor) {
-		var lastSlash = filename.lastIndexOf('/');
+		int lastSlash = filename.lastIndexOf('/');
 		String name = lastSlash >= 0 ? filename.substring(lastSlash) : filename;
 		File file = newFile(name);
 		file.getParentFile().mkdirs();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2023 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -55,7 +55,7 @@ public abstract class AbstractEslint extends AbstractNpmFormatterStepFactory {
 			throw onlyOneConfig();
 		}
 
-		var devDependencies = new TreeMap<String, String>();
+		Map<String, String> devDependencies = new TreeMap<>();
 		if (this.devDependencies != null) {
 			devDependencies.putAll(this.devDependencies);
 		} else if (this.devDependencyProperties != null) {

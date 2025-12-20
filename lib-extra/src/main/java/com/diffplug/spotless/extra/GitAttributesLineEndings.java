@@ -353,7 +353,7 @@ public final class GitAttributesLineEndings {
 		/** Returns a value if there is one, or unspecified if there isn't. */
 		public @Nullable String valueFor(File file, String key) {
 			StringBuilder pathBuilder = new StringBuilder(file.getAbsolutePath().length());
-			var isDirectory = file.isDirectory();
+			boolean isDirectory = file.isDirectory();
 			File parent = file.getParentFile();
 
 			pathBuilder.append(file.getName());

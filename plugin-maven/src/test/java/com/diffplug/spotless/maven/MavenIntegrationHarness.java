@@ -281,7 +281,7 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	protected static Map<String, Object> buildPomXmlParams(String pluginVersion, String[] build, String[] executions, String[] configuration, String[] modules, String[] dependencies, String[] plugins) {
-		var params = new HashMap<String, Object>();
+		Map<String, Object> params = new HashMap<>();
 		params.put(SPOTLESS_MAVEN_PLUGIN_VERSION, pluginVersion == null ? getSystemProperty(SPOTLESS_MAVEN_PLUGIN_VERSION) : pluginVersion);
 
 		if (build != null) {
@@ -363,9 +363,9 @@ public class MavenIntegrationHarness extends ResourceHarness {
 				.filter(Objects::nonNull)
 				.collect(Collectors.joining("\n"));
 
-		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:flawless-maven-plugin:([^:]+):", "com.diffplug.spotless:flawless-maven-plugin:VERSION:");
+		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:spotless-maven-plugin:([^:]+):", "com.diffplug.spotless:spotless-maven-plugin:VERSION:");
 
-		var help1 = sanitizedVersion.indexOf("-> [Help 1]");
+		int help1 = sanitizedVersion.indexOf("-> [Help 1]");
 		String trimTrailingString = sanitizedVersion.substring(0, help1);
 
 		String sanitizeBiomeNative = trimTrailingString.replaceAll("[/|\\\\].m2(.*)[/|\\\\]biome\\-(.+),", "biome-exe");

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2023 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ class KotlinGradleExtensionTest extends KotlinExtensionTest {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'org.jetbrains.kotlin.jvm' version '1.6.21'",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

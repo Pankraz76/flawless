@@ -248,7 +248,7 @@ class BiomeMavenTest extends MavenIntegrationHarness {
 		var result = mavenRunner().withArguments("spotless:apply").runHasError();
 		assertFile("biome_test.js").sameAsResource("biome/js/fileBefore.js");
 		expectSelfieErrorMsg(result).toBe("""
-				Failed to execute goal com.diffplug.spotless:flawless-maven-plugin:VERSION:apply (default-cli) on project flawless-maven-plugin-tests: There were 1 lint error(s), they must be fixed or suppressed.
+				Failed to execute goal com.diffplug.spotless:spotless-maven-plugin:VERSION:apply (default-cli) on project spotless-maven-plugin-tests: There were 1 lint error(s), they must be fixed or suppressed.
 				biome_test.js:LINE_UNDEFINED biome(java.lang.RuntimeException) > arguments: [${user.home}biome-exe file.json] (...)
 				Resolve these lints or suppress with `<lintSuppressions>`
 				""");

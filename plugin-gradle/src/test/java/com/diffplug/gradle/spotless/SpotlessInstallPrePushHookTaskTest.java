@@ -29,7 +29,7 @@ class SpotlessInstallPrePushHookTaskTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }");
 
@@ -58,7 +58,7 @@ class SpotlessInstallPrePushHookTaskTest extends GradleIntegrationHarness {
 		setFile("build.gradle").toLines(
 				"plugins {",
 				"    id 'java'",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }");
 		setFile(".git/hooks/pre-push").toResource("git_pre_hook/pre-push.existing");

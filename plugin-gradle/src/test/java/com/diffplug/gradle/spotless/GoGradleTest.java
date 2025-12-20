@@ -1,5 +1,5 @@
 /*
- * Copyright 2020-2025 DiffPlug
+ * Copyright 2020-2024 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ class GoGradleTest extends GradleIntegrationHarness {
 	void gofmt() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"  go {",

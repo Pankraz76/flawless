@@ -73,7 +73,7 @@ class ValuePerStep<T> extends AbstractList<T> {
 
 	public int indexOfFirstValue() {
 		if (multipleValues != null) {
-			for (var i = 0; i < multipleValues.length; i++) {
+			for (int i = 0; i < multipleValues.length; i++) {
 				if (multipleValues[i] != null) {
 					return i;
 				}

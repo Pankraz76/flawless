@@ -31,7 +31,7 @@ public class ConfigurationCacheTest extends GradleIntegrationHarness {
 	public void helpConfigures() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"apply plugin: 'java'",
@@ -47,7 +47,7 @@ public class ConfigurationCacheTest extends GradleIntegrationHarness {
 	public void helpConfiguresIfTasksAreCreated() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"apply plugin: 'java'",
@@ -64,7 +64,7 @@ public class ConfigurationCacheTest extends GradleIntegrationHarness {
 	public void multipleRuns() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

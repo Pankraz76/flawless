@@ -23,7 +23,7 @@ class TargetExcludeIfContentContainsTest extends GradleIntegrationHarness {
 	@Test
 	void targetExcludeIfContentContainsWithOneValue() throws IOException {
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.opencohesion.flawless' }",
+				"plugins { id 'com.diffplug.spotless' }",
 				"spotless {",
 				"  format 'toLower', {",
 				"    target '**/*.md'",
@@ -54,7 +54,7 @@ class TargetExcludeIfContentContainsTest extends GradleIntegrationHarness {
 	@Test
 	void targetExcludeIfContentContainsWithMultipleSteps() throws IOException {
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.opencohesion.flawless' }",
+				"plugins { id 'com.diffplug.spotless' }",
 				"spotless {",
 				"  format 'toLower', {",
 				"    target '**/*.md'",
@@ -93,7 +93,7 @@ class TargetExcludeIfContentContainsTest extends GradleIntegrationHarness {
 	@Test
 	void targetExcludeIfContentContainsRegex() throws IOException {
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.opencohesion.flawless' }",
+				"plugins { id 'com.diffplug.spotless' }",
 				"spotless {",
 				"  format 'toLower', {",
 				"    target '**/*.md'",

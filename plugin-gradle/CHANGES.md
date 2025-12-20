@@ -1,4 +1,4 @@
-# flawless-plugin-gradle releases
+# spotless-plugin-gradle releases
 
 We adhere to the [keepachangelog](https://keepachangelog.com/en/1.0.0/) format (starting after version `3.27.0`).
 
@@ -893,7 +893,7 @@ This release is *exactly* the same as `4.5.1`, except:
 - all deprecated functionality has been removed
 - `-PspotlessModern=true` (introduced in [`4.3.0`](#430---2020-06-05)) is now always on
 
-If `id 'com.diffplug.gradle.spotless' version '4.5.1'` works without deprecation warnings, then you can upgrade to `id 'com.opencohesion.flawless' version '5.0.0'` and no changes will be required.
+If `id 'com.diffplug.gradle.spotless' version '4.5.1'` works without deprecation warnings, then you can upgrade to `id 'com.diffplug.spotless' version '5.0.0'` and no changes will be required.
 
 * **BREAKING** All deprecated functionality has been removed ([#640](https://github.com/diffplug/spotless/pull/640)).
   * (dev-only) `SpotlessTask` was deleted, and `SpotlessTaskModern` was renamed to `SpotlessTask` (ditto for `SpotlessPlugin` and `SpotlessExtension`).
@@ -912,7 +912,7 @@ spotless {
 }
 println "isEager $isEager"
 // 'com.diffplug.gradle.spotless' -> isEager yup
-// 'com.opencohesion.flawless'        -> isEager nope
+// 'com.diffplug.spotless'        -> isEager nope
 ```
 
 ## [4.5.1] - 2020-07-04
@@ -1270,9 +1270,9 @@ spotless {
 
 ## [3.0.0] - 2017-01-09
 * BREAKING CHANGE: `customReplace` and `customReplaceRegex` renamed to just `replace` and `replaceRegex`.
-* BREAKING CHANGE: Plugin portal ID is still `com.diffplug.gradle.spotless`, but Maven coordinate has changed to `com.diffplug.spotless:flawless-plugin-gradle`.
+* BREAKING CHANGE: Plugin portal ID is still `com.diffplug.gradle.spotless`, but Maven coordinate has changed to `com.diffplug.spotless:spotless-plugin-gradle`.
 * HUGE SPEEDUP: Now supports incremental build / up-to-date-checking.
-  + If you are using `custom` or `customLazy`, you might want to take a look at [this javadoc](https://javadoc.io/doc/com.diffplug.spotless/flawless-plugin-gradle/3.27.0/com/diffplug/gradle/spotless/FormatExtension.html#bumpThisNumberIfACustomStepChanges-int-).
+  + If you are using `custom` or `customLazy`, you might want to take a look at [this javadoc](https://javadoc.io/doc/com.diffplug.spotless/spotless-plugin-gradle/3.27.0/com/diffplug/gradle/spotless/FormatExtension.html#bumpThisNumberIfACustomStepChanges-int-).
 * BREAKING CHANGE: `freshmark` no longer includes all project properties by default.  All properties must now be added manually:
 
 ```gradle

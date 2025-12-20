@@ -53,7 +53,7 @@ abstract class ToggleOffOnTest extends GradleIntegrationHarness {
 	@Test
 	void lowercase() throws IOException {
 		setFile("build.gradle").toLines(
-				"plugins { id 'com.opencohesion.flawless' }",
+				"plugins { id 'com.diffplug.spotless' }",
 				"spotless {",
 				"  lineEndings 'UNIX'",
 				"  format 'toLower', {",
@@ -97,7 +97,7 @@ abstract class ToggleOffOnTest extends GradleIntegrationHarness {
 	void gjf() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",

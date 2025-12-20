@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2021 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ class SqlExtensionTest extends GradleIntegrationHarness {
 	void should_format_sql_with_default_configuration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"    sql {",
@@ -43,7 +43,7 @@ class SqlExtensionTest extends GradleIntegrationHarness {
 	void should_format_sql_with_alternative_configuration() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"    sql {",

@@ -26,11 +26,11 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	private static final int N = 100;
 
 	private void createNSubprojects() throws IOException {
-		for (var i = 0; i < N; i++) {
+		for (int i = 0; i < N; i++) {
 			createSubproject(Integer.toString(i));
 		}
 		String settings = StringPrinter.buildString(printer -> {
-			for (var i = 0; i < N; i++) {
+			for (int i = 0; i < N; i++) {
 				printer.println("include '" + i + "'");
 			}
 		});
@@ -40,7 +40,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	void createSubproject(String name) throws IOException {
 		setFile(name + "/build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -64,7 +64,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void hasRootSpotless() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"",
@@ -83,7 +83,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void predeclaredFails() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless { predeclareDeps() }");
 		createNSubprojects();
@@ -95,7 +95,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void predeclaredSucceeds() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless { predeclareDeps() }",
@@ -110,7 +110,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void predeclaredFromBuildscriptSucceeds() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless { predeclareDepsFromBuildscript() }",
@@ -125,7 +125,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void predeclaredOrdering() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotlessPredeclare {",
@@ -141,7 +141,7 @@ class MultiProjectTest extends GradleIntegrationHarness {
 	public void predeclaredUndeclared() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotlessPredeclare {",

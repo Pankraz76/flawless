@@ -33,7 +33,7 @@ class LicenseHeaderTest extends GradleIntegrationHarness {
 	private void setLicenseStep(String licenseLine) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"  id 'java'",
 				"}",
 				"spotless {",

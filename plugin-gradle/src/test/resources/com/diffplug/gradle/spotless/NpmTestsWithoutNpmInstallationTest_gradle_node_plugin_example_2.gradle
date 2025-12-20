@@ -3,7 +3,7 @@
  * use these binaries with the prettier formatter.
  */
 plugins {
-    id 'com.opencohesion.flawless'
+    id 'com.diffplug.spotless'
     id 'com.github.node-gradle.node' version '3.5.1'
 }
 repositories { mavenCentral() }

@@ -27,7 +27,7 @@ class JavaIdeaTest extends GradleIntegrationHarness {
 	void idea() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"  java {",

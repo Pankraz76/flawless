@@ -105,7 +105,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 		String cacheDirEnabled = cacheDirEnabledStringForCacheDir(cacheDir);
 		setFile(baseDir + "/build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -163,7 +163,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 		String cacheDirEnabled = cacheDirEnabledStringForCacheDir(cacheDir);
 		setFile(baseDir + "/build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def tsfmtconfig = [:]",
@@ -220,7 +220,7 @@ class NpmInstallCacheIntegrationTests extends GradleIntegrationHarness {
 		setFile(baseDir + "/.eslintrc.js").toResource("npm/eslint/typescript/custom_rules/.eslintrc.js");
 		setFile(baseDir + "/build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",

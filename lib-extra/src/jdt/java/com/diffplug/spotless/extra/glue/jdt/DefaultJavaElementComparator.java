@@ -69,14 +69,14 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			String visibilityPreferences) {
 
 		int[] memberCategoryOffsets = new int[9];
-		var success = fillMemberCategoryOffsets(memberCategoryPreferences, memberCategoryOffsets);
+		boolean success = fillMemberCategoryOffsets(memberCategoryPreferences, memberCategoryOffsets);
 		if (!success) {
 			String defaultValue = "T,SF,SI,SM,F,I,C,M";
 			fillMemberCategoryOffsets(defaultValue, memberCategoryOffsets);
 		}
 
 		int[] visibilityOffsets = new int[4];
-		var success2 = fillVisibilityOffsets(visibilityPreferences, visibilityOffsets);
+		boolean success2 = fillVisibilityOffsets(visibilityPreferences, visibilityOffsets);
 		if (!success2) {
 			String defaultValue = "B,V,R,D";
 			fillVisibilityOffsets(defaultValue, visibilityOffsets);
@@ -100,7 +100,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	@SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "we only accept valid tokens in the order string, otherwise we fall back to default value")
 	static boolean fillVisibilityOffsets(String preferencesString, int[] offsets) {
 		StringTokenizer tokenizer = new StringTokenizer(preferencesString, ",");
-		var i = 0;
+		int i = 0;
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
 			switch (token) {
@@ -123,7 +123,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	@SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "we only accept valid tokens in the order string, otherwise we fall back to default value")
 	static boolean fillMemberCategoryOffsets(String orderString, int[] offsets) {
 		StringTokenizer tokenizer = new StringTokenizer(orderString, ",");
-		var i = 0;
+		int i = 0;
 		offsets[8] = i++;
 		while (tokenizer.hasMoreTokens()) {
 			String token = tokenizer.nextToken();
@@ -163,7 +163,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			if (method.isConstructor()) {
 				return CONSTRUCTORS_INDEX;
 			}
-			var flags = method.getModifiers();
+			int flags = method.getModifiers();
 			if (Modifier.isStatic(flags)) {
 				return STATIC_METHODS_INDEX;
 			} else {
@@ -178,7 +178,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			}
 		}
 		case ASTNode.INITIALIZER: {
-			var flags = bodyDeclaration.getModifiers();
+			int flags = bodyDeclaration.getModifiers();
 			if (Modifier.isStatic(flags)) {
 				return STATIC_INIT_INDEX;
 			} else {
@@ -203,7 +203,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	}
 
 	private int getVisibilityIndex(int modifierFlags) {
-		var kind = 3;
+		int kind = 3;
 		if (Flags.isPublic(modifierFlags)) {
 			kind = 0;
 		} else if (Flags.isProtected(modifierFlags)) {
@@ -223,15 +223,15 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	@Override
 	@SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "when switching to a more recent Java version, we can avoid those unconfirmed casts")
 	public int compare(BodyDeclaration bodyDeclaration1, BodyDeclaration bodyDeclaration2) {
-		var preserved1 = doNotSortFields && isSortPreserved(bodyDeclaration1);
-		var preserved2 = doNotSortFields && isSortPreserved(bodyDeclaration2);
+		boolean preserved1 = doNotSortFields && isSortPreserved(bodyDeclaration1);
+		boolean preserved2 = doNotSortFields && isSortPreserved(bodyDeclaration2);
 
 		// Bug 407759: need to use a common category for all isSortPreserved members that are to be sorted in the same group:
-		var cat1 = category(bodyDeclaration1);
+		int cat1 = category(bodyDeclaration1);
 		if (preserved1) {
 			cat1 = sortPreservedCategory(cat1);
 		}
-		var cat2 = category(bodyDeclaration2);
+		int cat2 = category(bodyDeclaration2);
 		if (preserved2) {
 			cat2 = sortPreservedCategory(cat2);
 		}
@@ -247,9 +247,9 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 		}
 
 		if (sortByVisibility) {
-			var flags1 = JdtFlags.getVisibilityCode(bodyDeclaration1);
-			var flags2 = JdtFlags.getVisibilityCode(bodyDeclaration2);
-			var vis = getVisibilityIndex(flags1) - getVisibilityIndex(flags2);
+			int flags1 = JdtFlags.getVisibilityCode(bodyDeclaration1);
+			int flags2 = JdtFlags.getVisibilityCode(bodyDeclaration2);
+			int vis = getVisibilityIndex(flags1) - getVisibilityIndex(flags2);
 			if (vis != 0) {
 				return vis;
 			}
@@ -261,7 +261,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			MethodDeclaration method2 = (MethodDeclaration) bodyDeclaration2;
 
 			if (sortByVisibility) {
-				var vis = getVisibilityIndex(method1.getModifiers()) - getVisibilityIndex(method2.getModifiers());
+				int vis = getVisibilityIndex(method1.getModifiers()) - getVisibilityIndex(method2.getModifiers());
 				if (vis != 0) {
 					return vis;
 				}
@@ -271,7 +271,7 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			String name2 = method2.getName().getIdentifier();
 
 			// method declarations (constructors) are sorted by name
-			var cmp = name1.compareTo(name2);
+			int cmp = name1.compareTo(name2);
 			if (cmp != 0) {
 				return cmp;
 			}
@@ -279,11 +279,11 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 			// if names equal, sort by parameter types
 			List<SingleVariableDeclaration> parameters1 = method1.parameters();
 			List<SingleVariableDeclaration> parameters2 = method2.parameters();
-			var length1 = parameters1.size();
-			var length2 = parameters2.size();
+			int length1 = parameters1.size();
+			int length2 = parameters2.size();
 
-			var len = Math.min(length1, length2);
-			for (var i = 0; i < len; i++) {
+			int len = Math.min(length1, length2);
+			for (int i = 0; i < len; i++) {
 				SingleVariableDeclaration param1 = parameters1.get(i);
 				SingleVariableDeclaration param2 = parameters2.get(i);
 				cmp = buildSignature(param1.getType()).compareTo(buildSignature(param2.getType()));
@@ -371,13 +371,13 @@ class DefaultJavaElementComparator implements Comparator<BodyDeclaration> {
 	}
 
 	private int preserveRelativeOrder(BodyDeclaration bodyDeclaration1, BodyDeclaration bodyDeclaration2) {
-		var value1 = (Integer) bodyDeclaration1.getProperty(CompilationUnitSorter.RELATIVE_ORDER);
-		var value2 = (Integer) bodyDeclaration2.getProperty(CompilationUnitSorter.RELATIVE_ORDER);
+		int value1 = (Integer) bodyDeclaration1.getProperty(CompilationUnitSorter.RELATIVE_ORDER);
+		int value2 = (Integer) bodyDeclaration2.getProperty(CompilationUnitSorter.RELATIVE_ORDER);
 		return value1 - value2;
 	}
 
 	private int compareNames(BodyDeclaration bodyDeclaration1, BodyDeclaration bodyDeclaration2, String name1, String name2) {
-		var cmp = name1.compareTo(name2);
+		int cmp = name1.compareTo(name2);
 		if (cmp != 0) {
 			return cmp;
 		}

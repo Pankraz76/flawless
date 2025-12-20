@@ -37,7 +37,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void useInlineConfig(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -64,7 +64,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void verifyCleanSpotlessCheckWorks(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -90,7 +90,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 		setFile(".prettierrc.yml").toResource("npm/prettier/config/.prettierrc.yml");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -114,7 +114,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void chooseParserBasedOnFilename(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"spotless {",
@@ -142,7 +142,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 		}
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -176,7 +176,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 		setFile(".prettierrc.yml").toResource("npm/prettier/config/.prettierrc_java_plugin.yml");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierPackages = [:]",
@@ -199,7 +199,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void suggestsMissingJavaCommunityPlugin(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -231,7 +231,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 		}
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -276,7 +276,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 		}
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfigPhp = [:]",
@@ -323,7 +323,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"fetch-retry-maxtimeout=250");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -345,7 +345,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void verifyCleanAndSpotlessWorks(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -369,7 +369,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 	void verifyCleanAndSpotlessWithNpmInstallCacheWorks(String prettierVersion) throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",
@@ -398,7 +398,7 @@ class PrettierIntegrationTest extends GradleIntegrationHarness {
 				"fetch-retry-maxtimeout=250");
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"repositories { mavenCentral() }",
 				"def prettierConfig = [:]",

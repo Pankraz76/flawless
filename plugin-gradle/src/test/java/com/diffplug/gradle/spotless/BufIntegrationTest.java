@@ -1,5 +1,5 @@
 /*
- * Copyright 2022-2025 DiffPlug
+ * Copyright 2022-2024 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void bufLarge() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"  protobuf {",
@@ -43,7 +43,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void buf() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"  protobuf {",
@@ -59,7 +59,7 @@ class BufIntegrationTest extends GradleIntegrationHarness {
 	void bufWithLicense() throws IOException {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"  id 'com.opencohesion.flawless'",
+				"  id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"  protobuf {",

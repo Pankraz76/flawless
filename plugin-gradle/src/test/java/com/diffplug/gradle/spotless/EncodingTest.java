@@ -26,7 +26,7 @@ class EncodingTest extends GradleIntegrationHarness {
 	void defaultIsUtf8() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"    java {",
@@ -43,7 +43,7 @@ class EncodingTest extends GradleIntegrationHarness {
 	void globalIsRespected() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"    java {",
@@ -61,7 +61,7 @@ class EncodingTest extends GradleIntegrationHarness {
 	void globalIsRespectedButCanBeOverridden() throws Exception {
 		setFile("build.gradle").toLines(
 				"plugins {",
-				"    id 'com.opencohesion.flawless'",
+				"    id 'com.diffplug.spotless'",
 				"}",
 				"spotless {",
 				"    java {",
