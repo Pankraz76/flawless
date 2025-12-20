@@ -1,4 +1,4 @@
-def decode64(String varName) {
+static def decode64(String varName) {
 	String envValue = System.env[varName]
 	if (envValue == null) {
 		return ""
@@ -114,7 +114,7 @@ model {
 				pom.withXml {
 					// add MavenCentral requirements to the POM
 					asNode().children().last() + {
-						resolveStrategy = Closure.DELEGATE_FIRST
+						resolveStrategy = DELEGATE_FIRST
 						name projectExtArtifactId
 						description projectDescription
 						url "https://github.com/${projectOrg}/${rootProjectName}"
