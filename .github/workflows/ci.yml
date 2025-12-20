@@ -93,7 +93,7 @@ jobs:
           export PATH=${PATH}:$(pwd)/bin
           cd ..
           ./gradlew testIdea
-      - name: JUnit Test Results 📊
+      - name: Test Report 📊
         uses: mikepenz/action-junit-report@v6
         if: always()
         with:
