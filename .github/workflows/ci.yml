@@ -80,7 +80,7 @@ jobs:
       - name: Install shfmt 🔧
         if: matrix.kind == 'shfmt'
         run: go install mvdan.cc/sh/v3/cmd/shfmt@${{matrix.shfmt-version}}
-      - name: Test shfmt Integration 🧪
+      - name: Test Shfmt Integration 🧪
         if: matrix.kind == 'shfmt'
         run: ./gradlew testShfmt
       - name: Test IDEA Integration 🧪
