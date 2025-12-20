@@ -38,8 +38,8 @@ user@machine repo % ./gradlew build
   src\main\java\com\diffplug\gradle\spotless\FormatExtension.java
     -\t\t····if·(targets.length·==·0)·{
     +\t\tif·(targets.length·==·0)·{
-  Run './gradlew flawlessApply' to fix these violations.
-user@machine repo % ./gradlew flawlessApply
+  Run './gradlew spotlessApply' to fix these violations.
+user@machine repo % ./gradlew spotlessApply
 :spotlessApply
 BUILD SUCCESSFUL
 user@machine repo % ./gradlew build
