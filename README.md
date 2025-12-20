@@ -11,14 +11,14 @@ You probably want one of the links below:
 
 ```console
 user@machine repo % ./gradlew build
-:flawlessJavaCheck FAILED
+:spotlessJavaCheck FAILED
   The following files had format violations:
   src\main\java\com\obsolete\gradle\flawless\FormatExtension.java
     -\t\t····if·(targets.length·==·0)·{
     +\t\tif·(targets.length·==·0)·{
-  Run './gradlew flawlessApply' to fix these violations.
-user@machine repo % ./gradlew flawlessApply
-:flawlessApply
+  Run './gradlew spotlessApply' to fix these violations.
+user@machine repo % ./gradlew spotlessApply
+:spotlessApply
 BUILD SUCCESSFUL
 user@machine repo % ./gradlew build
 BUILD SUCCESSFUL
@@ -27,15 +27,15 @@ BUILD SUCCESSFUL
 ## [Flawless ✨️ Maven](plugin-maven)
 
 ```console
-user@machine repo % mvn flawless:check
+user@machine repo % mvn spotless:check
 [ERROR]  > The following files had format violations:
 [ERROR]  src\main\java\com\obsolete\gradle\flawless\FormatExtension.java
 [ERROR]    -\t\t····if·(targets.length·==·0)·{
 [ERROR]    +\t\tif·(targets.length·==·0)·{
-[ERROR]  Run 'mvn flawless:apply' to fix these violations.
-user@machine repo % mvn flawless:apply
+[ERROR]  Run 'mvn spotless:apply' to fix these violations.
+user@machine repo % mvn spotless:apply
 [INFO] BUILD SUCCESS
-user@machine repo % mvn flawless:check
+user@machine repo % mvn spotless:check
 [INFO] BUILD SUCCESS
 ```
 
