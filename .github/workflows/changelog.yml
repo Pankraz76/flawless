@@ -16,5 +16,5 @@ jobs:
           distribution: 'temurin'
       - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - name: Run Changelog Print 🖨️
+      - name: Changelog Print 🖨️
         run: ./gradlew changelogPrint

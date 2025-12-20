@@ -26,9 +26,9 @@ jobs:
           java-version: 21
       - name: Setup Gradle 🐘
         uses: gradle/actions/setup-gradle@v5
-      - name: Run Spotless ✨
+      - name: Spotless ✨
         run: ./gradlew spotlessCheck
-      - name: Run Rewrite ♻️
+      - name: Rewrite ♻️
         run: ./gradlew rewriteDryRun
       - name: Assemble Test Classes 🧱
         run: ./gradlew assemble testClasses
