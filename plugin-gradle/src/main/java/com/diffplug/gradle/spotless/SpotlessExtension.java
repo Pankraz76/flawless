@@ -44,7 +44,7 @@ public abstract class SpotlessExtension {
 	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
 
 	static final String EXTENSION = "flawless";
-	static final String EXTENSION_PREDECLARE = EXTENSION	  + "Predeclare";
+	static final String EXTENSION_PREDECLARE = EXTENSION + "Predeclare";
 	static final String CHECK = "Check";
 	static final String APPLY = "Apply";
 	static final String DIAGNOSE = "Diagnose";
