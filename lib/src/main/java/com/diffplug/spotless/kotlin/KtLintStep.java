@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.TreeMap;
 
 import javax.annotation.Nullable;
@@ -73,7 +74,7 @@ public final class KtLintStep implements Serializable {
 		Objects.requireNonNull(version, "version");
 		Objects.requireNonNull(provisioner, "provisioner");
 		String ktlintCoordinate = (version.startsWith("0.") ? MAVEN_COORDINATE_0_DOT : MAVEN_COORDINATE_1_DOT) + version;
-		var mavenCoordinates = new HashSet<String>(customRuleSets);
+		Set<String> mavenCoordinates = new HashSet<>(customRuleSets);
 		mavenCoordinates.add(ktlintCoordinate);
 		return FormatterStep.create(NAME,
 				new KtLintStep(version, JarState.promise(() -> JarState.from(mavenCoordinates, provisioner)), editorConfig, editorConfigOverride),

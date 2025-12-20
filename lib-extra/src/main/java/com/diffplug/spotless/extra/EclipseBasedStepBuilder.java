@@ -107,7 +107,7 @@ public class EclipseBasedStepBuilder {
 		byte[] buf = new byte[8192];
 		try {
 			while (true) {
-				var r = in.read(buf);
+				int r = in.read(buf);
 				if (r == -1) {
 					break;
 				}
@@ -170,7 +170,7 @@ public class EclipseBasedStepBuilder {
 			String semanticVersion = version;
 			//Old Eclipse versions used a character at the end. For example '4.7.3a'.
 			if (1 < version.length()) {
-				var lastChar = version.charAt(version.length() - 1);
+				char lastChar = version.charAt(version.length() - 1);
 				if ('.' != lastChar && 'a' <= lastChar) {
 					semanticVersion = version.substring(0, version.length() - 1);
 					semanticVersion += ".%d".formatted((int) lastChar);

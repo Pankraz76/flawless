@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -33,7 +34,7 @@ public class KtLintCompat1Dot0Dot0AdapterTest {
 		var content = loadAndWriteText(path, "EmptyClassBody.kt");
 		final Path filePath = Path.of(path.toString(), "EmptyClassBody.kt");
 
-		var editorConfigOverrideMap = new HashMap<String, Object>();
+		Map<String, Object> editorConfigOverrideMap = new HashMap<>();
 
 		String formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
 		assertEquals("class EmptyClassBody\n", formatted);
@@ -45,7 +46,7 @@ public class KtLintCompat1Dot0Dot0AdapterTest {
 		var content = loadAndWriteText(path, "FailsNoSemicolons.kt");
 		final Path filePath = Path.of(path.toString(), "FailsNoSemicolons.kt");
 
-		var editorConfigOverrideMap = new HashMap<String, Object>();
+		Map<String, Object> editorConfigOverrideMap = new HashMap<>();
 		editorConfigOverrideMap.put("indent_style", "tab");
 		editorConfigOverrideMap.put("ktlint_standard_no-semi", "disabled");
 

@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -260,7 +261,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 		List<FormatterFactory> formatterFactories = getFormatterFactories();
 		FormatterConfig config = getFormatterConfig();
 
-		var formatterFactoryToFiles = new LinkedHashMap<FormatterFactory, Supplier<Iterable<File>>>();
+		Map<FormatterFactory, Supplier<Iterable<File>>> formatterFactoryToFiles = new LinkedHashMap<>();
 		for (FormatterFactory formatterFactory : formatterFactories) {
 			Supplier<Iterable<File>> filesToFormat = () -> collectFiles(formatterFactory, config);
 			formatterFactoryToFiles.put(formatterFactory, filesToFormat);
@@ -342,7 +343,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 			throw new PluginException("Unable to scan file tree rooted at " + baseDir, e);
 		}
 
-		var result = new ArrayList<File>();
+		List<File> result = new ArrayList<>();
 		for (String file : withNormalizedFileSeparators(dirtyFiles)) {
 			if (includePatterns.matches(file, true)) {
 				if (!excludePatterns.matches(file, true)) {
@@ -383,7 +384,7 @@ public abstract class AbstractSpotlessMojo extends AbstractMojo {
 	private Set<String> getExcludes(FormatterFactory formatterFactory) {
 		Set<String> configuredExcludes = formatterFactory.excludes();
 
-		var excludes = new HashSet<String>(FileUtils.getDefaultExcludesAsList());
+		Set<String> excludes = new HashSet<>(FileUtils.getDefaultExcludesAsList());
 		excludes.add(withTrailingSeparator(buildDir.toString()));
 		excludes.addAll(configuredExcludes);
 		return excludes;

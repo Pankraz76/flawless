@@ -86,12 +86,12 @@ public final class ReplaceRegexStep {
 
 				@Override
 				public List<Lint> lint(String raw, File file) {
-					var lints = new ArrayList<Lint>();
+					List<Lint> lints = new ArrayList<>();
 					var matcher = regex.matcher(raw);
 					while (matcher.find()) {
-						var line = 1 + (int) raw.codePoints().limit(matcher.start()).filter(c -> c == '\n').count();
+						int line = 1 + (int) raw.codePoints().limit(matcher.start()).filter(c -> c == '\n').count();
 						String errorCode = matcher.group(0).trim();
-						var firstNewline = errorCode.indexOf("\n");
+						int firstNewline = errorCode.indexOf("\n");
 						if (firstNewline != -1) {
 							errorCode = errorCode.substring(0, firstNewline);
 						}

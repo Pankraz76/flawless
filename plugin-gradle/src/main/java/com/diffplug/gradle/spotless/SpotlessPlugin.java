@@ -57,7 +57,7 @@ public class SpotlessPlugin implements Plugin<Project> {
 		// actually happen (as desired)
 		//
 		// we use System.identityHashCode() to avoid a memory leak by hanging on to the reference directly
-		var cacheKey = System.identityHashCode(project.getRootProject());
+		int cacheKey = System.identityHashCode(project.getRootProject());
 		project.getTasks().named(BasePlugin.CLEAN_TASK_NAME).configure(clean -> clean.doLast(unused -> SpotlessCache.clearOnce(cacheKey)));
 	}
 
