@@ -82,7 +82,7 @@ class JvmTest {
 
 	@Test
 	void supportListsMinimumJvmIfOnlyHigherJvmSupported() {
-		int higherJvmVersion = Jvm.version() + 1;
+		var higherJvmVersion = Jvm.version() + 1;
 		Exception testException = new Exception("Some test exception");
 		testSupport.add(higherJvmVersion, "1.2.3");
 		testSupport.add(higherJvmVersion + 1, "2.2.3");
@@ -116,7 +116,7 @@ class JvmTest {
 
 	@Test
 	void supportProposesFormatterUpgrade() {
-		int requiredJvm = Jvm.version() - 1;
+		var requiredJvm = Jvm.version() - 1;
 		testSupport.add(Jvm.version() - 2, "1");
 		testSupport.add(requiredJvm, "2");
 		testSupport.add(Jvm.version() + 1, "3");
@@ -135,7 +135,7 @@ class JvmTest {
 	@Test
 	void supportProposesJvmUpgrade() {
 		testSupport.add(Jvm.version(), "1");
-		int higherJvm = Jvm.version() + 3;
+		var higherJvm = Jvm.version() + 3;
 		testSupport.add(higherJvm, "2");
 		testSupport.add(higherJvm + 1, "3");
 		for (String fmtVersion : Arrays.asList("1", "1.0")) {

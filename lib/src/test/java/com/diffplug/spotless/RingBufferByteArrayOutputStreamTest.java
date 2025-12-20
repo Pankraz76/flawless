@@ -143,7 +143,7 @@ class RingBufferByteArrayOutputStreamTest {
 
 	private static ByteWriteStrategy twoBytesAtATime() {
 		return (stream, bytes) -> {
-			for (int i = 0; i < bytes.length; i += 2) {
+			for (var i = 0; i < bytes.length; i += 2) {
 				stream.write(bytes, i, 2);
 			}
 		};
@@ -151,8 +151,8 @@ class RingBufferByteArrayOutputStreamTest {
 
 	private static ByteWriteStrategy oneAndThenTwoBytesAtATime() {
 		return (stream, bytes) -> {
-			int written = 0;
-			for (int i = 0; i + 3 < bytes.length; i += 3) {
+			var written = 0;
+			for (var i = 0; i + 3 < bytes.length; i += 3) {
 				stream.write(bytes, i, 1);
 				stream.write(bytes, i + 1, 2);
 				written += 3;

@@ -34,7 +34,7 @@ import com.diffplug.spotless.ResourceHarness;
 @ClearGitConfig
 class GitAttributesTest extends ResourceHarness {
 	private List<File> testFiles(String prefix) {
-		List<File> result = new ArrayList<>();
+		var result = new ArrayList<File>();
 		for (String path : TEST_PATHS) {
 			String prefixedPath = prefix + path;
 			setFile(prefixedPath).toContent("");

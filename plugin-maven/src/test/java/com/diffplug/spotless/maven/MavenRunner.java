@@ -78,7 +78,7 @@ public final class MavenRunner {
 	}
 
 	private Map<String, String> calculateEnvironment() {
-		Map<String, String> env = new HashMap<>(environment);
+		var env = new HashMap<String, String>(environment);
 		if (!systemProperties.isEmpty()) {
 			// add system properties as environment variables as MAVEN_OPTS or append if already there
 			String sysProps = systemProperties.entrySet().stream()

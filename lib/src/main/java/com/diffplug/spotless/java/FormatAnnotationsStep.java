@@ -469,7 +469,7 @@ public final class FormatAnnotationsStep implements Serializable {
 		String fixupTypeAnnotations(String unixStr) {
 			// Each element of `lines` ends with a newline.
 			String[] lines = unixStr.split("((?<=\n))");
-			for (int i = 0; i < lines.length - 1; i++) {
+			for (var i = 0; i < lines.length - 1; i++) {
 				String line = lines[i];
 				if (endsWithTypeAnnotation(line)) {
 					String nextLine = lines[i + 1];
