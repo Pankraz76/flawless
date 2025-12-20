@@ -26,7 +26,7 @@ public class PrettierRestService extends BaseNpmRestService {
 	}
 
 	public String resolveConfig(File prettierConfigPath, Map<String, Object> prettierConfigOptions) {
-		var jsonProperties = new LinkedHashMap<String, Object>();
+		Map<String, Object> jsonProperties = new LinkedHashMap<>();
 		if (prettierConfigPath != null) {
 			jsonProperties.put("prettier_config_path", prettierConfigPath.getAbsolutePath());
 		}
@@ -37,7 +37,7 @@ public class PrettierRestService extends BaseNpmRestService {
 	}
 
 	public String format(String fileContent, String configOptionsJsonString) {
-		var jsonProperties = new LinkedHashMap<String, Object>();
+		Map<String, Object> jsonProperties = new LinkedHashMap<>();
 		jsonProperties.put("file_content", fileContent);
 		if (configOptionsJsonString != null) {
 			jsonProperties.put("config_options", JsonRawValue.wrap(configOptionsJsonString));

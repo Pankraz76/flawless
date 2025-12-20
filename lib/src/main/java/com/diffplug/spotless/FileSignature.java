@@ -91,7 +91,7 @@ public final class FileSignature implements Serializable {
 		this.files = validateInputFiles(files);
 		this.signatures = new Sig[this.files.size()];
 
-		var i = 0;
+		int i = 0;
 		for (File file : this.files) {
 			signatures[i] = CACHE.sign(file);
 			++i;
@@ -190,7 +190,7 @@ public final class FileSignature implements Serializable {
 				MessageDigest digest = MessageDigest.getInstance("SHA-256");
 				File file = new File(p);
 				// calculate the size and content hash of the file
-				var size = 0L;
+				long size = 0;
 				byte[] buf = new byte[1024];
 				long lastModified;
 				try (InputStream input = new FileInputStream(file)) {
@@ -203,7 +203,7 @@ public final class FileSignature implements Serializable {
 				}
 				return new Sig(file.getName(), size, digest.digest(), lastModified);
 			}));
-			var lastModified = fileInput.lastModified();
+			long lastModified = fileInput.lastModified();
 			if (sig.lastModified != lastModified) {
 				cache.remove(canonicalPath);
 				return sign(fileInput);

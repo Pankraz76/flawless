@@ -124,18 +124,18 @@ final class TimedLogger {
 		}
 
 		private String durationString() {
-			var duration = ticker.read() - startedAt;
+			long duration = ticker.read() - startedAt;
 			if (duration < 1000) {
 				return duration + "ms";
 			} else if (duration < 1000 * 60) {
-				var seconds = duration / 1000;
-				var millis = duration - seconds * 1000;
+				long seconds = duration / 1000;
+				long millis = duration - seconds * 1000;
 				return seconds + "." + millis + "s";
 			} else {
 				// output in the format 3m 4.321s
-				var minutes = duration / (1000 * 60);
-				var seconds = (duration - minutes * 1000 * 60) / 1000;
-				var millis = duration - minutes * 1000 * 60 - seconds * 1000;
+				long minutes = duration / (1000 * 60);
+				long seconds = (duration - minutes * 1000 * 60) / 1000;
+				long millis = duration - minutes * 1000 * 60 - seconds * 1000;
 				return minutes + "m" + (seconds + millis > 0 ? " " + seconds + "." + millis + "s" : "");
 			}
 		}

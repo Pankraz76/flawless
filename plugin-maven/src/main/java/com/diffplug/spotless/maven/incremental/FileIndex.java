@@ -90,7 +90,7 @@ final class FileIndex {
 
 	static void delete(FileIndexConfig config, Log log) {
 		Path indexFile = config.getIndexFile();
-		var deleted = false;
+		boolean deleted = false;
 		try {
 			deleted = Files.deleteIfExists(indexFile);
 		} catch (IOException e) {
@@ -157,12 +157,12 @@ final class FileIndex {
 	}
 
 	private static Content readIndexContent(BufferedReader reader, Path projectDir, Log log) throws IOException {
-		var fileToLastModifiedTime = new TreeMap<Path, Instant>();
-		var needsRewrite = false;
+		Map<Path, Instant> fileToLastModifiedTime = new TreeMap<>();
+		boolean needsRewrite = false;
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			var separatorIndex = line.lastIndexOf(SEPARATOR);
+			int separatorIndex = line.lastIndexOf(SEPARATOR);
 			if (separatorIndex == -1) {
 				throw new IOException("Incorrect index file. No separator found in '" + line + "'");
 			}

@@ -81,14 +81,14 @@ public abstract class SpotlessCheck extends SpotlessTaskService.ClientTask {
 				// We only show lints if there are no unformatted files.
 				// This is because lint line numbers are relative to the
 				// formatted content, and formatting often fixes lints.
-				var detailed = false;
+				boolean detailed = false;
 				throw new GradleException(super.allLintsErrorMsgDetailed(lintsFiles, detailed));
 			}
 		}
 	}
 
 	private @NotNull List<File> getUncleanFiles(ConfigurableFileTree cleanFiles) {
-		var uncleanFiles = new ArrayList<File>();
+		List<File> uncleanFiles = new ArrayList<>();
 		cleanFiles.visit(new FileVisitor() {
 			@Override
 			public void visitDir(FileVisitDetails fileVisitDetails) {

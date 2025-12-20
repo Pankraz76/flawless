@@ -51,7 +51,7 @@ public class LicenseHeader implements FormatterStepFactory {
 			if ("true".equals(config.spotlessSetLicenseHeaderYearsFromGitHistory().orElse(""))) {
 				yearMode = YearMode.SET_FROM_GIT;
 			} else {
-				var updateYear = config.getRatchetFrom().isPresent();
+				boolean updateYear = config.getRatchetFrom().isPresent();
 				yearMode = updateYear ? YearMode.UPDATE_TO_TODAY : YearMode.PRESERVE;
 			}
 			return LicenseHeaderStep.headerDelimiter(() -> readFileOrContent(config), delimiterString)

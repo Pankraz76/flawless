@@ -29,7 +29,7 @@ public class Simple implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		var indentSpaces = this.indentSpaces;
+		int indentSpaces = this.indentSpaces;
 		return JsonSimpleStep.create(indentSpaces, stepConfig.getProvisioner());
 	}
 }

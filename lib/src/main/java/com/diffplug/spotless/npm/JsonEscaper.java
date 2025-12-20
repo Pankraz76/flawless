@@ -38,7 +38,7 @@ final class JsonEscaper {
 			// create an array
 			StringBuilder sb = new StringBuilder();
 			sb.append('[');
-			var first = true;
+			boolean first = true;
 			for (Object o : ListableAdapter.adapt(val)) {
 				if (first) {
 					first = false;
@@ -75,9 +75,9 @@ final class JsonEscaper {
 		StringBuilder escaped = new StringBuilder();
 		escaped.append('"');
 		char b;
-		var c = 0;
-		for (var i = 0; i < unescaped.length(); i++) {
-			b = (char) c;
+		char c = 0;
+		for (int i = 0; i < unescaped.length(); i++) {
+			b = c;
 			c = unescaped.charAt(i);
 			switch (c) {
 			case '\"':

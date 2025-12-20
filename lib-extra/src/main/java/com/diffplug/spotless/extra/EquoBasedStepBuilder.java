@@ -109,7 +109,7 @@ public abstract class EquoBasedStepBuilder {
 		if (!version.startsWith("4.")) {
 			throw new IllegalArgumentException("Expected 4.x");
 		}
-		var minorVersion = Integer.parseInt(version.substring("4.".length()));
+		int minorVersion = Integer.parseInt(version.substring("4.".length()));
 
 		model.addP2Repo("https://download.eclipse.org/eclipse/updates/" + version + "/");
 		model.getInstall().addAll(List.of(
@@ -155,7 +155,7 @@ public abstract class EquoBasedStepBuilder {
 			return model;
 		}
 
-		var p2Repos = new ArrayList<String>(model.getP2repo());
+		ArrayList<String> p2Repos = new ArrayList<>(model.getP2repo());
 		p2Repos.replaceAll(url -> {
 			for (Map.Entry<String, String> mirror : p2Mirrors.entrySet()) {
 				String prefix = mirror.getKey();

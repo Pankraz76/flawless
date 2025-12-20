@@ -35,7 +35,7 @@ public final class EndWithNewlineStep {
 		}
 
 		// find the last character which has real content
-		var lastContentCharacter = rawUnix.length() - 1;
+		int lastContentCharacter = rawUnix.length() - 1;
 		char c;
 		while (lastContentCharacter >= 0) {
 			c = rawUnix.charAt(lastContentCharacter);

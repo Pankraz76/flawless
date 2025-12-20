@@ -18,6 +18,7 @@ package com.diffplug.spotless.maven;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.plugin.MojoExecutionException;
@@ -66,8 +67,8 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 	protected void process(String name, Iterable<File> files, Formatter formatter, UpToDateChecker upToDateChecker) throws MojoExecutionException {
 		ImpactedFilesTracker counter = new ImpactedFilesTracker();
 
-		var problemFiles = new ArrayList<File>();
-		var lintProblems = new ArrayList<Map.Entry<File, LintState>>();
+		List<File> problemFiles = new ArrayList<>();
+		List<Map.Entry<File, LintState>> lintProblems = new ArrayList<>();
 		for (File file : files) {
 			if (upToDateChecker.isUpToDate(file.toPath())) {
 				counter.skippedAsCleanCache();
@@ -79,8 +80,8 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 			buildContext.removeMessages(file);
 			try {
 				LintState lintState = super.calculateLintState(formatter, file);
-				var hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
-				var hasUnsuppressedLints = lintState.isHasLints();
+				boolean hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
+				boolean hasUnsuppressedLints = lintState.isHasLints();
 
 				if (hasDirtyState || hasUnsuppressedLints) {
 					if (hasUnsuppressedLints) {

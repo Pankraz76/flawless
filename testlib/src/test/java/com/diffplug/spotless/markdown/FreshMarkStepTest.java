@@ -28,7 +28,7 @@ import com.diffplug.spotless.TestProvisioner;
 class FreshMarkStepTest {
 	@Test
 	void behavior() {
-		var map = new HashMap<String, String>();
+		HashMap<String, String> map = new HashMap<>();
 		map.put("lib", "MyLib");
 		map.put("author", "Me");
 		StepHarness.forStep(FreshMarkStep.create(map, TestProvisioner.mavenCentral()))
@@ -55,7 +55,9 @@ class FreshMarkStepTest {
 
 			@Override
 			protected FormatterStep create() {
-				return FreshMarkStep.create(this.version, new HashMap<>(props), TestProvisioner.mavenCentral());
+				String finalVersion = this.version;
+				Map<String, ?> finalProps = new HashMap<>(props);
+				return FreshMarkStep.create(finalVersion, finalProps, TestProvisioner.mavenCentral());
 			}
 		}.testEquals();
 	}

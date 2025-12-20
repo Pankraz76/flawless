@@ -55,7 +55,7 @@ public abstract class AbstractEslint extends AbstractNpmFormatterStepFactory {
 			throw onlyOneConfig();
 		}
 
-		var devDependencies = new TreeMap<String, String>();
+		Map<String, String> devDependencies = new TreeMap<>();
 		if (this.devDependencies != null) {
 			devDependencies.putAll(this.devDependencies);
 		} else if (this.devDependencyProperties != null) {

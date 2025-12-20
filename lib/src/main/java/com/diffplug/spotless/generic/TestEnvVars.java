@@ -45,7 +45,7 @@ final class TestEnvVars {
 	}
 
 	private static Map<String, String> readTestEnvVars() {
-		var envVars = new HashMap<String, String>();
+		Map<String, String> envVars = new HashMap<>();
 		Optional<Path> resolvedTestenvProps = candidateTestEnvLocations().filter(Files::exists).findFirst();
 		resolvedTestenvProps.ifPresent(testenvProps -> {
 			try (var reader = Files.newBufferedReader(testenvProps)) {
