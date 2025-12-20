@@ -147,7 +147,7 @@ Spotless requires JRE 17+ and Gradle 7.3 or newer.
 
 ### Git hook
 
-If you want, you can run `./gradlew flawlessInstallGitPrePushHook` and it will install a hook such that
+If you want, you can run `./gradlew spotlessInstallGitPrePushHook` and it will install a hook such that
 
 1. When you push, it runs `spotlessCheck`
 2. If formatting issues are found:
@@ -207,7 +207,7 @@ spotless {
     importOrderFile('eclipse-import-order.txt') // import order file as exported from eclipse
 
     removeUnusedImports()
-    forbidWildcardImports() // @Deprecated; use expandWildcardImports, see below
+    forbidWildcardImports()
     forbidModuleImports()
 
     // Cleanthat will refactor your code, but it may break your style: apply it before your formatter
@@ -255,20 +255,6 @@ spotless {
 spotless {
   java {
     forbidWildcardImports()
-  }
-}
-```
-
-### expandWildcardImports
-
-This step expands all wildcard imports to single class imports.
-To do this, [JavaParser](https://javaparser.org/) is used to parse the complete sourcecode and resolve the full qualified name of all used classes and static methods.
-This operation can be resource intensive when formatting many source files, so you may want to change to `forbidWildcardImports` when your codebase is cleaned and stable.
-
-```
-spotless {
-  java {
-    expandWildcardImports()
   }
 }
 ```

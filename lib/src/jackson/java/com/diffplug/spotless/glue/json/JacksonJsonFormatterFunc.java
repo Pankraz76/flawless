@@ -70,7 +70,7 @@ public class JacksonJsonFormatterFunc extends AJacksonFormatterFunc {
 
 	@Override
 	protected DefaultPrettyPrinter makePrettyPrinter() {
-		var spaceBeforeSeparator = jacksonConfig.isSpaceBeforeSeparator();
+		boolean spaceBeforeSeparator = jacksonConfig.isSpaceBeforeSeparator();
 
 		// DefaultIndenter default constructor relies on 2 whitespaces as default tabulation
 		// By we want to force '\n' as eol given Spotless provides LF-input (whatever the actual File content/current OS)
@@ -94,7 +94,7 @@ public class JacksonJsonFormatterFunc extends AJacksonFormatterFunc {
 			}
 
 			// Keep the behavior consistent even if Jackson changes default behavior
-			var startsWithSpace = Character.isWhitespace(_objectFieldValueSeparatorWithSpaces.charAt(0));
+			boolean startsWithSpace = Character.isWhitespace(_objectFieldValueSeparatorWithSpaces.charAt(0));
 			if (spaceBeforeSeparator && !startsWithSpace) {
 				_objectFieldValueSeparatorWithSpaces = String.format(" %s", _objectFieldValueSeparatorWithSpaces);
 			} else if (!spaceBeforeSeparator && startsWithSpace) {

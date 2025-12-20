@@ -123,7 +123,7 @@ public class TestProvisioner {
 			synchronized (TestProvisioner.class) {
 				ImmutableSet<File> result = cached.get(mavenCoords);
 				// double-check that depcache pruning hasn't removed them since our cache cached them
-				var needsToBeSet = result == null || !result.stream().allMatch(file -> file.exists() && file.isFile() && file.length() > 0);
+				boolean needsToBeSet = result == null || !result.stream().allMatch(file -> file.exists() && file.isFile() && file.length() > 0);
 				if (needsToBeSet) {
 					result = ImmutableSet.copyOf(input.get().provisionWithTransitives(withTransitives, mavenCoords));
 					cached.put(mavenCoords, result);

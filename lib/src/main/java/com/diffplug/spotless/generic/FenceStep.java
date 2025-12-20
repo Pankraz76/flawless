@@ -171,8 +171,8 @@ public final class FenceStep {
 			}
 			StringBuilder builder = builderZeroed();
 			Matcher matcher = regex.matcher(unix);
-			var lastEnd = 0;
-			var groupIdx = 0;
+			int lastEnd = 0;
+			int groupIdx = 0;
 			while (matcher.find()) {
 				builder.append(unix, lastEnd, matcher.start(1));
 				builder.append(groups.get(groupIdx));
@@ -184,8 +184,8 @@ public final class FenceStep {
 				return builder.toString();
 			} else {
 				// these will be needed to generate Lints later on
-				var startLine = 1 + (int) builder.toString().codePoints().filter(c -> c == '\n').count();
-				var endLine = 1 + (int) unix.codePoints().filter(c -> c == '\n').count();
+				int startLine = 1 + (int) builder.toString().codePoints().filter(c -> c == '\n').count();
+				int endLine = 1 + (int) unix.codePoints().filter(c -> c == '\n').count();
 
 				// throw an error with either the full regex, or the nicer open/close pair
 				Matcher openClose = Pattern.compile("\\\\Q([\\s\\S]*?)\\\\E" + "\\Q([\\s\\S]*?)\\E" + "\\\\Q([\\s\\S]*?)\\\\E")

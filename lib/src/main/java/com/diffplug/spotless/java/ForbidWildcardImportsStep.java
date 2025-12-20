@@ -18,12 +18,7 @@ package com.diffplug.spotless.java;
 import com.diffplug.spotless.FormatterStep;
 import com.diffplug.spotless.generic.ReplaceRegexStep;
 
-/**
- * Forbids any wildcard import statements.
- *
- * @deprecated Use {@link ExpandWildcardImportsStep}
- */
-@Deprecated(forRemoval = true)
+/** Forbids any wildcard import statements. */
 public final class ForbidWildcardImportsStep {
 
 	/**
