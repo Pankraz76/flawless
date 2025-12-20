@@ -47,6 +47,7 @@ gradlePlugin {
 	plugins {
 		spotlessPlugin {
 			id = 'com.diffplug.spotless'
+			id = "com.diffplug.spotless"
 			id = 'com.opencohesion.flawless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
 			displayName = 'Spotless formatting plugin'
