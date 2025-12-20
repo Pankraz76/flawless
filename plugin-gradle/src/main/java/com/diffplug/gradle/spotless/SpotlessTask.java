@@ -192,8 +192,8 @@ public abstract class SpotlessTask extends DefaultTask {
 	/** Returns the name of this format. */
 	String formatName() {
 		String name = getName();
-		if (name.startsWith(SpotlessExtension.EXTENSION)) {
-			return name.substring(SpotlessExtension.EXTENSION.length()).toLowerCase(Locale.ROOT);
+		if (name.startsWith(SpotlessExtension.NAME)) {
+			return name.substring(SpotlessExtension.NAME.length()).toLowerCase(Locale.ROOT);
 		} else {
 			return name;
 		}

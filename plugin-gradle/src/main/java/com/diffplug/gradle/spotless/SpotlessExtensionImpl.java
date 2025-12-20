@@ -30,16 +30,16 @@ public class SpotlessExtensionImpl extends SpotlessExtension {
 
 	public SpotlessExtensionImpl(Project project) {
 		super(project);
-		rootCheckTask = project.getTasks().register(EXTENSION + CHECK, task -> {
+		rootCheckTask = project.getTasks().register(NAME + CHECK, task -> {
 			task.setGroup(TASK_GROUP);
 			task.setDescription(CHECK_DESCRIPTION);
 		});
-		rootApplyTask = project.getTasks().register(EXTENSION + APPLY, task -> {
+		rootApplyTask = project.getTasks().register(NAME + APPLY, task -> {
 			task.setGroup(TASK_GROUP);
 			task.setDescription(APPLY_DESCRIPTION);
 		});
-		rootDiagnoseTask = project.getTasks().register(EXTENSION + DIAGNOSE, task -> task.setGroup(TASK_GROUP));
-		rootInstallPreHook = project.getTasks().register(EXTENSION + INSTALL_GIT_PRE_PUSH_HOOK, SpotlessInstallPrePushHookTask.class, task -> {
+		rootDiagnoseTask = project.getTasks().register(NAME + DIAGNOSE, task -> task.setGroup(TASK_GROUP));
+		rootInstallPreHook = project.getTasks().register(NAME + INSTALL_GIT_PRE_PUSH_HOOK, SpotlessInstallPrePushHookTask.class, task -> {
 			task.setGroup(BUILD_SETUP_TASK_GROUP);
 			task.setDescription(INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION);
 			task.getRootDir().set(project.getRootDir());
@@ -59,7 +59,7 @@ public class SpotlessExtensionImpl extends SpotlessExtension {
 		TaskContainer tasks = project.getTasks();
 
 		// create the SpotlessTask
-		String taskName = EXTENSION + SpotlessPlugin.capitalize(name);
+		String taskName = NAME + SpotlessPlugin.capitalize(name);
 		TaskProvider<SpotlessTaskImpl> spotlessTask = tasks.register(taskName, SpotlessTaskImpl.class, task -> {
 			task.init(getRegisterDependenciesTask().getTaskService());
 			task.setGroup(TASK_GROUP);
