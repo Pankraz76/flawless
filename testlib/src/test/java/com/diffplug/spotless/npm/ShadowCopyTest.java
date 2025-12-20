@@ -146,7 +146,7 @@ class ShadowCopyTest extends ResourceHarness {
 		List<File> actualContent = filesInAlphabeticalOrder(actual);
 		List<File> expectedContent = filesInAlphabeticalOrder(expected);
 
-		for (int i = 0; i < expectedContent.size(); i++) {
+		for (var i = 0; i < expectedContent.size(); i++) {
 			assertAllFilesAreEqualButNotSameAbsolutePath(expectedContent.get(i), actualContent.get(i));
 		}
 	}
@@ -181,7 +181,7 @@ class ShadowCopyTest extends ResourceHarness {
 		// returns a string of length containing characters a-z, A-Z, 0-9
 
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < length; i++) {
+		for (var i = 0; i < length; i++) {
 			sb.append(CHARS[random.nextInt(CHARS.length)]);
 		}
 		return sb.toString();

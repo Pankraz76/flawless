@@ -34,7 +34,7 @@ public class KtLintCompat1Dot0Dot0AdapterTest {
 		var content = loadAndWriteText(path, "EmptyClassBody.kt");
 		final Path filePath = Path.of(path.toString(), "EmptyClassBody.kt");
 
-		Map<String, Object> editorConfigOverrideMap = new HashMap<>();
+		var editorConfigOverrideMap = new HashMap<String, Object>();
 
 		String formatted = KtLintCompat1Dot0Dot0Adapter.format(content, filePath, null, editorConfigOverrideMap);
 		assertEquals("class EmptyClassBody\n", formatted);
@@ -46,7 +46,7 @@ public class KtLintCompat1Dot0Dot0AdapterTest {
 		var content = loadAndWriteText(path, "FailsNoSemicolons.kt");
 		final Path filePath = Path.of(path.toString(), "FailsNoSemicolons.kt");
 
-		Map<String, Object> editorConfigOverrideMap = new HashMap<>();
+		var editorConfigOverrideMap = new HashMap<String, Object>();
 		editorConfigOverrideMap.put("indent_style", "tab");
 		editorConfigOverrideMap.put("ktlint_standard_no-semi", "disabled");
 

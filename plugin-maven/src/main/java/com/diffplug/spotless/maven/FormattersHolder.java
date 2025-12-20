@@ -38,7 +38,7 @@ class FormattersHolder implements AutoCloseable {
 	}
 
 	static FormattersHolder create(Map<FormatterFactory, Supplier<Iterable<File>>> formatterFactoryToFiles, FormatterConfig config) {
-		Map<FormatterFactory, Formatter> openFormatters = new LinkedHashMap<>();
+		var openFormatters = new LinkedHashMap<FormatterFactory, Formatter>();
 		try {
 			for (Entry<FormatterFactory, Supplier<Iterable<File>>> entry : formatterFactoryToFiles.entrySet()) {
 				FormatterFactory formatterFactory = entry.getKey();

@@ -65,7 +65,7 @@ public final class ConfigurationCacheHackList implements Serializable {
 	}
 
 	private void writeObject(ObjectOutputStream out) throws IOException {
-		boolean serializeToByteArrayFirst = shouldWeSerializeToByteArrayFirst();
+		var serializeToByteArrayFirst = shouldWeSerializeToByteArrayFirst();
 		out.writeBoolean(serializeToByteArrayFirst);
 		out.writeBoolean(optimizeForEquality);
 		out.writeInt(backingList.size());
@@ -81,11 +81,11 @@ public final class ConfigurationCacheHackList implements Serializable {
 	}
 
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-		boolean serializeToByteArrayFirst = in.readBoolean();
+		var serializeToByteArrayFirst = in.readBoolean();
 		optimizeForEquality = in.readBoolean();
 		backingList = new ArrayList<>();
-		int size = in.readInt();
-		for (int i = 0; i < size; i++) {
+		var size = in.readInt();
+		for (var i = 0; i < size; i++) {
 			if (serializeToByteArrayFirst) {
 				backingList.add(LazyForwardingEquality.fromBytes((byte[]) in.readObject()));
 			} else {

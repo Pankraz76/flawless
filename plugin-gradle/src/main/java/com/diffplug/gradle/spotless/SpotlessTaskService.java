@@ -169,7 +169,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 
 		protected String allLintsErrorMsgDetailed(ConfigurableFileTree lintsFiles, boolean detailed) {
 			AtomicInteger total = new AtomicInteger(0);
-			TreeMap<String, LinkedHashMap<String, List<Lint>>> allLints = new TreeMap<>();
+			var allLints = new TreeMap<String, LinkedHashMap<String, List<Lint>>>();
 			lintsFiles.visit(new FileVisitor() {
 				@Override
 				public void visitDir(FileVisitDetails fileVisitDetails) {
@@ -193,7 +193,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 					for (Lint lint : stepLints.getValue()) {
 						builder.append(lintsPerFile.getKey());
 						builder.append(":");
-						boolean oneLine = !detailed;
+						var oneLine = !detailed;
 						lint.addWarningMessageTo(builder, stepName, oneLine);
 						builder.append("\n");
 					}

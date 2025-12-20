@@ -48,7 +48,7 @@ public class RdfFormatterFunc implements FormatterFunc {
 	@Override
 	public String apply(String rawUnix, File file) throws Exception {
 		String filename = file.getName().toLowerCase(Locale.US);
-		int lastDot = filename.lastIndexOf('.');
+		var lastDot = filename.lastIndexOf('.');
 		if (lastDot < 0) {
 			throw new IllegalArgumentException(
 					"File %s has no file extension, cannot determine RDF format".formatted(file.getAbsolutePath()));
@@ -109,8 +109,8 @@ public class RdfFormatterFunc implements FormatterFunc {
 		Object modelBefore = reflectionHelper.parseToModel(rawUnix, file, lang);
 		Object modelAfter = reflectionHelper.parseToModel(formatted, file, lang);
 		if (!reflectionHelper.areModelsIsomorphic(modelBefore, modelAfter)) {
-			long beforeSize = reflectionHelper.modelSize(modelBefore);
-			long afterSize = reflectionHelper.modelSize(modelAfter);
+			var beforeSize = reflectionHelper.modelSize(modelBefore);
+			var afterSize = reflectionHelper.modelSize(modelAfter);
 			String diffResult;
 			if (beforeSize != afterSize) {
 				diffResult = "< %,d triples".formatted(beforeSize);

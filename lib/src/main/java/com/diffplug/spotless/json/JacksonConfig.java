@@ -32,7 +32,7 @@ public class JacksonConfig implements Serializable {
 	private static final Map<String, Boolean> DEFAULT_FEATURE_TOGGLES;
 
 	static {
-		Map<String, Boolean> defaultFeatureToggles = new LinkedHashMap<>();
+		var defaultFeatureToggles = new LinkedHashMap<String, Boolean>();
 		// We activate by default the PrettyPrinter from Jackson
 		// @see com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT
 		defaultFeatureToggles.put("INDENT_OUTPUT", true);

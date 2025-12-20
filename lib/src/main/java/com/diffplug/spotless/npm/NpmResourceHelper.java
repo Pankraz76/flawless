@@ -104,7 +104,7 @@ final class NpmResourceHelper {
 	}
 
 	static void awaitReadableFile(File file, Duration maxWaitTime) throws TimeoutException {
-		final long startedAt = System.currentTimeMillis();
+		final var startedAt = System.currentTimeMillis();
 		while (!file.exists() || !file.canRead()) {
 			// wait for at most maxWaitTime
 			if ((System.currentTimeMillis() - startedAt) > maxWaitTime.toMillis()) {
@@ -115,7 +115,7 @@ final class NpmResourceHelper {
 	}
 
 	static void awaitFileDeleted(File file, Duration maxWaitTime) throws TimeoutException {
-		final long startedAt = System.currentTimeMillis();
+		final var startedAt = System.currentTimeMillis();
 		while (file.exists()) {
 			// wait for at most maxWaitTime
 			if ((System.currentTimeMillis() - startedAt) > maxWaitTime.toMillis()) {
