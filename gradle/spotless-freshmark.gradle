@@ -1,5 +1,4 @@
-
-apply plugin: 'com.opencohesion.flawless'
+apply plugin: 'com.diffplug.spotless'
 
 import com.diffplug.gradle.spotless.FreshMarkExtension
 
