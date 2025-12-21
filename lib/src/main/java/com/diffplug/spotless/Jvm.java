@@ -145,7 +145,7 @@ public final class Jvm {
 
 		private String buildUnsupportedFormatterMessage(V fmtVersion) {
 			// check if the jvm version is to low for the formatter version
-			var requiredJvmVersion = getRequiredJvmVersion(fmtVersion);
+			int requiredJvmVersion = getRequiredJvmVersion(fmtVersion);
 			if (Jvm.version() < requiredJvmVersion) {
 				return buildUpgradeJvmMessage(fmtVersion) + "Upgrade your JVM or try " + toString();
 			}
@@ -268,7 +268,7 @@ public final class Jvm {
 				int numberOfElements = version0Items.length > version1Items.length ? version0Items.length : version1Items.length;
 				version0Items = Arrays.copyOf(version0Items, numberOfElements);
 				version1Items = Arrays.copyOf(version1Items, numberOfElements);
-				for (var i = 0; i < numberOfElements; i++) {
+				for (int i = 0; i < numberOfElements; i++) {
 					if (version0Items[i] > version1Items[i]) {
 						return 1;
 					} else if (version1Items[i] > version0Items[i]) {

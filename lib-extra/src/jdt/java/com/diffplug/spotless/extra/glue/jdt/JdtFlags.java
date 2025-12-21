@@ -36,7 +36,7 @@ final class JdtFlags {
 		if (isNestedInterfaceOrAnnotation(bodyDeclaration)) {
 			return true;
 		}
-		var nodeType = bodyDeclaration.getNodeType();
+		int nodeType = bodyDeclaration.getNodeType();
 		if (nodeType != ASTNode.METHOD_DECLARATION
 				&& nodeType != ASTNode.ANNOTATION_TYPE_MEMBER_DECLARATION
 				&& isInterfaceOrAnnotationMember(bodyDeclaration)) {
@@ -75,8 +75,8 @@ final class JdtFlags {
 	}
 
 	private static boolean isInterfaceOrAnnotation(ASTNode node) {
-		var isInterface = (node instanceof TypeDeclaration) && ((TypeDeclaration) node).isInterface();
-		var isAnnotation = node instanceof AnnotationTypeDeclaration;
+		boolean isInterface = (node instanceof TypeDeclaration) && ((TypeDeclaration) node).isInterface();
+		boolean isAnnotation = node instanceof AnnotationTypeDeclaration;
 		return isInterface || isAnnotation;
 	}
 

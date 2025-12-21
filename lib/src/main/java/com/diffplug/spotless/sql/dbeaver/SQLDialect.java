@@ -19,6 +19,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -106,7 +107,7 @@ final class SQLDialect {
 
 	private void loadStandardKeywords() {
 		// Add default set of keywords
-		var all = new HashSet<String>();
+		Set<String> all = new HashSet<>();
 		Collections.addAll(all, SQLConstants.SQL2003_RESERVED_KEYWORDS);
 		Collections.addAll(all, SQLConstants.SQL_EX_KEYWORDS);
 		Collections.addAll(functions, SQLConstants.SQL2003_FUNCTIONS);

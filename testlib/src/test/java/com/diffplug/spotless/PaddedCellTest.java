@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2024 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,7 +46,7 @@ class PaddedCellTest {
 	}
 
 	private void testCase(SerializedFunction<String, String> step, String input, PaddedCell.Type expectedOutputType, String expectedSteps, String canonical, boolean misbehaved) throws IOException {
-		var formatterSteps = new ArrayList<FormatterStep>();
+		List<FormatterStep> formatterSteps = new ArrayList<>();
 		formatterSteps.add(NeverUpToDateStep.create("step", step));
 		try (Formatter formatter = Formatter.builder()
 				.lineEndingsPolicy(LineEnding.UNIX.createPolicy())
@@ -116,7 +116,7 @@ class PaddedCellTest {
 	void cycleOrder() {
 		BiConsumer<String, String> testCase = (unorderedStr, canonical) -> {
 			List<String> unordered = Arrays.asList(unorderedStr.split(","));
-			for (var i = 0; i < unordered.size(); ++i) {
+			for (int i = 0; i < unordered.size(); ++i) {
 				// try every rotation of the list
 				Collections.rotate(unordered, 1);
 				PaddedCell result = CYCLE.create(rootFolder, unordered);

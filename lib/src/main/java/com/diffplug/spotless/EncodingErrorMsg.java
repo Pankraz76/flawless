@@ -34,7 +34,7 @@ final class EncodingErrorMsg {
 	private static final int CONTEXT = 3;
 
 	static @Nullable String msg(String chars, byte[] bytes, Charset charset) {
-		var unrepresentable = chars.indexOf(UNREPRESENTABLE);
+		int unrepresentable = chars.indexOf(UNREPRESENTABLE);
 		if (unrepresentable == -1) {
 			return null;
 		}
@@ -73,10 +73,10 @@ final class EncodingErrorMsg {
 			message.append("You configured Spotless to use ").append(charset.name()).append(".");
 		}
 
-		var line = 1;
-		var col = 1;
-		for (var i = 0; i < unrepresentable; i++) {
-			var c = chars.charAt(i);
+		int line = 1;
+		int col = 1;
+		for (int i = 0; i < unrepresentable; i++) {
+			char c = chars.charAt(i);
 			if (c == '\n') {
 				++line;
 				col = 1;
@@ -87,7 +87,7 @@ final class EncodingErrorMsg {
 		message.append("  At line ").append(line).append(" col ").append(col).append(":");
 
 		// https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html
-		var encodings = new LinkedHashSet<Charset>();
+		LinkedHashSet<Charset> encodings = new LinkedHashSet<>();
 		encodings.add(charset); // the encoding we are using
 		encodings.add(StandardCharsets.UTF_8);  // followed by likely encodings
 		addIfAvailable(encodings, "windows-1252");
@@ -136,8 +136,8 @@ final class EncodingErrorMsg {
 		}
 		charBuf.flip();
 
-		var start = Math.max(unrepresentable - CONTEXT, 0);
-		var end = Math.min(charBuf.limit(), unrepresentable + CONTEXT + 1);
+		int start = Math.max(unrepresentable - CONTEXT, 0);
+		int end = Math.min(charBuf.limit(), unrepresentable + CONTEXT + 1);
 		message.append('\n');
 		message.append(charBuf.subSequence(start, end).toString()
 				.replace('\n', '␤')

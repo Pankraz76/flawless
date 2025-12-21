@@ -70,7 +70,7 @@ public class LintSuppression implements Serializable {
 	}
 
 	public void ensureDoesNotSuppressAll() {
-		var suppressAll = ALL.equals(path) && ALL.equals(step) && ALL.equals(shortCode);
+		boolean suppressAll = ALL.equals(path) && ALL.equals(step) && ALL.equals(shortCode);
 		if (suppressAll) {
 			throw new IllegalArgumentException("You must specify a specific `file`, `step`, or `shortCode`.");
 		}
