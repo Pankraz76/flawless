@@ -630,7 +630,7 @@ public class FormatExtension {
 
 		FormatterStep createStep() {
 			return builder.withYearModeLazy(() -> {
-				if (Boolean.parseBoolean(GradleCompat.findOptionalProperty(spotless.project, LicenseHeaderStep.FLAG_SET_LICENSE_HEADER_YEARS_FROM_GIT_HISTORY()))) {
+				if (Boolean.parseBoolean(GradleCompat.findOptionalProperty(spotless.getProject(), LicenseHeaderStep.FLAG_SET_LICENSE_HEADER_YEARS_FROM_GIT_HISTORY()))) {
 					return YearMode.SET_FROM_GIT;
 				} else {
 					boolean updateYear = updateYearWithLatest == null ? getRatchetFrom() != null : updateYearWithLatest;
@@ -1099,7 +1099,7 @@ public class FormatExtension {
 
 	/** Returns the project that this extension is attached to. */
 	protected Project getProject() {
-		return spotless.project;
+		return spotless.getProject();
 	}
 
 	/** Eager version of {@link #createIndependentApplyTaskLazy(String)} */
@@ -1127,7 +1127,7 @@ public class FormatExtension {
 	public TaskProvider<SpotlessApply> createIndependentApplyTaskLazy(String taskName) {
 		Preconditions.checkArgument(!taskName.endsWith(SpotlessExtension.APPLY),
 				"Task name must not end with " + SpotlessExtension.APPLY);
-		TaskProvider<SpotlessTaskImpl> spotlessTask = spotless.project.getTasks()
+		TaskProvider<SpotlessTaskImpl> spotlessTask = spotless.getProject().getTasks()
 				.register(taskName + SpotlessTaskService.INDEPENDENT_HELPER, SpotlessTaskImpl.class, task -> {
 					task.init(spotless.getRegisterDependenciesTask().getTaskService());
 					setupTask(task);
@@ -1135,7 +1135,7 @@ public class FormatExtension {
 					task.mustRunAfter(BasePlugin.CLEAN_TASK_NAME);
 				});
 		// create the apply task
-		return spotless.project.getTasks().register(taskName, SpotlessApply.class,
+		return spotless.getProject().getTasks().register(taskName, SpotlessApply.class,
 				task -> {
 					task.dependsOn(spotlessTask);
 					task.init(spotlessTask);

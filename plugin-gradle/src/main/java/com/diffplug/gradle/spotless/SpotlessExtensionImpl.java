@@ -55,8 +55,8 @@ public class SpotlessExtensionImpl extends SpotlessExtension {
 
 	@Override
 	protected void createFormatTasks(String name, FormatExtension formatExtension) {
-		IdeHook.State ideHook = new IdeHook.State(project);
-		TaskContainer tasks = project.getTasks();
+		IdeHook.State ideHook = new IdeHook.State(getProject());
+		TaskContainer tasks = getProject().getTasks();
 
 		// create the SpotlessTask
 		String taskName = EXTENSION + SpotlessPlugin.capitalize(name);
@@ -67,7 +67,7 @@ public class SpotlessExtensionImpl extends SpotlessExtension {
 			// clean removes the SpotlessCache, so we have to run after clean
 			task.mustRunAfter(BasePlugin.CLEAN_TASK_NAME);
 		});
-		project.afterEvaluate(unused -> spotlessTask.configure(task -> {
+		getProject().afterEvaluate(unused -> spotlessTask.configure(task -> {
 			// now that the task is being configured, we execute our actions
 			for (Action<FormatExtension> lazyAction : formatExtension.lazyActions) {
 				lazyAction.execute(formatExtension);
