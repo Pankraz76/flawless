@@ -89,9 +89,9 @@ public final class ReplaceRegexStep {
 					var lints = new ArrayList<Lint>();
 					var matcher = regex.matcher(raw);
 					while (matcher.find()) {
-						int line = 1 + (int) raw.codePoints().limit(matcher.start()).filter(c -> c == '\n').count();
+						var line = 1 + (int) raw.codePoints().limit(matcher.start()).filter(c -> c == '\n').count();
 						String errorCode = matcher.group(0).trim();
-						int firstNewline = errorCode.indexOf("\n");
+						var firstNewline = errorCode.indexOf("\n");
 						if (firstNewline != -1) {
 							errorCode = errorCode.substring(0, firstNewline);
 						}

@@ -49,7 +49,7 @@ class SQLTokensParser {
 		this.quoteStrings = SQL_DIALECT.getIdentifierQuoteStrings();
 		this.singleLineComments = SQL_DIALECT.getSingleLineComments();
 		this.singleLineCommentStart = new char[this.singleLineComments.length];
-		for (int i = 0; i < singleLineComments.length; i++) {
+		for (var i = 0; i < singleLineComments.length; i++) {
 			if (singleLineComments[i].isEmpty()) {
 				singleLineCommentStart[i] = 0;
 			} else {
@@ -103,13 +103,13 @@ class SQLTokensParser {
 	}
 
 	private FormatterToken nextToken() {
-		int start_pos = fPos;
+		var start_pos = fPos;
 		if (fPos >= fBefore.length()) {
 			fPos++;
 			return new FormatterToken(TokenType.END, "", start_pos);
 		}
 
-		char fChar = fBefore.charAt(fPos);
+		var fChar = fBefore.charAt(fPos);
 
 		if (isSpace(fChar)) {
 			StringBuilder workString = new StringBuilder();
@@ -194,7 +194,7 @@ class SQLTokensParser {
 			return new FormatterToken(TokenType.NAME, word, start_pos);
 		} else if (fChar == '/') {
 			fPos++;
-			char ch2 = fBefore.charAt(fPos);
+			var ch2 = fBefore.charAt(fPos);
 			if (ch2 != '*') {
 				return new FormatterToken(TokenType.SYMBOL, "/", start_pos);
 			}
@@ -202,7 +202,7 @@ class SQLTokensParser {
 			StringBuilder s = new StringBuilder("/*");
 			fPos++;
 			for (;;) {
-				int ch0 = fChar;
+				var ch0 = fChar;
 				fChar = fBefore.charAt(fPos);
 				s.append(fChar);
 				fPos++;
@@ -213,7 +213,7 @@ class SQLTokensParser {
 		} else {
 			if (fChar == '\'' || isQuoteChar(fChar)) {
 				fPos++;
-				char endQuoteChar = fChar;
+				var endQuoteChar = fChar;
 				// Close quote char may differ
 				if (quoteStrings != null) {
 					for (String[] quoteString : quoteStrings) {
@@ -249,7 +249,7 @@ class SQLTokensParser {
 				if (fPos >= fBefore.length()) {
 					return new FormatterToken(TokenType.SYMBOL, s.toString(), start_pos);
 				}
-				char ch2 = fBefore.charAt(fPos);
+				var ch2 = fBefore.charAt(fPos);
 				for (String aTwoCharacterSymbol : TWO_CHARACTER_SYMBOL) {
 					if (aTwoCharacterSymbol.charAt(0) == fChar && aTwoCharacterSymbol.charAt(1) == ch2) {
 						fPos++;

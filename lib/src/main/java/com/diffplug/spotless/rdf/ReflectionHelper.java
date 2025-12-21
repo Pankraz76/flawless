@@ -168,7 +168,7 @@ class ReflectionHelper {
 	}
 
 	public boolean graphContainsSameTerm(Object graph, Object triple) throws InvocationTargetException, IllegalAccessException {
-		boolean found = (boolean) contains.invoke(graph, triple);
+		var found = (boolean) contains.invoke(graph, triple);
 		if (!found) {
 			return false;
 		}
@@ -198,8 +198,8 @@ class ReflectionHelper {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			String message = (String) args[0];
-			long line = (long) args[1];
-			long col = (long) args[2];
+			var line = (long) args[1];
+			var col = (long) args[2];
 			String severity = method.getName();
 			if ("warning".equals(severity) && !state.getConfig().isFailOnWarning()) {
 				LOGGER.warn("{}({},{}): {}", this.filePath, line, col, message);
@@ -400,7 +400,7 @@ class ReflectionHelper {
 	private String tryToMakeUri(String stringRepresentation)
 			throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 		if (stringRepresentation.matches("[^:/]+:[^:/]+")) {
-			int colonIndex = stringRepresentation.indexOf(':');
+			var colonIndex = stringRepresentation.indexOf(':');
 			//could be a known prefix
 			String prefix = stringRepresentation.substring(0, colonIndex);
 			Object knownPrefix = getKnownPrefix(prefix);

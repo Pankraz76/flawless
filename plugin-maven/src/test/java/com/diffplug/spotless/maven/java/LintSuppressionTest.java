@@ -144,7 +144,7 @@ class LintSuppressionTest extends MavenIntegrationHarness {
 		StringBuilder javaSteps = new StringBuilder();
 		StringBuilder globalConfig = new StringBuilder();
 
-		boolean inSuppressions = false;
+		var inSuppressions = false;
 		for (String line : stepsAndSuppressions) {
 			if (line.startsWith("<lintSuppressions>")) {
 				inSuppressions = true;

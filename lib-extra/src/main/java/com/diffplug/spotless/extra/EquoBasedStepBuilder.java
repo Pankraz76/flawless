@@ -109,7 +109,7 @@ public abstract class EquoBasedStepBuilder {
 		if (!version.startsWith("4.")) {
 			throw new IllegalArgumentException("Expected 4.x");
 		}
-		int minorVersion = Integer.parseInt(version.substring("4.".length()));
+		var minorVersion = Integer.parseInt(version.substring("4.".length()));
 
 		model.addP2Repo("https://download.eclipse.org/eclipse/updates/" + version + "/");
 		model.getInstall().addAll(List.of(
