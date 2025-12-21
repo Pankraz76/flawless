@@ -51,7 +51,7 @@ final class ImportSorter {
 		int lastImportLine = 0;
 		int line = 0;
 		boolean isMultiLineComment = false;
-		List<String> imports = new ArrayList<>();
+		var imports = new ArrayList<String>();
 		while (scanner.hasNext()) {
 			line++;
 			String next = scanner.nextLine();

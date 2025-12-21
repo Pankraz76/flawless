@@ -87,7 +87,7 @@ final class EncodingErrorMsg {
 		message.append("  At line ").append(line).append(" col ").append(col).append(":");
 
 		// https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html
-		LinkedHashSet<Charset> encodings = new LinkedHashSet<>();
+		var encodings = new LinkedHashSet<Charset>();
 		encodings.add(charset); // the encoding we are using
 		encodings.add(StandardCharsets.UTF_8);  // followed by likely encodings
 		addIfAvailable(encodings, "windows-1252");

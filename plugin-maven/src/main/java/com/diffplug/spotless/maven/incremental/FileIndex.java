@@ -157,7 +157,7 @@ final class FileIndex {
 	}
 
 	private static Content readIndexContent(BufferedReader reader, Path projectDir, Log log) throws IOException {
-		Map<Path, Instant> fileToLastModifiedTime = new TreeMap<>();
+		var fileToLastModifiedTime = new TreeMap<Path, Instant>();
 		boolean needsRewrite = false;
 
 		String line;

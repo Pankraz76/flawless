@@ -107,7 +107,7 @@ final class SQLDialect {
 
 	private void loadStandardKeywords() {
 		// Add default set of keywords
-		Set<String> all = new HashSet<>();
+		var all = new HashSet<String>();
 		Collections.addAll(all, SQLConstants.SQL2003_RESERVED_KEYWORDS);
 		Collections.addAll(all, SQLConstants.SQL_EX_KEYWORDS);
 		Collections.addAll(functions, SQLConstants.SQL2003_FUNCTIONS);

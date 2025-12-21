@@ -105,7 +105,7 @@ class FormatterPropertiesTest extends ResourceHarness {
 
 	@Test
 	void multiplePropertyFiles() throws IOException {
-		LinkedList<File> settingsFiles = new LinkedList<>();
+		var settingsFiles = new LinkedList<File>();
 		for (String settingsResource : VALID_SETTINGS_RESOURCES) {
 			File settingsFile = createTestFile(settingsResource);
 			settingsFiles.add(settingsFile);
@@ -119,8 +119,8 @@ class FormatterPropertiesTest extends ResourceHarness {
 
 	@Test
 	void multiplePropertyFiles_content_properties() throws IOException {
-		LinkedList<File> settingsFiles = new LinkedList<>();
-		LinkedList<String> content = new LinkedList<>();
+		var settingsFiles = new LinkedList<File>();
+		var content = new LinkedList<String>();
 		for (String settingsResource : validPropertiesResources()) {
 			File settingsFile = createTestFile(settingsResource);
 			content.add(Files.readString(settingsFile.toPath()));
@@ -135,8 +135,8 @@ class FormatterPropertiesTest extends ResourceHarness {
 
 	@Test
 	void multiplePropertyFiles_content_xml() throws IOException {
-		LinkedList<File> settingsFiles = new LinkedList<>();
-		LinkedList<String> content = new LinkedList<>();
+		var settingsFiles = new LinkedList<File>();
+		var content = new LinkedList<String>();
 		for (String settingsResource : validXmlResources()) {
 			File settingsFile = createTestFile(settingsResource);
 			content.add(Files.readString(settingsFile.toPath()));

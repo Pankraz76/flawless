@@ -281,7 +281,7 @@ public class MavenIntegrationHarness extends ResourceHarness {
 	}
 
 	protected static Map<String, Object> buildPomXmlParams(String pluginVersion, String[] build, String[] executions, String[] configuration, String[] modules, String[] dependencies, String[] plugins) {
-		Map<String, Object> params = new HashMap<>();
+		var params = new HashMap<String, Object>();
 		params.put(SPOTLESS_MAVEN_PLUGIN_VERSION, pluginVersion == null ? getSystemProperty(SPOTLESS_MAVEN_PLUGIN_VERSION) : pluginVersion);
 
 		if (build != null) {

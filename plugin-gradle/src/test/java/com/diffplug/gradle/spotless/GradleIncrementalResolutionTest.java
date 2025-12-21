@@ -143,7 +143,7 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 				gradleRunner().withArguments(task).forwardStdOutput(printer.toWriter()).build();
 			}
 		}));
-		SortedSet<String> added = new TreeSet<>();
+		var added = new TreeSet<String>();
 		for (String line : console.split("\n")) {
 			String trimmed = line.trim();
 			if (trimmed.startsWith("<") && trimmed.endsWith(">")) {

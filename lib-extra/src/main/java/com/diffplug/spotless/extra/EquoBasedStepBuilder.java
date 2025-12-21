@@ -155,7 +155,7 @@ public abstract class EquoBasedStepBuilder {
 			return model;
 		}
 
-		ArrayList<String> p2Repos = new ArrayList<>(model.getP2repo());
+		var p2Repos = new ArrayList<String>(model.getP2repo());
 		p2Repos.replaceAll(url -> {
 			for (Map.Entry<String, String> mirror : p2Mirrors.entrySet()) {
 				String prefix = mirror.getKey();
