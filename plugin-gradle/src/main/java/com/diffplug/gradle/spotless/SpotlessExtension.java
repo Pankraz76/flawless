@@ -37,7 +37,7 @@ public abstract class SpotlessExtension {
 	static final String APPLY = "Apply";
 	static final String CHECK = "Check";
 	static final String DIAGNOSE = "Diagnose";
-	static final String EXTENSION = "spotless"; // todo rename flawless
+	static final String EXTENSION = "flawless"; // todo rename flawless
 	static final String EXTENSION_PREDECLARE = EXTENSION + "Predeclare";
 	static final String INSTALL_GIT_PRE_PUSH_HOOK = "InstallGitPrePushHook";
 	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
