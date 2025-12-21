@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 DiffPlug
+ * Copyright 2023-2025 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class Simple implements FormatterStepFactory {
 
 	@Override
 	public FormatterStep newFormatterStep(FormatterStepConfig stepConfig) {
-		int indentSpaces = this.indentSpaces;
+		var indentSpaces = this.indentSpaces;
 		return JsonSimpleStep.create(indentSpaces, stepConfig.getProvisioner());
 	}
 }

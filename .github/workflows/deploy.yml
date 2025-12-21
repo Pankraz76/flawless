@@ -37,12 +37,12 @@ jobs:
     steps:
       - name: Checkout 📥
         uses: actions/checkout@v6
-      - name: Java ☕️
+      - name: Java Setup ☕️
         uses: actions/setup-java@v5
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: Gradle 🐘
+      - name: Gradle Setup 🐘
         uses: gradle/actions/setup-gradle@v5
       - name: Fetch Latest Main Branch 🔄
         run: git fetch origin main

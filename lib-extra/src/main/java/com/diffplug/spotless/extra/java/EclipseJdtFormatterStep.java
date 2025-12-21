@@ -85,7 +85,7 @@ public final class EclipseJdtFormatterStep {
 		}
 
 		public void sortMembersDoNotSortFields(boolean doNotSortFields) {
-			boolean sortAllMembers = !doNotSortFields;
+			var sortAllMembers = !doNotSortFields;
 			stepProperties.put("sp_cleanup.sort_members_all", String.valueOf(sortAllMembers));
 		}
 

@@ -36,7 +36,7 @@ public class KtlintFormatterFunc implements FormatterFunc.NeedsFile {
 			FileSignature editorConfigPath,
 			Map<String, Object> editorConfigOverrideMap) {
 		String[] versions = version.split("\\.");
-		int majorVersion = Integer.parseInt(versions[0]);
+		var majorVersion = Integer.parseInt(versions[0]);
 		if (majorVersion == 1) {
 			this.adapter = new KtLintCompat1Dot0Dot0Adapter();
 		} else {

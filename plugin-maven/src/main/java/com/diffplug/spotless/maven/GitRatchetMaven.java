@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.jgit.lib.IndexDiff;
@@ -65,7 +64,7 @@ final class GitRatchetMaven extends GitRatchet<File> {
 		String workTreePath = repository.getWorkTree().getPath();
 		Path baseDirPath = Path.of(baseDir.getPath());
 
-		Set<String> dirtyPaths = new HashSet<>(indexDiff.getChanged());
+		var dirtyPaths = new HashSet<String>(indexDiff.getChanged());
 		dirtyPaths.addAll(indexDiff.getAdded());
 		dirtyPaths.addAll(indexDiff.getConflicting());
 		dirtyPaths.addAll(indexDiff.getUntracked());

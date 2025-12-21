@@ -20,7 +20,6 @@ import static org.junit.jupiter.api.condition.JRE.JAVA_23;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.gradle.testkit.runner.BuildResult;
 import org.junit.jupiter.api.Test;
@@ -32,7 +31,7 @@ import com.diffplug.selfie.StringSelfie;
 /** Tests the desired behavior from https://github.com/diffplug/spotless/issues/46. */
 class ErrorShouldRethrowTest extends GradleIntegrationHarness {
 	private void writeBuild(String... toInsert) throws IOException {
-		List<String> lines = new ArrayList<>();
+		var lines = new ArrayList<String>();
 		lines.add("plugins {");
 		lines.add("    id 'com.diffplug.spotless'");
 		lines.add("    id 'java'");
@@ -136,9 +135,9 @@ class ErrorShouldRethrowTest extends GradleIntegrationHarness {
 	private StringSelfie expectFailureAndConsoleToBe() throws Exception {
 		BuildResult result = gradleRunner().withArguments("check").buildAndFail();
 		String output = result.getOutput();
-		int register = output.indexOf(":spotlessInternalRegisterDependencies");
-		int firstNewlineAfterThat = output.indexOf('\n', register + 1);
-		int firstTry = output.indexOf("\n* Try:");
+		var register = output.indexOf(":spotlessInternalRegisterDependencies");
+		var firstNewlineAfterThat = output.indexOf('\n', register + 1);
+		var firstTry = output.indexOf("\n* Try:");
 		String useThisToMatch = output.substring(firstNewlineAfterThat, firstTry).trim();
 		return Selfie.expectSelfie(useThisToMatch);
 	}

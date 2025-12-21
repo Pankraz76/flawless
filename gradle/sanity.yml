@@ -5,9 +5,8 @@ displayName: Apply all best practices
 description: Comprehensive code quality recipe combining modernization, security, and best practices.
 recipeList:
   # - org.openrewrite.java.migrate.lang.var.UseVarForGenericMethodInvocations # bug
-  # - org.openrewrite.java.migrate.lang.var.UseVarForGenericsConstructors
+  # - org.openrewrite.java.migrate.lang.var.UseVarForPrimitive # bug
   # - org.openrewrite.java.migrate.lang.var.UseVarForObject # bug
-  # - org.openrewrite.java.migrate.lang.var.UseVarForPrimitive
   - org.openrewrite.gradle.EnableGradleBuildCache
   - org.openrewrite.gradle.EnableGradleParallelExecution
   - org.openrewrite.gradle.GradleBestPractices
@@ -17,6 +16,7 @@ recipeList:
   - org.openrewrite.java.format.RemoveTrailingWhitespace
   - org.openrewrite.java.migrate.UpgradeToJava17
   - org.openrewrite.java.migrate.lang.StringRulesRecipes
+  - org.openrewrite.java.migrate.lang.var.UseVarForGenericsConstructors
   - org.openrewrite.java.migrate.util.JavaLangAPIs
   - org.openrewrite.java.migrate.util.JavaUtilAPIs
   - org.openrewrite.java.migrate.util.MigrateInflaterDeflaterToClose

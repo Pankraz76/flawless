@@ -69,7 +69,7 @@ public final class RemoveSemicolonsStep implements Serializable {
 		 */
 		private String removeSemicolon(String line) {
 			// Find the last semicolon in a string and remove it.
-			int lastSemicolon = line.lastIndexOf(";");
+			var lastSemicolon = line.lastIndexOf(";");
 			if (lastSemicolon != -1 && lastSemicolon == line.length() - 1) {
 				return line.substring(0, lastSemicolon);
 			} else {

@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
-import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.assertj.core.api.AbstractStringAssert;
@@ -101,8 +100,8 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 	private void writeState(String state) throws IOException {
 		for (char c : state.toCharArray()) {
 			String letter = new String(new char[]{c});
-			boolean exists = new File(rootFolder(), filename(letter)).exists();
-			boolean needsChanging = exists && !read(filename(letter)).trim().equals(letter);
+			var exists = new File(rootFolder(), filename(letter)).exists();
+			var needsChanging = exists && !read(filename(letter)).trim().equals(letter);
 			if (!exists || needsChanging) {
 				setFile(filename(letter)).toContent(letter);
 			}
@@ -136,14 +135,14 @@ class GradleIncrementalResolutionTest extends GradleIntegrationHarness {
 	private String taskRanAgainst(String task, String... ranAgainst) throws IOException {
 		pauseForFilesystem();
 		String console = StringPrinter.buildString(Errors.rethrow().wrap(printer -> {
-			boolean expectFailure = "spotlessCheck".equals(task) && !isClean();
+			var expectFailure = "spotlessCheck".equals(task) && !isClean();
 			if (expectFailure) {
 				gradleRunner().withArguments(task).forwardStdOutput(printer.toWriter()).forwardStdError(printer.toWriter()).buildAndFail();
 			} else {
 				gradleRunner().withArguments(task).forwardStdOutput(printer.toWriter()).build();
 			}
 		}));
-		SortedSet<String> added = new TreeSet<>();
+		var added = new TreeSet<String>();
 		for (String line : console.split("\n")) {
 			String trimmed = line.trim();
 			if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
