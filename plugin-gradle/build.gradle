@@ -42,8 +42,8 @@ tasks.validatePlugins {
 // GRADLE PLUGIN PORTAL //
 //////////////////////////
 gradlePlugin {
-	website = "https://github.com/diffplug/spotless"
-	vcsUrl = "https://github.com/diffplug/spotless"
+	website = "https://github.com/Pankraz76/flawless"
+	vcsUrl = "https://github.com/Pankraz76/flawless"
 	plugins {
 		spotlessPlugin {
 			id = 'com.diffplug.spotless'
