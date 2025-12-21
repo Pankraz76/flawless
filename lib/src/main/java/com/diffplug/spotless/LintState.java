@@ -54,7 +54,7 @@ public class LintState {
 			throw new IllegalStateException("LintState was created with a different formatter!");
 		}
 		LinkedHashMap<String, List<Lint>> result = new LinkedHashMap<>();
-		for (int i = 0; i < lintsPerStep.size(); i++) {
+		for (var i = 0; i < lintsPerStep.size(); i++) {
 			List<Lint> lints = lintsPerStep.get(i);
 			if (lints != null) {
 				FormatterStep step = formatter.getSteps().get(i);
@@ -71,9 +71,9 @@ public class LintState {
 		if (formatter.getSteps().size() != lintsPerStep.size()) {
 			throw new IllegalStateException("LintState was created with a different formatter!");
 		}
-		boolean changed = false;
+		var changed = false;
 		ValuePerStep<List<Lint>> perStepFiltered = new ValuePerStep<>(formatter);
-		for (int i = 0; i < lintsPerStep.size(); i++) {
+		for (var i = 0; i < lintsPerStep.size(); i++) {
 			FormatterStep step = formatter.getSteps().get(i);
 			List<Lint> lintsOriginal = lintsPerStep.get(i);
 			if (lintsOriginal != null) {
@@ -114,7 +114,7 @@ public class LintState {
 			return "(none)";
 		} else {
 			StringBuilder result = new StringBuilder();
-			for (int i = 0; i < lintsPerStep.size(); i++) {
+			for (var i = 0; i < lintsPerStep.size(); i++) {
 				List<Lint> lints = lintsPerStep.get(i);
 				if (lints != null) {
 					FormatterStep step = formatter.getSteps().get(i);
@@ -143,7 +143,7 @@ public class LintState {
 
 		var lints = new ValuePerStep<List<Lint>>(formatter);
 		// if a step did not throw an exception, then it gets to check for lints if it wants
-		for (int i = 0; i < formatter.getSteps().size(); i++) {
+		for (var i = 0; i < formatter.getSteps().size(); i++) {
 			FormatterStep step = formatter.getSteps().get(i);
 			Throwable exception = exceptions.get(i);
 			if (exception == null || exception == formatStepCausedNoChange()) {
@@ -161,8 +161,8 @@ public class LintState {
 		// we try to reuse the exception if possible, but that is only possible if other steps
 		// didn't change the formatted value. so we start at the end, and note when the string
 		// gets changed by a step. if it does, we rerun the steps to get an exception with accurate line numbers.
-		boolean nothingHasChangedSinceLast = true;
-		for (int i = formatter.getSteps().size() - 1; i >= 0; i--) {
+		var nothingHasChangedSinceLast = true;
+		for (var i = formatter.getSteps().size() - 1; i >= 0; i--) {
 			FormatterStep step = formatter.getSteps().get(i);
 			Throwable exception = exceptions.get(i);
 			if (exception != null && exception != formatStepCausedNoChange()) {

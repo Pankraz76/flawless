@@ -47,10 +47,10 @@ final class ImportSorter {
 	String format(String raw, String lineFormat) {
 		// parse file
 		Scanner scanner = new Scanner(raw);
-		int firstImportLine = 0;
-		int lastImportLine = 0;
-		int line = 0;
-		boolean isMultiLineComment = false;
+		var firstImportLine = 0;
+		var lastImportLine = 0;
+		var line = 0;
+		var isMultiLineComment = false;
 		List<String> imports = new ArrayList<>();
 		while (scanner.hasNext()) {
 			line++;
@@ -68,7 +68,7 @@ final class ImportSorter {
 			}
 
 			if (next.startsWith("import ")) {
-				int i = next.indexOf(".");
+				var i = next.indexOf(".");
 				if (isNotValidImport(i)) {
 					continue;
 				}
@@ -76,7 +76,7 @@ final class ImportSorter {
 					firstImportLine = line;
 				}
 				lastImportLine = line;
-				int endIndex = next.indexOf(";");
+				var endIndex = next.indexOf(";");
 
 				String imprt = next.substring(START_INDEX_OF_IMPORTS_PACKAGE_DECLARATION, endIndex != -1 ? endIndex : next.length());
 				if (!isMultiLineComment && !imports.contains(imprt)) {
@@ -95,7 +95,7 @@ final class ImportSorter {
 	}
 
 	private static boolean isBeginningOfScope(String line) {
-		int scope = line.indexOf("{");
+		var scope = line.indexOf("{");
 		if (0 <= scope) {
 			return !line.substring(0, scope).contains("//");
 		}
@@ -106,9 +106,9 @@ final class ImportSorter {
 		if (document.isEmpty()) {
 			return document;
 		}
-		boolean importsAlreadyAppended = false;
+		var importsAlreadyAppended = false;
 		Scanner scanner = new Scanner(document);
-		int curentLine = 0;
+		var curentLine = 0;
 		final StringBuilder sb = new StringBuilder();
 		while (scanner.hasNext()) {
 			curentLine++;

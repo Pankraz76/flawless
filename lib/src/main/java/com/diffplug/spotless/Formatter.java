@@ -140,7 +140,7 @@ public final class Formatter implements Serializable, AutoCloseable {
 	}
 
 	static void legacyErrorBehavior(Formatter formatter, File file, ValuePerStep<Throwable> exceptionPerStep) {
-		for (int i = 0; i < formatter.getSteps().size(); i++) {
+		for (var i = 0; i < formatter.getSteps().size(); i++) {
 			Throwable exception = exceptionPerStep.get(i);
 			if (exception != null && exception != LintState.formatStepCausedNoChange()) {
 				LOGGER.error("Step '{}' found problem in '{}':\n{}", formatter.getSteps().get(i).getName(), file.getName(), exception.getMessage(), exception);
@@ -165,7 +165,7 @@ public final class Formatter implements Serializable, AutoCloseable {
 		Objects.requireNonNull(unix, "unix");
 		Objects.requireNonNull(file, "file");
 
-		for (int i = 0; i < steps.size(); i++) {
+		for (var i = 0; i < steps.size(); i++) {
 			FormatterStep step = steps.get(i);
 			Throwable storeForStep;
 			try {
@@ -196,8 +196,8 @@ public final class Formatter implements Serializable, AutoCloseable {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
+		final var prime = 31;
+		var result = 1;
 		result = prime * result + encoding.hashCode();
 		result = prime * result + lineEndingsPolicy.hashCode();
 		return prime * result + steps.hashCode();

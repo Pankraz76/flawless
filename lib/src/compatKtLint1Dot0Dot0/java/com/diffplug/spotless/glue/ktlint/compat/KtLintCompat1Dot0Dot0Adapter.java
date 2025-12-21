@@ -131,7 +131,7 @@ public class KtLintCompat1Dot0Dot0Adapter implements KtLintCompatAdapter {
 				.collect(Collectors.toMap(EditorConfigProperty::getName, property -> property));
 
 		// The default style had been changed from intellij_idea to ktlint_official in version 1.0.0
-		boolean isCodeStyleDefinedInEditorConfig = editorConfig.getValue().getSections().stream()
+		var isCodeStyleDefinedInEditorConfig = editorConfig.getValue().getSections().stream()
 				.anyMatch(section -> section.getProperties().containsKey("ktlint_code_style"));
 		if (!isCodeStyleDefinedInEditorConfig && !editorConfigOverrideMap.containsKey("ktlint_code_style")) {
 			editorConfigOverrideMap.put("ktlint_code_style", "intellij_idea");

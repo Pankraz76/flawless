@@ -153,7 +153,7 @@ class FormatterPropertiesTest extends ResourceHarness {
 	void invalidPropertyFiles() throws IOException {
 		for (String settingsResource : INVALID_SETTINGS_RESOURCES) {
 			File settingsFile = createTestFile(settingsResource);
-			boolean exceptionCaught = false;
+			var exceptionCaught = false;
 			try {
 				FormatterProperties.from(settingsFile);
 			} catch (IllegalArgumentException ex) {

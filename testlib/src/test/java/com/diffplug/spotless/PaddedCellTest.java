@@ -116,7 +116,7 @@ class PaddedCellTest {
 	void cycleOrder() {
 		BiConsumer<String, String> testCase = (unorderedStr, canonical) -> {
 			List<String> unordered = Arrays.asList(unorderedStr.split(","));
-			for (int i = 0; i < unordered.size(); ++i) {
+			for (var i = 0; i < unordered.size(); ++i) {
 				// try every rotation of the list
 				Collections.rotate(unordered, 1);
 				PaddedCell result = CYCLE.create(rootFolder, unordered);

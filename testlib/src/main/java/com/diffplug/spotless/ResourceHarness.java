@@ -160,7 +160,7 @@ public class ResourceHarness {
 	 * src/test/resources directory.
 	 */
 	public File createTestFile(String filename, UnaryOperator<String> fileContentsProcessor) {
-		int lastSlash = filename.lastIndexOf('/');
+		var lastSlash = filename.lastIndexOf('/');
 		String name = lastSlash >= 0 ? filename.substring(lastSlash) : filename;
 		File file = newFile(name);
 		file.getParentFile().mkdirs();

@@ -365,7 +365,7 @@ public class MavenIntegrationHarness extends ResourceHarness {
 
 		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:spotless-maven-plugin:([^:]+):", "com.diffplug.spotless:spotless-maven-plugin:VERSION:");
 
-		int help1 = sanitizedVersion.indexOf("-> [Help 1]");
+		var help1 = sanitizedVersion.indexOf("-> [Help 1]");
 		String trimTrailingString = sanitizedVersion.substring(0, help1);
 
 		String sanitizeBiomeNative = trimTrailingString.replaceAll("[/|\\\\].m2(.*)[/|\\\\]biome\\-(.+),", "biome-exe");

@@ -49,7 +49,7 @@ public class EclipseJdtFormatterStepImpl {
 	/** Formatting Java string, distinguishing module-info and compilation unit by file name */
 	public String format(String raw, File file) throws Exception {
 		raw = sort(raw);
-		int kind = (file.getName().equals(IModule.MODULE_INFO_JAVA) ? CodeFormatter.K_MODULE_INFO
+		var kind = (file.getName().equals(IModule.MODULE_INFO_JAVA) ? CodeFormatter.K_MODULE_INFO
 				: CodeFormatter.K_COMPILATION_UNIT) | CodeFormatter.F_INCLUDE_COMMENTS;
 		TextEdit edit = codeFormatter.format(kind, raw, 0, raw.length(), 0, LINE_DELIMITER);
 		if (edit == null) {

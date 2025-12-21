@@ -80,8 +80,8 @@ public class SpotlessCheckMojo extends AbstractSpotlessMojo {
 			buildContext.removeMessages(file);
 			try {
 				LintState lintState = super.calculateLintState(formatter, file);
-				boolean hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
-				boolean hasUnsuppressedLints = lintState.isHasLints();
+				var hasDirtyState = !lintState.getDirtyState().isClean() && !lintState.getDirtyState().didNotConverge();
+				var hasUnsuppressedLints = lintState.isHasLints();
 
 				if (hasDirtyState || hasUnsuppressedLints) {
 					if (hasUnsuppressedLints) {

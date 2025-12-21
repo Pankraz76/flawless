@@ -288,7 +288,7 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 		}
 
 		private void assertClean(int i, String filename, boolean expected) throws IOException {
-			boolean actual = ratchet.isClean(rootFolder(), shas[i], newFile(filename));
+			var actual = ratchet.isClean(rootFolder(), shas[i], newFile(filename));
 			if (actual != expected) {
 				throw new AssertionError("Expected " + filename + " to be " + (expected ? "clean" : "dirty") + " relative to " + ratchetFroms[i]);
 			}
@@ -312,8 +312,8 @@ class GitRachetMergeBaseTest extends ResourceHarness {
 				if (!file.isFile()) {
 					continue;
 				}
-				boolean expectedClean = !dirtyFiles.contains(file.getName());
-				for (int i = 0; i < shas.length; i++) {
+				var expectedClean = !dirtyFiles.contains(file.getName());
+				for (var i = 0; i < shas.length; i++) {
 					assertClean(i, file.getName(), expectedClean);
 				}
 			}
