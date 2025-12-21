@@ -34,7 +34,7 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import com.diffplug.spotless.LineEnding;
 
 public abstract class SpotlessExtension {
-	final Project project;
+	private final Project project;
 	private final RegisterDependenciesTask registerDependenciesTask;
 
 	protected static final String TASK_GROUP = LifecycleBasePlugin.VERIFICATION_GROUP;
@@ -340,5 +340,8 @@ public abstract class SpotlessExtension {
 
 	protected void predeclare(GradleProvisioner.Policy policy) {
 		project.getExtensions().create(SpotlessExtensionPredeclare.class, EXTENSION_PREDECLARE, SpotlessExtensionPredeclare.class, project, policy);
+	}
+	public Project getProject() {
+		return project;
 	}
 }

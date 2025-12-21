@@ -67,7 +67,7 @@ public abstract class SpotlessTaskService implements BuildService<BuildServicePa
 			if (predeclaredProvisioner != null) {
 				return predeclaredProvisioner.cachedOnly;
 			} else {
-				return provisioner.computeIfAbsent(spotless.project.getPath(), unused -> new GradleProvisioner.DedupingProvisioner(GradleProvisioner.forProject(spotless.project)));
+				return provisioner.computeIfAbsent(spotless.getProject().getPath(), unused -> new GradleProvisioner.DedupingProvisioner(GradleProvisioner.forProject(spotless.getProject())));
 			}
 		}
 	}
