@@ -16,6 +16,7 @@
 package com.diffplug.gradle.spotless;
 
 import static java.util.Objects.requireNonNull;
+import static org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -44,7 +45,7 @@ public abstract class SpotlessExtension {
 	protected static final String BUILD_SETUP_TASK_GROUP = "build setup";
 	protected static final String CHECK_DESCRIPTION = "Checks that sourcecode satisfies formatting steps.";
 	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
-	protected static final String TASK_GROUP = LifecycleBasePlugin.VERIFICATION_GROUP;
+	protected static final String TASK_GROUP = VERIFICATION_GROUP;
 	private final Project project;
 	private final RegisterDependenciesTask registerDependenciesTask;
 
