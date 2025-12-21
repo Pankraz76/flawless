@@ -30,7 +30,6 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
-import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 import com.diffplug.spotless.LineEnding;
 
