@@ -92,7 +92,7 @@ public final class JsonSimpleStep implements Serializable {
 				if (s.isEmpty()) {
 					return s;
 				}
-				char first = s.charAt(0);
+				var first = s.charAt(0);
 				if (first == '{') {
 					return format(objectConstructor, objectToString, s);
 				}

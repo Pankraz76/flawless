@@ -64,7 +64,7 @@ public final class NativeCmdStep {
 		}
 
 		String format(ProcessRunner runner, String input) throws IOException, InterruptedException {
-			List<String> argumentsWithPathToExe = new ArrayList<>();
+			var argumentsWithPathToExe = new ArrayList<String>();
 			argumentsWithPathToExe.add(pathToExe.getAbsolutePath());
 			if (arguments != null) {
 				argumentsWithPathToExe.addAll(arguments);

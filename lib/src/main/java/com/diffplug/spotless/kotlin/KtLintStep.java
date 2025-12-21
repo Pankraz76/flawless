@@ -74,7 +74,7 @@ public final class KtLintStep implements Serializable {
 		Objects.requireNonNull(version, "version");
 		Objects.requireNonNull(provisioner, "provisioner");
 		String ktlintCoordinate = (version.startsWith("0.") ? MAVEN_COORDINATE_0_DOT : MAVEN_COORDINATE_1_DOT) + version;
-		Set<String> mavenCoordinates = new HashSet<>(customRuleSets);
+		var mavenCoordinates = new HashSet<String>(customRuleSets);
 		mavenCoordinates.add(ktlintCoordinate);
 		return FormatterStep.create(NAME,
 				new KtLintStep(version, JarState.promise(() -> JarState.from(mavenCoordinates, provisioner)), editorConfig, editorConfigOverride),

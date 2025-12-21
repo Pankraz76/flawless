@@ -60,14 +60,14 @@ public class DBeaverSQLFormatterConfiguration {
 		this.statementDelimiters = properties.getProperty(SQL_FORMATTER_STATEMENT_DELIMITER, SQLDialect.INSTANCE
 				.getScriptDelimiter());
 		String indentType = properties.getProperty(SQL_FORMATTER_INDENT_TYPE, "space");
-		int indentSize = Integer.parseInt(properties.getProperty(SQL_FORMATTER_INDENT_SIZE, "4"));
+		var indentSize = Integer.parseInt(properties.getProperty(SQL_FORMATTER_INDENT_SIZE, "4"));
 		indentString = getIndentString(indentType, indentSize);
 	}
 
 	private String getIndentString(String indentType, int indentSize) {
 		char indentChar = "space".equals(indentType) ? ' ' : '\t';
 		StringBuilder stringBuilder = new StringBuilder();
-		for (int i = 0; i < indentSize; i++) {
+		for (var i = 0; i < indentSize; i++) {
 			stringBuilder.append(indentChar);
 		}
 		return stringBuilder.toString();

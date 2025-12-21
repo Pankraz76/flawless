@@ -122,8 +122,8 @@ public enum LineEnding {
         }
 
         static String getEndingFor(Reader reader) throws IOException {
-            char previousCharacter = 0;
-            char currentCharacter = 0;
+            var previousCharacter = 0;
+            var currentCharacter = 0;
             int readResult;
             while ((readResult = reader.read()) != -1) {
                 currentCharacter = (char) readResult;
@@ -194,7 +194,7 @@ public enum LineEnding {
 
 	/** Returns a string with exclusively unix line endings. */
 	public static String toUnix(String input) {
-		int lastCarriageReturn = input.lastIndexOf('\r');
+		var lastCarriageReturn = input.lastIndexOf('\r');
 		if (lastCarriageReturn == -1) {
 			return input;
 		} else {

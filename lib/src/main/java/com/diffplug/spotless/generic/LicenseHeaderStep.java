@@ -133,7 +133,7 @@ public final class LicenseHeaderStep {
 		FormatterStep formatterStep;
 		if (yearMode.get() == YearMode.SET_FROM_GIT) {
 			formatterStep = FormatterStep.createLazy(name, () -> {
-				boolean updateYear = false; // doesn't matter
+				var updateYear = false; // doesn't matter
 				return new Runtime(headerLazy.get(), delimiter, yearSeparator, updateYear, skipLinesMatching);
 			}, new SetLicenseHeaderYearsFromGitHistory());
 		} else {
@@ -241,14 +241,14 @@ public final class LicenseHeaderStep {
 			Optional<String> yearToken = getYearToken(licenseHeader);
 			if (yearToken.isPresent()) {
 				this.yearToday = String.valueOf(YearMonth.now().getYear());
-				int yearTokenIndex = licenseHeader.indexOf(yearToken.orElseThrow());
+				var yearTokenIndex = licenseHeader.indexOf(yearToken.orElseThrow());
 				this.beforeYear = licenseHeader.substring(0, yearTokenIndex);
 				this.afterYear = licenseHeader.substring(yearTokenIndex + yearToken.orElseThrow().length());
 				this.yearSepOrFull = yearSeparator;
 				this.updateYearWithLatest = updateYearWithLatest;
 
-				boolean hasHeaderWithRange = false;
-				int yearPlusSep = 4 + yearSeparator.length();
+				var hasHeaderWithRange = false;
+				var yearPlusSep = 4 + yearSeparator.length();
 				if (beforeYear.endsWith(yearSeparator) && yearTokenIndex > yearPlusSep) {
 					// year from in range
 					String yearFrom = licenseHeader.substring(yearTokenIndex - yearPlusSep, yearTokenIndex).substring(0, 4);
@@ -284,7 +284,7 @@ public final class LicenseHeaderStep {
 				String[] lines = raw.split("\n");
 				StringBuilder skippedLinesBuilder = new StringBuilder();
 				StringBuilder remainingLinesBuilder = new StringBuilder();
-				boolean lastMatched = true;
+				var lastMatched = true;
 				for (String line : lines) {
 					if (lastMatched) {
 						Matcher matcher = skipLinesMatching.matcher(line);
@@ -325,8 +325,8 @@ public final class LicenseHeaderStep {
 					}
 				} else {
 					// the yes year case is a bit harder
-					int beforeYearIdx = raw.indexOf(beforeYear);
-					int afterYearIdx = raw.indexOf(afterYear, beforeYearIdx + beforeYear.length() + 1);
+					var beforeYearIdx = raw.indexOf(beforeYear);
+					var afterYearIdx = raw.indexOf(afterYear, beforeYearIdx + beforeYear.length() + 1);
 
 					if (beforeYearIdx >= 0 && afterYearIdx >= 0 && afterYearIdx + afterYear.length() <= contentMatcher.start()) {
 						// and also ends with exactly the right header, so it's easy to parse the existing year
@@ -334,7 +334,7 @@ public final class LicenseHeaderStep {
 						String newYear = calculateYearExact(existingYear);
 						if (existingYear.equals(newYear)) {
 							// fastpath where we don't need to make any changes at all
-							boolean noPadding = beforeYearIdx == 0 && afterYearIdx + afterYear.length() == contentMatcher.start(); // allows fastpath return raw
+							var noPadding = beforeYearIdx == 0 && afterYearIdx + afterYear.length() == contentMatcher.start(); // allows fastpath return raw
 							if (noPadding) {
 								return raw;
 							}
@@ -382,7 +382,7 @@ public final class LicenseHeaderStep {
 					secondYear = firstYear.equals(yearToday) ? null : yearToday;
 				} else {
 					String contentWithSecondYear = content.substring(yearMatcher.end() + 1);
-					int endOfLine = contentWithSecondYear.indexOf('\n');
+					var endOfLine = contentWithSecondYear.indexOf('\n');
 					if (endOfLine != -1) {
 						contentWithSecondYear = contentWithSecondYear.substring(0, endOfLine);
 					}

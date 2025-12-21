@@ -46,7 +46,7 @@ class PaddedCellTest {
 	}
 
 	private void testCase(SerializedFunction<String, String> step, String input, PaddedCell.Type expectedOutputType, String expectedSteps, String canonical, boolean misbehaved) throws IOException {
-		List<FormatterStep> formatterSteps = new ArrayList<>();
+		var formatterSteps = new ArrayList<FormatterStep>();
 		formatterSteps.add(NeverUpToDateStep.create("step", step));
 		try (Formatter formatter = Formatter.builder()
 				.lineEndingsPolicy(LineEnding.UNIX.createPolicy())
@@ -116,7 +116,7 @@ class PaddedCellTest {
 	void cycleOrder() {
 		BiConsumer<String, String> testCase = (unorderedStr, canonical) -> {
 			List<String> unordered = Arrays.asList(unorderedStr.split(","));
-			for (int i = 0; i < unordered.size(); ++i) {
+			for (var i = 0; i < unordered.size(); ++i) {
 				// try every rotation of the list
 				Collections.rotate(unordered, 1);
 				PaddedCell result = CYCLE.create(rootFolder, unordered);

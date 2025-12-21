@@ -344,7 +344,7 @@ public class ProcessRunner implements AutoCloseable {
 		}
 
 		public Result result() throws ExecutionException, InterruptedException {
-			int exitCode = waitFor();
+			var exitCode = waitFor();
 			return new Result(args, exitCode, this.outputFut.get(), (this.errorFut != null ? this.errorFut.get() : null));
 		}
 

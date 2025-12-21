@@ -55,7 +55,7 @@ public final class TsFmtFormatterStep {
 	}
 
 	public static Map<String, String> defaultDevDependenciesWithTsFmt(String typescriptFormatter) {
-		TreeMap<String, String> defaults = new TreeMap<>();
+		var defaults = new TreeMap<String, String>();
 		defaults.put("typescript-formatter", typescriptFormatter);
 		defaults.put("typescript", "3.9.5");
 		defaults.put("tslint", "6.1.2");
@@ -104,7 +104,7 @@ public final class TsFmtFormatterStep {
 		}
 
 		private Map<String, Object> unifyOptions() {
-			Map<String, Object> unified = new HashMap<>();
+			var unified = new HashMap<String, Object>();
 			if (!this.inlineTsFmtSettings.isEmpty()) {
 				File targetFile = new File(this.buildDir, "inline-tsfmt.json");
 				JsonWriter.of(this.inlineTsFmtSettings).toJsonFile(targetFile);
