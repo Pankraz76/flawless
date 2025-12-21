@@ -48,7 +48,7 @@ gradlePlugin {
 		flawlessPlugin {
 			id = 'com.opencohesion.flawless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
-			displayName = 'Spotless formatting plugin'
+			displayName = 'Flawless formatting plugin'
 			description = project.description
 			tags.set([
 				'format',
