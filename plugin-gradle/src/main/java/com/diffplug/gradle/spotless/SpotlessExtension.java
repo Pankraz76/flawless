@@ -43,7 +43,7 @@ public abstract class SpotlessExtension {
 	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
 	protected static final String BUILD_SETUP_TASK_GROUP = "build setup";
 	protected static final String CHECK_DESCRIPTION = "Checks that sourcecode satisfies formatting steps.";
-	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
+	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Flawless Git pre-push hook.";
 	protected static final String TASK_GROUP = VERIFICATION_GROUP;
 	private final Project project;
 	private final RegisterDependenciesTask registerDependenciesTask;
@@ -305,7 +305,7 @@ public abstract class SpotlessExtension {
 		try {
 			return findRegisterDepsTask(RegisterDependenciesTask.TASK_NAME);
 		} catch (Exception e) {
-			// in a composite build there can be multiple Spotless plugins on the classpath, and they will each try to register
+			// in a composite build there can be multiple Flawless plugins on the classpath, and they will each try to register
 			// a task on the root project with the same name. That will generate casting errors, which we can catch and try again
 			// with an identity-specific identifier.
 			// https://github.com/diffplug/spotless/pull/1001 for details
