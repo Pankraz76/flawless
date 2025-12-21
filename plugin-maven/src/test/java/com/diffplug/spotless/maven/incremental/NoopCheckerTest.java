@@ -104,10 +104,10 @@ class NoopCheckerTest extends ResourceHarness {
 		project.setFile(pomFile);
 		Build build = new Build();
 		build.setDirectory(targetDir.getName());
-		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
-		build.addPlugin(spotlessPlugin);
+		Plugin flawlessPlugin = new Plugin();
+		flawlessPlugin.setGroupId("com.diffplug.spotless");
+		flawlessPlugin.setArtifactId("spotless-maven-plugin");
+		build.addPlugin(flawlessPlugin);
 		project.setBuild(build);
 		return project;
 	}
