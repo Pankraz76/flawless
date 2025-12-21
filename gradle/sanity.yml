@@ -15,8 +15,8 @@ recipeList:
   - org.openrewrite.java.migrate.lang.StringRulesRecipes
   - org.openrewrite.java.migrate.lang.var.UseVarForGenericsConstructors
   - org.openrewrite.java.migrate.lang.var.UseVarForPrimitive
-  - org.openrewrite.java.migrate.lang.var.UseVarForGenericMethodInvocations # bug
-  # - org.openrewrite.java.migrate.lang.var.UseVarForObject # 6k changes...
+  # - org.openrewrite.java.migrate.lang.var.UseVarForGenericMethodInvocations # bug
+  - org.openrewrite.java.migrate.lang.var.UseVarForObject # 6k changes...
   - org.openrewrite.java.migrate.util.JavaLangAPIs
   - org.openrewrite.java.migrate.util.JavaUtilAPIs
   - org.openrewrite.java.migrate.util.MigrateInflaterDeflaterToClose
