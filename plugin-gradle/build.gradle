@@ -46,7 +46,7 @@ gradlePlugin {
 	vcsUrl = "https://github.com/Pankraz76/flawless"
 	plugins {
 		flawlessPlugin {
-			id = 'com.diffplug.spotless'
+			id = 'com.opencohesion.flawless'
 			implementationClass = 'com.diffplug.gradle.spotless.SpotlessPlugin'
 			displayName = 'Spotless formatting plugin'
 			description = project.description
