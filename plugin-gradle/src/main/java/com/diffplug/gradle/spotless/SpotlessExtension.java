@@ -34,21 +34,19 @@ import org.gradle.language.base.plugins.LifecycleBasePlugin;
 import com.diffplug.spotless.LineEnding;
 
 public abstract class SpotlessExtension {
-	private final Project project;
-	private final RegisterDependenciesTask registerDependenciesTask;
-
-	protected static final String TASK_GROUP = LifecycleBasePlugin.VERIFICATION_GROUP;
-	protected static final String BUILD_SETUP_TASK_GROUP = "build setup";
-	protected static final String CHECK_DESCRIPTION = "Checks that sourcecode satisfies formatting steps.";
-	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
-	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
-
+	static final String APPLY = "Apply";
+	static final String CHECK = "Check";
+	static final String DIAGNOSE = "Diagnose";
 	static final String EXTENSION = "spotless"; // todo rename flawless
 	static final String EXTENSION_PREDECLARE = EXTENSION + "Predeclare";
-	static final String CHECK = "Check";
-	static final String APPLY = "Apply";
-	static final String DIAGNOSE = "Diagnose";
 	static final String INSTALL_GIT_PRE_PUSH_HOOK = "InstallGitPrePushHook";
+	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
+	protected static final String BUILD_SETUP_TASK_GROUP = "build setup";
+	protected static final String CHECK_DESCRIPTION = "Checks that sourcecode satisfies formatting steps.";
+	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
+	protected static final String TASK_GROUP = LifecycleBasePlugin.VERIFICATION_GROUP;
+	private final Project project;
+	private final RegisterDependenciesTask registerDependenciesTask;
 
 	protected SpotlessExtension(Project project) {
 		this.project = requireNonNull(project);
