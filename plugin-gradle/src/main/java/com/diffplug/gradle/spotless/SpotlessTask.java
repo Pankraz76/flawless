@@ -153,7 +153,7 @@ public abstract class SpotlessTask extends DefaultTask {
 	}
 
 	protected File cleanDirectory = new File(getProject().getLayout().getBuildDirectory().getAsFile().get(),
-			"spotless-clean/" + getName());
+			"flawless-clean/" + getName());
 
 	@OutputDirectory
 	public File getCleanDirectory() {
@@ -161,7 +161,7 @@ public abstract class SpotlessTask extends DefaultTask {
 	}
 
 	protected File lintsDirectory = new File(getProject().getLayout().getBuildDirectory().getAsFile().get(),
-			"spotless-lints/" + getName());
+			"flawless-lints/" + getName());
 
 	@OutputDirectory
 	public File getLintsDirectory() {

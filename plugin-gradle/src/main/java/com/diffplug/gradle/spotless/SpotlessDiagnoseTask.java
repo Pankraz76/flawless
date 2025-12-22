@@ -46,7 +46,7 @@ public class SpotlessDiagnoseTask extends DefaultTask {
 	public void performAction() throws IOException {
 		Path srcRoot = getProject().getProjectDir().toPath();
 		Path diagnoseRoot = getProject().getLayout().getBuildDirectory().getAsFile().get()
-				.toPath().resolve("spotless-diagnose-" + source.get().formatName());
+				.toPath().resolve("flawless-diagnose-" + source.get().formatName());
 		getProject().delete(diagnoseRoot.toFile());
 		try (Formatter formatter = source.get().buildFormatter()) {
 			for (File file : source.get().target) {

@@ -40,7 +40,7 @@ class FileIndexConfigTest {
 		FileIndexConfig config = new FileIndexConfig(project, getIndexFile(project), PluginFingerprint.from("foo"));
 
 		assertThat(config.getIndexFile())
-				.isEqualTo(Path.of("projectDir", "target", "spotless-index"));
+				.isEqualTo(Path.of("projectDir", "target", "flawless-index"));
 	}
 
 	@Test
@@ -69,6 +69,6 @@ class FileIndexConfigTest {
 	}
 
 	private static Path getIndexFile(MavenProject project) {
-		return project.getBasedir().toPath().resolve(project.getBuild().getDirectory()).resolve("spotless-index");
+		return project.getBasedir().toPath().resolve(project.getBuild().getDirectory()).resolve("flawless-index");
 	}
 }

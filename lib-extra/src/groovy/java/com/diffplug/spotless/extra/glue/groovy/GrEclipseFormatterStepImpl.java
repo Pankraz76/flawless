@@ -58,7 +58,7 @@ public class GrEclipseFormatterStepImpl {
 			solstice.warnAndModifyManifestsToFix();
 			var props = Map.of("osgi.nl", "en_US",
 					Constants.FRAMEWORK_STORAGE_CLEAN, Constants.FRAMEWORK_STORAGE_CLEAN_ONFIRSTINIT,
-					EquinoxLocations.PROP_INSTANCE_AREA, Files.createTempDirectory("spotless-groovy").toAbsolutePath().toString());
+					EquinoxLocations.PROP_INSTANCE_AREA, Files.createTempDirectory("flawless-groovy").toAbsolutePath().toString());
 			solstice.openShim(props);
 			ShimIdeBootstrapServices.apply(props, solstice.getContext());
 			solstice.start("org.apache.felix.scr");

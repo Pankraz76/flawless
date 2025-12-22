@@ -363,7 +363,7 @@ public class MavenIntegrationHarness extends ResourceHarness {
 				.filter(Objects::nonNull)
 				.collect(Collectors.joining("\n"));
 
-		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:spotless-maven-plugin:([^:]+):", "com.diffplug.spotless:spotless-maven-plugin:VERSION:");
+		String sanitizedVersion = concatenatedError.replaceFirst("com\\.diffplug\\.spotless:flawless-maven-plugin:([^:]+):", "com.diffplug.spotless:flawless-maven-plugin:VERSION:");
 
 		int help1 = sanitizedVersion.indexOf("-> [Help 1]");
 		String trimTrailingString = sanitizedVersion.substring(0, help1);

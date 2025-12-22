@@ -1,7 +1,7 @@
 # <img align="left" src="_images/spotless_logo.png"> Spotless: Keep your code spotless
 
 [![Gradle Plugin](https://img.shields.io/gradle-plugin-portal/v/com.diffplug.spotless?color=blue&label=gradle%20plugin)](plugin-gradle)
-[![Maven Plugin](https://img.shields.io/maven-central/v/com.diffplug.spotless/spotless-maven-plugin?color=blue&label=maven%20plugin)](plugin-maven)
+[![Maven Plugin](https://img.shields.io/maven-central/v/com.diffplug.spotless/flawless-maven-plugin?color=blue&label=maven%20plugin)](plugin-maven)
 [![SBT Plugin](https://img.shields.io/badge/sbt%20plugin-0.1.3-blue)](https://github.com/moznion/sbt-spotless)
 
 Spotless can format &lt;antlr | c | c# | c++ | css | flow | graphql | groovy | html | java | javascript | json | jsx | kotlin | less | license headers | markdown | objective-c | protobuf | python | scala | scss | shell | sql | typeScript | vue | yaml | anything> using &lt;gradle | maven | sbt | anything>.

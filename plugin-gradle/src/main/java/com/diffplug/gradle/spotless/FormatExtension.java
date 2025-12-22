@@ -670,7 +670,7 @@ public class FormatExtension {
 
 	public abstract static class NpmStepConfig<T extends NpmStepConfig<?>> {
 
-		public static final String SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME = "spotless-npm-install-cache";
+		public static final String SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME = "flawless-npm-install-cache";
 
 		@Nullable protected Object npmFile;
 

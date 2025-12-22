@@ -178,9 +178,9 @@ class PaddedCellTaskTest extends ResourceHarness {
 		diverge().diagnose();
 
 		assertFolderContents("build",
-				"spotless-diagnose-converge",
-				"spotless-diagnose-cycle",
-				"spotless-diagnose-diverge");
+				"flawless-diagnose-converge",
+				"flawless-diagnose-cycle",
+				"flawless-diagnose-diverge");
 		assertFolderContents("build/spotless-diagnose-cycle/src",
 				"test.cycle.cycle0",
 				"test.cycle.cycle1");

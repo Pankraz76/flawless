@@ -48,7 +48,7 @@ abstract class FileIndexHarness {
 		Files.createDirectory(projectDir);
 		when(config.getProjectDir()).thenReturn(projectDir);
 
-		Path indexFile = projectDir.resolve("target").resolve("spotless-index");
+		Path indexFile = projectDir.resolve("target").resolve("flawless-index");
 		when(config.getIndexFile()).thenReturn(indexFile);
 
 		when(config.getPluginFingerprint()).thenReturn(FINGERPRINT);
