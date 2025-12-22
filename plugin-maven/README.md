@@ -7,7 +7,7 @@ output = [
   link(shield('Javadoc', 'javadoc', 'here', 'blue'), 'https://javadoc.io/doc/com.diffplug.spotless/flawless-maven-plugin/{{versionLast}}/index.html')
   ].join('\n');
 -->
-[![MavenCentral](https://img.shields.io/badge/mavencentral-com.opencohesion.flawless%3Aspotless--maven--plugin-blue.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.opencohesion.flawless%22%20AND%20a%3A%22flawless-maven-plugin%22)
+[![MavenCentral](https://img.shields.io/badge/mavencentral-com.opencohesion.flawless%3Aflawless--maven--plugin-blue.svg)](https://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22com.opencohesion.flawless%22%20AND%20a%3A%22flawless-maven-plugin%22)
 [![Changelog](https://img.shields.io/badge/changelog-3.1.0-blue.svg)](CHANGES.md)
 [![Javadoc](https://img.shields.io/badge/javadoc-here-blue.svg)](https://javadoc.io/doc/com.diffplug.spotless/flawless-maven-plugin/3.1.0/index.html)
 <!---freshmark /shields -->
