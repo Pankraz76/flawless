@@ -51,7 +51,7 @@ class NoopCheckerTest extends ResourceHarness {
 	@BeforeEach
 	void beforeEach() throws Exception {
 		project = buildMavenProject();
-		indexFile = project.getBasedir().toPath().resolve(project.getBuild().getDirectory()).resolve("spotless-index");
+		indexFile = project.getBasedir().toPath().resolve(project.getBuild().getDirectory()).resolve("flawless-index");
 		existingSourceFile = project.getBasedir().toPath().resolve("existing.txt");
 		Files.write(existingSourceFile, "foo".getBytes(UTF_8), CREATE_NEW);
 		nonExistingSourceFile = project.getBasedir().toPath().resolve("non-existing.txt");
@@ -104,10 +104,10 @@ class NoopCheckerTest extends ResourceHarness {
 		project.setFile(pomFile);
 		Build build = new Build();
 		build.setDirectory(targetDir.getName());
-		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
-		build.addPlugin(spotlessPlugin);
+		Plugin flawlessPlugin = new Plugin();
+		flawlessPlugin.setGroupId("com.opencohesion.flawless");
+		flawlessPlugin.setArtifactId("flawless-maven-plugin");
+		build.addPlugin(flawlessPlugin);
 		project.setBuild(build);
 		return project;
 	}

@@ -16,6 +16,7 @@
 package com.diffplug.gradle.spotless;
 
 import static java.util.Objects.requireNonNull;
+import static org.gradle.language.base.plugins.LifecycleBasePlugin.VERIFICATION_GROUP;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -29,26 +30,23 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskProvider;
-import org.gradle.language.base.plugins.LifecycleBasePlugin;
 
 import com.diffplug.spotless.LineEnding;
 
 public abstract class SpotlessExtension {
-	private final Project project;
-	private final RegisterDependenciesTask registerDependenciesTask;
-
-	protected static final String TASK_GROUP = LifecycleBasePlugin.VERIFICATION_GROUP;
+	static final String APPLY = "Apply";
+	static final String CHECK = "Check";
+	static final String DIAGNOSE = "Diagnose";
+	static final String EXTENSION = "flawless"; // todo rename flawless
+	static final String EXTENSION_PREDECLARE = EXTENSION + "Predeclare";
+	static final String INSTALL_GIT_PRE_PUSH_HOOK = "InstallGitPrePushHook";
+	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
 	protected static final String BUILD_SETUP_TASK_GROUP = "build setup";
 	protected static final String CHECK_DESCRIPTION = "Checks that sourcecode satisfies formatting steps.";
-	protected static final String APPLY_DESCRIPTION = "Applies code formatting steps to sourcecode in-place.";
-	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Spotless Git pre-push hook.";
-
-	static final String EXTENSION = "spotless"; // todo rename flawless
-	static final String EXTENSION_PREDECLARE = EXTENSION + "Predeclare";
-	static final String CHECK = "Check";
-	static final String APPLY = "Apply";
-	static final String DIAGNOSE = "Diagnose";
-	static final String INSTALL_GIT_PRE_PUSH_HOOK = "InstallGitPrePushHook";
+	protected static final String INSTALL_GIT_PRE_PUSH_HOOK_DESCRIPTION = "Installs Flawless Git pre-push hook.";
+	protected static final String TASK_GROUP = VERIFICATION_GROUP;
+	private final Project project;
+	private final RegisterDependenciesTask registerDependenciesTask;
 
 	protected SpotlessExtension(Project project) {
 		this.project = requireNonNull(project);
@@ -307,7 +305,7 @@ public abstract class SpotlessExtension {
 		try {
 			return findRegisterDepsTask(RegisterDependenciesTask.TASK_NAME);
 		} catch (Exception e) {
-			// in a composite build there can be multiple Spotless plugins on the classpath, and they will each try to register
+			// in a composite build there can be multiple Flawless plugins on the classpath, and they will each try to register
 			// a task on the root project with the same name. That will generate casting errors, which we can catch and try again
 			// with an identity-specific identifier.
 			// https://github.com/diffplug/spotless/pull/1001 for details

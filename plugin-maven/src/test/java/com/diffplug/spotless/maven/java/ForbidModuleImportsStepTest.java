@@ -30,7 +30,7 @@ class ForbidModuleImportsStepTest extends MavenIntegrationHarness {
 		var selfie = expectSelfieErrorMsg(mavenRunner().withArguments("spotless:apply").runHasError());
 		assertFile(path).sameAsResource("java/forbidmoduleimports/JavaCodeModuleImportsUnformatted.test");
 		selfie.toBe("""
-				Failed to execute goal com.diffplug.spotless:spotless-maven-plugin:VERSION:apply (default-cli) on project spotless-maven-plugin-tests: There were 2 lint error(s), they must be fixed or suppressed.
+				Failed to execute goal com.opencohesion.flawless:flawless-maven-plugin:VERSION:apply (default-cli) on project flawless-maven-plugin-tests: There were 2 lint error(s), they must be fixed or suppressed.
 				src/main/java/test.java:L1 forbidModuleImports(import module java.base;) Do not use module imports - replace with specific class imports as 'spotlessApply' cannot auto-fix this
 				src/main/java/test.java:L2 forbidModuleImports(import module java.sql;) Do not use module imports - replace with specific class imports as 'spotlessApply' cannot auto-fix this
 				Resolve these lints or suppress with `<lintSuppressions>`

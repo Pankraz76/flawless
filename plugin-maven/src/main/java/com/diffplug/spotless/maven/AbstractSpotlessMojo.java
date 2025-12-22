@@ -85,7 +85,7 @@ import com.diffplug.spotless.maven.typescript.Typescript;
 import com.diffplug.spotless.maven.yaml.Yaml;
 
 public abstract class AbstractSpotlessMojo extends AbstractMojo {
-	private static final String DEFAULT_INDEX_FILE_NAME = "spotless-index";
+	private static final String DEFAULT_INDEX_FILE_NAME = "flawless-index";
 	private static final String DEFAULT_ENCODING = "UTF-8";
 	private static final String DEFAULT_LINE_ENDINGS = "GIT_ATTRIBUTES_FAST_ALLSAME";
 

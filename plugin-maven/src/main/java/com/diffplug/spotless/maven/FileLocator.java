@@ -34,7 +34,7 @@ import org.codehaus.plexus.util.FileUtils;
 
 public class FileLocator {
 
-	static final String TMP_RESOURCE_FILE_PREFIX = "spotless-resource-";
+	static final String TMP_RESOURCE_FILE_PREFIX = "flawless-resource-";
 
 	private final ResourceManager resourceManager;
 	private final File baseDir;
@@ -133,7 +133,7 @@ public class FileLocator {
 			var parent1 = jarPath != null ? jarPath.getParent() : null;
 			var parent2 = parent1 != null ? parent1.getParent() : null;
 			var base = parent2 != null ? parent2.getParent() : null;
-			var sub = base != null ? base.resolve("spotless-data") : null;
+			var sub = base != null ? base.resolve("flawless-data") : null;
 			if (sub != null) {
 				return sub.toAbsolutePath().toFile();
 			} else {

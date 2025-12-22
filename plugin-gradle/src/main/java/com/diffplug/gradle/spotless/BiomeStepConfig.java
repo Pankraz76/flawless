@@ -197,7 +197,7 @@ public abstract class BiomeStepConfig<Self extends BiomeStepConfig<Self>> {
 	private File findDataDir() {
 		// e.g. ~/.gradle/
 		var userHomeDir = project.getGradle().getGradleUserHomeDir().toPath();
-		var dataPath = userHomeDir.resolve("com").resolve("diffplug").resolve("spotless").resolve("spotless-data");
+		var dataPath = userHomeDir.resolve("com").resolve("diffplug").resolve("spotless").resolve("flawless-data");
 		return dataPath.toAbsolutePath().toFile();
 	}
 

@@ -34,7 +34,7 @@ import com.diffplug.spotless.npm.NpmPathResolver;
 
 public abstract class AbstractNpmFormatterStepFactory implements FormatterStepFactory {
 
-	public static final String SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME = "spotless-npm-install-cache";
+	public static final String SPOTLESS_NPM_INSTALL_CACHE_DEFAULT_NAME = "flawless-npm-install-cache";
 
 	@Parameter
 	private String npmExecutable;

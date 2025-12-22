@@ -35,7 +35,7 @@ import com.diffplug.spotless.Formatter;
  */
 final class PluginFingerprint {
 
-	private static final String SPOTLESS_PLUGIN_KEY = "com.diffplug.spotless:spotless-maven-plugin";
+	private static final String SPOTLESS_PLUGIN_KEY = "com.opencohesion.flawless:flawless-maven-plugin";
 
 	private final String value;
 
@@ -44,8 +44,8 @@ final class PluginFingerprint {
 	}
 
 	static PluginFingerprint from(MavenProject project, Iterable<Formatter> formatters) {
-		Plugin spotlessPlugin = findSpotlessPlugin(project);
-		byte[] digest = digest(spotlessPlugin, formatters);
+		Plugin flawlessPlugin = findSpotlessPlugin(project);
+		byte[] digest = digest(flawlessPlugin, formatters);
 		String value = Base64.getEncoder().encodeToString(digest);
 		return new PluginFingerprint(value);
 	}

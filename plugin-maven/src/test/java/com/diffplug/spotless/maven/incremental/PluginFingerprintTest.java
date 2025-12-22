@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2024 DiffPlug
+ * Copyright 2021-2025 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,11 +120,11 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 	@Test
 	void buildsFingerprintForProjectWithSpotlessPluginInBuildPlugins() {
 		MavenProject project = new MavenProject();
-		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
-		spotlessPlugin.setVersion("1.2.3");
-		project.getBuild().addPlugin(spotlessPlugin);
+		Plugin flawlessPlugin = new Plugin();
+		flawlessPlugin.setGroupId("com.opencohesion.flawless");
+		flawlessPlugin.setArtifactId("flawless-maven-plugin");
+		flawlessPlugin.setVersion("1.2.3");
+		project.getBuild().addPlugin(flawlessPlugin);
 
 		PluginFingerprint fingerprint = PluginFingerprint.from(project, Collections.emptyList());
 
@@ -134,13 +134,13 @@ class PluginFingerprintTest extends MavenIntegrationHarness {
 	@Test
 	void buildsFingerprintForProjectWithSpotlessPluginInPluginManagement() {
 		MavenProject project = new MavenProject();
-		Plugin spotlessPlugin = new Plugin();
-		spotlessPlugin.setGroupId("com.diffplug.spotless");
-		spotlessPlugin.setArtifactId("spotless-maven-plugin");
-		spotlessPlugin.setVersion("1.2.3");
-		project.getBuild().addPlugin(spotlessPlugin);
+		Plugin flawlessPlugin = new Plugin();
+		flawlessPlugin.setGroupId("com.opencohesion.flawless");
+		flawlessPlugin.setArtifactId("flawless-maven-plugin");
+		flawlessPlugin.setVersion("1.2.3");
+		project.getBuild().addPlugin(flawlessPlugin);
 		PluginManagement pluginManagement = new PluginManagement();
-		pluginManagement.addPlugin(spotlessPlugin);
+		pluginManagement.addPlugin(flawlessPlugin);
 		project.getBuild().setPluginManagement(pluginManagement);
 
 		PluginFingerprint fingerprint = PluginFingerprint.from(project, Collections.emptyList());

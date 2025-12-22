@@ -90,13 +90,13 @@ javadoc {
 // PUBLISHING //
 ////////////////
 boolean isExt = project.name.startsWith('eclipse-')
-boolean isPluginMaven = project.ext.artifactId == 'spotless-maven-plugin'
+boolean isPluginMaven = project.ext.artifactId == 'flawless-maven-plugin'
 
 model {
 	publishing {
 		publications {
 			pluginMaven(MavenPublication) {
-				if (project.ext.artifactId != 'spotless-plugin-gradle') {
+				if (project.ext.artifactId != 'flawless-plugin-gradle') {
 					from components.java
 				}
 
