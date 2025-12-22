@@ -168,7 +168,7 @@ class ReflectionHelper {
 	}
 
 	public boolean graphContainsSameTerm(Object graph, Object triple) throws InvocationTargetException, IllegalAccessException {
-		var found = (boolean) contains.invoke(graph, triple);
+		boolean found = (boolean) contains.invoke(graph, triple);
 		if (!found) {
 			return false;
 		}
@@ -198,8 +198,8 @@ class ReflectionHelper {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			String message = (String) args[0];
-			var line = (long) args[1];
-			var col = (long) args[2];
+			long line = (long) args[1];
+			long col = (long) args[2];
 			String severity = method.getName();
 			if ("warning".equals(severity) && !state.getConfig().isFailOnWarning()) {
 				LOGGER.warn("{}({},{}): {}", this.filePath, line, col, message);
@@ -400,7 +400,7 @@ class ReflectionHelper {
 	private String tryToMakeUri(String stringRepresentation)
 			throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
 		if (stringRepresentation.matches("[^:/]+:[^:/]+")) {
-			var colonIndex = stringRepresentation.indexOf(':');
+			int colonIndex = stringRepresentation.indexOf(':');
 			//could be a known prefix
 			String prefix = stringRepresentation.substring(0, colonIndex);
 			Object knownPrefix = getKnownPrefix(prefix);
@@ -415,7 +415,7 @@ class ReflectionHelper {
 	private Object getKnownPrefix(String stringRepresentation)
 			throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
 		Field[] fields = TurtleFormatFormattingStyleClass.getDeclaredFields();
-		var options = new ArrayList<String>();
+		List<String> options = new ArrayList<>();
 		for (Field field : fields) {
 			if (field.getType().equals(TurtleFormatKnownPrefix)) {
 				Object knownPrefix = field.get(TurtleFormatFormattingStyleClass);
@@ -502,7 +502,7 @@ class ReflectionHelper {
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 			if ("listSubjects".equals(method.getName()) && method.getParameterCount() == 0) {
 				Object resIterator = method.invoke(jenaModel);
-				var resources = new ArrayList<Object>();
+				List<Object> resources = new ArrayList<>();
 				while (hasNext(resIterator)) {
 					resources.add(next(resIterator));
 				}

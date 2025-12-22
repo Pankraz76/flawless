@@ -35,7 +35,7 @@ class PrettierMissingParserException extends RuntimeException implements Lint.Ha
 	private static final Map<String, String> EXTENSIONS_TO_PLUGINS;
 
 	static {
-		var plugins = new HashMap<String, String>();
+		Map<String, String> plugins = new HashMap<>();
 		// ---- official plugins
 		plugins.put(".php", "@prettier/plugin-php");
 		plugins.put(".pug", "@prettier/plugin-pug");

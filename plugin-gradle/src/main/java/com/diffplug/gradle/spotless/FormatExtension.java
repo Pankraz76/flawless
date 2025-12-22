@@ -323,7 +323,7 @@ public class FormatExtension {
 				return matchedFiles;
 			}
 			if (targetString.startsWith("**/") || targetString.startsWith("**\\")) {
-				var excludes = new ArrayList<String>();
+				List<String> excludes = new ArrayList<>();
 				// no git
 				excludes.add(".git");
 				// no .gradle
@@ -357,7 +357,7 @@ public class FormatExtension {
 	/** Adds a new step. */
 	public void addStep(FormatterStep newStep) {
 		requireNonNull(newStep);
-		var existingIdx = getExistingStepIdx(newStep.getName());
+		int existingIdx = getExistingStepIdx(newStep.getName());
 		if (existingIdx != -1) {
 			throw new GradleException(
 					"Multiple steps with name '" + newStep.getName() + "' for spotless format '" + formatName() + "'");
@@ -377,7 +377,7 @@ public class FormatExtension {
 	 * step exists.
 	 */
 	protected int getExistingStepIdx(String stepName) {
-		for (var i = 0; i < steps.size(); i++) {
+		for (int i = 0; i < steps.size(); i++) {
 			if (steps.get(i).getName().equals(stepName)) {
 				return i;
 			}
@@ -387,7 +387,7 @@ public class FormatExtension {
 
 	/** Replaces the given step. */
 	protected void replaceStep(FormatterStep replacementStep) {
-		var existingIdx = getExistingStepIdx(replacementStep.getName());
+		int existingIdx = getExistingStepIdx(replacementStep.getName());
 		if (existingIdx == -1) {
 			throw new GradleException("Cannot replace step '" + replacementStep.getName() + "' for spotless format '"
 					+ formatName() + "' because it hasn't been added yet.");
@@ -570,7 +570,7 @@ public class FormatExtension {
 		public LicenseHeaderConfig named(String name) {
 			String existingStepName = builder.getName();
 			builder = builder.withName(name);
-			var existingStepIdx = getExistingStepIdx(existingStepName);
+			int existingStepIdx = getExistingStepIdx(existingStepName);
 			if (existingStepIdx != -1) {
 				steps.set(existingStepIdx, createStep());
 			} else {

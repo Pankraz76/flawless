@@ -148,7 +148,7 @@ public class SQLTokenizedFormatter {
 		}
 
 		int indent = 0;
-		final var bracketIndent = new ArrayList<Integer>();
+		final List<Integer> bracketIndent = new ArrayList<>();
 		FormatterToken prev = new FormatterToken(TokenType.SPACE, " ");
 		boolean encounterBetween = false;
 		for (int index = 0; index < argList.size(); index++) {

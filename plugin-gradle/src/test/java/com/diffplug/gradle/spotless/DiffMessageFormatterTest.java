@@ -180,7 +180,7 @@ class DiffMessageFormatterTest extends ResourceHarness {
 
 	@Test
 	void manyFiles() throws Exception {
-		var testFiles = new ArrayList<File>();
+		List<File> testFiles = new ArrayList<>();
 		for (int i = 0; i < 9 + DiffMessageFormatter.MAX_FILES_TO_LIST - 1; i++) {
 			String fileName = "%02d".formatted(i) + ".txt";
 			testFiles.add(setFile(fileName).toContent("1\r\n2\r\n"));
@@ -254,7 +254,7 @@ class DiffMessageFormatterTest extends ResourceHarness {
 
 	@Test
 	void manyManyFiles() throws Exception {
-		var testFiles = new ArrayList<File>();
+		List<File> testFiles = new ArrayList<>();
 		for (int i = 0; i < 9 + DiffMessageFormatter.MAX_FILES_TO_LIST; i++) {
 			String fileName = "%02d".formatted(i) + ".txt";
 			testFiles.add(setFile(fileName).toContent("1\r\n2\r\n"));

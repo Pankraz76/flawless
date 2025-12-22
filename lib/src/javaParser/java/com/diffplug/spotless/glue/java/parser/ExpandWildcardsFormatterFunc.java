@@ -110,7 +110,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 	}
 
 	private List<ImportDeclaration> findWildcardImports(CompilationUnit cu) {
-		var wildcardImports = new ArrayList<ImportDeclaration>();
+		List<ImportDeclaration> wildcardImports = new ArrayList<>();
 		for (ImportDeclaration importDeclaration : cu.getImports()) {
 			if (importDeclaration.isAsterisk()) {
 				wildcardImports.add(importDeclaration);
@@ -135,7 +135,7 @@ public class ExpandWildcardsFormatterFunc implements FormatterFunc.NeedsFile {
 
 		private void matchTypeName(Map<ImportDeclaration, Set<ImportDeclaration>> importMap, String qualifiedName,
 				boolean isStatic) {
-			var lastDot = qualifiedName.lastIndexOf('.');
+			int lastDot = qualifiedName.lastIndexOf('.');
 			if (lastDot < 0) {
 				return;
 			}

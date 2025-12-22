@@ -62,7 +62,7 @@ class RingBufferByteArrayOutputStream extends ByteArrayOutputStream {
 
 	@Override
 	public synchronized void write(byte[] b, int off, int len) {
-		var remaining = limit - count;
+		int remaining = limit - count;
 		if (remaining >= len) {
 			super.write(b, off, len);
 			return;
@@ -77,7 +77,7 @@ class RingBufferByteArrayOutputStream extends ByteArrayOutputStream {
 		// we are over the limit
 		isOverLimit = true;
 		// write till limit is reached
-		var writeTillLimit = Math.min(len, limit - zeroIndexPointer);
+		int writeTillLimit = Math.min(len, limit - zeroIndexPointer);
 		System.arraycopy(b, off, buf, zeroIndexPointer, writeTillLimit);
 		zeroIndexPointer = (zeroIndexPointer + writeTillLimit) % limit;
 		if (writeTillLimit < len) {

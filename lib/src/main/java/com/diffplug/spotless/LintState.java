@@ -53,7 +53,7 @@ public class LintState {
 		if (lintsPerStep.size() != formatter.getSteps().size()) {
 			throw new IllegalStateException("LintState was created with a different formatter!");
 		}
-		var result = new LinkedHashMap<String, List<Lint>>();
+		LinkedHashMap<String, List<Lint>> result = new LinkedHashMap<>();
 		for (int i = 0; i < lintsPerStep.size(); i++) {
 			List<Lint> lints = lintsPerStep.get(i);
 			if (lints != null) {
@@ -72,12 +72,12 @@ public class LintState {
 			throw new IllegalStateException("LintState was created with a different formatter!");
 		}
 		boolean changed = false;
-		var perStepFiltered = new ValuePerStep<List<Lint>>(formatter);
+		ValuePerStep<List<Lint>> perStepFiltered = new ValuePerStep<>(formatter);
 		for (int i = 0; i < lintsPerStep.size(); i++) {
 			FormatterStep step = formatter.getSteps().get(i);
 			List<Lint> lintsOriginal = lintsPerStep.get(i);
 			if (lintsOriginal != null) {
-				var lints = new ArrayList<Lint>(lintsOriginal);
+				List<Lint> lints = new ArrayList<>(lintsOriginal);
 				Iterator<Lint> iter = lints.iterator();
 				while (iter.hasNext()) {
 					Lint lint = iter.next();

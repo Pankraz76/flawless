@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 DiffPlug
+ * Copyright 2016-2023 DiffPlug
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,7 +51,7 @@ final class ImportSorter {
 		int lastImportLine = 0;
 		int line = 0;
 		boolean isMultiLineComment = false;
-		var imports = new ArrayList<String>();
+		List<String> imports = new ArrayList<>();
 		while (scanner.hasNext()) {
 			line++;
 			String next = scanner.nextLine();

@@ -96,16 +96,16 @@ public abstract class GitRatchet<Project> implements AutoCloseable {
 				DirCacheIterator dirCacheIterator = treeWalk.getTree(INDEX, DirCacheIterator.class);
 				WorkingTreeIterator workingTreeIterator = treeWalk.getTree(WORKDIR, WorkingTreeIterator.class);
 
-				var hasTree = treeIterator != null && workingTreeIterator != null;
-				var hasDirCache = dirCacheIterator != null;
+				boolean hasTree = treeIterator != null && workingTreeIterator != null;
+				boolean hasDirCache = dirCacheIterator != null;
 
 				if (!hasTree) {
 					// it's not in the tree, so it was added
 					return false;
 				} else {
 					if (hasDirCache) {
-						var treeEqualsIndex = treeIterator.idEqual(dirCacheIterator) && treeIterator.getEntryRawMode() == dirCacheIterator.getEntryRawMode();
-						var indexEqualsWC = !workingTreeIterator.isModified(dirCacheIterator.getDirCacheEntry(), true, treeWalk.getObjectReader());
+						boolean treeEqualsIndex = treeIterator.idEqual(dirCacheIterator) && treeIterator.getEntryRawMode() == dirCacheIterator.getEntryRawMode();
+						boolean indexEqualsWC = !workingTreeIterator.isModified(dirCacheIterator.getDirCacheEntry(), true, treeWalk.getObjectReader());
 						if (treeEqualsIndex != indexEqualsWC) {
 							// if one is equal and the other isn't, then it has definitely changed
 							return false;

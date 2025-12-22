@@ -244,7 +244,7 @@ class UpToDateCheckingTest extends MavenIntegrationHarness {
 	}
 
 	private List<File> writeFiles(String resource, String suffix, int count) throws IOException {
-		var result = new ArrayList<File>(count);
+		List<File> result = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
 			String path = "src/main/java/test_" + suffix + "_" + i + ".java";
 			File file = setFile(path).toResource(resource);

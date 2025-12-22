@@ -250,7 +250,7 @@ class LicenseHeaderStepTest extends ResourceHarness {
 
 	@Test
 	void should_update_year_for_license_with_address() throws Throwable {
-		var currentYear = LocalDate.now(ZoneOffset.UTC).getYear();
+		int currentYear = LocalDate.now(ZoneOffset.UTC).getYear();
 		FormatterStep step = LicenseHeaderStep.headerDelimiter(header(licenceWithAddress()), PACKAGE_).withYearMode(YearMode.UPDATE_TO_TODAY).build();
 		StepHarness.forStep(step).test(
 				hasHeader(licenceWithAddress().replace("$YEAR", "2015")),

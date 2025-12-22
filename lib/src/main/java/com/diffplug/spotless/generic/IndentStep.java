@@ -78,10 +78,10 @@ public final class IndentStep implements Serializable {
 		String format(String raw) {
 			// reset the buffer
 			builder.setLength(0);
-			var lineStart = 0; // beginning of line
+			int lineStart = 0; // beginning of line
 			do {
-				var contentStart = lineStart; // beginning of non-whitespace
-				var numSpaces = 0;
+				int contentStart = lineStart; // beginning of non-whitespace
+				int numSpaces = 0;
 				char c;
 				while (contentStart < raw.length() && isSpaceOrTab(c = raw.charAt(contentStart))) {
 					switch (c) {
@@ -98,18 +98,18 @@ public final class IndentStep implements Serializable {
 				}
 
 				// detect potential multi-line comments
-				var mightBeMultiLineComment = (contentStart < raw.length()) && (raw.charAt(contentStart) == '*');
+				boolean mightBeMultiLineComment = (contentStart < raw.length()) && (raw.charAt(contentStart) == '*');
 
 				// add the leading space in a canonical way
 				if (numSpaces > 0) {
 					switch (state.type) {
 					case SPACE:
-						for (var i = 0; i < numSpaces; i++) {
+						for (int i = 0; i < numSpaces; i++) {
 							builder.append(' ');
 						}
 						break;
 					case TAB:
-						for (var i = 0; i < numSpaces / state.numSpacesPerTab; i++) {
+						for (int i = 0; i < numSpaces / state.numSpacesPerTab; i++) {
 							builder.append('\t');
 						}
 						if (mightBeMultiLineComment && (numSpaces % state.numSpacesPerTab == 1)) {
