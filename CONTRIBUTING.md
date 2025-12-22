@@ -26,7 +26,7 @@ All `FormatterStep` implement `Serializable`, `equals`, and `hashCode`, so build
 
 ## Project layout
 
-For the folders below in monospace text, they are published on MavenCentral at the coordinate `com.diffplug.spotless:spotless-${FOLDER_NAME}`.  The other folders are dev infrastructure.
+For the folders below in monospace text, they are published on MavenCentral at the coordinate `com.opencohesion.flawless:spotless-${FOLDER_NAME}`.  The other folders are dev infrastructure.
 
 | Folder | Description |
 | ------ | ----------- |
@@ -209,7 +209,7 @@ pluginManagement {
   resolutionStrategy {
     eachPlugin {
       if (requested.id.id == 'com.diffplug.spotless') {
-        useModule('com.diffplug.spotless:flawless-plugin-gradle:{latest-SNAPSHOT}')
+        useModule('com.opencohesion.flawless:flawless-plugin-gradle:{latest-SNAPSHOT}')
       }
     }
   }

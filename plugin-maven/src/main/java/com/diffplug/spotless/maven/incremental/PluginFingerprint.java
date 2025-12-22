@@ -35,7 +35,7 @@ import com.diffplug.spotless.Formatter;
  */
 final class PluginFingerprint {
 
-	private static final String SPOTLESS_PLUGIN_KEY = "com.diffplug.spotless:flawless-maven-plugin";
+	private static final String SPOTLESS_PLUGIN_KEY = "com.opencohesion.flawless:flawless-maven-plugin";
 
 	private final String value;
 

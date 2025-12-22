@@ -30,7 +30,7 @@ class ForbidWildcardImportsStepTest extends MavenIntegrationHarness {
 		var selfie = expectSelfieErrorMsg(mavenRunner().withArguments("spotless:apply").runHasError());
 		assertFile(path).sameAsResource("java/forbidwildcardimports/JavaCodeWildcardsUnformatted.test");
 		selfie.toBe("""
-				Failed to execute goal com.diffplug.spotless:flawless-maven-plugin:VERSION:apply (default-cli) on project flawless-maven-plugin-tests: There were 5 lint error(s), they must be fixed or suppressed.
+				Failed to execute goal com.opencohesion.flawless:flawless-maven-plugin:VERSION:apply (default-cli) on project flawless-maven-plugin-tests: There were 5 lint error(s), they must be fixed or suppressed.
 				src/main/java/test.java:L1 forbidWildcardImports(import java.util.*;) Do not use wildcard imports (e.g. java.util.*) - replace with specific class imports (e.g. java.util.List) as 'spotlessApply' cannot auto-fix this
 				src/main/java/test.java:L2 forbidWildcardImports(import static java.util.Collections.*;) Do not use wildcard imports (e.g. java.util.*) - replace with specific class imports (e.g. java.util.List) as 'spotlessApply' cannot auto-fix this
 				src/main/java/test.java:L5 forbidWildcardImports(import io.quarkus.maven.dependency.*;) Do not use wildcard imports (e.g. java.util.*) - replace with specific class imports (e.g. java.util.List) as 'spotlessApply' cannot auto-fix this
